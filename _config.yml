@@ -5,14 +5,14 @@ permalink: /posts/:title.html
 exclude:
   - README.md
 
-name: Y\u4E2BY
+name: Y丫Y
 host: icai.github.com
 
 
 
 meta:
     author:
-        name: Y\u4E2BY
+        name: Y丫Y
         email: gidcai@gmail.com
         disqus:gidcai                               # Disqus缩略标识
         gcse: 001585136437331322683:wvcrg0yva3i    # Google自定义搜索标识ID
