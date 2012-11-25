@@ -22,7 +22,7 @@ meta:
 
     disqus: disqus.com/embed.js                     # Disqus评论的JS地址
     gapi: http://www.google.com/jsapi               # Google API地址
-    gravatar: https://secure.gravatar.com/avatar        # Gravatar头像服务器地址
+    gravatar: https://secure.gravatar.com/avatar/        # Gravatar头像服务器地址
 
 
 custom:
