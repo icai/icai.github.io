@@ -42,7 +42,7 @@
 			{% if site.meta.author.gravatar %}<img src="{{ site.meta.gravatar}}{{ site.meta.author.gravatar }}?s=48" />{% endif %}
 			<figcaption><strong>{{ site.meta.author.name }}</strong></figcaption>
 		</figure>
-		<p>前端开发,javascript,python,ruby::\{\{在路上\}\}</p>
+		<p>前端开发,javascript,python,ruby::\u123\u123在路上\u125\u125</p>
 	</div>
 	
 	<div class="block block-license">
