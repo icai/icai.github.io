@@ -1,10 +1,11 @@
-
 ---
 layout: post
 title: javascript类库中和编程语言中getter和setter
 category: knowledge
 tags: [getter,setter,javascript,java]
 ---
+
+
 
 
 1.backbonejs中的getter和setter
