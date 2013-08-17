@@ -207,7 +207,9 @@ Y.augment : `http://yuilibrary.com/yui/docs/api/files/oop_js_oop.js.html#l67`
     }
 
 
+总结：
 
+用function封装存储规则，在set，get中嵌入pub/sub模式实现 事件触发。
 
 
 参考文献：
