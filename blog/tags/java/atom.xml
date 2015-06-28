@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: java | 泛前端开发]]></title>
-  <link href="http://icai.github.io/blog/tags/java/atom.xml" rel="self"/>
-  <link href="http://icai.github.io/"/>
-  <updated>2015-06-28T23:35:57+08:00</updated>
-  <id>http://icai.github.io/</id>
+  <link href="http://blog.w3cub.com/blog/tags/java/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2015-06-28T23:50:24+08:00</updated>
+  <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
     <email><![CDATA[gidcai@gmail.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[javascript类库中和编程语言中getter和setter]]></title>
-    <link href="http://icai.github.io/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter/"/>
+    <link href="http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter/"/>
     <updated>2013-08-17T23:16:31+08:00</updated>
-    <id>http://icai.github.io/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter</id>
+    <id>http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter</id>
     <content type="html"><![CDATA[<p>1.backbonejs中的getter和setter</p>
 
 <p>所说的backbonejs中的getter和setter就是内部自定义get和set方法，set方法嵌入了<code>Pub/Sub模型</code>,

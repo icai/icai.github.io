@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: octopress | 泛前端开发]]></title>
-  <link href="http://icai.github.io/blog/categories/octopress/atom.xml" rel="self"/>
-  <link href="http://icai.github.io/"/>
-  <updated>2015-06-28T23:35:57+08:00</updated>
-  <id>http://icai.github.io/</id>
+  <link href="http://blog.w3cub.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2015-06-28T23:50:24+08:00</updated>
+  <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
     <email><![CDATA[gidcai@gmail.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[octopress configuration]]></title>
-    <link href="http://icai.github.io/blog/2015/06/20/octopress-config/"/>
+    <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
     <updated>2015-06-20T23:16:31+08:00</updated>
-    <id>http://icai.github.io/blog/2015/06/20/octopress-config</id>
+    <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
     <content type="html"><![CDATA[<h1>前言</h1>
 
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
@@ -228,9 +228,9 @@ $ rake deploy
   
   <entry>
     <title type="html"><![CDATA[rake task for octopress]]></title>
-    <link href="http://icai.github.io/blog/2015/06/19/rake-task-for-octopress/"/>
+    <link href="http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress/"/>
     <updated>2015-06-19T23:35:19+08:00</updated>
-    <id>http://icai.github.io/blog/2015/06/19/rake-task-for-octopress</id>
+    <id>http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress</id>
     <content type="html"><![CDATA[<p>$ rake -T</p>
 
 <pre><code>    rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache

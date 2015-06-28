@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[泛前端开发]]></title>
-  <link href="http://icai.github.io/atom.xml" rel="self"/>
-  <link href="http://icai.github.io/"/>
-  <updated>2015-06-28T23:35:57+08:00</updated>
-  <id>http://icai.github.io/</id>
+  <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2015-06-28T23:50:24+08:00</updated>
+  <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
     <email><![CDATA[gidcai@gmail.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[rvm help]]></title>
-    <link href="http://icai.github.io/blog/2015/06/28/rvm-help/"/>
+    <link href="http://blog.w3cub.com/blog/2015/06/28/rvm-help/"/>
     <updated>2015-06-28T13:12:54+08:00</updated>
-    <id>http://icai.github.io/blog/2015/06/28/rvm-help</id>
+    <id>http://blog.w3cub.com/blog/2015/06/28/rvm-help</id>
     <content type="html"><![CDATA[<p>常用命令（Action）：</p>
 
 <pre><code>list        :: show currently installed rubies, interactive output.
@@ -262,9 +262,9 @@ limitations under the License.
   
   <entry>
     <title type="html"><![CDATA[octopress configuration]]></title>
-    <link href="http://icai.github.io/blog/2015/06/20/octopress-config/"/>
+    <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
     <updated>2015-06-20T23:16:31+08:00</updated>
-    <id>http://icai.github.io/blog/2015/06/20/octopress-config</id>
+    <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
     <content type="html"><![CDATA[<h1>前言</h1>
 
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
@@ -542,9 +542,9 @@ limitations under the License.
   
   <entry>
     <title type="html"><![CDATA[rake task for octopress]]></title>
-    <link href="http://icai.github.io/blog/2015/06/19/rake-task-for-octopress/"/>
+    <link href="http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress/"/>
     <updated>2015-06-19T23:35:19+08:00</updated>
-    <id>http://icai.github.io/blog/2015/06/19/rake-task-for-octopress</id>
+    <id>http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress</id>
     <content type="html"><![CDATA[<p>$ rake -T</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -594,7 +594,7 @@ limitations under the License.
 
 <p>test include_code plugin:</p>
 
-<figure class='code'><figcaption><span>Example 2 (github.js)</span> <a href='http://icai.github.io/downloads/code/github.js'>download</a></figcaption>
+<figure class='code'><figcaption><span>Example 2 (github.js)</span> <a href='http://blog.w3cub.com/downloads/code/github.js'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -668,9 +668,9 @@ limitations under the License.
   
   <entry>
     <title type="html"><![CDATA[javascript类库中和编程语言中getter和setter]]></title>
-    <link href="http://icai.github.io/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter/"/>
+    <link href="http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter/"/>
     <updated>2013-08-17T23:16:31+08:00</updated>
-    <id>http://icai.github.io/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter</id>
+    <id>http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter</id>
     <content type="html"><![CDATA[<p>1.backbonejs中的getter和setter</p>
 
 <p>所说的backbonejs中的getter和setter就是内部自定义get和set方法，set方法嵌入了<code>Pub/Sub模型</code>,
@@ -1040,9 +1040,9 @@ limitations under the License.
   
   <entry>
     <title type="html"><![CDATA[city hall]]></title>
-    <link href="http://icai.github.io/blog/2012/11/10/music-city-hall/"/>
+    <link href="http://blog.w3cub.com/blog/2012/11/10/music-city-hall/"/>
     <updated>2012-11-10T23:35:19+08:00</updated>
-    <id>http://icai.github.io/blog/2012/11/10/music-city-hall</id>
+    <id>http://blog.w3cub.com/blog/2012/11/10/music-city-hall</id>
     <content type="html"><![CDATA[<div><embed src="http://www.xiami.com/widget/0_141216/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed></div>
 
 

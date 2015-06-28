@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: rvm | 泛前端开发]]></title>
-  <link href="http://icai.github.io/blog/tags/rvm/atom.xml" rel="self"/>
-  <link href="http://icai.github.io/"/>
-  <updated>2015-06-28T23:35:57+08:00</updated>
-  <id>http://icai.github.io/</id>
+  <link href="http://blog.w3cub.com/blog/tags/rvm/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2015-06-28T23:50:24+08:00</updated>
+  <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
     <email><![CDATA[gidcai@gmail.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[rvm help]]></title>
-    <link href="http://icai.github.io/blog/2015/06/28/rvm-help/"/>
+    <link href="http://blog.w3cub.com/blog/2015/06/28/rvm-help/"/>
     <updated>2015-06-28T13:12:54+08:00</updated>
-    <id>http://icai.github.io/blog/2015/06/28/rvm-help</id>
+    <id>http://blog.w3cub.com/blog/2015/06/28/rvm-help</id>
     <content type="html"><![CDATA[<p>常用命令（Action）：</p>
 
 <pre><code>list        :: show currently installed rubies, interactive output.

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://icai.github.io/sitemap.xml 
+Sitemap: http://blog.w3cub.com/sitemap.xml 
