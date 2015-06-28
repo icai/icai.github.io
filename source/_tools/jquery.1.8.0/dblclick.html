@@ -1,0 +1,28 @@
+
+  
+  <div rel="dblclick">
+    <h2><span>返回值:jQuery</span>dblclick([[data],fn])</h2>
+    <h3>概述</h3>
+    <div class="desc">
+      <p>触发每一个匹配元素的dblclick事件。</p>
+      <div class="longdesc">
+        <p>这个函数会调用执行绑定到dblclick事件的所有函数，包括浏览器的默认行为。可以通过在某个绑定的函数中返回false来防止触发浏览器的默认行为。dblclick事件会在元素的同一点双击时触发。</p>
+      </div>
+    </div>
+    <h3>参数</h3>
+    <div>
+      <h4><strong>fn</strong><span>Function</span><em>V1.0</em></h4>
+      <p>在每一个匹配元素的dblclick事件中绑定的处理函数。</p>
+      <h4><strong>[data],fn</strong><span>String,Function</span><em>V1.4.3</em></h4>
+      <p><strong>data</strong>:dblclick([Data], fn) 可传入data供函数fn处理。</p>
+      <p><strong>fn</strong>:在每一个匹配元素的dblclick事件中绑定的处理函数。</p>
+    </div>
+        <div class="example">
+      <h3>示例</h3>
+      <span id="f_ad2"></span>
+      <h4>描述:</h4>
+      <p>给页面上每个段落的双击事件绑上 "Hello World!" 警告框</p>
+      <h5>jQuery 代码:</h5>
+      <pre><code>$("p").dblclick( function () { alert("Hello World!"); });</code></pre>
+    </div>
+  </div>

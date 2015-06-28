@@ -1,0 +1,33 @@
+
+  
+  <div rel="jQuery.noConflict">
+    <h2><span>返回值:jQuery</span>jQuery.noConflict([extreme])</h2>
+    <h3>概述</h3>
+    <div class="desc">
+      <p>运行这个函数将变量$的控制权让渡给第一个实现它的那个库。</p>
+      <div class="longdesc">
+        <p>这有助于确保jQuery不会与其他库的$对象发生冲突。
+
+在运行这个函数后，就只能使用jQuery变量访问jQuery对象。例如，在要用到$("div p")的地方，就必须换成jQuery("div p")。
+
+'''注意:'''这个函数必须在你导入jQuery文件之后，并且在导入另一个导致冲突的库'''之前'''使用。当然也应当在其他冲突的库被使用之前，除非jQuery是最后一个导入的。</p>
+      </div>
+    </div>
+        <h3>参数</h3>
+    <div>
+      <h4><strong>extreme</strong><span>Boolean</span><em>V1.0</em></h4>
+      <p>传入 true 来允许彻底将jQuery变量还原</p>
+    </div>
+    <div class="example">
+      <h3>示例</h3>
+      <span id="f_ad2"></span>
+      <h4>描述:</h4>
+      <p>将$引用的对象映射回原始的对象。</p>
+      <h5>jQuery 代码:</h5>
+      <pre><code>jQuery.noConflict();
+// 使用 jQuery
+jQuery("div p").hide();
+// 使用其他库的 $()
+$("content").style.display = 'none';</code></pre>
+      <h4>描述:</h4>
+      <p>恢复使用

@@ -1,0 +1,19 @@
+
+  
+  <div rel="trigger">
+    <h2><span>返回值:jQuery</span>trigger(type,[data])</h2>
+    <h3>概述</h3>
+    <div class="desc">
+      <p>在每一个匹配的元素上触发某类事件。</p>
+      <div class="longdesc">
+        <p>这个函数也会导致浏览器同名的默认行为的执行。比如，如果用trigger()触发一个'submit'，则同样会导致浏览器提交表单。如果要阻止这种默认行为，应返回false。</p>
+
+<p>你也可以触发由bind()注册的自定义事件而不限于浏览器默认事件。</p>
+
+<p>事件处理函数会收到一个修复的(规范化的)事件对象，但这个对象没有特定浏览器才有的属性，比如keyCode。</p>
+
+<p>jQuery也支持 &lt;a href="http://docs.jquery.com/Namespaced_Events"&gt;命名空间事件&lt;/a&gt;。这允许你触发或者解除绑定一组特定的事件处理函数，而无需一一个指定。你可以在事件类型后面加上感叹号 ! 来只触发那些没有命名空间的事件处理函数。</p>
+
+<p><strong>jQuery 1.3中新增：</strong></p>
+
+<p>所有触发的事件现在会冒泡到DOM树上了。举例来说，如果你在一个段落p上触发一个事件，他首先会在这个元素上触发，其次到父元素，在到父元素的父元素，直到触发到document对象。这个事件对象有一个 .ta

@@ -1,0 +1,34 @@
+{% if index %}
+	<div class="meta">
+		<div class="date">{% include post/date.html %}{{ time }}</div>
+		<div class="cats">{% include post/categories.html %}</div>
+		{% if site.disqus_short_name and site.disqus_show_comment_count == true %}
+			<span class="comments"><a href="{{ root_url }}{{ post.url }}#disqus_thread">Comments</a></span>
+		{% endif %}
+	</div>
+	<h1 class="title" itemprop="name"><a href="{{ root_url }}{{ post.url }}" itemprop="url">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		{{ content | excerpt }}
+		{% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
+		{% if excerpted == 'true' %}<a href="{{ root_url }}{{ post.url }}" class="more-link">{{ site.excerpt_link }}</a>{% endif %}
+	</div>
+{% else %}
+	<div class="meta">
+		<div class="date">{% include post/date.html %}{{ time }}</div>
+		<div class="cats">{% include post/categories.html %}</div>
+		{% include post/tags.html %}
+		{% if site.disqus_short_name and site.disqus_show_comment_count == true %}
+			<span class="comments"><a href="{{ root_url }}{{ post.url }}#disqus_thread">Comments</a></span>
+		{% endif %}
+	</div>
+	<h1 class="title" itemprop="name">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
+	{% if page.subtitle %}
+	<p class="subtitle" itemprop="name">{% if site.titlecase %}{{ page.subtitle | titlecase }}{% else %}{{ page.subtitle }}{% endif %}</p>
+	{% endif %}
+	<hr />
+	<div class="entry-content" itemprop="articleBody">{{ content }}</div>
+
+	{% if page.statement == true %}
+		{% include post/statement.html %}
+	{% endif %}
+{% endif %}

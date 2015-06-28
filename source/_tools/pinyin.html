@@ -1,0 +1,23 @@
+---
+layout: tool
+name: pinyin
+icon: paragraph
+title: 中文转拼音
+category: 常用工具
+published: true
+graduated: true
+---
+
+<h2>贴入要转换成拼音的文字:</h2>
+<textarea  class="tarea"
+	id="contentPY"></textarea>
+<p>
+	<input class="btn btn-primary" id="conv" type="button" value="查拼音"
+		onclick="trans();" /> <input class="btn btn-primary" id="copy" type="button"
+		value="复制" onclick="copy('result');" /> <input class="btn btn-primary"
+		id="remove" type="button" value="清空结果" onclick="remove();" />
+</p>
+<br>
+<h2>相应的拼音:</h2>
+<textarea onclick="this.select();" class="tarea" id="result"></textarea>
+<script src="{{root_url}} /javascripts/tools/pinyin.js"></script>

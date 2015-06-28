@@ -2,12 +2,12 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://icai.github.io
+title: 泛前端开发
+subtitle: I am Terry，习惯阅读无注释代码
+author: Terry Cai
 simple_search: https://www.google.com/search
-description:
+description: 多数人25岁就死了，一直到75岁才埋。——Horus9527 译
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -19,7 +19,21 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email:
+email: gidcai@gmail.com
+
+avatarimg: 'gravatar' # or  your path
+
+meta:
+    author:
+        gravatar: 750a24b137f6f1f3313127daf9c9152d   # Gravatar头像标识
+    gapi: http://www.google.com/jsapi               # Google API地址
+    gravatar: https://en.gravatar.com/avatar/        # Gravatar头像服务器地址
+
+
+collections:
+  tools:
+    output: true
+    permalink: /tools/:path/
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -31,8 +45,9 @@ permalink: /blog/:year/:month/:day/:title/
 source: source
 destination: public
 plugins: plugins
-code_dir: downloads/code
+code_dir: /downloads/code
 category_dir: blog/categories
+tag_dir: blog/tags 
 markdown: rdiscount
 rdiscount:
   extensions:
@@ -64,7 +79,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
-github_user:
+github_user: icai
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
@@ -91,11 +106,17 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name:
-disqus_show_comment_count: false
+disqus_short_name: gidcai
+disqus_show_comment_count: true
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: 001585136437331322683:wvcrg0yva3i
 
 # Facebook Like
 facebook_like: false
+
+# weibo
+weibo_user: 328765211
+
+addthis_profile_id: ra-558841b45b591663
+weibo_share: true

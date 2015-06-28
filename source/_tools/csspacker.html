@@ -1,0 +1,22 @@
+---
+layout: tool
+name: css
+icon: dedent
+title: CSS压缩/格式化
+category: 常用工具
+published: true
+graduated: true
+---
+
+
+<h2>贴入要格式化或压缩的CSS代码：</h2>
+<textarea onmouseover="this.focus();this.select();" id="code" class="tarea"></textarea>
+<p>
+	<input type="button" onclick="CSS('pack');" value="高级压缩" class="btn btn-primary">
+	<input type="button" onclick="CSS('packNor');" value="普通压缩" class="btn btn-primary">
+	<input type="button" onclick="CSS('format');" value="格式化" class="btn btn-primary">
+</p>
+<br>
+<h2 class="sitetip">转换后的CSS代码：</h2>
+<textarea onmouseover="this.focus();this.select();" id="packer" class="tarea"></textarea>
+<script src="{{ root_url }}/javascripts/tools/csspacker.js"></script>

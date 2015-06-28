@@ -1,0 +1,160 @@
+.tool hr {
+    height: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #FFF;
+}
+
+.tool .content {
+    box-sizing: border-box;
+    margin-right: 0;
+    padding: 20px;
+}
+
+.tool .content {
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.tool .content h2 {
+    font-size: 16px;
+    margin: 0 0 10px;
+    font-weight: bold;
+}
+
+.tool .content textarea {
+    width: 100%;
+    min-height: 250px;
+    border: 1px solid #ddd;
+    display: block;
+    margin-bottom: 10px;
+    padding: 7px;
+    font: 100 12px/18px monaco, andale mono, courier new;
+    color: #666;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+.tool .content textarea:focus {
+    outline: 0;
+    border-color: #bbb;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .15)
+}
+
+.tool .content button,
+.tool .content input.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid rgba(0, 0, 0, 0);
+    white-space: nowrap;
+    padding: 5px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 2px;
+    border-color: #55A5D8;
+    background-color: #55A5D8;
+    color: #FFF;
+    opacity: 0.85;
+    filter: alpha(opacity=85);
+}
+
+.tool .content button:focus,
+.tool .content button:hover {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    outline: 0;
+}
+
+.tool .content select {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid rgba(0, 0, 0, 0);
+    white-space: nowrap;
+    padding: 5px 6px 4px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 2px;
+    border-color: #ddd;
+}
+
+.tool .prettyprint,
+.tool pre.prettyprint {
+    background-color: #272822;
+    border: 1px solid #272822;
+    overflow: hidden;
+    padding: 8px;
+}
+
+.tool .prettyprint.linenums,
+.tool pre.prettyprint.linenums {
+    -webkit-box-shadow: inset 40px 0 0 #39382E, inset 41px 0 0 #464741;
+    -moz-box-shadow: inset 40px 0 0 #39382E, inset 41px 0 0 #464741;
+    box-shadow: inset 40px 0 0 #39382E, inset 41px 0 0 #464741;
+}
+
+.tool .prettyprint.linenums ol,
+.tool pre.prettyprint.linenums ol {
+    margin: 0 0 0 33px;
+}
+
+.tool .prettyprint.linenums ol li,
+.tool pre.prettyprint.linenums ol li {
+    padding-left: 12px;
+    color: #bebec5;
+    line-height: 20px;
+    margin-left: 0;
+    list-style: decimal;
+}
+
+.tool .prettyprint .com {
+    color: #93a1a1;
+}
+
+.tool .prettyprint .lit {
+    color: #AE81FF;
+}
+
+.tool .prettyprint .pun,
+.tool .prettyprint .opn,
+.tool .prettyprint .clo {
+    color: #F8F8F2;
+}
+
+.tool .prettyprint .fun {
+    color: #dc322f;
+}
+
+.tool .prettyprint .str,
+.tool .prettyprint .atv {
+    color: #E6DB74;
+}
+
+.tool .prettyprint .kwd,
+.tool .prettyprint .tag {
+    color: #F92659;
+}
+
+.tool .prettyprint .typ,
+.tool .prettyprint .atn,
+.tool .prettyprint .dec,
+.tool .prettyprint .var {
+    color: #A6E22E;
+}
+
+.tool .prettyprint .pln {
+    color: #66D9EF;
+}

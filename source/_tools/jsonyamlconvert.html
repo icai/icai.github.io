@@ -1,0 +1,51 @@
+---
+layout: tool
+name: jsonyamlconvert
+icon: exchange
+title: Json/Yaml转换
+category: 常用工具
+published: true
+graduated: true
+---
+<p>贴入要转换代码</p>
+<br>
+<h2>Json代码:</h2>
+<textarea id="json" class="tarea"></textarea>
+<p class="" style="text-align: center;">
+	<input type="button" onclick="jsonyamlconvert('toyaml');" value="Json转Yaml↓" class="btn btn-primary">
+	<input type="button" onclick="jsonyamlconvert('tojson');" value="Yaml转Json↑" class="btn btn-primary">
+</p>
+<br>
+<h2>Yaml代码:</h2>
+<textarea id="yaml" class="tarea"></textarea>
+<script src="{{ root_url }}/javascripts/tools/json2yaml.js"></script>
+<script src="{{ root_url }}/javascripts/tools/yaml2json.js"></script>
+<script>
+function jsonyamlconvert(type){
+	var json, yml, data;
+	if(type == "toyaml"){
+            json = document.getElementById("json").value;
+            try {
+                data = JSON.parse(json)
+            } catch (e) {
+            	document.getElementById("yaml").value = "convert Error, check your data please.";
+            	return;
+            }
+            yml = YAML.stringify(data);
+		document.getElementById("yaml").value = yml;	
+	} else if(type == "tojson"){
+            yml = document.getElementById("yaml").value;
+            try {
+                data = YAML.parse(yml)
+            } catch (e) {
+                document.getElementById("json").value = "convert Error, check your data please.";
+                return;
+            }
+            json = JSON.stringify(data, null, "  ");
+            document.getElementById("json").value = json;	
+	}
+
+
+}
+	
+</script>

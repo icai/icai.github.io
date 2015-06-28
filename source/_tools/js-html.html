@@ -1,0 +1,21 @@
+---
+layout: tool
+name: js-html
+icon: anchor
+title: JS转HTML
+category: 常用工具
+published: true
+graduated: true
+---
+
+
+<h2>贴入要转换的Javascript代码:</h2>
+<textarea id="code" onfocus="rechange()" onkeyup="rechange()"></textarea>
+<br>
+<h2>相应的HTML代码:</h2>
+<textarea id="result"></textarea>
+<script type="text/javascript">
+function rechange(){
+	document.getElementById('result').value=document.getElementById('code').value.replace(/document.writeln\("/g,"").replace(/"\);/g,"").replace(/\\\"/g,"\"").replace(/\\\'/g,"\'").replace(/\\\//g,"\/").replace(/\\\\/g,"\\")
+}
+</script>

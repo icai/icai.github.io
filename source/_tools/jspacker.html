@@ -1,0 +1,27 @@
+---
+layout: tool
+name: js
+icon: code
+title: JS加密/压缩/格式化/解压
+category: 常用工具
+published: true
+graduated: true
+---
+
+
+<h2>贴入Javascript/HTML代码：</h2>
+<textarea style="height: 450px;" id="pcontent" name="pcontent" class="tarea"></textarea>
+<p>
+	<select id="tabsize" name="tabsize" class="select">
+		<option selected="selected" value="1">制表符缩进</option>
+		<option value="2">2个空格缩进</option>
+		<option value="4">4个空格缩进</option>
+		<option value="8">8个空格缩进</option>
+	</select> <input type="button" id="beautify"
+		onclick="return do_js_beautify()" value="格式化" class="btn btn-primary"> <input
+		type="button" onclick="pack_js(0)" value="普通压缩" class="btn btn-primary"> <input
+		type="button" onclick="pack_js(1)" value="加密压缩" class="btn btn-primary"> <input
+		type="button" onclick="unpack();" value="解压" class="btn btn-primary"> <input
+		type="button" onclick="Empty();" value="清空" class="btn btn-primary">
+</p>
+<script src="{{ root_url }}/javascripts/tools/jspacker.js"></script>

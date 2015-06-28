@@ -1,0 +1,26 @@
+---
+layout: tool
+name: html-gov
+icon: sitemap
+title: HTML代码转换
+category: 常用工具
+published: true
+graduated: true
+---
+
+
+<h2>贴入要转换的HTML代码：</h2>
+<textarea  class="tarea" id="textarea_content"></textarea>
+<p>
+	<input type="button" onclick="javascript();" value="转为JavaScript" class="btn btn-primary">
+	<input type="button" onclick="php();" value="转为PHP" class="btn btn-primary">
+	<input type="button" onclick="jsp();" value="转为JSP" class="btn btn-primary">
+	<input type="button" onclick="asp();" value="转为ASP" class="btn btn-primary">
+	<input type="button" onclick="perl();" value="转为Perl" class="btn btn-primary">
+	<input type="button" onclick="sws();" value="转为Sws" class="btn btn-primary">
+	<input type="button" onclick="vbnet();" value="转为Vb.net" class="btn btn-primary">
+</p>
+<br>
+<h2>转换结果：</h2>
+<textarea  class="tarea" id="textarea_result"></textarea>
+<script src="{{ root_url }}/javascripts/tools/htmlcodecov.js"></script>

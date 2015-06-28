@@ -1,0 +1,23 @@
+
+  
+  <div rel="jQuery.ajax">
+    <h2><span>返回值:XMLHttpRequest</span>jQuery.ajax(url,[settings])</h2>
+    <h3>概述</h3>
+    <div class="desc">
+      <p>通过 HTTP 请求加载远程数据。</p>
+      <div class="longdesc">
+        <p>jQuery 底层 AJAX 实现。简单易用的高层实现见 $.get, $.post 等。$.ajax() 返回其创建的 XMLHttpRequest 对象。大多数情况下你无需直接操作该函数，除非你需要操作不常用的选项，以获得更多的灵活性。</p>
+
+<p>最简单的情况下，$.ajax()可以不带任何参数直接使用。</p>
+
+<p><strong>注意</strong>，所有的选项都可以通过$.ajaxSetup()函数来全局设置。</p>
+
+<p><strong>回调函数</strong></p>
+
+<p>如果要处理$.ajax()得到的数据，则需要使用回调函数。beforeSend、error、dataFilter、success、complete。</p>
+
+<ul>
+    <li>beforeSend 在发送请求之前调用，并且传入一个XMLHttpRequest作为参数。</li>
+    <li>error 在请求出错时调用。传入XMLHttpRequest对象，描述错误类型的字符串以及一个异常对象（如果有的话）</li>
+    <li>dataFilter 在请求成功之后调用。传入返回的数据以及"dataType"参数的值。并且必须返回新的数据（可能是处理过的）传递给success回调函数。</li>
+    <li>success 当请求�

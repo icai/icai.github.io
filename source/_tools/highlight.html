@@ -1,0 +1,52 @@
+---
+layout: tool
+name: highlight
+icon: header
+title: 在线代码高亮
+category: 常用工具
+published: true
+graduated: true
+---
+
+<h2>
+	贴入要高亮代码：
+	<!--[if IE]><font color="red">(本功能暂不支持 IE 浏览器)</font><![endif]-->
+</h2>
+<textarea class="tarea" id="code" onmouseover="this.focus();this.select();"><h2 class="demo">贴入要高亮代码：</h2></textarea>
+<p>
+	<input class="btn btn-primary" type="button" value="HTML" onclick="doHighlight('text/html');">
+	<input class="btn btn-primary" type="button" value="CSS" onclick="doHighlight('text/css');">
+	<input class="btn btn-primary" type="button" value="Javscript" onclick="doHighlight('text/javascript');">
+	<input class="btn btn-primary" type="button" value="XML" onclick="doHighlight('application/xml');">
+	<input class="btn btn-primary" type="button" value="PHP" onclick="doHighlight('application/x-httpd-php');">
+</p>
+<br>
+<h2>复制以下代码到编辑器（html模式）：</h2>
+<textarea class="tarea" id="getcode" style="height: 100px" onmouseover="this.focus();this.select();"></textarea>
+<br>
+<h2>高亮预览：</h2>
+<pre id="output" class="cm-s-default"></pre>
+
+<script src="{{ root_url }}/javascripts/tools/highlight/codemirror.js"></script>
+<script src="{{ root_url }}/javascripts/tools/highlight/runmode.js"></script>
+<script src="{{ root_url }}/javascripts/tools/highlight/htmlmixed.js"></script>
+<script src="{{ root_url }}/javascripts/tools/highlight/css.js"></script>
+<script src="{{ root_url }}/javascripts/tools/highlight/javascript.js"></script>
+<script src="{{ root_url }}/javascripts/tools/highlight/xml.js"></script>
+<script src="{{ root_url }}/javascripts/tools/highlight/php.js"></script>
+<script src="{{ root_url }}/javascripts/tools/highlight/clike.js"></script>
+
+<!-- 
+
+<script src="<?php bloginfo('template_url') ?>/private/tools/jquery.1.8.0.php"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/csspacker.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/htmlcodecov.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/html_js.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/base.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/jsformat.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/htmlformat.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/jspacker.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/scriptencode.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/jscodeconfusion.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/pinyin.js"></script>
+ -->
