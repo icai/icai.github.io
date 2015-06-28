@@ -1,0 +1,36 @@
+
+  <div rel="jQuery.callbacks">
+    <h2><span>返回值:jQuery</span>jQuery.callbacks(flags)</h2>
+    <h3>概述</h3>
+    <div class="desc">
+      <p> 一个多用途的回调列表对象，提供了强大的的方式来管理回调函数列表。 </p>
+      <div class="longdesc">
+        <p>$.Callbacks()的内部提供了jQuery的$.ajax()&nbsp;和&nbsp;$.Deferred()&nbsp;基本功能组件。它可以用来作为类似基础定义的新组件的功能。</p>
+      </div>
+    </div>
+    <h3>参数</h3>
+    <div>
+      <h4><strong>flags</strong><em>V1.7</em></h4>
+      <p> 一个用空格标记分隔的标志可选列表,用来改变回调列表中的行为 </p>
+    </div>
+    <div class="example">
+      <h3>示例</h3>
+      <span id="f_ad2"></span>
+      <h4>入门描述:</h4>
+      <p> 以下是两个样品的方法命名fn1&nbsp;and&nbsp;fn2: </p>
+      <h5>jQuery 代码:</h5>
+      <pre><code>function fn1( value ){
+    console.log( value );
+}
+
+function fn2( value ){
+    fn1("fn2 says:" + value);
+    return false;
+}</code></pre>
+      <p>这些可以添加为回调函数作为一个$.Callbacks的列表，并调用如下:</p>
+      <pre><code>var callbacks = $.Callbacks();
+callbacks.add( fn1 );
+callbacks.fire( "foo!" ); // outputs: foo!
+
+callbacks.add( fn2 );
+callbacks.fire( "bar!" ); // outputs: bar!, 

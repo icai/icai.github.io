@@ -1,0 +1,9 @@
+
+  <div rel="off">
+    <h2><span>返回值:jQuery</span>off(events,[selector],[fn])</h2>
+    <h3>概述</h3>
+    <div class="desc">
+      <p>在选择元素上移除一个或多个事件的事件处理函数。</p>
+      <div class="longdesc">
+        <p> off()&nbsp;方法移除用<a href="http://api.jquery.com/on" tppabs="http://api.jquery.com/on">.on()</a>绑定的事件处理程序。有关详细信息，请参阅该网页上delegated和directly绑定事件。特定的事件处理程序可以被移除元素上提供事件的名称，命名空间，选择器，或处理函数名称的组合。<strong>当有多个过滤参数，所提供的参数都必须匹配的事件处理程序被删除。</strong></p>
+        <p>如果一个简单的事件名称，比如提供&quot;click&quot;，<em>所有</em>&nbsp;这种类型的事件（包括直接和委派）从jQuery设置的元素上删除。当编写代码，将作为一个插件使用，或者干脆当一个大的代码基础工作，最好的做法是安装和取下使用命名空间的事件，从而使代码不会无意中删除其他代码附加事件处理程序。在一个特定的命名空间中的所有类型的所有事件，可以从一个元素中删除，只是提供了一个命名空间，比如&nbsp;&quot;.myPlugin&quot;。至少，无论是命名空间或事件名称必须提

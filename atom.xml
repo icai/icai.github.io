@@ -1,0 +1,1130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[泛前端开发]]></title>
+  <link href="http://icai.github.io/atom.xml" rel="self"/>
+  <link href="http://icai.github.io/"/>
+  <updated>2015-06-28T22:58:01+08:00</updated>
+  <id>http://icai.github.io/</id>
+  <author>
+    <name><![CDATA[Terry Cai]]></name>
+    <email><![CDATA[gidcai@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[rvm help]]></title>
+    <link href="http://icai.github.io/blog/2015/06/28/rvm-help/"/>
+    <updated>2015-06-28T13:12:54+08:00</updated>
+    <id>http://icai.github.io/blog/2015/06/28/rvm-help</id>
+    <content type="html"><![CDATA[<p>常用命令（Action）：</p>
+
+<pre><code>list        :: show currently installed rubies, interactive output.
+install     :: install one or many ruby versions
+use         :: setup current shell to use a specific ruby version
+</code></pre>
+
+<!-- more -->
+
+
+<p>详细帮助文档（rvm -h）：</p>
+
+<pre><code>= rvm
+
+* https://rvm.io/
+* https://github.com/wayneeseguin/rvm/
+
+== DESCRIPTION:
+
+RVM is the Ruby enVironment Manager (rvm).
+
+It manages Ruby application environments and enables switching between them.
+
+== Installation
+
+  curl -L https://get.rvm.io | bash -s stable --autolibs=enabled [--ruby] [--rails] [--trace]
+
+stable     :: Install stable RVM, good for servers.
+--ruby     :: Additionally install latest ruby version (MRI).
+--rails    :: Install gem rails into default gemset (also installs ruby=).
+--trace    :: Print trace of the installation, gist output when you have problems.
+--autolibs :: Enable or disable autolibs see: https://rvm.io/rvm/autolibs
+
+More details here: https://rvm.io/rvm/install/
+
+== Usage
+
+  rvm [Flags] [Options] Action [Implementation[,Implementation[,...]]
+
+== Flags
+
+--default         :: with 'rvm use X', sets the default ruby for new shells to X.
+--debug           :: Toggle debug mode on for very verbose output.
+--disable-binary  :: Install from source instead of using binaries
+--trace           :: Toggle trace mode on to see EVERYTHING rvm is doing.
+--force           :: Force install, removes old install &amp; source before install.
+--summary         :: Used with rubydo to print out a summary of the commands run.
+--latest          :: with gemset --dump skips version strings for latest gem.
+--gems            :: with uninstall/remove removes gems with the interpreter.
+--docs            :: with install, attempt to generate ri after installation.
+--reconfigure     :: Force ./configure on install even if Makefile already exists.
+--skip-gemsets    :: with install, skip the installation of default gemsets.
+--quiet-curl      :: Makes curl silent when fetching data
+
+== Options
+
+-v|--version     :: Emit rvm version loaded for current shell
+-l|--level       :: patch level to use with rvm use / install
+   --bin         :: path for binaries to be placed (~/.rvm/bin/)
+-S               :: Specify a script file to attempt to load and run (rubydo)
+-e               :: Execute code from the command line.
+--gems           :: Used to set the 'gems_flag', use with 'remove' to remove
+                    gems
+--archive        :: Used to set the 'archive_flag', use with 'remove' to remove
+                    archive
+--patch          :: With MRI Rubies you may specify one or more full paths to
+                    patches
+
+                    for multiple, specify comma separated:
+
+                      --patch /.../.../a.patch[%prefix],/.../.../.../b.patch
+
+                    'prefix' is an optional argument, which will be bypassed
+                    to the '-p' argument of the 'patch' command. It is separated
+                    from patch file name with '%' symbol.
+-C|--configure   :: custom configure options. If you need to pass several
+                    configure options then append them comma separated:
+
+                      -C --...,--...,--...
+
+--nice           :: process niceness (for slow computers, default 0)
+--ree-options    :: Options passed directly to ree's './installer' on the
+                    command line.
+--with-rubies    :: Specifies a string for rvm to attempt to expand for set
+                    operations.
+
+== Action
+
+(Note: for most actions, 'rvm help action-name' may provide more information.)
+
+*usage*     :: show this usage information
+version     :: show the rvm version installed in rvm_path
+use         :: setup current shell to use a specific ruby version
+reload      :: reload rvm source itself (useful after changing rvm source)
+implode     :: (seppuku) removes the rvm installation completely.
+
+               This means everything in $rvm_path (~/.rvm || /usr/local/rvm).
+
+               This does not touch your profiles. However, this means that you
+               must manually clean up your profiles and remove the lines which
+               source RVM.
+get         :: {head,stable} upgrades rvm to latest head or stable version.
+
+               Check 'rvm help get' for more details.
+
+               (If you experience bugs try this first with head version, then
+               ask for help in #rvm on irc.freenode.net and hang around)
+reset       :: remove current and stored default &amp; system settings.
+
+               (If you experience odd behavior try this second)
+info        :: show the *current* environment information for current ruby
+current     :: print the *current* ruby version and the name of any gemset
+               being used.
+debug       :: show info plus additional information for common issues
+
+install     :: install one or many ruby versions
+
+               See also: https://rvm.io/rubies/installing/
+uninstall   :: uninstall one or many ruby versions, leaves their sources
+remove      :: uninstall one or many ruby versions and remove their sources
+reinstall   :: reinstall ruby and runs gem pristine on all gems,
+               make sure to read output, use 'all' for all rubies.
+
+migrate     :: Lets you migrate all gemsets from one ruby to another.
+upgrade     :: Lets you upgrade from one version of a ruby to another, including
+               migrating your gemsets semi-automatically.
+
+wrapper     :: generates a set of wrapper executables for a given ruby with the
+               specified ruby and gemset combination. Used under the hood for
+               passenger support and the like.
+
+cleanup     :: Lets you remove stale source folders / archives and other
+               miscellaneous data associated with rvm.
+repair      :: Lets you repair parts of your environment e.g. wrappers, env
+               files and and similar files (e.g. general maintenance).
+fix-permissions :: Repairs broken permissions (e.g. by sudo or chef)
+osx-ssl-certs :: Helps update certificates for OpenSSL installed by rvm on OSX.
+snapshot    :: Lets you backup / restore an rvm installation in a lightweight
+               manner.
+
+alias       :: Lets you set shortcut strings for convenience with 'rvm use'.
+disk-usage  :: Tells you how much disk space rvm install is using.
+tools       :: Provides general information about the ruby environment,
+               primarily useful when scripting rvm.
+docs        :: Tools to make installing ri and rdoc documentation easier.
+rvmrc       :: Tools related to managing rvmrc trust and loading.
+patchset    :: Tools related to managing ruby patchsets.
+
+do          :: runs an arbitrary command against specified and/or all rubies
+cron        :: Manages setup for using ruby in cron tasks.
+
+gemset      :: gemsets: https://rvm.io/gemsets/
+
+rubygems    :: Switches the installed version of rubygems for the current ruby.
+
+config-get  :: display values for RbConfig::CONFIG variables.
+gemdir      :: display the path to the current gem directory (GEM_HOME).
+
+
+fetch       :: Performs an archive / src fetch only of the selected ruby.
+list        :: show currently installed rubies, interactive output.
+
+               https://rvm.io/rubies/list/
+autolibs    :: Controls settings for automatically installing dependencies.
+pkg         :: Install a dependency package {readline,iconv,zlib,openssl}
+
+               https://rvm.io/packages/
+notes       :: Display notes, with operating system specifics.
+
+export      :: Temporarily set an environment variable in the current shell.
+unexport    :: Undo changes made to the environment by 'rvm export'.
+requirements  :: Installs additional OS specific dependencies/requirements for
+                 building various rubies. Usually run by install.
+mount       :: Install rubies from external locations.
+
+user        :: Tools for managing RVM mixed mode in multiuser installations.
+group       :: Tools for managing groups in multiuser installations.
+
+== Implementation
+
+*ruby*     :: MRI/YARV Ruby (The Gold Standard) {1.8.x, 1.9.x, 2.0.x, 2.1.x, 2.2.x}
+jruby      :: JRuby, Ruby interpreter on the Java Virtual Machine.
+rbx        :: Rubinius
+ree        :: Ruby Enterprise Edition, MRI Ruby with several custom
+              patches for performance, stability, and memory.
+macruby    :: MacRuby, insanely fast, can make real apps (Mac OS X Only).
+maglev     :: GemStone Ruby, awesome persistent ruby object store.
+ironruby   :: IronRuby, NOT supported yet. Looking for volunteers to help.
+system     :: use the system ruby (eg. pre-rvm state)
+default    :: use the default ruby (or the system ruby if a default hasn't been set).
+
+              https://rvm.io/rubies/default/
+
+== Resources:
+
+https://rvm.io/
+https://www.pivotaltracker.com/projects/26822
+
+== Contributions:
+
+Any and all contributions offered in any form, past present or future, to the
+RVM project are understood to be in complete agreement and acceptance with the
+Apache License v2.0.
+
+== LICENSE:
+
+Copyright (c) 2009-2011 Wayne E. Seguin
+Copyright (c) 2011-2015 Michal Papis
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+  Action documentation available with 'rvm help action-name':
+
+      alias autolibs cleanup config-get cron current debug disk-usage do docs fetch fix-permissions gemdir gemset gemset/copy get group implode info install list migrate mount notes osx-ssl-certs patchset pkg prepare reinstall remove repair requirements reset rubygems rvmrc rvmrc/to rvmrc/warning snapshot srcdir tools uninstall upgrade use user wrapper 
+
+  Other topics of documentation available with 'rvm help topic':
+
+      alt color upgrade-notes 
+
+
+  For additional information please visit RVM's documentation website:
+
+      https://rvm.io/
+
+  If you still cannot find an answer to your question, find
+  'wayneeseguin', 'mpapis', 'richo', 'lemoinem' or 'rys' in #rvm on irc.freenode.net:
+
+      http://webchat.freenode.net/?channels=rvm
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[octopress configuration]]></title>
+    <link href="http://icai.github.io/blog/2015/06/20/octopress-config/"/>
+    <updated>2015-06-20T23:16:31+08:00</updated>
+    <id>http://icai.github.io/blog/2015/06/20/octopress-config</id>
+    <content type="html"><![CDATA[<h1>前言</h1>
+
+<p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
+
+<!--more-->
+
+
+<hr />
+
+<p>先看一下技术栈：</p>
+
+<p>octopress -> jekyll -> ruby</p>
+
+<p>Markdown (or Textile), Liquid, HTML &amp; CSS go in. Static sites come out ready for deployment.</p>
+
+<p>Liquid 一个 ruby模板引擎，Markdown是……。</p>
+
+<p>所以 安装octopress之前必不可少的是安装Ta的生态环境。</p>
+
+<h1>安装Octopress</h1>
+
+<h3>安装rvm</h3>
+
+<p>打开<a href="https://rvm.io/">rvm</a>首页，打开终端，使用以下命令安装吧。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+</span><span class='line'>
+</span><span class='line'>$ \curl -sSL https://get.rvm.io | bash -s stable
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://en.wikipedia.org/wiki/Ruby_Version_Manager">rvm wiki</a></p>
+
+<h3>安装Ruby</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm -h
+</span><span class='line'>$ rvm list
+</span><span class='line'>$ rvm install 2.2.1
+</span><span class='line'>$ rvm use 2.2.1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>某些时候会提示，请使用 &ndash;bash-login. 使用就OK了。</p>
+
+<p>安装完成后可以用ruby &ndash;version进行验证</p>
+
+<h3>安装Octopress</h3>
+
+<p>安装Ruby完成后就按照官方指南安装Octpress</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#clone octopress
+</span><span class='line'>$ git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'>$ cd octopress
+</span><span class='line'>
+</span><span class='line'>#安装依赖
+</span><span class='line'>$ gem install bundler
+</span><span class='line'>$ bundle install
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>#安装octopress默认主题
+</span><span class='line'>$ rake install</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类似，都是一键安装依赖包文件。</p>
+
+<h1>部署</h1>
+
+<p>接下来需要把Blog部署到github上去，第一步要做的是去<a href="https://github.com/new">github</a>创建一个<code>username.github.io</code>的repo，比如我的就叫<code>msching.github.io</code>。</p>
+
+<p>然后运行以下命令，并依照提示完成github和Octopress的关联</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake setup_github_pages</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h1>创建博客</h1>
+
+<h3>生成博客</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
+</span><span class='line'>$ rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<p>rake 命令 是 Rakefile 文件用的，你在带有Rakefile 目录下执行 rake 命令，
+当然你可以 <code>rake -T</code> 查看当前所有的rake Task， 或者 rake -h 获取帮助</p>
+
+<p>把生成后的代码上传到github</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m 'create blog'
+</span><span class='line'>$ git push origin source</span></code></pre></td></tr></table></div></figure>
+
+
+<p>完成后等待一段时间后就能访问<code>http://username.github.io</code>看到自己的博客了</p>
+
+<h3>修改配置</h3>
+
+<p>配置文件路径为<code>~/octopress/_config.yml</code></p>
+
+<p>参考： <a href="https://github.com/octopress/octopress">官方</a></p>
+
+<p>编辑完成后</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
+</span><span class='line'>
+</span><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m "settings" 
+</span><span class='line'>$ git push origin source
+</span><span class='line'>
+</span><span class='line'>$ rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装第三方主题</h3>
+
+<p>Octopress有许多第三方主题可以选择，首先在<a href="http://opthemes.com/">这里</a>上寻找喜欢的主题，点击进入对应主题的git，一般在readme上都会有安装流程</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#这里以安装allenhsu定制的greyshade主题为例，原作者是shashankmehta
+</span><span class='line'>$ git clone git@github.com:allenhsu/greyshade.git .themes/greyshade
+</span><span class='line'>
+</span><span class='line'>#Substitue 'color' with your highlight color
+</span><span class='line'>$ echo "\$greyshade: color;" &gt;&gt; sass/custom/_colors.scss 
+</span><span class='line'>
+</span><span class='line'>$ rake "install[greyshade]"
+</span><span class='line'>$ rake generate
+</span><span class='line'>
+</span><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m "theme" 
+</span><span class='line'>$ git push origin source
+</span><span class='line'>
+</span><span class='line'>$ rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>支持中文标签</h3>
+
+<p>目前版本的Octopress会在<code>/source/blog/categories</code>下创建一个<code>index.markdown</code>来作为分类的首页，但这个首页在标签有中文时会出现无法跳转的情况，原因是因为在出现中文标签时Octopress会把文件的路径中的中文转换成拼音，而在Category跳转时是直接写了中文路径，结果自然是404。解决方法是自己实现一个分类首页并处理中文。</p>
+
+<p>首先按照<a href="https://kaworu.ch/blog/2013/09/23/categories-page-with-octopress/">这里</a>的方法实现<code>index.html</code></p>
+
+<p>将<code>plugins/category_list_tag.rb</code>中的</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>category_url = File.join(category_dir, category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>替换成</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>category_url = File.join(category_dir, category.to_url.downcase)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样你的博客就可以支持中文标签的跳转了。</p>
+
+<hr />
+
+<h1>写博客</h1>
+
+<p>经过上面几部后，博客已经成功搭建，现在就可以开始写博文了。</p>
+
+<h3>创建博文</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#如果用的是终端
+</span><span class='line'>$ rake new_post['title']
+</span><span class='line'>
+</span><span class='line'>#如果用的是ZSH
+</span><span class='line'>$ rake "new_post[title]"
+</span><span class='line'>#或者
+</span><span class='line'>$ rake new_post\['title'\]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成的文件在<code>~/source/_posts</code>目录下</p>
+
+<h3>编辑博文</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#...markdown写博文
+</span><span class='line'>
+</span><span class='line'>$ rake preview #localhost:4000
+</span><span class='line'>
+</span><span class='line'>$ rake generate
+</span><span class='line'>
+</span><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m "comment" 
+</span><span class='line'>$ git push origin source
+</span><span class='line'>
+</span><span class='line'>$ rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h1>参考资料</h1>
+
+<ul>
+<li><a href="http://octopress.org/">http://octopress.org/</a></li>
+<li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
+<li><a href="https://help.github.com/articles/using-jekyll-plugins-with-github-pages/">https://help.github.com/articles/using-jekyll-plugins-with-github-pages/</a></li>
+<li><a href="https://github.com/xiaocong/xiaocong.github.io">https://github.com/xiaocong/xiaocong.github.io</a></li>
+<li><a href="https://github.com/shashankmehta/greyshade">https://github.com/shashankmehta/greyshade</a></li>
+<li><a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a></li>
+<li><p><a href="https://github.com/msching/msching.github.io">https://github.com/msching/msching.github.io</a></p></li>
+<li><p><a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/</a></p></li>
+<li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
+<li><a href="http://robdodson.me/some-octopress-rake-tips/">http://robdodson.me/some-octopress-rake-tips/</a></li>
+<li><p><a href="http://jekyllcn.com/docs/templates/">http://jekyllcn.com/docs/templates/</a></p></li>
+<li><p><a href="http://rails-practice.com/content/">http://rails-practice.com/content/</a></p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[rake task for octopress]]></title>
+    <link href="http://icai.github.io/blog/2015/06/19/rake-task-for-octopress/"/>
+    <updated>2015-06-19T23:35:19+08:00</updated>
+    <id>http://icai.github.io/blog/2015/06/19/rake-task-for-octopress</id>
+    <content type="html"><![CDATA[<p>$ rake -T</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
+</span><span class='line'>rake copydot[source,dest] # copy dot files for deployment
+</span><span class='line'>rake deploy # Default deploy task
+</span><span class='line'>rake gen_deploy # 生成并部署网站
+</span><span class='line'>rake generate # 生成 jekyll 网站
+</span><span class='line'>rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
+</span><span class='line'>rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
+</span><span class='line'>rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
+</span><span class='line'>rake list # list tasks
+</span><span class='line'>rake new_page[filename] # Create a new page in source/(filename)/index.markdown
+</span><span class='line'>rake new_post[title] # Begin a new post in source/_posts
+</span><span class='line'>rake preview # preview the site in a web browser
+</span><span class='line'>rake push # ※ deploy public directory to github pages
+</span><span class='line'>rake rsync # Deploy website via rsync
+</span><span class='line'>rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
+</span><span class='line'>rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
+</span><span class='line'>rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
+</span><span class='line'>rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
+</span><span class='line'>rake watch # Watch the site and regenerate when it changes</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<!--more-->
+
+
+<p>test include_code plugin:</p>
+
+<figure class='code'><figcaption><span>Example 2 (github.js)</span> <a href='http://icai.github.io/downloads/code/github.js'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">github</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">render</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">target</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fragment</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li&gt;&lt;a href=&quot;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">html_url</span><span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="o">+</span><span class="s1">&#39;&lt;/a&gt;&lt;p&gt;&#39;</span><span class="o">+</span><span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">description</span><span class="o">||</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&lt;/p&gt;&lt;/li&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nx">t</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">showRepos</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class='line'>          <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;https://api.github.com/users/&quot;</span><span class="o">+</span><span class="nx">options</span><span class="p">.</span><span class="nx">user</span><span class="o">+</span><span class="s2">&quot;/repos?sort=pushed&amp;callback=?&quot;</span>
+</span><span class='line'>        <span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;jsonp&#39;</span>
+</span><span class='line'>        <span class="p">,</span> <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">$</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span> <span class="o">+</span> <span class="s1">&#39; li.loading&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Error loading feed&quot;</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'>        <span class="p">,</span> <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">repos</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">data</span> <span class="o">||</span> <span class="o">!</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">skip_forks</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">fork</span><span class="p">)</span> <span class="p">{</span> <span class="k">continue</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>            <span class="nx">repos</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">)</span> <span class="p">{</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'>          <span class="nx">render</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">});</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">})();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[javascript类库中和编程语言中getter和setter]]></title>
+    <link href="http://icai.github.io/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter/"/>
+    <updated>2013-08-17T23:16:31+08:00</updated>
+    <id>http://icai.github.io/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter</id>
+    <content type="html"><![CDATA[<p>1.backbonejs中的getter和setter</p>
+
+<p>所说的backbonejs中的getter和setter就是内部自定义get和set方法，set方法嵌入了<code>Pub/Sub模型</code>,
+例如 <code>book.on("change:title change:author", ...);</code>当<code>book.set('title':'othertitle');</code>触发<code>change</code>对用的<code>function</code>,
+解开二重锁 （不等于自身和并且非正在执行change function)。</p>
+
+<!--more-->
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>set: function(key, val, options) {
+</span><span class='line'>  var attr, attrs, unset, changes, silent, changing, prev, current;
+</span><span class='line'>  if (key == null) return this;
+</span><span class='line'>
+</span><span class='line'>  // Handle both `"key", value` and `{key: value}` -style arguments.
+</span><span class='line'>  if (typeof key === 'object') {
+</span><span class='line'>    attrs = key;
+</span><span class='line'>    options = val;
+</span><span class='line'>  } else {
+</span><span class='line'>    (attrs = {})[key] = val;
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  options || (options = {});
+</span><span class='line'>
+</span><span class='line'>  // Run validation.
+</span><span class='line'>  if (!this._validate(attrs, options)) return false;
+</span><span class='line'>
+</span><span class='line'>  // Extract attributes and options.
+</span><span class='line'>  unset           = options.unset;
+</span><span class='line'>  silent          = options.silent;
+</span><span class='line'>  changes         = [];
+</span><span class='line'>  changing        = this._changing;
+</span><span class='line'>  this._changing  = true;
+</span><span class='line'>
+</span><span class='line'>  if (!changing) {
+</span><span class='line'>    this._previousAttributes = _.clone(this.attributes);
+</span><span class='line'>    this.changed = {};
+</span><span class='line'>  }
+</span><span class='line'>  current = this.attributes, prev = this._previousAttributes;
+</span><span class='line'>
+</span><span class='line'>  // Check for changes of `id`.
+</span><span class='line'>  if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
+</span><span class='line'>
+</span><span class='line'>  // For each `set` attribute, update or delete the current value.
+</span><span class='line'>  for (attr in attrs) {
+</span><span class='line'>    val = attrs[attr];
+</span><span class='line'>    if (!_.isEqual(current[attr], val)) changes.push(attr);
+</span><span class='line'>    if (!_.isEqual(prev[attr], val)) {
+</span><span class='line'>      this.changed[attr] = val;
+</span><span class='line'>    } else {
+</span><span class='line'>      delete this.changed[attr];
+</span><span class='line'>    }
+</span><span class='line'>    unset ? delete current[attr] : current[attr] = val;
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  // Trigger all relevant attribute changes.
+</span><span class='line'>  if (!silent) {
+</span><span class='line'>    if (changes.length) this._pending = true;
+</span><span class='line'>    for (var i = 0, l = changes.length; i &lt; l; i++) {
+</span><span class='line'>      this.trigger('change:' + changes[i], this, current[changes[i]], options);
+</span><span class='line'>    }
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  // You might be wondering why there's a `while` loop here. Changes can
+</span><span class='line'>  // be recursively nested within `"change"` events.
+</span><span class='line'>  if (changing) return this;
+</span><span class='line'>  if (!silent) {
+</span><span class='line'>    while (this._pending) {
+</span><span class='line'>      this._pending = false;
+</span><span class='line'>      this.trigger('change', this, options);
+</span><span class='line'>    }
+</span><span class='line'>  }
+</span><span class='line'>  this._pending = false;
+</span><span class='line'>  this._changing = false;
+</span><span class='line'>  return this;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2.YUI中的getter和setter</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>get : function(name) {
+</span><span class='line'>    return this._getAttr(name);
+</span><span class='line'>},
+</span><span class='line'>
+</span><span class='line'>set : function(name, val, opts) {
+</span><span class='line'>    return this._setAttr(name, val, opts);
+</span><span class='line'>},
+</span><span class='line'>//……</span></code></pre></td></tr></table></div></figure>
+
+
+<p>get: <code>http://yuilibrary.com/yui/docs/api/files/attribute_js_AttributeCore.js.html#l343</code></p>
+
+<p>Y.augment : <code>http://yuilibrary.com/yui/docs/api/files/oop_js_oop.js.html#l67</code></p>
+
+<p>3.javascript中的getter和setter</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// 对象构造实现，javascript类库中最常用的方法
+</span><span class='line'>
+</span><span class='line'>function Field(val){
+</span><span class='line'>    var value = val;
+</span><span class='line'>       
+</span><span class='line'>    this.getValue = function(){
+</span><span class='line'>      return value;
+</span><span class='line'>    };
+</span><span class='line'>       
+</span><span class='line'>    this.setValue = function(val){
+</span><span class='line'>      value = val;
+</span><span class='line'>    };
+</span><span class='line'>} 
+</span><span class='line'>
+</span><span class='line'>// 模拟“hidden value property” 
+</span><span class='line'>
+</span><span class='line'>function Field(val){
+</span><span class='line'>  var value = val;
+</span><span class='line'>   
+</span><span class='line'>    this.__defineGetter__("value", function(){
+</span><span class='line'>      return value;
+</span><span class='line'>    });
+</span><span class='line'>       
+</span><span class='line'>    this.__defineSetter__("value", function(val){
+</span><span class='line'>      value = val;
+</span><span class='line'>    });
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>// es6 是实现
+</span><span class='line'>function Field(val){
+</span><span class='line'>  this.value = val;
+</span><span class='line'>}
+</span><span class='line'> 
+</span><span class='line'>Field.prototype = {
+</span><span class='line'>    get value(){
+</span><span class='line'>      return this._value;
+</span><span class='line'>    },
+</span><span class='line'>    set value(val){
+</span><span class='line'>      this._value = val;
+</span><span class='line'>    }
+</span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
+
+
+<p>4.java中的getter和setter</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public class TestGetterSetter { //TestGetterSetter.class
+</span><span class='line'>  
+</span><span class='line'>  private String name ;
+</span><span class='line'>
+</span><span class='line'>  public void setName(String name){
+</span><span class='line'>      if(this.name != name){
+</span><span class='line'>          System.out.println("name is changeing!");
+</span><span class='line'>          this.name = name ;
+</span><span class='line'>          // trigger change  event
+</span><span class='line'>      }
+</span><span class='line'>
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>public String getName(String name){
+</span><span class='line'>    if (this.name == null ){
+</span><span class='line'>    setName("Guest");
+</span><span class='line'>    }
+</span><span class='line'>    return this.name ;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>  public String getName() {
+</span><span class='line'>      return name;
+</span><span class='line'>  }
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>public class TestMain { //TestMain.class
+</span><span class='line'>  TestGetterSetter tb ;
+</span><span class='line'>
+</span><span class='line'>  public static void main(String[] args) {
+</span><span class='line'>      
+</span><span class='line'>      new TestMain().todo();
+</span><span class='line'>      // TODO Auto-generated method stub
+</span><span class='line'>
+</span><span class='line'>  }
+</span><span class='line'>  public TestMain(){ // init
+</span><span class='line'>      
+</span><span class='line'>       super();
+</span><span class='line'>       System.out.println("init TestMain !!");
+</span><span class='line'>  }
+</span><span class='line'>  public void todo(){
+</span><span class='line'>       tb  =  new TestGetterSetter();
+</span><span class='line'>       tb.setName("caicai");
+</span><span class='line'>       System.out.println(tb.getName());
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>总结：</p>
+
+<p>用function封装存储规则，在set，get中嵌入pub/sub模式实现 事件触发。</p>
+
+<p>参考文献：</p>
+
+<p>1.<a href="http://ejohn.org/blog/javascript-getters-and-setters/">http://ejohn.org/blog/javascript-getters-and-setters/</a></p>
+
+<p>2.javascript权威指南 6.6 属性getter和setter</p>
+
+<p>-EOF-</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[city hall]]></title>
+    <link href="http://icai.github.io/blog/2012/11/10/music-city-hall/"/>
+    <updated>2012-11-10T23:35:19+08:00</updated>
+    <id>http://icai.github.io/blog/2012/11/10/music-city-hall</id>
+    <content type="html"><![CDATA[<div><embed src="http://www.xiami.com/widget/0_141216/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed></div>
+
+
+<p>Lyrics:</p>
+
+<p>Title: Blue Caravan<br/>
+Artist: Vienna Teng<br/>
+Album: Dreaming Through the Noise<br/>
+Year: 2006</p>
+
+<p>me and my baby on a february holiday<br/>
+&lsquo;cause we got the news<br/>
+yeah, we got the news<br/>
+500 miles and we&rsquo;re gonna make it all the way<br/>
+we&rsquo;ve got nothing to lose<br/>
+we&rsquo;ve got nothing to lose</p>
+
+<!--more-->
+
+
+<p>it&rsquo;s been 10 years waiting<br/>
+but it&rsquo;s better late than the never<br/>
+we&rsquo;ve been told before<br/>
+we can&rsquo;t wait one minute more</p>
+
+<p>oh, me and my baby driving down<br/>
+to a hilly seaside town in the rainfall<br/>
+oh, me and my baby stand in line<br/>
+you&rsquo;ve never seen a sight so fine<br/>
+as the love that&rsquo;s gonna shine<br/>
+at city hall</p>
+
+<p>me and my baby&rsquo;ve been through<br/>
+a lot of good and bad<br/>
+learned to kiss the sky<br/>
+made our momma&rsquo;s cry<br/>
+I&rsquo;ve seen a lot of friends<br/>
+after giving it all they had<br/>
+lay down and die<br/>
+lay down and die</p>
+
+<p>10 years into it<br/>
+here&rsquo;s our window<br/>
+at the vegas drive-thru chapel<br/>
+it ain&rsquo;t too much<br/>
+for &lsquo;em all to handle</p>
+
+<p>oh, me and my baby driving down<br/>
+to a hilly seaside town in the rainfall<br/>
+oh, me and my baby stand in line<br/>
+you&rsquo;ve never seen a sight so fine<br/>
+as the love that&rsquo;s gonna shine<br/>
+at city hall</p>
+
+<p>outside, they&rsquo;re handing out<br/>
+donuts and pizza pies<br/>
+for the folks in pairs in the folding chairs<br/>
+my baby&rsquo;s lookin' so damned pretty<br/>
+with those anxious eyes<br/>
+rain-speckled hair<br/>
+and my ring to wear</p>
+
+<p>10 years waiting for this moment of fate<br/>
+when we say the words and sign our names<br/>
+if they take it away again someday<br/>
+this beautiful thing won&rsquo;t change</p>
+
+<p>oh, me and my baby driving down<br/>
+to a hilly seaside town in the rainfall<br/>
+oh, me and my baby stand in line<br/>
+you&rsquo;ve never seen a sight so fine<br/>
+as the love that&rsquo;s gonna shine</p>
+
+<p>oh, me and my baby driving down<br/>
+to a hilly seaside town in the rainfall<br/>
+oh, me and my baby stand in line<br/>
+you&rsquo;ve never seen a sight so fine<br/>
+as the love that&rsquo;s gonna shine<br/>
+at city hall</p>
+
+<p>-EOF-</p>
+]]></content>
+  </entry>
+  
+</feed>

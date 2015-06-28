@@ -1,0 +1,23 @@
+
+  
+  <div rel="jQuery.getJSON">
+    <h2><span>返回值:XMLHttpRequest</span>jQuery.getJSON(url, <em class="optional">[data]</em>, <em class="optional">[callback]</em>)</h2>
+    <h3>概述</h3>
+    <div class="desc">
+      <p>通过 HTTP GET 请求载入 JSON 数据。</p>
+      <div class="longdesc">
+        <p>在 jQuery 1.2 中，您可以通过使用<a href="http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/" tppabs="http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/" class="external text" title="http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/">JSONP</a>形式的回调函数来加载其他网域的JSON数据，如 "myurl?callback=?"。jQuery 将自动替换 ? 为正确的函数名，以执行回调函数。  注意：此行以后的代码将在这个回调函数执行前执行。</p>
+      </div>
+    </div>
+    <h3>参数</h3>
+    <div>
+      <h4><strong>url,[data],[callback]</strong><span>String,Map,Function</span><em>V1.0</em></h4>
+      <p><strong>url</strong>:发送请求地址。</p>
+      <p><strong>data</strong>:待发送 Key/value 参数。</p>
+      <p><strong>callback</strong>:载入成功时回调函数。</p>
+    </div>
+    <div class="example">
+      <h3>示例</h3>
+      <span id="f_ad2"></span>
+      <h4>描述:</h4>
+      <p>从 Flickr JSONP API 载入 4 

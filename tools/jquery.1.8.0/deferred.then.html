@@ -1,0 +1,16 @@
+
+  
+  <div rel="deferred.then">
+    <h2><span>返回值:Deferred Object</span>deferred.then(doneCallbacks,failCallbacks<strong>[, progressCallbacks]</strong>)</h2>
+    <h3>概述</h3>
+    <div class="desc">
+      <p>添加处理程序被调用时，递延对象得到解决或者拒绝。</p>
+      <div class="longdesc">
+        <p> 所有三个参数（包括progressCallbacks ，在jQuery的1.7 ）可以是一个单独的函数或一个函数的数组。 其中一个参数，也可以为空，如果没有该类型的回调是需要的。或者，使用.done()或.fail()仅设置doneCallbacks或failCallbacks。当递延解决，doneCallbacks被调用。若递延代替拒绝，failCallbacks被调用。回调按他们添加的顺序执行。一旦deferred.then返回延迟对象，延迟对象的其它方法也可以链接到了这里，包括增加.then()方法。有关详细信息，请参阅文件<a href="http://api.jquery.com/category/deferred-object/" tppabs="http://api.jquery.com/category/deferred-object/">Deferred object</a> 。</p>
+      </div>
+    </div>
+    <h3>参数</h3>
+    <div>
+      <h4><strong>doneCallbacks,failCallbacks</strong><span>String</span><em>V1.5</em></h4>
+      <p><strong>doneCallbacks</strong>: 一个函数或函数数组，当延迟成功时调用。 </p>
+      <p><strong>failCallbacks</strong>: 一个函数或函

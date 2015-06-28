@@ -1,0 +1,206 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>在线代码高亮 - 泛前端开发</title>
+	<meta name="author" content="Terry Cai">
+
+	
+	<meta name="description" content=" 在线代码高亮 贴入要高亮代码： 贴入要高亮代码： 复制以下代码到编辑器（html模式）： 高亮预览： ">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://icai.github.io/tools/highlight/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/styles.css" rel="stylesheet" type="text/css" />
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome/font-awesome.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/google-fonts.css" media="screen, projection" rel="stylesheet" type="text/css">	
+<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script src="http://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+<!-- 	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("gidcai@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	 -->
+	
+		<img src="https://en.gravatar.com/avatar/750a24b137f6f1f3313127daf9c9152d?s=160" />
+	
+</div>
+<h1><a href="/">泛前端开发</a></h1>
+<p class="subtitle">I am Terry，习惯阅读无注释代码</p>
+<nav id="main-nav"><ul class="main">
+    <li><a href="/">主页  Blog</a></li>
+    <li><a href="/blog/categories">分类  Categories</a></li>
+    <li><a href="/blog/tags">标签  Tags</a></li>
+    <li><a href="/blog/archives">归档  Archives</a></li>
+    <li><a href="/aboutme">关于  About</a></li>
+</ul>
+<ul class="main">
+    <li><a href="/navs">前端网址导航  Navs</a></li>
+    <li><a href="/tools">前端工具箱  Tools</a></li>
+</ul></nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+			<a class="email" href="mailto:gidcai@gmail.com" title="Email">Email</a>
+		
+		
+		<a class="weibo" href="http://weibo.com/328765211" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		
+			<a class="github" href="https://github.com/icai" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+
+<section class="aboutme">
+  <p class="description">
+    多数人25岁就死了，一直到75岁才埋。——Horus9527 译
+  </p>
+</section>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="tool" >
+	<h1><i class="fa fa-header"></i> 在线代码高亮</h1>
+	<hr>
+	<div class="content">
+		<h2>
+	贴入要高亮代码：
+	<!--[if IE]><font color="red">(本功能暂不支持 IE 浏览器)</font><![endif]-->
+</h2>
+<textarea class="tarea" id="code" onmouseover="this.focus();this.select();"><h2 class="demo">贴入要高亮代码：</h2></textarea>
+<p>
+	<input class="btn btn-primary" type="button" value="HTML" onclick="doHighlight('text/html');">
+	<input class="btn btn-primary" type="button" value="CSS" onclick="doHighlight('text/css');">
+	<input class="btn btn-primary" type="button" value="Javscript" onclick="doHighlight('text/javascript');">
+	<input class="btn btn-primary" type="button" value="XML" onclick="doHighlight('application/xml');">
+	<input class="btn btn-primary" type="button" value="PHP" onclick="doHighlight('application/x-httpd-php');">
+</p>
+<br>
+<h2>复制以下代码到编辑器（html模式）：</h2>
+<textarea class="tarea" id="getcode" style="height: 100px" onmouseover="this.focus();this.select();"></textarea>
+<br>
+<h2>高亮预览：</h2>
+<pre id="output" class="cm-s-default"></pre>
+
+<script src="/javascripts/tools/highlight/codemirror.js"></script>
+<script src="/javascripts/tools/highlight/runmode.js"></script>
+<script src="/javascripts/tools/highlight/htmlmixed.js"></script>
+<script src="/javascripts/tools/highlight/css.js"></script>
+<script src="/javascripts/tools/highlight/javascript.js"></script>
+<script src="/javascripts/tools/highlight/xml.js"></script>
+<script src="/javascripts/tools/highlight/php.js"></script>
+<script src="/javascripts/tools/highlight/clike.js"></script>
+
+<!-- 
+
+<script src="<?php bloginfo('template_url') ?>/private/tools/jquery.1.8.0.php"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/csspacker.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/htmlcodecov.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/html_js.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/base.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/jsformat.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/htmlformat.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/jspacker.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/scriptencode.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/jscodeconfusion.js"></script>
+<script src="<?php bloginfo('template_url') ?>/private/tools/js/pinyin.js"></script>
+ -->
+	</div>
+</article>
+</div>
+			</div>
+			<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Terry Cai
+
+.
+Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>.</br></footer>
+			<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'gidcai';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', '001585136437331322683:wvcrg0yva3i']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>
