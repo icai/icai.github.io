@@ -6,13 +6,20 @@
 			<span class="comments"><a href="{{ root_url }}{{ post.url }}#disqus_thread">Comments</a></span>
 		{% endif %}
 	</div>
-	<h1 class="title" itemprop="name"><a href="{{ root_url }}{{ post.url }}" itemprop="url">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h1>
+	<h1 class="title" itemprop="name"><a href="{{ root_url }}{{ post.url }}" itemprop="url">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}
+	{%if post.translate %}
+		<i class="fa translate-mark" title="translate" >[译]</i>
+	{% endif %}
+	</a></h1>
 	<div class="entry-content" itemprop="articleBody">
 		{{ content | excerpt }}
 		{% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
 		{% if excerpted == 'true' %}<a href="{{ root_url }}{{ post.url }}" class="more-link">{{ site.excerpt_link }}</a>{% endif %}
 	</div>
 {% else %}
+	
+
+
 	<div class="meta">
 		<div class="date">{% include post/date.html %}{{ time }}</div>
 		<div class="cats">{% include post/categories.html %}</div>
@@ -21,7 +28,23 @@
 			<span class="comments"><a href="{{ root_url }}{{ post.url }}#disqus_thread">Comments</a></span>
 		{% endif %}
 	</div>
-	<h1 class="title" itemprop="name">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
+	<h1 class="title" itemprop="name">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}
+	{%if page.translate %}
+		<i class="fa translate-mark" title="translate" >[译]</i>
+	{% endif %}
+	</h1>
+	{%if page.translate %}
+		{% if page.originaltitle and page.originalurl %}
+			<h3 class="original-title">原文: 
+			{% if page.originalurl %}
+				<a href="{{page.originalurl}}" target="_blank">{{page.originaltitle}}</a>
+			{% else %}
+				{{page.originaltitle}}
+			{% endif %}
+			</h3>
+		{% endif %}
+	{% endif %}
+
 	{% if page.subtitle %}
 	<p class="subtitle" itemprop="name">{% if site.titlecase %}{{ page.subtitle | titlecase }}{% else %}{{ page.subtitle }}{% endif %}</p>
 	{% endif %}

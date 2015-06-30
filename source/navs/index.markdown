@@ -15,8 +15,10 @@ footer: true
 		<h2>{{ group.name }}</h2>	
 		<ul>
 			{% for item in group.items %}
-			<li class="post alignleft">
-			<a href="{{ item.link }}" title="{{ item.desc }}" target="_blank" >{% if site.titlecase %}{{ item.title | titlecase }}{% else %}{{ item.title }}{% endif %}</a>
+			<li class="post pull-left">
+			<a href="{{ item.link }}" title="{{ item.desc }}" target="_blank" >
+			 {% if site.titlecase %}{{ item.title | titlecase }}{% else %}{{ item.title }}{% endif %}
+			</a>
 			</li>
 			{%endfor%}
 		</ul>
