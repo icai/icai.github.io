@@ -21,7 +21,7 @@ footer: true
 
 2015-06-29:  add translation style and merge style, fix google analytics id
 
-2015-07-01:  add keycode table tool
+2015-07-01:  add keycode table tool and support meta keywords, optimize page seo
 
 
 
