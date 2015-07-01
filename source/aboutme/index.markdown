@@ -19,8 +19,9 @@ footer: true
 
 ###Change log
 
+2015-06-29:  add translation style and merge style, fix google analytics id
 
-2015-06-29:  add translate style and merge style, fix google analytics id
+2015-07-01:  add keycode table tool
 
 
 
