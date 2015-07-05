@@ -26,10 +26,12 @@
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<script src="http://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"></script>
 	
+<link rel="stylesheet" href="/assets/slides/css/for_blog.css">
+
 </head>
 
 
-<body>
+<body class="blog">
 	<div class="container">
 		<div class="left-col">
 			<div class="intrude-less">
@@ -41,10 +43,13 @@
 <h1><a href="/">泛前端开发</a></h1>
 <p class="subtitle">I am Terry，习惯阅读无注释代码</p>
 <nav id="main-nav"><ul class="main">
-    <li><a href="/">主页  Blog</a></li>
-    <li><a href="/blog/categories">分类  Categories</a></li>
-    <li><a href="/blog/tags">标签  Tags</a></li>
-    <li><a href="/blog/archives">归档  Archives</a></li>
+	<li class=""><a href="/">主页  Blog</a></li>
+    <li class=""><a href="/blog/archives">归档  Archives</a></li>
+    <li class="inline"><a href="/blog/categories">分类  Categories</a></li>
+    <li class="inline" ><a href="/blog/tags">标签  Tags</a></li>
+    
+    <li><a href="/slides">演讲 talks</a></li>
+    
     <li><a href="/aboutme">关于  About</a></li>
 </ul>
 <ul class="main">
@@ -84,7 +89,10 @@
 
 <section class="aboutme">
   <p class="motto">
-    多数人25岁就死了，一直到75岁才埋。——Horus9527 译
+    <script>
+    var mottos = ["多数人25岁就死了，一直到75岁才埋。——Horus9527 译","要么牛逼，要么滾蛋。","人民不应该怕政府，政府才应该怕人民。","你不问我，我就不会说谎话。","天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。 --老子","爱国者的责任就是保护国家不受政府侵犯——托马斯·潘恩","计算机就跟比基尼一样，省去了人们许多的胡思乱想。--萨姆·尤因","想了解一个人的个性，那就赋予他权力。--林肯","如果你怀疑自己，那么你的立足点确实不稳固了。","在民主和独裁的斗争中，纸上的宪法敌不过独裁者的刺刀。——林语堂","国家是危险的机器--华盛顿","冬天已经到来，春天还会远吗？--雪莱","工作撵跑三个魔鬼：无聊、堕落和贫穷。","老大哥在看着你。--奥威尔","宗教上最深的误解——认为坏人没有宗教。——尼采","国家是为人而建立，而人不是为国家而生存。--爱因斯坦","肚子大不可怕，可怕的是肚子里没有好东西。--加菲猫","任何有可能出错的事将会出错--墨菲定理","管得最少，就是最好的政府。-- 大卫·梭罗"];
+    document.writeln(mottos[Math.floor(Math.random() * mottos.length)])
+    </script>
   </p>
 </section>
 </header>				
@@ -463,7 +471,7 @@ Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages
 
 
 <script type="text/javascript">
-      var disqus_shortname = 'gidcai';
+      var disqus_shortname = 'w3cub';
       
         
         // var disqus_developer = 1;
