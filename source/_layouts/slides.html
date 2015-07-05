@@ -1,0 +1,202 @@
+{% capture root_url %}{{ site.root | strip_slash }}{% endcapture %}
+<!DOCTYPE HTML>
+{% if site.lang %}
+<html lang="{{ site.lang }}" class="decks" >
+{% else %}
+<html class="decks">
+{% endif %}
+<head>
+  <meta charset="utf-8">
+	<title>{% if page.title %}{{ page.title }} - {% endif %}slides - {{ site.title }}</title>
+	<meta name="author" content="{{ site.author }}">
+
+	{% capture description %}{% if page.description %}{{ page.description }}{% else %}{{ content | raw_content }}{% endif %}{% endcapture %}
+	<meta name="description" content="{{ description | strip_html | condense_spaces | truncate:150 }}">
+	{% if page.keywords %}<meta name="keywords" content="{{ page.keywords }}">{%else%}<meta name="keywords" content="{{ site.keywords }}">{% endif %}
+	<!-- http://t.co/dKP3o1e -->
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="{{ site.subscribe_rss }}" rel="alternate" title="{{site.title}}" type="application/atom+xml">
+	{% capture canonical %}{{ site.url }}{% if site.permalink contains '.html' %}{{ page.url }}{% else %}{{ page.url | remove:'index.html' }}{% endif %}{% endcapture %}
+	<link rel="canonical" href="{{ canonical }}">
+	<link href="{{ root_url }}/favicon.png" rel="shortcut icon">
+	<!-- <link href="{{ root_url }}/stylesheets/styles.css" rel="stylesheet" type="text/css" /> -->
+	<link href="{{ root_url }}/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	
+	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/css/reveal.min.css">
+	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/css/theme/{{ page.slides }}.css">
+	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/css/print/paper.css">
+	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/lib/css/zenburn.css">
+	<link href="{{ root_url }}/stylesheets/slide.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+  	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="http://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"></script>
+	<script src="{{ root_url }}/javascripts/bootstrap.min.js"></script>
+</head>
+<body>
+	{% assign useinverse = "simple|sky|beige|serif|solarized" | split: "|"  %}
+
+	<header class="navbar {%if useinverse contains page.slides %}navbar-inverse{%else%}navbar-default{%endif%} navbar-fixed-top slides-nav" id="top" role="banner">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a href="{{ root_url }}/" class="navbar-brand">{{site.title }}</a>
+	    </div>
+	    <nav id="bs-navbar" class="collapse navbar-collapse">
+	      <ul class="nav navbar-nav navbar-right">
+	        <!-- <li><a href="{{ root_url }}/slides" >Explore</a></li> -->
+			<li><a href="{{ root_url }}/">主页  Blog</a></li>
+		    <li><a href="{{ root_url }}/blog/categories">分类  Categories</a></li>
+		    <li><a href="{{ root_url }}/blog/tags">标签  Tags</a></li>
+		    <li><a href="{{ root_url }}/blog/archives">归档  Archives</a></li>
+		    {%if site.slides%}
+		    <li><a href="{{ root_url }}/slides">演讲 talks</a></li>
+		    {%endif%}
+
+	        <!-- <li><a href="{{site.url}}/tools">Tools</a></li> -->
+	      </ul>
+	    </nav>
+	  </div>
+	</header>
+	<div class="main">
+		<div class="marquee">
+			<div class="reveal-frame">
+				<div class="reveal-viewport reveal-viewport-{{ page.slides }}">
+					<div class="reveal">
+						<!-- Any section element inside of this container is displayed as a slide -->
+						<div class="slides">
+						  {{ content | expand_urls: root_url }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="slides-extend">
+		<div class="container">
+			<div class="panel-body">
+				<div class="pull-right">
+					<a href="javascript:;" class="btn btn-default fullscreen-btn" id="fullscreen_btn"><i class="fa fa-arrows-alt"></i></a>
+					<a href="javascript:window.print();" class="btn btn-default" ><i class="fa fa-print"></i></a>
+					<a href="#disqus_thread"class="btn btn-default"><i class="fa fa-comment"></i> </a>
+				</div>
+				<div class="slides-info">
+					<h3 class="title">{{page.title}}</h3>
+					{%if page.description%}
+					<p class="description">{{page.description}}</p>
+					{%endif%}
+					<div class="meta">
+						<span class="date"><i class="fa fa-clock-o"></i> {{page.date | date: "%b %d, %Y" }}</span>&nbsp;&nbsp;
+						<span class="author">
+							<i class="fa fa-user"></i> {%if page.author%}{{page.author}}{%else%} {{site.author}} {%endif%}
+						</span>&nbsp;&nbsp;
+						{% if site.disqus_short_name and site.disqus_show_comment_count == true %}
+						<span class="comments"><i class="fa fa-comment"></i> <a href="{{ root_url }}{{ page.url }}#disqus_thread">Comments</a></span>
+						{% endif %}
+					</div>
+				</div>
+				
+			</div>
+			<div class="panel-body">
+				{% unless page.sharing == false %}
+					{% include post/sharing.html %}
+				{% endunless %}
+
+				{% if site.disqus_short_name and page.comments == true %}
+					<section id="comment">
+					    <h1 class="title">Comments</h1>
+					    <div id="disqus_thread" aria-live="polite">{% include post/disqus_thread.html %}</div>
+					</section>
+				{% endif %}	
+			</div>
+		</div>
+	</div>
+	<footer id="footer" class="inner">{% include footer.html %}</footer>
+			{% include after_footer.html %}
+	<script src="{{ root_url }}/assets/reveal.js/lib/js/head.min.js"></script>
+	<script src="{{ root_url }}/assets/reveal.js/js/reveal.min.js"></script>
+  	<script>
+  	var Fullscreen = {
+        enter: function(t) {
+            t = t || document.body;
+            var e = t.requestFullScreen || t.webkitRequestFullscreen || t.webkitRequestFullScreen || t.mozRequestFullScreen || t.msRequestFullscreen;
+            e && e.apply(t)
+        },
+        exit: function() {
+            var t = document.exitFullscreen || document.msExitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen;
+            t && t.apply(document)
+        },
+        toggle: function() {
+            Fullscreen.isActive() ? Fullscreen.exit() : Fullscreen.enter()
+        },
+        isEnabled: function() {
+            return !!(document.fullscreenEnabled || document.mozFullscreenEnabled || document.msFullscreenEnabled || document.webkitFullscreenEnabled)
+        },
+        isActive: function() {
+            return !!(document.fullscreenElement || document.msFullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement)
+        }
+    };
+
+    function onFullScreenClicked() {
+        var t = $(".reveal-viewport").get(0);
+        return t ? (Fullscreen.enter(t), !1) : void(0)
+    }
+    function onWindowScroll(domElement) {
+            var isScrolledDown = $(window).scrollTop() > 30;
+             domElement.toggleClass("show", isScrolledDown)
+    }
+    $(function(){
+	    var domElement = $('.slides-nav');
+		$(document).on("webkitfullscreenchange mozfullscreenchange MSFullscreenChange fullscreenchange", Reveal.layout);
+
+		$(window).on("scroll.headertoogle", function(){
+			onWindowScroll(domElement)
+		})
+	    $('#fullscreen_btn').click(function(){
+	    	onFullScreenClicked()
+	    })    	
+    })
+
+  	</script>
+	<script>
+
+		// Full list of configuration options available here:
+		// https://github.com/hakimel/reveal.js#configuration
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			history: true,
+			center: true,
+		  	//center: false,
+			{%if page.transition %}
+			  transition: '{{page.transition}}',
+			{% else %}
+			  transition: 'slide', // none/fade/slide/convex/concave/zoom
+			{% endif %}
+			{%capture revealpath %}{{root_url}}/assets/reveal.js{% endcapture %}
+			// Optional reveal.js plugins
+			dependencies: [
+				{ src: '{{revealpath}}/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+				// { src: '{{revealpath}}/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				// { src: '{{revealpath}}/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				{ src: '{{revealpath}}/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+				{ src: '{{revealpath}}/plugin/zoom-js/zoom.js', async: true },
+				{ src: '{{revealpath}}/plugin/notes/notes.js', async: true }
+			]
+
+		});
+
+	</script>
+  	{% include google_analytics.html %}
+  
+</body>
+</html>

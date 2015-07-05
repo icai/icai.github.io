@@ -4,12 +4,13 @@
 
 url: http://blog.w3cub.com
 title: 泛前端开发
+logo: "&lt;w3cub/&gt;"
 subtitle: I am Terry，习惯阅读无注释代码
 author: Terry Cai
 simple_search: https://www.google.com/search
 description: 泛前端开发是一个专注前端开发但不限于前端的技术分享个人独立博客
 keywords: 泛前端开发,前端,全栈,frontend,fullstack,octopress,frontend tools
-motto: 多数人25岁就死了，一直到75岁才埋。——Horus9527 译
+
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -36,6 +37,10 @@ collections:
   tools:
     output: true
     permalink: /tools/:path/
+  slides:
+    output: true
+    permalink: /slides/:path/
+
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -108,7 +113,7 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name: gidcai
+disqus_short_name: w3cub
 disqus_show_comment_count: true
 
 # Google Analytics
@@ -122,3 +127,10 @@ weibo_user: 328765211
 
 addthis_profile_id: ra-558841b45b591663
 weibo_share: true
+
+
+exclude:
+    - assets/reveal.js/css/theme/source/*
+    - assets/reveal.js/css/theme/template/*
+    - assets/reveal.js/index.html
+    - assets/reveal.js/*.md

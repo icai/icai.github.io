@@ -46,7 +46,7 @@ body {
 
 		ul {
 			margin-bottom: 0px;
-		@extend .list-unstyled !optional;
+			@extend .list-unstyled !optional;
 			li {
 				margin-left: 0px;
 				display: block;
@@ -54,12 +54,14 @@ body {
 					padding: 0px 0px;
 				}
 			}
+			.inline{
+					display: inline;
+			 }
 		}
 
 	}
 }
-
-.container {
+.blog .container {
   position: relative;
   min-height: 100%;
   width: auto!important;
@@ -269,7 +271,7 @@ body {
 	}
 }
 @media screen and (max-width: 830px){
-	.container {
+.blog .container {
 		.credit-box {
 			display: none;
 		}

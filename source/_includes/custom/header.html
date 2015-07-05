@@ -1,7 +1,10 @@
-{% if site.motto %}
+{% if site.data.motto %}
 <section class="aboutme">
   <p class="motto">
-    {{ site.motto }}
+    <script>
+    var mottos = {{ site.data.motto | jsonify }};
+    document.writeln(mottos[Math.floor(Math.random() * mottos.length)])
+    </script>
   </p>
 </section>
 {% endif %}
