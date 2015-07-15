@@ -1,10 +1,5 @@
 @import "compass";
-@import "font-awesome-compass";
-$fa-sass-asset-helper: false;
-$fa-font-path: "/fonts/fontawesome/";
-@import "font-awesome";
 
-@import "google-fonts";
 
 // Import Bootstrap Compass integration
 @import "bootstrap-compass";
@@ -13,7 +8,12 @@ $fa-font-path: "/fonts/fontawesome/";
 // Import Bootstrap for Sass
 @import "bootstrap";
 
+@import "font-awesome-compass";
+$fa-sass-asset-helper: false;
+$fa-font-path: "/fonts/fontawesome/";
+@import "font-awesome";
 
+@import "google-fonts";
 // *{
 // 	margin:0;
 // 	padding:0;
