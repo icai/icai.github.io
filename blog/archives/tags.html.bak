@@ -10,18 +10,23 @@
 
 	
 	<meta name="description" content=" Tags City Hall
+fuzzy
 getter
 java
 javascript
 jekyll
+lazy
 music
 octopress
 rake
+regex
 ruby
 rvm
+search
 setter
 song
-task ">
+task
+ux ">
 	<meta name="keywords" content="泛前端开发,前端,全栈,frontend,fullstack,octopress,frontend tools">
 	<!-- http://t.co/dKP3o1e -->
 	<meta name="HandheldFriendly" content="True">
@@ -123,18 +128,23 @@ task ">
   <h2>Tags</h2>
   <ul class="tag-cloud">
 <li><a style="font-size: 100%" href="/blog/tags/city-hall/">City Hall</a></li>
+<li><a style="font-size: 100%" href="/blog/tags/fuzzy/">fuzzy</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/getter/">getter</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/java/">java</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/javascript/">javascript</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/jekyll/">jekyll</a></li>
+<li><a style="font-size: 100%" href="/blog/tags/lazy/">lazy</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/music/">music</a></li>
 <li><a style="font-size: 220%" href="/blog/tags/octopress/">octopress</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/rake/">rake</a></li>
+<li><a style="font-size: 100%" href="/blog/tags/regex/">regex</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/ruby/">ruby</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/rvm/">rvm</a></li>
+<li><a style="font-size: 100%" href="/blog/tags/search/">search</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/setter/">setter</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/song/">song</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/task/">task</a></li>
+<li><a style="font-size: 100%" href="/blog/tags/ux/">ux</a></li>
 
   </ul>
 </div>
@@ -168,7 +178,8 @@ task ">
 
 .
 Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
-<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a> </br></footer>
+<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
+<span>Last build: 2015-07-15T23:58:25+08:00</span></br></footer>
 			<script src="/javascripts/slash.js"></script>
 <script src="/javascripts/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
