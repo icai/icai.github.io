@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2015-08-14T22:44:19+08:00</updated>
+  <updated>2015-08-21T00:49:04+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[鲜香虾粥]]></title>
+    <link href="http://blog.w3cub.com/blog/2015/08/20/shrimpcongee/"/>
+    <updated>2015-08-20T22:53:49+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2015/08/20/shrimpcongee</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>你会不会经常大排档吃砂锅粥呢，各种虾粥，蟹粥之类的。在广州，潮汕大排档这些东西是最普遍不过了。不过要么味道太浓，味精太多，要么吃不出什么鲜肉。对于我这种买了辆单车就会修单车的人，自然就是少不了在家DIY了.</p>
+
+<p>七夕，见鬼了。</p>
+
+<!-- more -->
+
+
+<h2>食材：</h2>
+
+<p>米 150  毫升 （电饭锅米杯差不多满杯）</p>
+
+<p>虾 600 克 （shrimp）</p>
+
+<p>香菜（芫荽） 50 克</p>
+
+<p>姜 小许</p>
+
+<p>盐油 小许</p>
+
+<h2>步骤：</h2>
+
+<ol>
+<li><p>把米放到锅里面洗干净，放进适量的水。
+其实我也不知道适量是多少，以前本港台中午的烹饪节目就是那么说的。
+可以开火了，1000W 煲到沸，转600W。</p>
+
+<blockquote><p><img src="http://blog.w3cub.com/images/posts/shrimpcongee/IMG_20150820_185200.png" width="720" alt="第一步, 洗米" /></p></blockquote></li>
+<li><p>在煲的过程中，我们开始处理主要材料。
+明虾去头，虾脚等，由腹开刀，去除虾线。把尾也去掉吧。</p>
+
+<blockquote><p><img src="http://blog.w3cub.com/images/posts/shrimpcongee/IMG_20150820_190823.png" width="720" alt="第二步, 处理虾" /></p></blockquote></li>
+<li><p>腌虾。当粥煮到沸，<strong>米变粗，没有变花</strong>的时候，开始腌虾，盐少许，油适量。盐不要放太多，是个人口味而定，这里已经放盐了，之后就不用放了。</p>
+
+<blockquote><p><img src="http://blog.w3cub.com/images/posts/shrimpcongee/IMG_20150820_195056.png" width="720" alt="第三步, 腌虾" /></p></blockquote></li>
+<li><p>准备配料。洗净，去头，切段。假如，你能把头洗净的话，可以留头。姜，拍扁。</p>
+
+<blockquote><p><img src="http://blog.w3cub.com/images/posts/shrimpcongee/IMG_20150820_195127.png" width="720" alt="第四步, 准备配料" /></p></blockquote></li>
+<li><p><strong>米变粗</strong>，放入姜。</p></li>
+<li><p>米开花，煮好的白粥，放料。把火调到1000w。</p>
+
+<blockquote><p><img src="http://blog.w3cub.com/images/posts/shrimpcongee/IMG_20150820_195312.png" width="720" alt="第五步,白粥" /></p></blockquote></li>
+<li><p>等待煮沸，放入香草，OK。</p>
+
+<blockquote><p><img src="http://blog.w3cub.com/images/posts/shrimpcongee/IMG_20150820_200346.png" width="720" alt="最后完成" /></p></blockquote></li>
+</ol>
+
+
+<h2>点评：</h2>
+
+<p>过程，虾处理十分耗时，煮白粥也要相当一段时间。放下米的时候，开始处理就好了。</p>
+
+<p>味道, 十分鲜味，还有米和姜的香。十分OK啦。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[模糊匹配查询正则表达式探究]]></title>
@@ -740,7 +802,7 @@ limitations under the License.
     <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
     <updated>2015-06-20T23:16:31+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
-    <content type="html"><![CDATA[<h1>前言</h1>
+    <content type="html"><![CDATA[<h2>前言</h2>
 
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
 
@@ -759,7 +821,7 @@ limitations under the License.
 
 <p>所以 安装octopress之前必不可少的是安装Ta的生态环境。</p>
 
-<h1>安装Octopress</h1>
+<h2>安装Octopress</h2>
 
 <h3>安装rvm</h3>
 
@@ -812,13 +874,13 @@ limitations under the License.
 </span><span class='line'>$ git clone git://github.com/imathis/octopress.git octopress
 </span><span class='line'>$ cd octopress
 </span><span class='line'>
-</span><span class='line'>#安装依赖
+</span><span class='line'>##安装依赖
 </span><span class='line'>$ gem install bundler
 </span><span class='line'>$ bundle install
 </span><span class='line'>
 </span><span class='line'>
 </span><span class='line'>
-</span><span class='line'>#安装octopress默认主题
+</span><span class='line'>##安装octopress默认主题
 </span><span class='line'>$ rake install</span></code></pre></td></tr></table></div></figure>
 
 
@@ -826,7 +888,7 @@ limitations under the License.
 
 <p>bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类似，都是一键安装依赖包文件。</p>
 
-<h1>部署</h1>
+<h2>部署</h2>
 
 <p>接下来需要把Blog部署到github上去，第一步要做的是去<a href="https://github.com/new">github</a>创建一个<code>username.github.io</code>的repo，比如我的就叫<code>msching.github.io</code>。</p>
 
@@ -838,7 +900,7 @@ limitations under the License.
 
 <hr />
 
-<h1>创建博客</h1>
+<h2>创建博客</h2>
 
 <h3>生成博客</h3>
 
@@ -943,7 +1005,7 @@ limitations under the License.
 
 <hr />
 
-<h1>写博客</h1>
+<h2>写博客</h2>
 
 <p>经过上面几部后，博客已经成功搭建，现在就可以开始写博文了。</p>
 
@@ -995,7 +1057,7 @@ limitations under the License.
 
 <hr />
 
-<h1>参考资料</h1>
+<h2>参考资料</h2>
 
 <ul>
 <li><a href="http://octopress.org/">http://octopress.org/</a></li>
