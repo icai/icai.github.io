@@ -133,7 +133,60 @@
 <p><code>sudo /etc/init.d/networking restart</code></p>
 
 <script>
-eval(function(p,a,c,k,e,r){e=function(c){return c.toString(36)};if('0'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return'[0-9ab]'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3(1($){3.ajaxPrefilter(1(2){if(2.crossDomain&&3.support.5){2.6=\'https://5-anywhere.herokuapp.4/\'+2.6}});$.7(\'8://9.a.4/b/VERSION\',1(0){$(\'#ver\').html(\'version \'+0);$.7(\'8://9.a.4/b/\'+0,1(0){$(\'#code\').val(0)})})})',[],12,'data|function|options|jQuery|com|cors|url|get|http|www|lizhenwang|appserver'.split('|'),0,{}))
+// jQuery(function ($) {
+// 	jQuery.ajaxPrefilter(function (options) {
+// 		if (options.crossDomain && jQuery.support.cors) {
+// 			options.url = 'https://cors-anywhere.herokuapp.com/' + options.url
+// 		}
+// 	});
+// 	$.get('http://www.lizhenwang.com/appserver/VERSION', function (data) {
+// 		$('#ver').html('version ' + data);
+// 		$.get('http://www.lizhenwang.com/appserver/' + data, function (data) {
+// 			$('#code').val(data)
+// 		})
+// 	})
+// })
+
+
+jQuery(function($) {
+    jQuery.ajaxPrefilter(function(options) {
+        if (options.crossDomain && jQuery.support.cors) {
+            options.url = 'https://cors-anywhere.herokuapp.com/' + options.url
+        }
+    });
+
+    jQuery.ajax({
+      url: 'http://laod.cn/hosts/2015-google-hosts.html',
+      type: 'GET',
+      dataType: 'text',
+      complete: function(xhr, textStatus) {
+      },
+      success: function(data, textStatus, xhr) {
+      	var  postContent = data.match(/<div[^>]*post-content[^>]*>([\s\S]*?)<\/div><div[\s\S]*post-share/);
+        var div = $("<div />").html(postContent[0]);
+        var  atags = div.find('a[href$=".txt"]').get();
+             atags = [].sort.call(atags, function(a, b){
+              if (a.textContent > b.textContent) {
+                return 1;
+              }
+              if (a.textContent < b.textContent) {
+                return -1;
+              }
+              return 0;
+            })
+           var tag =  atags.reverse()[0];
+        $('#ver').html('version ' + tag.textContent);
+        $.get(tag.getAttribute("href"), function(data) {
+            $('#code').val(data)
+        })
+        dev = null;
+        //called when successful
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        //called when there is an error
+      }
+    });
+})
 </script>
 	</div>
 </article>
@@ -171,7 +224,7 @@ eval(function(p,a,c,k,e,r){e=function(c){return c.toString(36)};if('0'.replace(0
 .
 Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-<span>Last build: 2015-08-31T22:40:37+08:00</span></br></footer>
+<span>Last build: 2015-09-15T00:42:17+08:00</span></br></footer>
 			<script src="/javascripts/slash.js"></script>
 <script src="/javascripts/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
