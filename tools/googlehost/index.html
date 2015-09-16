@@ -135,21 +135,6 @@ notepad %windir%\system32\drivers\etc\hosts ubuntu: &hellip;">
 <p><code>sudo /etc/init.d/networking restart</code></p>
 
 <script>
-// jQuery(function ($) {
-// 	jQuery.ajaxPrefilter(function (options) {
-// 		if (options.crossDomain && jQuery.support.cors) {
-// 			options.url = 'https://cors-anywhere.herokuapp.com/' + options.url
-// 		}
-// 	});
-// 	$.get('http://www.lizhenwang.com/appserver/VERSION', function (data) {
-// 		$('#ver').html('version ' + data);
-// 		$.get('http://www.lizhenwang.com/appserver/' + data, function (data) {
-// 			$('#code').val(data)
-// 		})
-// 	})
-// })
-
-
 jQuery(function($) {
     jQuery.ajaxPrefilter(function(options) {
         if (options.crossDomain && jQuery.support.cors) {
@@ -181,10 +166,11 @@ jQuery(function($) {
         $.get(tag.getAttribute("href"), function(data) {
             $('#code').val(data)
         })
-        dev = null;
+        div = null;
         //called when successful
       },
       error: function(xhr, textStatus, errorThrown) {
+        alert(xhr);
         //called when there is an error
       }
     });
@@ -226,7 +212,7 @@ jQuery(function($) {
 .
 Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-<span>Last build: 2015-09-15T00:46:36+08:00</span></br></footer>
+<span>Last build: 2015-09-16T19:54:49+08:00</span></br></footer>
 			<script src="/javascripts/slash.js"></script>
 <script src="/javascripts/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
