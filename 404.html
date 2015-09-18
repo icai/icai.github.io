@@ -10,7 +10,7 @@
 			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		}
 
-		.container { margin: 5% auto 40px auto; width: 600px; }
+		.container { margin: 5% auto 40px auto; max-width: 800px; padding: 15px; }
 
 		a { color: #4183c4; text-decoration: none; }
 		a:hover { text-decoration: underline; }
@@ -53,7 +53,7 @@
 		<p>Sorry, the page you requested was not fount.</p>
 		
 		<p>
-			Automatically return to <a href="http://blog.w3cub.com" title="go to Home Page">Home Page</a><span id="num"></span> | <a href="javascript:;" id="disable" onclick="disable()">disable</a>
+			Return to <a href="http://blog.w3cub.com" title="go to Home Page">Home Page</a>
 		</p>
 
 		<h4>Are you hungry?</h4>
@@ -72,27 +72,6 @@
 
 		
 	</div>
-	<script type="text/javascript" >
-	var timeout;
-	function count(c, cel, callback){
-		var str= " ({num})";
-		cel.innerHTML =  str.replace(/\{num\}/,c);
-		if(c == 0){
-			callback();
-		} else {
-			timeout = setTimeout(function(){
-				count(--c, cel, callback)
-			},1000)	
-		}
-	}
-	function disable(){
-		timeout && clearTimeout(timeout);
-	}
-	var numel  = document.getElementById('num');
-	count(5, numel, function(){
-		location.href = "/";
-	})
-	</script>
 	
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
