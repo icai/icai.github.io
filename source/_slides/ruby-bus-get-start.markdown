@@ -2,7 +2,7 @@
 layout: slides
 published: true
 title: "Ruby Bus Presentation"
-description: wellcome ruby get start course, ruby is very nice language as offcial website said, A PROGRAMMER'S BEST FRIEND. Well, let check it out.
+description: Welcome ruby get start course, ruby is very nice language as offcial website said, A PROGRAMMER'S BEST FRIEND. Well, let check it out.
 keywords: ruby, slide, guide
 date: 2015-07-05T04:22:26+00:00
 comments: true

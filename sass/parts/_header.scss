@@ -447,6 +447,14 @@ $header-height: 30px;
 					border: 1px solid darken(#EF7522, 10%);
 				}
 			}
+			&.netease{
+				background: image-url('social/netease.png') center no-repeat #FF0000;
+				border: 1px solid #FF0000;
+				&:hover{
+					border: 1px solid darken(#FF0000, 10%);
+				}
+			}
+
 		}
 	}
 }

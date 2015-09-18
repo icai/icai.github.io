@@ -8,7 +8,7 @@ tags: [octopress]
 statement: true
 ---
 
-#前言
+##前言
 假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的`A blogging framework for hackers.` 博客。
 
 
@@ -29,7 +29,7 @@ Liquid 一个 ruby模板引擎，Markdown是……。
 
 
 
-#安装Octopress
+##安装Octopress
 
 
 ###安装rvm
@@ -68,13 +68,13 @@ $ rvm use 2.2.1
 $ git clone git://github.com/imathis/octopress.git octopress
 $ cd octopress
 
-#安装依赖
+##安装依赖
 $ gem install bundler
 $ bundle install
 
 
 
-#安装octopress默认主题
+##安装octopress默认主题
 $ rake install
 ```
 ---------
@@ -86,7 +86,7 @@ bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类�
 
 
 
-#部署
+##部署
 接下来需要把Blog部署到github上去，第一步要做的是去[github](https://github.com/new)创建一个`username.github.io`的repo，比如我的就叫`msching.github.io`。
 
 然后运行以下命令，并依照提示完成github和Octopress的关联
@@ -96,7 +96,7 @@ $ rake setup_github_pages
 ```
 ---------
 
-#创建博客
+##创建博客
 
 ###生成博客
 ```
@@ -180,7 +180,7 @@ category_url = File.join(category_dir, category.to_url.downcase)
 
 ---------
 
-#写博客
+##写博客
 
 经过上面几部后，博客已经成功搭建，现在就可以开始写博文了。
 
@@ -214,7 +214,7 @@ $ rake deploy
 ```
 
 ---------
-#参考资料
+##参考资料
 
 * http://octopress.org/
 * https://msching.github.io/blog/2014/04/11/starting/

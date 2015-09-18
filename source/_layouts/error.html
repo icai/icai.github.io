@@ -10,7 +10,7 @@
 			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		}
 
-		.container { margin: 5% auto 40px auto; width: 600px; }
+		.container { margin: 5% auto 40px auto; max-width: 800px; padding: 15px; }
 
 		a { color: #4183c4; text-decoration: none; }
 		a:hover { text-decoration: underline; }
@@ -31,7 +31,7 @@
 		p { color: rgba(0, 0, 0, 0.5); margin: 20px 0; line-height: 1.6; }
 
 		ul { list-style: none; margin: 25px 0; padding: 0; }
-		li { display: table-cell; font-weight: bold; width: 1%; }
+		li { display: inline-block; float: left; font-weight: bold; line-height: 1.5; margin-right: 15px;}
 		.text-center{
 			text-align: center;
 		}
@@ -53,33 +53,12 @@
 		<p>{{page.subtitle}}</p>
 		{% endif %}
 		<p>
-			Automatically return to <a href="{{site.url}}" title="go to Home Page">Home Page</a><span id="num"></span> | <a href="javascript:;" id="disable" onclick="disable()">disable</a>
+			Return to <a href="{{site.url}}" title="go to Home Page">Home Page</a>
 		</p>
 
 		{{content}}
 		
 	</div>
-	<script type="text/javascript" >
-	var timeout;
-	function count(c, cel, callback){
-		var str= " ({num})";
-		cel.innerHTML =  str.replace(/\{num\}/,c);
-		if(c == 0){
-			callback();
-		} else {
-			timeout = setTimeout(function(){
-				count(--c, cel, callback)
-			},1000)	
-		}
-	}
-	function disable(){
-		timeout && clearTimeout(timeout);
-	}
-	var numel  = document.getElementById('num');
-	count(5, numel, function(){
-		location.href = "/";
-	})
-	</script>
 	{% include google_analytics.html %}
 </body>
 </html>

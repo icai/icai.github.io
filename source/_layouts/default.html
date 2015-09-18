@@ -7,7 +7,12 @@
 			<div class="intrude-less">
 			<header id="header" class="inner">{% include header.html %}</header>				
 			</div>
-		</div>	
+		</div>
+	    <script>
+	    var bgs = ["1.jpg","2.jpg", "3.jpg", "4.jpg", "5.jpg"];
+	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
+	    	lcol && (lcol.style.backgroundImage = "url(/images/bg/" + bgs[Math.floor(Math.random() * bgs.length)] +")");
+	    </script>	
 		<div class="mid-col">
 			{% unless page.banner == false %}
 				{% include banner.html %}

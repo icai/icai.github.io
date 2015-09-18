@@ -22,9 +22,9 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email: gidcai@gmail.com
+# email: gidcai@gmail.com
 
-avatarimg: 'gravatar' # or  your path
+avatarimg: "/images/avatar.jpeg"
 
 meta:
     author:
@@ -104,6 +104,8 @@ google_plus_one_size: medium
 googleplus_user:
 googleplus_hidden: false
 
+facebook_user: "terry.cai.7921"
+
 # Pinboard
 pinboard_user:
 pinboard_count: 3
@@ -124,6 +126,9 @@ facebook_like: false
 
 # weibo
 weibo_user: 328765211
+
+# netease
+netease_user: 328765211
 
 addthis_profile_id: ra-558841b45b591663
 weibo_share: true

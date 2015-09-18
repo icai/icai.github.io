@@ -9,7 +9,7 @@ statement: true
 translate: true
 originaltitle: "Fuzzy Scoring Regex Mayhem"
 originalurl: http://james.padolsey.com/javascript/fuzzy-scoring-regex-mayhem/
-keyword: 模糊匹配, autocompletion, 正则表达式, 用户体验优化，智能排序
+keywords: 模糊匹配, autocompletion, 正则表达式, 用户体验优化，智能排序
 
 ---
 
