@@ -1,0 +1,835 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>jQuery 手册 - 泛前端开发</title>
+	<meta name="author" content="Terry Cai">
+	
+	<meta name="description" content="jQuery 手册 核心 jQuery 核心函数 jQuery([sel,[context]]) jQuery(html,[ownerDoc])1.8* jQuery(callback) jQuery.holdReady(hold) jQuery 对象访问 each(callback) size &hellip;">
+
+	<meta name="keywords" content="jQuery, manual, handbook">
+	
+
+	<!-- http://t.co/dKP3o1e -->
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://blog.w3cub.com/tools/jquery/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="/javascripts/libs/jquery.min.js"></script>
+	<!-- <link rel="stylesheet" href="/assets/slides/css/for_blog.css"> -->
+
+</head>
+
+
+<body class="blog">
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+		<img src="/images/avatar.jpeg" style="width: 160px;" />
+	
+</div>
+<h1><a href="/">泛前端开发</a></h1>
+<p class="subtitle">I am Terry，习惯阅读无注释代码</p>
+<nav id="main-nav"><ul class="main">
+	<li class=""><a href="/">主页  Blog</a></li>
+    <li class=""><a href="/blog/archives">归档  Archives</a></li>
+    <li class="inline"><a href="/blog/categories">分类  Categories</a></li>
+    <li class="inline" ><a href="/blog/tags">标签  Tags</a></li>
+    
+    <li><a href="/slides">演讲 talks</a></li>
+    
+    <li><a href="/about">关于  About</a></li>
+</ul>
+<ul class="main">
+    <li><a href="/navs">前端网址导航  Navs</a></li>
+    <li><a href="/tools">前端工具箱  Tools</a></li>
+</ul></nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+
+		
+		<a class="weibo" href="http://weibo.com/328765211" target="_blank" title="Weibo">Weibo</a>
+		
+		
+			<a class="facebook" href="http://www.facebook.com/terry.cai.7921" target="_blank" title="Facebook">Facebook</a>
+		
+		
+		
+
+		
+		<a class="netease" href="http://blog.163.com/328765211" target="_blank" title="Netease">Netease</a>
+		
+
+		
+			<a class="github" href="https://github.com/icai" target="_blank" title="GitHub">GitHub</a>
+		
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" target="_blank" title="RSS">RSS</a>
+		
+
+
+
+	</div>
+</nav>
+
+<section class="aboutme">
+  <p class="motto">
+    <script>
+    var mottos = ["多数人25岁就死了，一直到75岁才埋。——Horus9527 译","要么牛逼，要么滾蛋。","人民不应该怕政府，政府才应该怕人民。","你不问我，我就不会说谎话。","天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。 --老子","爱国者的责任就是保护国家不受政府侵犯——托马斯·潘恩","计算机就跟比基尼一样，省去了人们许多的胡思乱想。--萨姆·尤因","想了解一个人的个性，那就赋予他权力。--林肯","如果你怀疑自己，那么你的立足点确实不稳固了。","在民主和独裁的斗争中，纸上的宪法敌不过独裁者的刺刀。——林语堂","国家是危险的机器--华盛顿","冬天已经到来，春天还会远吗？--雪莱","工作撵跑三个魔鬼：无聊、堕落和贫穷。","老大哥在看着你。--奥威尔","宗教上最深的误解——认为坏人没有宗教。——尼采","国家是为人而建立，而人不是为国家而生存。--爱因斯坦","肚子大不可怕，可怕的是肚子里没有好东西。--加菲猫","任何有可能出错的事将会出错--墨菲定理","管得最少，就是最好的政府。-- 大卫·梭罗"];
+    document.writeln(mottos[Math.floor(Math.random() * mottos.length)])
+    </script>
+  </p>
+</section>
+</header>				
+			</div>
+		</div>
+	    <script>
+	    var bgs = ["1.jpg","2.jpg", "3.jpg", "4.jpg", "5.jpg"];
+	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
+	    	lcol && (lcol.style.backgroundImage = "url(/images/bg/" + bgs[Math.floor(Math.random() * bgs.length)] +")");
+	    </script>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="tool" >
+	<h1><i class="fa fa-css3"></i> jQuery 手册</h1>
+	<hr>
+	<div class="content">
+		<div class="jq-cheetsheat jquerychm">
+ 
+  <div class="item col-1">
+    <div id="core">
+      <h2>核心</h2>
+      <ul>
+        <li>
+          <h3>jQuery 核心函数</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery_selector_context/">jQuery([sel,[context]])</a>
+            <li><a href="/tools/jquery/jQuery_html_ownerDocument/">jQuery(html,[ownerDoc])</a><sup>1.8*</sup></li>
+            <li><a href="/tools/jquery/jQuery_callback/">jQuery(callback)</a></li>
+            <li><a href="/tools/jquery/jQuery.holdReady/">jQuery.holdReady(hold)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>jQuery 对象访问</h3>
+          <ul>
+            <li><a href="/tools/jquery/each/">each(callback)</a></li>
+            <li><a href="/tools/jquery/size/">size()</a></li>
+            <li><a href="/tools/jquery/length/">length</a></li>
+            <li><a href="/tools/jquery/selector/">selector</a></li>
+            <li><a href="/tools/jquery/context/">context</a></li>
+            <li><a href="/tools/jquery/get/">get([index])</a></li>
+            <li><a href="/tools/jquery/index_1/">index([selector|element])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>数据缓存</h3>
+          <ul>
+            <li><a href="/tools/jquery/data/">data([key],[value])</a></li>
+            <li><a href="/tools/jquery/removeData/">removeData([name|list])</a><sup>1.7*</sup></li>
+            <li><del><a href="/tools/jquery/jQuery.data/">$.data(ele,[key],[val])</a></del><sup>1.8-</sup></li>
+          </ul>
+        </li>
+        <li>
+          <h3>队列控制</h3>
+          <ul>
+            <li><a href="/tools/jquery/queue/" title="queue(element,[queueName])">queue(e,[q])</a></li>
+            <li><a href="/tools/jquery/dequeue/" title="dequeue([queueName])">dequeue([queueName])</a></li>
+            <li><a href="/tools/jquery/clearQueue/" title="clearQueue([queueName])">clearQueue([queueName])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>插件机制</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.fn.extend/">jQuery.fn.extend(object)</a></li>
+            <li><a href="/tools/jquery/jQuery.extend_object/">jQuery.extend(object)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>多库共存</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.noConflict/" title="jQuery.noConflict([extreme])">jQuery.noConflict([ex])</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div id="attributes">
+      <h2>属性</h2>
+      <ul>
+        <li>
+          <h3>属性</h3>
+          <ul>
+            <li><a href="/tools/jquery/attr/" title="attr(name|properties|key,value|fn)">attr(name|pro|key,val|fn)</a></li>
+            <li><a href="/tools/jquery/removeAttr/">removeAttr(name)</a></li>
+            <li><a href="/tools/jquery/prop/" title="prop(name|properties|key,value|fn)">prop(n|p|k,v|f)</a></li>
+            <li><a href="/tools/jquery/removeProp/">removeProp(name)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>CSS 类</h3>
+          <ul>
+            <li><a href="/tools/jquery/addClass/">addClass(class|fn)</a></li>
+            <li><a href="/tools/jquery/removeClass/">removeClass([class|fn])</a></li>
+            <li><a href="/tools/jquery/toggleClass/">toggleClass(class|fn[,sw])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>HTML代码/文本/值</h3>
+          <ul>
+            <li><a href="/tools/jquery/html/">html([val|fn])</a></li>
+            <li><a href="/tools/jquery/text/">text([val|fn])</a></li>
+            <li><a href="/tools/jquery/val/">val([val|fn|arr])</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div id="css">
+      <h2>CSS</h2>
+      <ul>
+        <li>
+          <h3>CSS</h3>
+          <ul>
+            <li><a href="/tools/jquery/css/" title="css(name|properties|[,value|fn])">css(name|pro|[,val|fn])</a><sup>1.9*</sup></li>
+            <li><a href="/tools/jquery/jQuery.cssHooks/">jQuery.cssHooks</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>位置</h3>
+          <ul>
+            <li><a href="/tools/jquery/offset/">offset([coordinates])</a></li>
+            <li><a href="/tools/jquery/position/">position()</a></li>
+            <li><a href="/tools/jquery/scrollTop/">scrollTop([val])</a></li>
+            <li><a href="/tools/jquery/scrollLeft/">scrollLeft([val])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>尺寸</h3>
+          <ul>
+            <li><a href="/tools/jquery/height/">height([val|fn])</a></li>
+            <li><a href="/tools/jquery/width/">width([val|fn])</a></li>
+            <li><a href="/tools/jquery/innerHeight/">innerHeight()</a></li>
+            <li><a href="/tools/jquery/innerWidth/">innerWidth()</a></li>
+            <li><a href="/tools/jquery/outerHeight/">outerHeight([soptions])</a></li>
+            <li><a href="/tools/jquery/outerWidth/">outerWidth([options])</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="item col-2">
+    <div id="selectors">
+      <h2>选择器</h2>
+      <ul>
+        <li>
+          <h3>基本</h3>
+          <ul>
+            <li><a href="/tools/jquery/id/">#id</a></li>
+            <li><a href="/tools/jquery/element/">element</a></li>
+            <li><a href="/tools/jquery/class/">.class</a></li>
+            <li><a href="/tools/jquery/all/">*</a></li>
+            <li><a href="/tools/jquery/multiple/">selector1,selector2,selectorN</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>层级</h3>
+          <ul>
+            <li><a href="/tools/jquery/descendant/">ancestor descendant</a></li>
+            <li><a href="/tools/jquery/child/">parent &gt;  child</a></li>
+            <li><a href="/tools/jquery/next_1/">prev + next</a></li>
+            <li><a href="/tools/jquery/siblings_1/">prev ~ siblings</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>基本</h3>
+          <ul>
+            <li><a href="/tools/jquery/first_1/">:first</a></li>
+            <li><a href="/tools/jquery/not_1/">:not(selector)</a></li>
+            <li><a href="/tools/jquery/even/">:even</a></li>
+            <li><a href="/tools/jquery/odd/">:odd</a></li>
+            <li><a href="/tools/jquery/eq_1/">:eq(index)</a></li>
+            <li><a href="/tools/jquery/gt/">:gt(index)</a></li>
+            <li><a href="/tools/jquery/lang/">:lang</a><sup>1.9+</sup></li>
+            <li><a href="/tools/jquery/last_1/">:last</a></li>
+            <li><a href="/tools/jquery/lt/">:lt(index)</a></li>
+            <li><a href="/tools/jquery/header/">:header</a></li>
+            <li><a href="/tools/jquery/animated/">:animated</a></li>
+            <li><a href="/tools/jquery/focus_1/">:focus</a></li>
+            <li><a href="/tools/jquery/root/">:root</a><sup>1.9+</sup></li>
+            <li><a href="/tools/jquery/target/">:target</a><sup>1.9+</sup></li>
+          </ul>
+        </li>
+        <li>
+          <h3>内容</h3>
+          <ul>
+            <li><a href="/tools/jquery/contains/">:contains(text)</a></li>
+            <li><a href="/tools/jquery/empty_1/">:empty</a></li>
+            <li><a href="/tools/jquery/has_1/">:has(selector)</a></li>
+            <li><a href="/tools/jquery/parent_1/">:parent</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>可见性</h3>
+          <ul>
+            <li><a href="/tools/jquery/hidden_1/">:hidden</a></li>
+            <li><a href="/tools/jquery/visible/">:visible</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>属性</h3>
+          <ul>
+            <li><a href="/tools/jquery/attributeHas/">[attribute]</a></li>
+            <li><a href="/tools/jquery/attributeEquals/">[attribute=value]</a></li>
+            <li><a href="/tools/jquery/attributeNotEqual/">[attribute!=value]</a></li>
+            <li><a href="/tools/jquery/attributeStartsWith/">[attribute^=value]</a></li>
+            <li><a href="/tools/jquery/attributeEndsWith/">[attribute$=value]</a></li>
+            <li><a href="/tools/jquery/attributeContains/">[attribute*=value]</a></li>
+            <li><a href="/tools/jquery/attributeMultiple/">[attrSel1][attrSel2][attrSelN]</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>子元素</h3>
+          <ul>
+            <li><a href="/tools/jquery/firstChild/">:first-child</a></li>
+            <li><a href="/tools/jquery/firstOfType/">:first-of-type</a><sup>1.9+</sup></li>
+            <li><a href="/tools/jquery/lastChild/">:last-child</a></li>
+            <li><a href="/tools/jquery/lastOfType/">:last-of-type</a><sup>1.9+</sup></li>
+            <li><a href="/tools/jquery/nthChild/">:nth-child</a></li>
+            <li><a href="/tools/jquery/nthLastChild/">:nth-last-child()</a><sup>1.9+</sup></li>
+            <li><a href="/tools/jquery/nthLastOfType/">:nth-last-of-type()</a><sup>1.9+</sup></li>
+            <li><a href="/tools/jquery/nthOfType/">:nth-of-type()</a><sup>1.9+</sup></li>
+            <li><a href="/tools/jquery/onlyChild/">:only-child</a></li>
+            <li><a href="/tools/jquery/onlyOfType/">:only-of-type</a><sup>1.9+</sup></li>
+          </ul>
+        </li>
+        <li>
+          <h3>表单</h3>
+          <ul>
+            <li><a href="/tools/jquery/input/">:input</a></li>
+            <li><a href="/tools/jquery/text_1/">:text</a></li>
+            <li><a href="/tools/jquery/password/">:password</a></li>
+            <li><a href="/tools/jquery/radio/">:radio</a></li>
+            <li><a href="/tools/jquery/checkbox/">:checkbox</a></li>
+            <li><a href="/tools/jquery/submit_1/">:submit</a></li>
+            <li><a href="/tools/jquery/image/">:image</a></li>
+            <li><a href="/tools/jquery/reset/">:reset</a></li>
+            <li><a href="/tools/jquery/button/">:button</a></li>
+            <li><a href="/tools/jquery/file/">:file</a></li>
+            <li><a href="/tools/jquery/hidden_1/">:hidden</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>表单对象属性</h3>
+          <ul>
+            <li><a href="/tools/jquery/enabled/">:enabled</a></li>
+            <li><a href="/tools/jquery/disabled/">:disabled</a></li>
+            <li><a href="/tools/jquery/checked/">:checked</a></li>
+            <li><a href="/tools/jquery/selected/">:selected</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="item col-3">
+    <div id="manipulation">
+      <h2>文档处理</h2>
+      <ul>
+        <li>
+          <h3>内部插入</h3>
+          <ul>
+            <li><a href="/tools/jquery/append/">append(content|fn)</a></li>
+            <li><a href="/tools/jquery/appendTo/">appendTo(content)</a></li>
+            <li><a href="/tools/jquery/prepend/">prepend(content|fn)</a></li>
+            <li><a href="/tools/jquery/prependTo/">prependTo(content)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>外部插入</h3>
+          <ul>
+            <li><a href="/tools/jquery/after/">after(content|fn)</a></li>
+            <li><a href="/tools/jquery/before/">before(content|fn)</a></li>
+            <li><a href="/tools/jquery/insertAfter/">insertAfter(content)</a></li>
+            <li><a href="/tools/jquery/insertBefore/">insertBefore(content)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>包裹</h3>
+          <ul>
+            <li><a href="/tools/jquery/wrap/" title="wrap(html|element|fn)">wrap(html|ele|fn)</a></li>
+            <li><a href="/tools/jquery/unwrap/">unwrap()</a></li>
+            <li><a href="/tools/jquery/wrapAll/" title="wrapall(html|element)">wrapAll(html|ele)</a></li>
+            <li><a href="/tools/jquery/wrapInner/" title="wrapInner(html|element|fn)">wrapInner(html|ele|fn)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>替换</h3>
+          <ul>
+            <li><a href="/tools/jquery/replaceWith/">replaceWith(content|fn)</a></li>
+            <li><a href="/tools/jquery/replaceAll/">replaceAll(selector)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>删除</h3>
+          <ul>
+            <li><a href="/tools/jquery/empty/">empty()</a></li>
+            <li><a href="/tools/jquery/remove/">remove([expr])</a></li>
+            <li><a href="/tools/jquery/detach/">detach([expr])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>复制</h3>
+          <ul>
+            <li><a href="/tools/jquery/clone/">clone([Even[,deepEven]])</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div id="traversing">
+      <h2>筛选</h2>
+      <ul>
+        <li>
+          <h3>过滤</h3>
+          <ul>
+            <li><a href="/tools/jquery/eq/">eq(index|-index)</a></li>
+            <li><a href="/tools/jquery/first/">first()</a></li>
+            <li><a href="/tools/jquery/last/">last()</a></li>
+            <li><a href="/tools/jquery/hasClass/">hasClass(class)</a></li>
+            <li><a href="/tools/jquery/filter/" title="filter(expr|object|element|fn)">filter(expr|obj|ele|fn)</a></li>
+            <li><a href="/tools/jquery/is/" title="is(expr|object|element|fn)">is(expr|obj|ele|fn)</a></li>
+            <li><a href="/tools/jquery/map/">map(callback)</a></li>
+            <li><a href="/tools/jquery/has/" title="has(expr|element)">has(expr|ele)</a></li>
+            <li><a href="/tools/jquery/not/" title="not(expr|element|fn)">not(expr|ele|fn)</a></li>
+            <li><a href="/tools/jquery/slice/" title="slice(start,[end])">slice(start,[end])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>查找</h3>
+          <ul>
+            <li><a href="/tools/jquery/children/">children([expr])</a></li>
+            <li><a href="/tools/jquery/closest/" title="closest(expr,[context]|object|element)">closest(e|o|e)</a><sup>1.7*</sup></li>
+            <li><a href="/tools/jquery/find/" title="find(expr|object|element)">find(e|o|e)</a></li>
+            <li><a href="/tools/jquery/next/">next([expr])</a></li>
+            <li><a href="/tools/jquery/nextAll/">nextall([expr])</a></li>
+            <li><a href="/tools/jquery/nextUntil/" title="nextUntil([expr|element][,filter])">nextUntil([e|e][,f])</a></li>
+            <li><a href="/tools/jquery/offsetParent/">offsetParent()</a></li>
+            <li><a href="/tools/jquery/parent/">parent([expr])</a></li>
+            <li><a href="/tools/jquery/parents/">parents([expr])</a></li>
+            <li><a href="/tools/jquery/parentsUntil/" title="parentsUntil([expr|element][,filter])">parentsUntil([e|e][,f])</a></li>
+            <li><a href="/tools/jquery/prev/">prev([expr])</a></li>
+            <li><a href="/tools/jquery/prevAll/">prevall([expr])</a></li>
+            <li><a href="/tools/jquery/prevUntil/" title="prevUntil([expr|element][,filter])">prevUntil([e|e][,f])</a></li>
+            <li><a href="/tools/jquery/siblings/">siblings([expr])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>串联</h3>
+          <ul>
+            <li><a href="/tools/jquery/add/" title="add(expr|element|html|object[,context])">add(e|e|h|o[,c])</a><sup>1.9*</sup></li>
+            <li><del><a href="/tools/jquery/andSelf/">andSelf()</a></del><sup>1.8-</sup></li>
+            <li><a href="/tools/jquery/addBack/">addBack()</a><sup>1.9+</sup></li>
+            <li><a href="/tools/jquery/contents/">contents()</a></li>
+            <li><a href="/tools/jquery/end/">end()</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="item col-4">
+    <div id="events">
+      <h2>事件</h2>
+      <ul>
+        <li>
+          <h3>页面载入</h3>
+          <ul>
+            <li><a href="/tools/jquery/ready/">ready(fn)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>事件处理</h3>
+          <ul>
+            <li><a href="/tools/jquery/on/" title="on(events,[selector],[data],fn)">on(eve,[sel],[data],fn)</a><sup>1.7+</sup></li>
+            <li><a href="/tools/jquery/off/" title="off(events,[selector],[data],fn)">off(eve,[sel],[fn])</a><sup>1.7+</sup></li>
+            <li><a href="/tools/jquery/bind/">bind(type,[data],fn)</a></li>
+            <li><a href="/tools/jquery/one/">one(type,[data],fn)</a></li>
+            <li><a href="/tools/jquery/trigger/">trigger(type,[data])</a></li>
+            <li><a href="/tools/jquery/triggerHandler/">triggerHandler(type, [data])</a></li>
+            <li><a href="/tools/jquery/unbind/" title="unbind(type,[data|fn])">unbind(t,[d|f])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>事件委派</h3>
+          <ul>
+            <li><del><a href="/tools/jquery/live/">live(type,[data],fn)</a></del><sup>1.7-</sup></li>
+            <li><del><a href="/tools/jquery/die/">die(type,[fn])</a></del><sup>1.7-</sup></li>
+            <li><a href="/tools/jquery/delegate/" title="delegate(selector,[type],[data],fn)">delegate(s,[t],[d],fn)</a></li>
+            <li><a href="/tools/jquery/undelegate/" title="undelegate([selector,[type],fn])">undelegate([s,[t],fn])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>事件切换</h3>
+          <ul>
+            <li><a href="/tools/jquery/hover/">hover([over,]out)</a></li>
+            <li><del><a href="/tools/jquery/toggle/">toggle([spe],[eas],[fn])</a></del><sup>1.9-</sup></li>
+          </ul>
+        </li>
+        <li>
+          <h3>事件</h3>
+          <ul>
+            <li><a href="/tools/jquery/blur/">blur([[data],fn])</a></li>
+            <li><a href="/tools/jquery/change/">change([[data],fn])</a></li>
+            <li><a href="/tools/jquery/click/">click([[data],fn])</a></li>
+            <li><a href="/tools/jquery/dblclick/">dblclick([[data],fn])</a></li>
+            <li><a href="/tools/jquery/error/">error([[data],fn])</a></li>
+            <li><a href="/tools/jquery/focus/">focus([[data],fn])</a></li>
+            <li><a href="/tools/jquery/focusin/">focusin([data],fn)</a></li>
+            <li><a href="/tools/jquery/focusout/">focusout([data],fn)</a></li>
+            <li><a href="/tools/jquery/keydown/">keydown([[data],fn])</a></li>
+            <li><a href="/tools/jquery/keypress/">keypress([[data],fn])</a></li>
+            <li><a href="/tools/jquery/keyup/">keyup([[data],fn])</a></li>
+            <li><a href="/tools/jquery/mousedown/">mousedown([[data],fn])</a></li>
+            <li><a href="/tools/jquery/mouseenter/">mouseenter([[data],fn])</a></li>
+            <li><a href="/tools/jquery/mouseleave/">mouseleave([[data],fn])</a></li>
+            <li><a href="/tools/jquery/mousemove/">mousemove([[data],fn])</a></li>
+            <li><a href="/tools/jquery/mouseout/">mouseout([[data],fn])</a></li>
+            <li><a href="/tools/jquery/mouseover/">mouseover([[data],fn])</a></li>
+            <li><a href="/tools/jquery/mouseup/">mouseup([[data],fn])</a></li>
+            <li><a href="/tools/jquery/resize/">resize([[data],fn])</a></li>
+            <li><a href="/tools/jquery/scroll/">scroll([[data],fn])</a></li>
+            <li><a href="/tools/jquery/select/">select([[data],fn])</a></li>
+            <li><a href="/tools/jquery/submit/">submit([[data],fn])</a></li>
+            <li><a href="/tools/jquery/unload/">unload([[data],fn])</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div id="effects">
+      <h2>效果</h2>
+      <ul>
+        <li>
+          <h3>基本</h3>
+          <ul>
+            <li><a href="/tools/jquery/show/" title="show([speed,[easing],[fn]])">show([s,[e],[fn]])</a></li>
+            <li><a href="/tools/jquery/hide/" title="hide([speed,[easing],[fn]])">hide([s,[e],[fn]])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>滑动</h3>
+          <ul>
+            <li><a href="/tools/jquery/slideDown/" title="slideDown([speed],[easing],[fn])">slideDown([s],[e],[fn])</a></li>
+            <li><a href="/tools/jquery/slideUp/" title="slideUp([speed,[easing],[fn]])">slideUp([s,[e],[fn]])</a></li>
+            <li><a href="/tools/jquery/slideToggle/" title="slideToggle([speed],[easing],[fn])">slideToggle([s],[e],[fn])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>淡入淡出</h3>
+          <ul>
+            <li><a href="/tools/jquery/fadeIn/" title="fadeIn([speed],[easing],[fn])">fadeIn([s],[e],[fn])</a></li>
+            <li><a href="/tools/jquery/fadeOut/" title="fadeOut([speed],[easing],[fn])">fadeOut([s],[e],[fn])</a></li>
+            <li><a href="/tools/jquery/fadeTo/" title="fadeTo([[speed],opacity,[easing],[fn]])">fadeTo([[s],o,[e],[fn]])</a></li>
+            <li><a href="/tools/jquery/fadeToggle/" title="fadeToggle([speed,[easing],[fn]])">fadeToggle([s,[e],[fn]])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>自定义</h3>
+          <ul>
+            <li><a href="/tools/jquery/animate/" title="animate(params,[speed],[easing],[fn])">animate(p,[s],[e],[fn])</a><sup>1.8*</sup></li>
+            <li><a href="/tools/jquery/stop/" title="stop([clearQueue],[jumpToEnd])">stop([c],[j])</a><sup>1.7*</sup></li>
+            <li><a href="/tools/jquery/delay/" title="delay(duration,[queueName])">delay(d,[q])</a></li>
+            <li><a href="/tools/jquery/finish/" title="finish([queue])">finish([queue])</a><sup>1.9+</sup></li>
+          </ul>
+        <li>
+          <h3>设置</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.fx.off/">jQuery.fx.off</a></li>
+            <li><a 
+    href="/tools/jquery/jQuery.fx.interval/">jQuery.fx.interval</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="item col-5">
+    <div id="ajax" >
+      <h2>ajax</h2>
+      <ul>
+        <li>
+          <h3>ajax 请求</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.ajax/">$.ajax(url,[settings])</a></li>
+            <li><a href="/tools/jquery/load/">load(url,[data],[callback])</a></li>
+            <li><a href="/tools/jquery/jQuery.get/">$.get(url,[data],[fn],[type])</a></li>
+            <li><a href="/tools/jquery/jQuery.getJSON/">$.getJSON(url,[data],[fn])</a></li>
+            <li><a href="/tools/jquery/jQuery.getScript/">$.getScript(url,[callback])</a></li>
+            <li><a href="/tools/jquery/jQuery.post/">$.post(url,[data],[fn],[type])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>ajax 事件</h3>
+          <ul>
+            <li><a href="/tools/jquery/ajaxComplete/">ajaxComplete(callback)</a></li>
+            <li><a href="/tools/jquery/ajaxError/">ajaxError(callback)</a></li>
+            <li><a href="/tools/jquery/ajaxSend/">ajaxSend(callback)</a></li>
+            <li><a href="/tools/jquery/ajaxStart/">ajaxStart(callback)</a></li>
+            <li><a href="/tools/jquery/ajaxStop/">ajaxStop(callback)</a></li>
+            <li><a href="/tools/jquery/ajaxSuccess/">ajaxSuccess(callback)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>其它</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.ajaxPrefilter/">$.ajaxPrefilter([type],fn)</a></li>
+            <li><a href="/tools/jquery/jQuery.ajaxSetup/">$.ajaxSetup([options])</a></li>
+            <li><a href="/tools/jquery/serialize/">serialize()</a></li>
+            <li><a href="/tools/jquery/serializearray/">serializearray()</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div id="utilities" >
+      <h2>工具</h2>
+      <ul>
+        <li>
+          <h3>浏览器及特性检测</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.support/">$.support</a></li>
+            <li><del><a href="/tools/jquery/jQuery.browser/">$.browser</a></del><sup>1.9-</sup></li>
+            <li><a href="/tools/jquery/jQuery.browser.version/">$.browser.version</a></li>
+            <li><del><a href="/tools/jquery/jQuery.boxModel/">$.boxModel</a></del></li>
+          </ul>
+        </li>
+        <li>
+          <h3>数组和对象操作</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.each/">$.each(object,[callback])</a></li>
+            <li><a href="/tools/jquery/jQuery.extend/">$.extend([d],tgt,obj1,[objN])</a></li>
+            <li><a href="/tools/jquery/jQuery.grep/">$.grep(array,fn,[invert])</a></li>
+            <li><del><a href="/tools/jquery/jQuery.sub/">$.sub()</a></del><sup>1.9-</sup></li>
+            <li><a href="/tools/jquery/jQuery.when/">$.when(deferreds)</a></li>
+            <li><a href="/tools/jquery/jQuery.makeArray/">$.makeArray(obj)</a></li>
+            <li><a href="/tools/jquery/jQuery.map/">$.map(arr|obj,callback)</a></li>
+            <li><a href="/tools/jquery/jQuery.inArray/">$.inArray(val,arr,[from])</a></li>
+            <li><a href="/tools/jquery/jQuery.toArray/">$.toArray()</a></li>
+            <li><a href="/tools/jquery/jQuery.merge/">$.merge(first,second)</a></li>
+            <li><a href="/tools/jquery/jQuery.unique/">$.unique(array)</a></li>
+            <li><a href="/tools/jquery/jQuery.parseJSON/">$.parseJSON(json)</a></li>
+            <li><a href="/tools/jquery/jQuery.parseXML/">$.parseXML(data)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>函数操作</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.noop/">$.noop</a>
+            <li><a href="/tools/jquery/jQuery.proxy/">$.proxy(function,context)</a></li>
+          </ul>
+        <li>
+          <h3>测试操作</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.contains/" title="$.contains(container,contained)">$.contains(c,c)</a></li>
+            <li><a href="/tools/jquery/jQuery.type/">$.type(obj)</a></li>
+            <li><a href="/tools/jquery/jQuery.isArray/">$.isarray(obj)</a></li>
+            <li><a href="/tools/jquery/jQuery.isFunction/">$.isFunction(obj)</a></li>
+            <li><a href="/tools/jquery/jQuery.isEmptyObject/">$.isEmptyObject(obj)</a></li>
+            <li><a href="/tools/jquery/jQuery.isPlainObject/">$.isPlainObject(obj)</a></li>
+            <li><a href="/tools/jquery/jQuery.isWindow/">$.isWindow(obj)</a></li>
+            <li><a href="/tools/jquery/jQuery.isNumeric/">$.isNumeric(value)</a><sup>1.7+</sup></li>
+          </ul>
+        </li>
+        <li>
+          <h3>字符串操作</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.trim/">$.trim(str)</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>URL</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.param/">$.param(obj,[traditional])</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>插件编写</h3>
+          <ul>
+            <li><a href="/tools/jquery/jQuery.error/">$.error(message)</a></li>
+            <li><a href="/tools/jquery/jquery/">$.fn.jquery</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="item col-6">
+    <div id="Eventobject" >
+      <h2>事件对象</h2>
+      <ul>
+        <li><a href="/tools/jquery/event.currentTarget/">eve.currentTarget</a></li>
+        <li><a href="/tools/jquery/event.data/">eve.data</a></li>
+        <li><a href="/tools/jquery/event.delegateTarget/">eve.delegateTarget</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/event.isDefaultPrevented/">eve.isDefaultPrevented()</a></li>
+        <li><a href="/tools/jquery/event.isImmediatePropagationStopped/" title="event.isImmediatePropagationStopped">eve.isImmediatePropag...()</a></li>
+        <li><a href="/tools/jquery/event.isPropagationStopped/">eve.isPropagationStopped()</a></li>
+        <li><a href="/tools/jquery/event.namespace/">eve.namespace</a></li>
+        <li><a href="/tools/jquery/event.pageX/">eve.pageX</a></li>
+        <li><a href="/tools/jquery/event.pageY/">eve.pageY</a></li>
+        <li><a href="/tools/jquery/event.preventDefault/">eve.preventDefault()</a></li>
+        <li><a href="/tools/jquery/event.relatedTarget/">eve.relatedTarget</a></li>
+        <li><a href="/tools/jquery/event.result/">eve.result</a></li>
+        <li><a href="/tools/jquery/event.stopImmediatePropagation/" title="event.stopImmediatePropagation">eve.stopImmediatePro...()</a></li>
+        <li><a href="/tools/jquery/event.stopPropagation/">eve.stopPropagation()</a></li>
+        <li><a href="/tools/jquery/event.target/">eve.target</a></li>
+        <li><a href="/tools/jquery/event.timeStamp/">eve.timeStamp</a></li>
+        <li><a href="/tools/jquery/event.type/">eve.type</a></li>
+        <li><a href="/tools/jquery/event.which/">eve.which</a></li>
+      </ul>
+    </div>
+    <div id="Deferred" >
+      <h2>延迟对象</h2>
+      <ul>
+        <li><a href="/tools/jquery/deferred.done/" title="deferred.done(doneCallbacks[,doneCallbacks])">def.done(d,[d])</a></li>
+        <li><a href="/tools/jquery/deferred.fail/">def.fail(failCallbacks)</a></li>
+        <li><del><a href="/tools/jquery/deferred.isRejected/">def.isRejected()</a></del><sup>1.7-</sup></li>
+        <li><del><a href="/tools/jquery/deferred.isResolved/">def.isResolved()</a></del><sup>1.7-</sup></li>
+        <li><a href="/tools/jquery/deferred.reject/">def.reject(args)</a></li>
+        <li><a href="/tools/jquery/deferred.rejectWith/" title="deferred.rejectWith(context,[args])">def.rejectWith(c,[a])</a></li>
+        <li><a href="/tools/jquery/deferred.resolve/">def.resolve(args)</a></li>
+        <li><a href="/tools/jquery/deferred.resolveWith/" title="deferred.resolveWith(context,[args])">def.resolveWith(c,[a])</a></li>
+        <li><del><a href="/tools/jquery/deferred.then/" title="deferred.then(doneCallbacks,failCallbacks[, progressCallbacks])">def.then(d[,f][,p])</a></del><sup>1.8*</sup></li>
+        <li><a href="/tools/jquery/deferred.promise/" title="deferred.promise([type],[target])">def.promise([ty],[ta])</a></li>
+        <li><del><a href="/tools/jquery/deferred.pipe/" title="deferred.pipe([doneFilter],[failFilter],[progressFilter])">def.pipe([d],[f],[p])</a></del><sup>1.8-</sup></li>
+        <li><a href="/tools/jquery/deferred.always/" title="deferred.always(alwaysCallbacks,[alwaysCallbacks])">def.always(al,[al])</a></li>
+        <li><a href="/tools/jquery/deferred.notify/">def.notify(args)</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/deferred.notifyWith/" title="deferred.notifyWith(context,[args])">def.notifyWith(c,[a])</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/deferred.progress/" title="deferred.progress(progressCallbacks)">def.progress(proCal)</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/deferred.state/">def.state()</a><sup>1.7+</sup></li>
+      </ul>
+    </div>
+    <div id="Callbacks" >
+      <h2>回调函数</h2>
+      <ul>
+        <li><a href="/tools/jquery/callbacks.add/">cal.add(callbacks)</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/callbacks.disable/">cal.disable()</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/callbacks.empty/">cal.empty()</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/callbacks.fire/">cal.fire(arguments)</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/callbacks.fired/">cal.fired()</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/callbacks.fireWith/" title="callbacks.fireWith([context] [, args])">cal.fireWith([c] [,a])</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/callbacks.has/">cal.has(callback)</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/callbacks.lock/">cal.lock()</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/callbacks.locked/">cal.locked()</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/callbacks.remove/">cal.remove(callbacks)</a><sup>1.7+</sup></li>
+        <li><a href="/tools/jquery/jQuery.callbacks/">$.callbacks(flags)</a><sup>1.7+</sup></li>
+      </ul>
+    </div>
+    <div id="Other" >
+      <h2>其它</h2>
+      <ul>
+        <li><a href="/tools/jquery/regexp/">正则表达式</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+	</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+	
+	<a class="addthis_button_sinaweibo"></a>
+	
+	
+	
+	<a class="addthis_button_twitter"></a>
+	
+	
+	
+	<a class="addthis_button_compact"></a>
+	<a class="addthis_counter addthis_bubble_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-558841b45b591663"></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Terry Cai
+
+.
+Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
+<span>Last build: 2015-09-27T22:37:33+08:00</span></br></footer>
+			<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'w3cub';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.w3cub.com/tools/jquery/';
+        var disqus_url = 'http://blog.w3cub.com/tools/jquery/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-64597109-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>
