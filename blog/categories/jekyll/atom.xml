@@ -4,7 +4,7 @@
   <title><![CDATA[Category: jekyll | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/jekyll/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2015-09-27T23:01:47+08:00</updated>
+  <updated>2015-10-08T00:58:22+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -86,7 +86,7 @@ $ rake install
 
 <h2>部署</h2>
 
-<p>接下来需要把Blog部署到github上去，第一步要做的是去<a href="https://github.com/new">github</a>创建一个<code>username.github.io</code>的repo，比如我的就叫<code>msching.github.io</code>。</p>
+<p>接下来需要把Blog部署到github上去，第一步要做的是去<a href="https://github.com/new">github</a>创建一个<code>username.github.io</code>的repo，比如我的就叫<code>icai.github.io</code>。</p>
 
 <p>然后运行以下命令，并依照提示完成github和Octopress的关联</p>
 
@@ -211,16 +211,16 @@ $ rake deploy
 <ul>
 <li><a href="http://octopress.org/">http://octopress.org/</a></li>
 <li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
-<li><a href="https://help.github.com/articles/using-jekyll-plugins-with-github-pages/">https://help.github.com/articles/using-jekyll-plugins-with-github-pages/</a></li>
+<li><a href="https://github.com/msching/msching.github.io">https://github.com/msching/msching.github.io</a></li>
 <li><a href="https://github.com/xiaocong/xiaocong.github.io">https://github.com/xiaocong/xiaocong.github.io</a></li>
+<li><a href="https://help.github.com/articles/using-jekyll-plugins-with-github-pages/">https://help.github.com/articles/using-jekyll-plugins-with-github-pages/</a></li>
 <li><a href="https://github.com/shashankmehta/greyshade">https://github.com/shashankmehta/greyshade</a></li>
 <li><a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a></li>
-<li><p><a href="https://github.com/msching/msching.github.io">https://github.com/msching/msching.github.io</a></p></li>
-<li><p><a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/</a></p></li>
+<li><a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/</a></li>
 <li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
 <li><a href="http://robdodson.me/some-octopress-rake-tips/">http://robdodson.me/some-octopress-rake-tips/</a></li>
-<li><p><a href="http://jekyllcn.com/docs/templates/">http://jekyllcn.com/docs/templates/</a></p></li>
-<li><p><a href="http://rails-practice.com/content/">http://rails-practice.com/content/</a></p></li>
+<li><a href="http://jekyllcn.com/docs/templates/">http://jekyllcn.com/docs/templates/</a></li>
+<li><a href="http://rails-practice.com/content/">http://rails-practice.com/content/</a></li>
 </ul>
 
 ]]></content>
