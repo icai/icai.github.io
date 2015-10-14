@@ -146,39 +146,71 @@ jQuery(function($) {
             options.url = 'https://cors-anywhere.herokuapp.com/' + options.url
         }
     });
-
+    var codeField = $('#code');
     jQuery.ajax({
-      url: 'http://laod.cn/hosts/2015-google-hosts.html',
+      url: 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts',
       type: 'GET',
       dataType: 'text',
       complete: function(xhr, textStatus) {
+        //called when complete
       },
       success: function(data, textStatus, xhr) {
-      	var  postContent = data.match(/<div[^>]*post-content[^>]*>([\s\S]*?)<\/div><div[\s\S]*post-share/);
-        var div = $("<div />").html(postContent[0]);
-        var  atags = div.find('a[href$=".txt"]').get();
-             atags = [].sort.call(atags, function(a, b){
-              if (a.textContent > b.textContent) {
-                return 1;
-              }
-              if (a.textContent < b.textContent) {
-                return -1;
-              }
-              return 0;
-            })
-           var tag =  atags.reverse()[0];
-        $('#ver').html('version ' + tag.textContent);
-        $.get(tag.getAttribute("href"), function(data) {
-            $('#code').val(data)
-        })
-        div = null;
+         codeField.val(data);
         //called when successful
       },
       error: function(xhr, textStatus, errorThrown) {
-        alert(xhr);
+        codeField.val("Failure, refresh page please.");
         //called when there is an error
       }
     });
+    // return;
+    // jQuery.ajax({
+    //   url: 'http://laod.cn/hosts/2015-google-hosts.html',
+    //   type: 'GET',
+    //   dataType: 'text',
+    //   success: function(data, textStatus, xhr) {
+    //   	var  postContent = data.match(/<div[^>]*post-content[^>]*>([\s\S]*?)<\/div><div[\s\S]*post-share/);
+    //     var div = $("<div />").html(postContent[0]);
+    //     var  atags = div.find('a[href$=".txt"]').get();
+    //          atags = [].sort.call(atags, function(a, b){
+    //           if (a.textContent > b.textContent) {
+    //             return 1;
+    //           }
+    //           if (a.textContent < b.textContent) {
+    //             return -1;
+    //           }
+    //           return 0;
+    //         })
+    //        var tag =  atags.reverse()[0];
+    //     $('#ver').html('version ' + tag.textContent);
+    //     $.get(tag.getAttribute("href"), function(data) {
+    //         codeField.val(data)
+    //     })
+    //     div = null;
+    //     //called when successful
+    //   },
+    //   error: function(xhr, textStatus, errorThrown) {
+    //     codeField.val("Let me try again.");
+    //     jQuery.ajax({
+    //       url: 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts',
+    //       type: 'GET',
+    //       dataType: 'text',
+    //       complete: function(xhr, textStatus) {
+    //         //called when complete
+    //       },
+    //       success: function(data, textStatus, xhr) {
+    //          codeField.val(data);
+    //         //called when successful
+    //       },
+    //       error: function(xhr, textStatus, errorThrown) {
+    //         codeField.val("Failure, refresh page please.");
+    //         //called when there is an error
+    //       }
+    //     });
+    //     //called when there is an error
+    //   }
+    // });
+
 })
 </script>
 	</div>
@@ -217,7 +249,7 @@ jQuery(function($) {
 .
 Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-<span>Last build: 2015-10-08T00:58:24+08:00</span></br></footer>
+<span>Last build: 2015-10-14T20:19:49+08:00</span></br></footer>
 			<script src="/javascripts/slash.js"></script>
 <script src="/javascripts/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">

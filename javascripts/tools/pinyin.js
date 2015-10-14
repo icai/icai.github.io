@@ -22,22 +22,27 @@ function trans(){
 
 function copy(obj)
 {
-  var Result=document.getElementById(obj).value+'\n\n东子博客 www.kilvn.com';
+  var Result=document.getElementById(obj).value+'\n\n blog.w3cub.com';
   if(Result=="")
   {
     return ;
   }
   else 
   {
-	  if(window.clipboardData) {        
+	 if(document.execCommand){
+  		document.getElementById(obj).select();
+  		document.execCommand("Copy");
+  		document.getElementById(obj).blur();
+  		alert('复制成功。');
+	 } else if(window.clipboardData) {        
         window.clipboardData.clearData();        
         window.clipboardData.setData("Text",Result); 
 		document.getElementById(obj).select(); 
-	    window.alert('复制成功。')      
+	    alert('复制成功。')
     } else if(navigator.userAgent.indexOf("Opera") != -1) {        
         window.location = Result;   
 		document.getElementById(obj).select(); 
-	    window.alert('复制成功。')       
+	    alert('复制成功。')       
     } else if (window.netscape) {        
         try {        
             netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");        
