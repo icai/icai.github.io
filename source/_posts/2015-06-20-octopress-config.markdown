@@ -87,7 +87,7 @@ bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类�
 
 
 ##部署
-接下来需要把Blog部署到github上去，第一步要做的是去[github](https://github.com/new)创建一个`username.github.io`的repo，比如我的就叫`msching.github.io`。
+接下来需要把Blog部署到github上去，第一步要做的是去[github](https://github.com/new)创建一个`username.github.io`的repo，比如我的就叫`icai.github.io`。
 
 然后运行以下命令，并依照提示完成github和Octopress的关联
 
@@ -218,15 +218,13 @@ $ rake deploy
 
 * http://octopress.org/
 * https://msching.github.io/blog/2014/04/11/starting/
-* https://help.github.com/articles/using-jekyll-plugins-with-github-pages/
+* https://github.com/msching/msching.github.io
 * https://github.com/xiaocong/xiaocong.github.io
+* https://help.github.com/articles/using-jekyll-plugins-with-github-pages/
 * https://github.com/shashankmehta/greyshade
 * https://github.com/imathis/octopress
-* https://github.com/msching/msching.github.io
-
 * http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/
 * https://msching.github.io/blog/2014/04/11/starting/
 * http://robdodson.me/some-octopress-rake-tips/
 * http://jekyllcn.com/docs/templates/
-
 * http://rails-practice.com/content/

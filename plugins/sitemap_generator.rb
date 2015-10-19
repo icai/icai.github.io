@@ -1,62 +1,19 @@
-# Sitemap.xml Generator is a Jekyll plugin that generates a sitemap.xml file by
+# Sitemap.xml Generator is a Jekyll plugin that generates a sitemap.xml file by 
 # traversing all of the available posts and pages.
-#
-# How To Use:
-#   1) Copy source file into your _plugins folder within your Jekyll project.
-#   2) Change modify the url variable in _config.yml to reflect your domain name.
-#   3) Run Jekyll: jekyll --server to re-generate your site.
-#
-# Variables:
-#   * Change SITEMAP_FILE_NAME if you want your sitemap to be called something
-#     other than sitemap.xml.
-#   * Change the PAGES_INCLUDE_POSTS list to include any pages that are looping
-#     through your posts (e.g. "index.html", "archive.html", etc.). This will
-#     ensure that right after you make a new post, the last modified date will
-#     be updated to reflect the new post.
-#   * A sitemap.xml should be included in your _site folder.
-#   * If there are any files you don't want included in the sitemap, add them
-#     to the EXCLUDED_FILES list. The name should match the name of the source
-#     file.
-#   * If you want to include the optional changefreq and priority attributes,
-#     simply include custom variables in the YAML Front Matter of that file.
-#     The names of these custom variables are defined below in the
-#     CHANGE_FREQUENCY_CUSTOM_VARIABLE_NAME and PRIORITY_CUSTOM_VARIABLE_NAME
-#     constants.
-#
-# Notes:
-#   * The last modified date is determined by the latest from the following:
-#     system modified date of the page or post, system modified date of
-#     included layout, system modified date of included layout within that
-#     layout, ...
-#
+# 
+# See readme file for documenation
+# 
+# Updated to use config file for settings by Daniel Groves
+# Site: http://danielgroves.net
+# 
 # Author: Michael Levin
 # Site: http://www.kinnetica.com
 # Distributed Under A Creative Commons License
 #   - http://creativecommons.org/licenses/by/3.0/
-#
-# Modified for Octopress by John W. Long
-#
+
 require 'rexml/document'
-require 'fileutils'
 
 module Jekyll
-
-  # Change SITEMAP_FILE_NAME if you would like your sitemap file
-  # to be called something else
-  SITEMAP_FILE_NAME = "sitemap.xml"
-
-  # Any files to exclude from being included in the sitemap.xml
-  EXCLUDED_FILES = ["atom.xml"]
-
-  # Any files that include posts, so that when a new post is added, the last
-  # modified date of these pages should take that into account
-  PAGES_INCLUDE_POSTS = ["index.html"]
-
-  # Custom variable names for changefreq and priority elements
-  # These names are used within the YAML Front Matter of pages or posts
-  # for which you want to include these properties
-  CHANGE_FREQUENCY_CUSTOM_VARIABLE_NAME = "change_frequency"
-  PRIORITY_CUSTOM_VARIABLE_NAME = "priority"
 
   class Post
     attr_accessor :name
@@ -64,9 +21,13 @@ module Jekyll
     def full_path_to_source
       File.join(@base, @name)
     end
+    
+    def path_to_source
+      File.join(@name)
+    end
 
-    def location_on_server
-      "#{site.config['url']}#{url}"
+    def location_on_server(my_url)
+      "#{my_url}#{url}"
     end
   end
 
@@ -76,12 +37,17 @@ module Jekyll
     def full_path_to_source
       File.join(@base, @dir, @name)
     end
+    
+    def path_to_source
+      File.join(@dir, @name)
+    end
 
-    def location_on_server
-      location = "#{site.config['url']}#{@dir}#{url}"
+    def location_on_server(my_url)
+      location = "#{my_url}#{url}"
       location.gsub(/index.html$/, "")
     end
   end
+
 
   class Layout
     def full_path_to_source
@@ -92,29 +58,41 @@ module Jekyll
   # Recover from strange exception when starting server without --auto
   class SitemapFile < StaticFile
     def write(dest)
-      begin
-        super(dest)
-      rescue
-      end
-
       true
     end
   end
 
   class SitemapGenerator < Generator
+    priority :lowest
 
+    # Config defaults
+    SITEMAP_FILE_NAME = "/sitemap.xml"
+    EXCLUDE = ["/atom.xml", "/feed.xml", "/feed/index.xml"]
+    INCLUDE_POSTS = ["/index.html"] 
+    CHANGE_FREQUENCY_NAME = "change_frequency"
+    PRIORITY_NAME = "priority"
+    
     # Valid values allowed by sitemap.xml spec for change frequencies
     VALID_CHANGE_FREQUENCY_VALUES = ["always", "hourly", "daily", "weekly",
-      "monthly", "yearly", "never"]
+      "monthly", "yearly", "never"] 
 
     # Goes through pages and posts and generates sitemap.xml file
     #
     # Returns nothing
     def generate(site)
+      # Configuration
+      sitemap_config = site.config['sitemap'] || {}
+      @config = {}
+      @config['filename'] = sitemap_config['filename'] || SITEMAP_FILE_NAME
+      @config['change_frequency_name'] = sitemap_config['change_frequency_name'] || CHANGE_FREQUENCY_NAME
+      @config['priority_name'] = sitemap_config['priority_name'] || PRIORITY_NAME
+      @config['exclude'] = sitemap_config['exclude'] || EXCLUDE
+      @config['include_posts'] = sitemap_config['include_posts'] || INCLUDE_POSTS
+
       sitemap = REXML::Document.new << REXML::XMLDecl.new("1.0", "UTF-8")
 
       urlset = REXML::Element.new "urlset"
-      urlset.add_attribute("xmlns",
+      urlset.add_attribute("xmlns", 
         "http://www.sitemaps.org/schemas/sitemap/0.9")
 
       @last_modified_post_date = fill_posts(site, urlset)
@@ -122,18 +100,19 @@ module Jekyll
 
       sitemap.add_element(urlset)
 
+      # Create destination directory if it doesn't exist yet. Otherwise, we cannot write our file there.
+      Dir::mkdir(site.dest) if !File.directory? site.dest
+
       # File I/O: create sitemap.xml file and write out pretty-printed XML
-      unless File.exists?(site.dest)
-        FileUtils.mkdir_p(site.dest)
-      end
-      file = File.new(File.join(site.dest, SITEMAP_FILE_NAME), "w")
+      filename = @config['filename']
+      file = File.new(File.join(site.dest, filename), "w")
       formatter = REXML::Formatters::Pretty.new(4)
       formatter.compact = true
       formatter.write(sitemap, file)
       file.close
 
       # Keep the sitemap.xml file from being cleaned by Jekyll
-      site.static_files << Jekyll::SitemapFile.new(site, site.dest, "/", SITEMAP_FILE_NAME)
+      site.static_files << Jekyll::SitemapFile.new(site, site.dest, "/", filename)
     end
 
     # Create url elements for all the posts and find the date of the latest one
@@ -142,7 +121,7 @@ module Jekyll
     def fill_posts(site, urlset)
       last_modified_date = nil
       site.posts.each do |post|
-        if !excluded?(post.name)
+        if !excluded?(site, post.name)
           url = fill_url(site, post)
           urlset.add_element(url)
         end
@@ -161,7 +140,7 @@ module Jekyll
     # Returns last_modified_date of index page
     def fill_pages(site, urlset)
       site.pages.each do |page|
-        if !excluded?(page.name)
+        if !excluded?(site, page.path_to_source)
           path = page.full_path_to_source
           if File.exists?(path)
             url = fill_url(site, page)
@@ -171,23 +150,25 @@ module Jekyll
       end
     end
 
-    # Fill data of each URL element: location, last modified,
+    # Fill data of each URL element: location, last modified, 
     # change frequency (optional), and priority.
     #
     # Returns url REXML::Element
     def fill_url(site, page_or_post)
       url = REXML::Element.new "url"
 
-      loc = fill_location(page_or_post)
+      loc = fill_location(site, page_or_post)
       url.add_element(loc)
 
       lastmod = fill_last_modified(site, page_or_post)
       url.add_element(lastmod) if lastmod
 
-      if (page_or_post.data[CHANGE_FREQUENCY_CUSTOM_VARIABLE_NAME])
-        change_frequency =
-          page_or_post.data[CHANGE_FREQUENCY_CUSTOM_VARIABLE_NAME].downcase
 
+
+      if (page_or_post.data[@config['change_frequency_name']])
+        change_frequency = 
+          page_or_post.data[@config['change_frequency_name']].downcase
+          
         if (valid_change_frequency?(change_frequency))
           changefreq = REXML::Element.new "changefreq"
           changefreq.text = change_frequency
@@ -197,11 +178,11 @@ module Jekyll
         end
       end
 
-      if (page_or_post.data[PRIORITY_CUSTOM_VARIABLE_NAME])
-        priority_value = page_or_post.data[PRIORITY_CUSTOM_VARIABLE_NAME]
+      if (page_or_post.data[@config['priority_name']])
+        priority_value = page_or_post.data[@config['priority_name']]
         if valid_priority?(priority_value)
           priority = REXML::Element.new "priority"
-          priority.text = page_or_post.data[PRIORITY_CUSTOM_VARIABLE_NAME]
+          priority.text = page_or_post.data[@config['priority_name']]
           url.add_element(priority)
         else
           puts "ERROR: Invalid Priority In #{page_or_post.name}"
@@ -211,12 +192,13 @@ module Jekyll
       url
     end
 
-    # Get URL location of page or post
+    # Get URL location of page or post 
     #
     # Returns the location of the page or post
-    def fill_location(page_or_post)
+    def fill_location(site, page_or_post)
       loc = REXML::Element.new "loc"
-      loc.text = page_or_post.location_on_server
+      url = site.config['url'] + site.config['baseurl']
+      loc.text = page_or_post.location_on_server(url)
 
       loc
     end
@@ -236,7 +218,7 @@ module Jekyll
         lastmod.text = latest_date.iso8601
       else
         # This is a page
-        if posts_included?(page_or_post.name)
+        if posts_included?(site, page_or_post.path_to_source)
           # We want to take into account the last post date
           final_date = greater_date(latest_date, @last_modified_post_date)
           lastmod.text = final_date.iso8601
@@ -270,22 +252,22 @@ module Jekyll
     #
     # Returns latest of two dates
     def greater_date(date1, date2)
-      if (date1 >= date2)
+      if (date1 >= date2) 
         date1
-      else
-        date2
+      else 
+        date2 
       end
     end
 
     # Is the page or post listed as something we want to exclude?
     #
     # Returns boolean
-    def excluded?(name)
-      EXCLUDED_FILES.include? name
+    def excluded?(site, name)
+      @config['exclude'].include? name
     end
 
-    def posts_included?(name)
-      PAGES_INCLUDE_POSTS.include? name
+    def posts_included?(site, name)
+      @config['include_posts'].include? name
     end
 
     # Is the change frequency value provided valid according to the spec
@@ -309,4 +291,3 @@ module Jekyll
     end
   end
 end
-
