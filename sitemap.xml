@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release/</loc>
+    <lastmod>2015-12-08T22:23:26+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://blog.w3cub.com/blog/2015/08/20/shrimpcongee/</loc>
     <lastmod>2015-08-20T22:53:49+08:00</lastmod>
   </url>
@@ -54,24 +58,6 @@
   </url>
   <url>
     <loc>http://blog.w3cub.com/navs/</loc>
-  </url>
-  <url>
-    <loc>http://blog.w3cub.com/blog/categories/music/</loc>
-  </url>
-  <url>
-    <loc>http://blog.w3cub.com/blog/categories/javascript/</loc>
-  </url>
-  <url>
-    <loc>http://blog.w3cub.com/blog/categories/octopress/</loc>
-  </url>
-  <url>
-    <loc>http://blog.w3cub.com/blog/categories/jekyll/</loc>
-  </url>
-  <url>
-    <loc>http://blog.w3cub.com/blog/categories/ruby/</loc>
-  </url>
-  <url>
-    <loc>http://blog.w3cub.com/blog/categories/life/</loc>
   </url>
   <url>
     <loc>http://blog.w3cub.com/blog/tags/song/</loc>
@@ -138,6 +124,30 @@
   </url>
   <url>
     <loc>http://blog.w3cub.com/blog/tags/zhou/</loc>
+  </url>
+  <url>
+    <loc>http://blog.w3cub.com/blog/tags/project-development-documents-w3cub/</loc>
+  </url>
+  <url>
+    <loc>http://blog.w3cub.com/blog/categories/music/</loc>
+  </url>
+  <url>
+    <loc>http://blog.w3cub.com/blog/categories/javascript/</loc>
+  </url>
+  <url>
+    <loc>http://blog.w3cub.com/blog/categories/octopress/</loc>
+  </url>
+  <url>
+    <loc>http://blog.w3cub.com/blog/categories/jekyll/</loc>
+  </url>
+  <url>
+    <loc>http://blog.w3cub.com/blog/categories/ruby/</loc>
+  </url>
+  <url>
+    <loc>http://blog.w3cub.com/blog/categories/life/</loc>
+  </url>
+  <url>
+    <loc>http://blog.w3cub.com/blog/categories/project/</loc>
   </url>
   <url>
     <loc>http://blog.w3cub.com/tools/csspacker/</loc>
