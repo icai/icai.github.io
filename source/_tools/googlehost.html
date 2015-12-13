@@ -1,0 +1,54 @@
+---
+layout: tool
+name: googlehosts
+icon: globe
+title: Google Hosts
+category: 常用工具
+keywords: google,hosts,proxy
+comments: true
+published: true
+graduated: true
+---
+
+<h2>
+	Google Hosts: <small id="ver"></small>
+</h2>
+<textarea class="tarea" id="code" rows="18" >loading</textarea>
+<div class="">
+	This hosts come from network.
+</div>
+<h4>How to change hosts?</h4>
+<h5>windows:</h5>
+<p><code>notepad %windir%\system32\drivers\etc\hosts</code></p>
+
+<h5>ubuntu:</h5>
+<p><code>sudo gedit /etc/hosts</code></p>
+<p><code>sudo /etc/init.d/networking restart</code></p>
+
+<script>
+jQuery(function($) {
+    // jQuery.ajaxPrefilter(function(options) {
+    //     if (options.crossDomain && jQuery.support.cors) {
+    //         options.url = 'https://cors-anywhere.herokuapp.com/' + options.url
+    //     }
+    // });
+    var codeField = $('#code');
+    jQuery.ajax({
+      url: 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts',
+      type: 'GET',
+      dataType: 'text',
+      complete: function(xhr, textStatus) {
+        //called when complete
+      },
+      success: function(data, textStatus, xhr) {
+         codeField.val(data);
+        //called when successful
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        codeField.val("Failure, refresh page please.");
+        //called when there is an error
+      }
+    });
+
+})
+</script>

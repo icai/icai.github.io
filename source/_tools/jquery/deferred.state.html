@@ -1,0 +1,29 @@
+---
+layout: tool
+title: "jQuery - deferred.state()"
+keywords: "deferred.state, jquery, documents"
+date: 2015-09-27 22:15
+icon: css3
+comments: true
+sharing: true
+footer: true
+---
+<div class="jq-page-content">
+<div rel="deferred.state">
+    <h2>
+<span>返回值:Deferred Object</span>deferred.state()</h2>
+    <h3>
+<em>V1.7</em>概述</h3>
+    <div class="desc">
+      <p><span id="result_box" lang="zh-CN" xml:lang="zh-CN">确定一个Deferred对象的当前状态</span>。</p>
+      <div class="longdesc">
+        <p><span id="result_box2" lang="zh-CN" xml:lang="zh-CN">deferred.state（）方法返回一个字符串，代表Deferred对象的当前状态。 Deferred对象可以在三种状态之一：</span></p>
+        <ul>
+          <li> <strong>pending</strong>:   Deferred对象是尚未完成状态 (不是 "rejected" 或 "resolved"). </li>
+          <li> <strong>resolved</strong>:    Deferred对象是在解决状态，这意味着，<a href="http://api.jquery.com/deferred.resolve/">deferred.resolve()</a> 或者 <a href="http://api.jquery.com/deferred.resolveWith/">deferred.resolveWith()</a>被对象访问和doneCallbacks被访问（或在被调用的过程中） 。 </li>
+          <li> <strong>rejected</strong>:   Deferred对象是在被拒绝的状态，这意味着，<a href="http://api.jquery.com/deferred.reject/">deferred.reject()</a> 或者 <a href="http://api.jquery.com/deferred.rejectWith/">deferred.rejectWith()</a> 被对象访问和failCallbacks被访问（或在被调用的过程中） 。 </li>
+        </ul>
+        <p> 这种方法主要是有用的调试，以确定的，例如，递延是否已经得到解决，即使你打算拒绝它的内部代码。 </p>
+      </div>
+    </div>
+  </div></div><div class="jquery-home"><a href="/tools/jquery/" class="btn btn-default" title="jQuery Home"><i class="fa fa-css3"></i></a></div>

@@ -56,7 +56,6 @@ article{
 		p{
 			margin-top: 10px;
 			margin-bottom: 0px;
-
 		}
 		h2{
 			font-weight: 300;
@@ -87,24 +86,30 @@ article{
 		iframe{
 			border: none;
 		}
-		table{
-			background: $color-gray04;
-			border: 1px solid $color-gray03;
-			border-spacing: 0;
-			margin-top: 10px;
-			th{
-				background: $color-gray03;
-				padding: 0 15px;
-			}
-			td{
-				text-align: center;
-			}
-			tr{
-				&:nth-of-type(2n){
-					background: #d5d5d5;
-				}
-			}
+		.github-btn{
+		    display: inline-block;
+		    vertical-align: text-top;
+		    margin-left: .25rem;
+		    margin-top: 0px;
 		}
+		// table{
+		// 	background: $color-gray04;
+		// 	border: 1px solid $color-gray03;
+		// 	border-spacing: 0;
+		// 	margin-top: 10px;
+		// 	th{
+		// 		background: $color-gray03;
+		// 		padding: 0 15px;
+		// 	}
+		// 	td{
+		// 		text-align: center;
+		// 	}
+		// 	tr{
+		// 		&:nth-of-type(2n){
+		// 			background: #d5d5d5;
+		// 		}
+		// 	}
+		// }
 		.caption{
 			display: block;
 			font-size: 0.9em;
