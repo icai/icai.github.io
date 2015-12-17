@@ -8,7 +8,7 @@
 	<title>About - 泛前端开发</title>
 	<meta name="author" content="Terry Cai">
 	
-	<meta name="description" content="关于我 一个程序员，你可以叫我Terry. location at China, Guangzhou. 热爱前端开发，但不限于前端开发。欢迎gmail me&lt;gidcai#gmail.com>。 关于本站 本站主要用于个人博客资讯记录，Github Pages 静态化页面， &hellip;">
+	<meta name="description" content="关于我 一个程序员，你可以叫我Terry. location at China, Guangzhou. 热爱前端开发，但不限于前端开发。欢迎gmail me&lt;gidcai#gmail.com>。 Follow me: 关于本站 本站主要用于个人博客资讯记录，Github Pages &hellip;">
 
 	<meta name="keywords" content="泛前端开发,前端,全栈,frontend,fullstack,octopress,frontend tools">
 	
@@ -22,9 +22,13 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/about/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<script src="/assets/application-586b0250184885da2ff0d8425ccf1f6c.js"></script>
+	<link rel="stylesheet" href="/assets/application-87c49e998f24fb33a420eb788e23eddd.css">
+
+	<!-- <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"> -->
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<script src="/javascripts/libs/jquery.min.js"></script>
+	<!-- <script src="/javascripts/libs/jquery.min.js"></script> -->
+	
 	<!-- <link rel="stylesheet" href="/assets/slides/css/for_blog.css"> -->
 
 </head>
@@ -36,7 +40,7 @@
 			<div class="intrude-less">
 			<header id="header" class="inner"><div class="profilepic">
 	
-		<img src="/images/avatar.jpeg" style="width: 160px;" />
+		<img src="/assets/images/avatar.jpeg" style="width: 160px;" />
 	
 </div>
 <h1><a href="/">泛前端开发</a></h1>
@@ -109,9 +113,9 @@
 			</div>
 		</div>
 	    <script>
-	    var bgs = ["1.jpg","2.jpg", "3.jpg", "4.jpg", "5.jpg"];
+	    var bgs = [ "/assets/bg/1-6221823e65aef1bb78ab046446b888ba.jpg","/assets/bg/2-f88a510fae11607ac30047bce9f1f740.jpg", "/assets/bg/3-1dc37e2bc1906aec7092b06e0085375f.jpg", "/assets/bg/4-f083b82fb6899fc6117fa19f7bc0cee6.jpg", "/assets/bg/5-0c2f2fdcc427c642764d67252d0639a5.jpg"];
 	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
-	    	lcol && (lcol.style.backgroundImage = "url(/images/bg/" + bgs[Math.floor(Math.random() * bgs.length)] +")");
+	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
 	    </script>	
 		<div class="mid-col">
 			
@@ -130,22 +134,26 @@
 
 <p>热爱前端开发，但不限于前端开发。欢迎gmail me&lt;gidcai#gmail.com>。</p>
 
-<p><br></p>
+<p>Follow me: <iframe src="https://ghbtns.com/github-btn.html?user=icai&type=follow&count=true" frameborder="0" scrolling="0" width="170px" height="20px" class="ghbtn"></iframe>
+<br></p>
 
 <h2>关于本站</h2>
 
-<p>本站主要用于个人博客资讯记录，Github Pages 静态化页面，可在网页下方找到源代码。</p>
+<p>本站主要用于个人博客资讯记录，Github Pages 静态化页面，可在网页下方找到源代码。
+以前一直在百度空间写日志，最高的文章PV达8k。百度空间关闭后，把日志备份在<a class="netease" href="http://blog.163.com/328765211" target="_blank" title="Netease">Netease</a>。</p>
 
 <p><br></p>
 
 <h2>关于w3cub</h2>
 
-<p>目前w3cub已经启用的二级域名有 <a href="http://blog.w3cub.com/" target="_blank">blog.w3cub.com</a>, <a href="http://jplugin.w3cub.com/" target="_blank">jplugin.w3cub.com</a>, <a href="http://markdown.w3cub.com/" target="_blank">markdown.w3cub.com</a>
+<p>目前w3cub已经启用的二级域名有 <a href="http://blog.w3cub.com/" target="_blank">blog.w3cub.com</a>, <a href="http://jplugin.w3cub.com/" target="_blank">jplugin.w3cub.com</a>, <a href="http://markdown.w3cub.com/" target="_blank">markdown.w3cub.com</a>, <a href="http://docs.w3cub.com/" target="_blank">docs.w3cub.com</a>
 <br></p>
 
 <hr />
 
 <h3>Change log</h3>
+
+<p>2015-12-17:  use sprockets handle assets</p>
 
 <p>2015-08-01:  add goolgehosts tool, fix style 404 bug, seo home page description.</p>
 
@@ -155,7 +163,21 @@
 
 <p>2015-07-01:  add keycode table tool and support meta keywords, optimize page seo</p>
 
-<p>2015-06-29:  add translation style and merge style, fix google analytics id</p>
+<p>2015-06-29:  add translation style and merge style, fix google analytics id
+<br>
+<br></p>
+
+<h3>Last build</h3>
+
+<p><span> 2015-12-17T23:46:14+08:00</span></p>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=icai&repo=icai.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px" class="ghbtn"></iframe>
+
+
+<iframe src="https://ghbtns.com/github-btn.html?user=icai&repo=icai.github.io&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px" class="ghbtn" ></iframe>
+
+
+<p><br></p>
 </div>
 </article>
 
@@ -193,14 +215,8 @@
 .
 Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-<span>Last build: 2015-12-10T18:46:26+08:00</span></br></footer>
-			<script src="/javascripts/slash.js"></script>
-<script src="/javascripts/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-	$('.fancybox').fancybox();
-})(jQuery);
-</script> <!-- Delete or comment this line to disable Fancybox -->
+<span>Last build: <a href="/about">Readme</a></span></br></footer>
+			
 
 
 <script type="text/javascript">

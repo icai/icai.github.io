@@ -22,9 +22,13 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/tools/jquery/clearQueue/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<script src="/assets/application-586b0250184885da2ff0d8425ccf1f6c.js"></script>
+	<link rel="stylesheet" href="/assets/application-87c49e998f24fb33a420eb788e23eddd.css">
+
+	<!-- <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"> -->
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<script src="/javascripts/libs/jquery.min.js"></script>
+	<!-- <script src="/javascripts/libs/jquery.min.js"></script> -->
+	
 	<!-- <link rel="stylesheet" href="/assets/slides/css/for_blog.css"> -->
 
 </head>
@@ -36,7 +40,7 @@
 			<div class="intrude-less">
 			<header id="header" class="inner"><div class="profilepic">
 	
-		<img src="/images/avatar.jpeg" style="width: 160px;" />
+		<img src="/assets/images/avatar.jpeg" style="width: 160px;" />
 	
 </div>
 <h1><a href="/">泛前端开发</a></h1>
@@ -109,9 +113,9 @@
 			</div>
 		</div>
 	    <script>
-	    var bgs = ["1.jpg","2.jpg", "3.jpg", "4.jpg", "5.jpg"];
+	    var bgs = [ "/assets/bg/1-6221823e65aef1bb78ab046446b888ba.jpg","/assets/bg/2-f88a510fae11607ac30047bce9f1f740.jpg", "/assets/bg/3-1dc37e2bc1906aec7092b06e0085375f.jpg", "/assets/bg/4-f083b82fb6899fc6117fa19f7bc0cee6.jpg", "/assets/bg/5-0c2f2fdcc427c642764d67252d0639a5.jpg"];
 	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
-	    	lcol && (lcol.style.backgroundImage = "url(/images/bg/" + bgs[Math.floor(Math.random() * bgs.length)] +")");
+	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
 	    </script>	
 		<div class="mid-col">
 			
@@ -187,14 +191,8 @@
 .
 Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-<span>Last build: 2015-12-10T18:46:22+08:00</span></br></footer>
-			<script src="/javascripts/slash.js"></script>
-<script src="/javascripts/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-	$('.fancybox').fancybox();
-})(jQuery);
-</script> <!-- Delete or comment this line to disable Fancybox -->
+<span>Last build: <a href="/about">Readme</a></span></br></footer>
+			
 
 
 <script type="text/javascript">
