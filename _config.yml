@@ -24,7 +24,7 @@ subscribe_email:
 # RSS feeds can list your email address if you like
 # email: gidcai@gmail.com
 
-avatarimg: "/images/avatar.jpeg"
+avatarimg: "/assets/images/avatar.jpeg"
 
 meta:
     author:

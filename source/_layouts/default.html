@@ -9,9 +9,9 @@
 			</div>
 		</div>
 	    <script>
-	    var bgs = ["1.jpg","2.jpg", "3.jpg", "4.jpg", "5.jpg"];
+	    var bgs = [ "{% image_path bg/1.jpg %}","{% image_path bg/2.jpg %}", "{% image_path bg/3.jpg %}", "{% image_path bg/4.jpg %}", "{% image_path bg/5.jpg %}"];
 	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
-	    	lcol && (lcol.style.backgroundImage = "url(/images/bg/" + bgs[Math.floor(Math.random() * bgs.length)] +")");
+	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
 	    </script>	
 		<div class="mid-col">
 			{% unless page.banner == false %}

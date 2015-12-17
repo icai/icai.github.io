@@ -27,11 +27,6 @@ graduated: true
 
 <script>
 jQuery(function($) {
-    // jQuery.ajaxPrefilter(function(options) {
-    //     if (options.crossDomain && jQuery.support.cors) {
-    //         options.url = 'https://cors-anywhere.herokuapp.com/' + options.url
-    //     }
-    // });
     var codeField = $('#code');
     jQuery.ajax({
       url: 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts',

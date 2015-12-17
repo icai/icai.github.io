@@ -1,0 +1,496 @@
+.tool hr {
+    height: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #FFF;
+}
+
+.tool .content {
+    box-sizing: border-box;
+    margin-right: 0;
+    padding: 20px;
+}
+
+.tool .content {
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.tool .content h2 {
+    font-size: 16px;
+    margin: 0 0 10px;
+    font-weight: bold;
+}
+
+.tool .content textarea {
+    width: 100%;
+    min-height: 250px;
+    border: 1px solid #ddd;
+    display: block;
+    margin-bottom: 10px;
+    padding: 7px;
+    font: 100 12px/18px monaco, andale mono, courier new;
+    color: #666;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+.tool .content textarea:focus {
+    outline: 0;
+    border-color: #bbb;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .15)
+}
+
+.tool .content button,
+.tool .content input.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid rgba(0, 0, 0, 0);
+    white-space: nowrap;
+    padding: 5px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 2px;
+    border-color: #55A5D8;
+    background-color: #55A5D8;
+    color: #FFF;
+    opacity: 0.85;
+    filter: alpha(opacity=85);
+}
+
+.tool .content button:focus,
+.tool .content button:hover {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    outline: 0;
+}
+
+.tool .content select {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid rgba(0, 0, 0, 0);
+    white-space: nowrap;
+    padding: 5px 6px 4px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 2px;
+    border-color: #ddd;
+}
+
+.tool .prettyprint,
+.tool pre.prettyprint {
+    background-color: #272822;
+    border: 1px solid #272822;
+    overflow: hidden;
+    padding: 8px;
+}
+
+.tool .prettyprint.linenums,
+.tool pre.prettyprint.linenums {
+    -webkit-box-shadow: inset 40px 0 0 #39382E, inset 41px 0 0 #464741;
+    -moz-box-shadow: inset 40px 0 0 #39382E, inset 41px 0 0 #464741;
+    box-shadow: inset 40px 0 0 #39382E, inset 41px 0 0 #464741;
+}
+
+.tool .prettyprint.linenums ol,
+.tool pre.prettyprint.linenums ol {
+    margin: 0 0 0 33px;
+}
+
+.tool .prettyprint.linenums ol li,
+.tool pre.prettyprint.linenums ol li {
+    padding-left: 12px;
+    color: #bebec5;
+    line-height: 20px;
+    margin-left: 0;
+    list-style: decimal;
+}
+
+.tool .prettyprint .com {
+    color: #93a1a1;
+}
+
+.tool .prettyprint .lit {
+    color: #AE81FF;
+}
+
+.tool .prettyprint .pun,
+.tool .prettyprint .opn,
+.tool .prettyprint .clo {
+    color: #F8F8F2;
+}
+
+.tool .prettyprint .fun {
+    color: #dc322f;
+}
+
+.tool .prettyprint .str,
+.tool .prettyprint .atv {
+    color: #E6DB74;
+}
+
+.tool .prettyprint .kwd,
+.tool .prettyprint .tag {
+    color: #F92659;
+}
+
+.tool .prettyprint .typ,
+.tool .prettyprint .atn,
+.tool .prettyprint .dec,
+.tool .prettyprint .var {
+    color: #A6E22E;
+}
+
+.tool .prettyprint .pln {
+    color: #66D9EF;
+}
+
+.tool .jquerychm {
+    overflow: hidden
+}
+
+.tool .jquerychm .item {
+    width: 20%;
+    float: left
+}
+
+@media screen and (max-width: 830px){
+    .tool .jquerychm .item{
+        width: 50%;
+    }
+}
+
+.tool .jquerychm .item h2,
+.tool .jquerychm .item h3 {
+    margin-right: 10px
+}
+
+.tool .jquerychm h2 {
+    background-color: #95B3D7;
+    color: #fff;
+    padding: 4px 10px 3px;
+    line-height: 20px;
+    font-size: 12px
+}
+
+.tool .jquerychm h3 {
+    background-color: #DBE5F1;
+    line-height: 20px;
+    color: #444;
+    font-size: 12px;
+    padding: 2px 10px 1px;
+    font-weight: normal
+}
+
+.tool .jquerychm a {
+    cursor: pointer;
+    font-family: serif;
+    margin-left: 10px
+}
+
+.tool .jquerychm ul,
+.tool .jquerychm li {
+    list-style: none;
+    line-height: 18px;
+    padding: 0px;
+}
+
+.tool .jquerychm sup {
+    color: #CC3300;
+    line-height: 8px;
+}
+
+// .tool .jquerychm ul{list-style:disc}
+// .tool .jquerychm ol{list-style:decimal}
+// .tool .jquerychm h2{margin:5px auto;padding:0px 10px;background:rgb(79,129,189);color:#fff;font-weight:bold;font-size:14px}
+// .tool .jquerychm h2 span{color:#f0f0f0;float:right;font-size:12px;font-weight:normal}
+// .tool .jquerychm h3{margin:5px auto;padding:0px 10px;background:rgb(149,179,215);color:#fff}
+// .tool .jquerychm h3 em{float:right}
+// .tool .jquerychm h3 .version{float:right;color:#000}
+// .tool .jquerychm h4{margin:5px auto;padding:5px 10px;background:rgb(219,229,241)}
+// .tool .jquerychm h4 strong{width:360px;display:inline-block}
+// .tool .jquerychm h4 strong em{color:#000;padding-left:5px}
+// .tool .jquerychm h4 span{width:255px;display:inline-block}
+// .tool .jquerychm h4 span em{color:#666;padding-left:20px}
+// .tool .jquerychm h4 em{display:inline-block;color:#06C}
+// .tool .jquerychm .desc p{font-size:14px}
+// .tool .jquerychm .longdesc p{font-size:12px;line-height:1.5;margin:10px 0}
+// .tool .jquerychm .longdesc strong{font-size:14px}
+// .tool .jquerychm .longdesc a{font-size:12px}
+// .tool .jquerychm .longdesc{margin-top:5px}
+// .tool .jquerychm em.optional{color:#999}
+// .tool .jquerychm h2 em.optional{color:#eee}
+// .tool .jq-cheetsheat h2,
+// .tool .jq-cheetsheat h3,
+// .tool .jq-cheetsheat ul,
+// .tool .jq-cheetsheat li {font-size: 12px;font-weight: normal;padding:0;margin:0;list-style:none;font-family:Verdana, Tahoma, arial, sans-serif, "宋体";line-height: 16px;}
+// .tool .jq-cheetsheat h2 {background: rgb(79,129,189);color:#eee;padding: 2px 5px;}
+// .tool .jq-cheetsheat h3 {color: #666;padding-top: 2px;}
+// .tool .jq-cheetsheat ul {margin:0 0 5px 10px;}
+// .tool .jq-cheetsheat ul ul {margin:0 0 0 10px;}
+// .tool .jq-cheetsheat > div{float:left;width: 206px;overflow:hidden;margin-right: 2px; height: 1168px; }
+// .tool .jq-cheetsheat a,
+// .tool .jq-cheetsheat a:link,
+// .tool .jq-cheetsheat a:visited {color:rgb(64,112,170);text-decoration: none;}
+// .tool .jq-cheetsheat a:hover {color:white;background: rgb(79,129,189);}
+// .tool .jq-cheetsheat > div > div:hover{background:rgb(232,238,247);}
+// .tool .jq-cheetsheat ul li ul li{color: #4070AA;}
+// .tool .jq-cheetsheat sup{ color:#CC3300; font-family:icon;line-height: 8px;}
+.tool .jq-page-content {
+    margin-bottom: 10px;
+}
+
+.tool .jq-page-content ul,
+.tool .jq-page-content ol {
+    margin-left: 15px;
+}
+
+.tool .jq-page-content hr {
+    width: 95%;
+    margin: 0 auto;
+    border: 1px solid #aaa;
+}
+
+.tool .jq-page-content sup {
+    background: #FFFF00;
+    color: #000000;
+    border-radius: 5px;
+}
+
+.tool .jq-page-content blockquote {
+    border: 1px dotted #4F81BD;
+}
+
+.tool .jq-page-content ul li {
+    margin-left: 15px;
+    list-style: disc;
+}
+
+.tool .jq-page-content ol li {
+    margin-left: 15px;
+    list-style: decimal;
+}
+
+.tool .jq-page-content p {
+    text-indent: 24px;
+    margin-left: 5px;
+}
+
+.tool .jq-page-content h2 {
+    margin: 5px auto;
+    padding: 5px;
+    background: rgb(79, 129, 189);
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.tool .jq-page-content h2 span {
+    color: #f0f0f0;
+    float: right;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.tool .jq-page-content h3 {
+    margin: 5px auto;
+    padding: 5px;
+    background: rgb(149, 179, 215);
+    color: #fff;
+}
+
+.tool .jq-page-content h3 em {
+    float: right;
+}
+
+.tool .jq-page-content h3 .version {
+    float: right;
+    color: #000;
+}
+
+.tool .jq-page-content .example h4 {
+    margin: 5px auto;
+    margin-left: 5px;
+    padding: 5px;
+    background: rgb(219, 229, 241);
+}
+
+.tool .jq-page-content .parameter {
+    padding: 0 2px 5px;
+    background-color: #F4F6F9;
+}
+
+.tool .jq-page-content .parameter h4 {
+    border-bottom: 1px solid #aaa;
+    color: #444;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.tool .jq-page-content .parameter p {
+    color: #333;
+    margin: 5px 0;
+}
+
+.tool .jq-page-content h4 strong {}
+
+.tool .jq-page-content h4 strong em {
+    color: #000;
+    padding-left: 5px;
+}
+
+.tool .jq-page-content h4 span em {
+    color: #666;
+    padding-left: 20px;
+}
+
+.tool .jq-page-content h4 em {
+    color: #999;
+}
+
+
+/*06C*/
+
+.tool .jq-page-content .desc p {
+    font-size: 14px;
+}
+
+.tool .jq-page-content .longdesc p {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+.tool .jq-page-content .longdesc strong {
+    font-size: 14px;
+}
+
+.tool .jq-page-content .longdesc a {
+    font-size: 12px;
+}
+
+.tool .jq-page-content .longdesc {
+    margin-top: 5px;
+}
+
+.tool .jq-page-content pre {
+    margin: 10px;
+    padding: 10px;
+    border: 1px dashed rgb(79, 129, 189);
+    display: block;
+    background-color: transparent;
+    color: #333;
+}
+
+.tool .jq-page-content pre,
+.tool .jq-page-content h4 {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+.tool .jq-page-content h2 em.optional {
+    color: #eee;
+}
+
+.tool .jq-page-content {
+    max-width: 900px;
+    padding: 0 5px;
+    position: relative;
+}
+
+.tool .jq-page-content h4 strong {
+    width: 320px;
+}
+
+.tool .jq-page-content h4 span {
+    width: 294px;
+}
+
+.tool .jq-page-content h4 em {
+    width: 51px;
+}
+
+.tool .jq-page-content h4 strong,
+.tool .jq-page-content h4 span,
+.tool .jq-page-content h4 em {
+    display: inline-block;
+}
+
+@media only screen and (min-width: 320px) and (max-width:650px) {
+    .tool .jq-page-content h4 strong,
+    .tool .jq-page-content h4 span,
+    .tool .jq-page-content h4 em {
+        width: 100%;
+        display: inline-block;
+    }
+}
+
+.tool .jq-page-content .wikitable {
+    background: #F9F9F9;
+    border: 1px solid #96B2D3;
+    border-collapse: collapse;
+    color: black;
+}
+
+.tool .jq-page-content .wikitable th,
+.tool .jq-page-content .wikitable td {
+    border: 1px solid #96B2D3;
+}
+
+.tool .jq-page-content .wikitable tr:hover {
+    background: #EAF0F7;
+}
+
+.tool .jq-page-content .wikitable td {
+    line-height: 20px;
+    padding: 5px 8px;
+}
+
+.tool .jq-page-content .wikitable th {
+    padding: 4px;
+    font-weight: normal;
+    background: #DBE5F1;
+    text-align: center;
+}
+
+.tool .jq-page-content .wikitable p {
+    line-height: 1.5em;
+    margin: 0.4em 0 0.5em;
+}
+
+.tool .jq-page-content .section h2.bt {
+    font-weight: normal;
+    text-align: center;
+    background: #4F81BD;
+    color: #FFF;
+    font-family: "黑体";
+    padding: 8px 0;
+    margin: 5px 0;
+    font-size: 26px;
+}
+
+.jquery-home {
+    position: fixed;
+    z-index: 1100;
+    right: 0%;
+    bottom: 0%;
+    margin-right: 15px;
+    margin-bottom: 30px;
+}

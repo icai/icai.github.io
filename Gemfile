@@ -13,8 +13,15 @@ group :development do
   gem 'sass-globbing', '~> 1.0.0'
   gem 'rb-fsevent', '~> 0.9'
   gem 'stringex', '~> 1.4.0'
+  gem 'bootstrap-sass', '~> 3.3.5'
+  gem 'font-awesome-sass', '~> 4.3.0'
+  gem 'uglifier'
+  gem 'sprockets', '~> 2.0'
+  gem 'sprockets-sass'
+  gem 'sprockets-helpers'
+  gem 'coffee-script'
+  gem 'sass'
+  
 end
 
 gem 'sinatra', '~> 1.4.2'
-gem 'bootstrap-sass', '~> 3.3.5'
-gem 'font-awesome-sass', '~> 4.3.0'
