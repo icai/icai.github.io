@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: project | 泛前端开发]]></title>
+  <link href="http://blog.w3cub.com/blog/categories/project/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2015-12-18T20:28:50+08:00</updated>
+  <id>http://blog.w3cub.com/</id>
+  <author>
+    <name><![CDATA[Terry Cai]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[docs w3cub is on]]></title>
+    <link href="http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release/"/>
+    <updated>2015-12-08T22:23:26+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release</id>
+    <content type="html"><![CDATA[<h2>Preface</h2>
+
+
+
+
+<p><a href="http://docs.w3cub.com/">docs.w3cub</a> project is based on <a href="https://github.com/Thibaut/devdocs">open source</a><iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&amp;repo=devdocs&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>. we use jekyll system to rewrite and hosted on Github Pages. This project continued for several months and written in my spare time.</p>
+
+
+
+
+<p>As you know, all pages are static. we think that this would be more fast than using backend router. The most important thing is that Github Pages is free. we also thought about using frondend history router to rewrite this project, but Github Pages don&rsquo;t support the nginx rule. However we have permission to use 404 page, but useing the 404 page as the frontend router is very crazy idea. So at last we use the jekyll system to generate the static pages.</p>
+
+
+
+
+<!--more-->
+
+
+
+
+<p>After subsequent improvement, we will open some jekyll plug-ins and source code.</p>
+
+
+
+
+<h2>Credits</h2>
+
+
+
+
+<p>Following credits copy from devdocs.</p>
+
+
+
+
+<table class="table table-bordered table-hover">
+  <tbody><tr>
+    <th>Documentation
+    </th><th>Copyright
+    </th><th>License
+  </th></tr><tr><td>Angular.js</td><td>© 2010-2015 Google, Inc.</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>Apache HTTP Server</td><td>© The Apache Software Foundation</td><td><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache</a></td></tr><tr><td>Backbone.js</td><td>© 2010-2015 Jeremy Ashkenas, DocumentCloud</td><td><a href="https://raw.github.com/jashkenas/backbone/master/LICENSE">MIT</a></td></tr><tr><td>Bower</td><td>© 2015 Bower contributors</td><td><a href="https://github.com/bower/bower.github.io/blob/b7b94ad38b72e8fb5dafb20c8ce42835a49cc98f/package.json#L20">CC BY</a></td></tr><tr><td>C<br>C++</td><td>© cppreference.com</td><td><a href="http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA">CC BY-SA</a></td></tr><tr><td>Chai</td><td>© 2011-2015 Jake Luer</td><td><a href="https://github.com/chaijs/chai/blob/master/README.md#license">MIT</a></td></tr><tr><td>Clojure</td><td>© Rich Hickey</td><td><a href="https://github.com/clojure/clojure/blob/master/epl-v10.html">EPL</a></td></tr><tr><td>CoffeeScript</td><td>© 2009-2015 Jeremy Ashkenas</td><td><a href="https://raw.github.com/jashkenas/coffee-script/master/LICENSE">MIT</a></td></tr><tr><td>Cordova</td><td>© 2012-2015 The Apache Software Foundation</td><td><a href="https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE">Apache</a></td></tr><tr><td>CSS<br>DOM<br>HTML<br>JavaScript<br>SVG<br>XPath</td><td>© 2005-2015 Mozilla Developer Network and individual contributors</td><td><a href="http://creativecommons.org/licenses/by-sa/2.5/">CC BY-SA</a></td></tr><tr><td>D3.js</td><td>© 2015 Michael Bostock</td><td><a href="https://raw.github.com/mbostock/d3/master/LICENSE">BSD</a></td></tr><tr><td>Django</td><td>© Django Software Foundation and individual contributors</td><td><a href="https://raw.githubusercontent.com/django/django/master/LICENSE">BSD</a></td></tr><tr><td>Dojo</td><td>© 2005-2015 The Dojo Foundation</td><td><a href="http://dojotoolkit.org/license.html">BSD + AFL</a></td></tr><tr><td>Drupal</td><td>© 2001-2015 by the original authors<br>Drupal is a registered trademark of Dries Buytaert.</td><td><a href="https://api.drupal.org/api/drupal/LICENSE.txt">GPLv2</a></td></tr><tr><td>Ember.js</td><td>© 2015 Yehuda Katz, Tom Dale and Ember.js contributors</td><td><a href="https://raw.github.com/emberjs/ember.js/master/LICENSE">MIT</a></td></tr><tr><td>Elixir</td><td>© 2012 Plataformatec</td><td><a href="https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE">Apache</a></td></tr><tr><td>Express</td><td>© 2009-2015 TJ Holowaychuk</td><td><a href="https://raw.githubusercontent.com/visionmedia/express/master/LICENSE">MIT</a></td></tr><tr><td>Git</td><td>© 2005-2015 Linus Torvalds and others</td><td><a href="https://raw.github.com/git/git/master/COPYING">GPLv2</a></td></tr><tr><td>Go</td><td>© Google, Inc.</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>Grunt</td><td>© 2014 Grunt Team</td><td><a href="https://raw.githubusercontent.com/gruntjs/gruntjs.com/master/LICENSE">MIT</a></td></tr><tr><td>Haskell</td><td>© The University of Glasgow</td><td><a href="http://www.haskell.org/ghc/license">BSD</a></td></tr><tr><td>io.js</td><td>© io.js contributors</td><td><a href="https://raw.githubusercontent.com/iojs/io.js/v1.x/LICENSE">MIT</a></td></tr><tr><td>jQuery</td><td>© 2009 Packt Publishing<br>© 2014 jQuery Foundation</td><td><a href="https://raw.github.com/jquery/api.jquery.com/master/LICENSE-MIT.txt">MIT</a></td></tr><tr><td>jQuery Mobile</td><td>© 2014 jQuery Foundation</td><td><a href="https://raw.github.com/jquery/api.jquerymobile.com/master/LICENSE-MIT.txt">MIT</a></td></tr><tr><td>jQuery UI</td><td>© 2014 jQuery Foundation</td><td><a href="https://raw.github.com/jquery/api.jqueryui.com/master/LICENSE-MIT.txt">MIT</a></td></tr><tr><td>Knockout.js</td><td>© Steven Sanderson, the Knockout.js team, and other contributors</td><td><a href="https://raw.github.com/knockout/knockout/master/LICENSE">MIT</a></td></tr><tr><td>Laravel</td><td>© Taylor Otwell</td><td><a href="https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt">MIT</a></td></tr><tr><td>Less</td><td>© 2009-2015 The Core Less Team</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>Lo-Dash</td><td>© 2012-2015 The Dojo Foundation</td><td><a href="https://raw.github.com/lodash/lodash/master/LICENSE.txt">MIT</a></td></tr><tr><td>Lua</td><td>© 1994–2015 Lua.org, PUC-Rio</td><td><a href="http://www.lua.org/license.html">MIT</a></td></tr><tr><td>Marionette.js</td><td>© 2015 Muted Solutions, LLC</td><td><a href="http://mutedsolutions.mit-license.org/">MIT</a></td></tr><tr><td>Markdown</td><td>© 2004 John Gruber</td><td><a href="http://daringfireball.net/projects/markdown/license">BSD</a></td></tr><tr><td>Meteor</td><td>© 2011-2015 Meteor Development Group</td><td><a href="https://raw.githubusercontent.com/meteor/meteor/master/LICENSE.txt">MIT</a></td></tr><tr><td>Minitest</td><td>© Ryan Davis, seattle.rb</td><td><a href="https://raw.githubusercontent.com/seattlerb/minitest/master/README.txt">MIT</a></td></tr><tr><td>Mocha</td><td>© 2011-2015 TJ Holowaychuk</td><td><a href="https://raw.githubusercontent.com/mochajs/mocha/master/LICENSE">MIT</a></td></tr><tr><td>Modernizr</td><td>© 2009-2014 Modernizr</td><td><a href="http://modernizr.com/license/">MIT</a></td></tr><tr><td>Moment.js</td><td>© 2011-2015 Tim Wood, Iskren Chernev, Moment.js contributors</td><td><a href="https://raw.github.com/moment/moment/master/LICENSE">MIT</a></td></tr><tr><td>Mongoose</td><td>© 2010 LearnBoost</td><td><a href="https://github.com/LearnBoost/mongoose/blob/master/README.md#license">MIT</a></td></tr><tr><td>nginx</td><td>© 2002-2015 Igor Sysoev<br>© 2011-2015 Nginx, Inc.</td><td><a href="http://nginx.org/LICENSE">BSD</a></td></tr><tr><td>Node.js</td><td>© Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.</td><td><a href="https://raw.githubusercontent.com/nodejs/node/master/LICENSE">MIT</a></td></tr><tr><td>Nokogiri</td><td>© 2008-2014 2014 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha</td><td><a href="https://github.com/sparklemotion/nokogiri/blob/master/README.rdoc#license">MIT</a></td></tr><tr><td>npm</td><td>© npm, Inc. and Contributors<br>npm is a trademark of npm, Inc.</td><td><a href="https://raw.githubusercontent.com/npm/npm/master/LICENSE">npm</a></td></tr><tr><td>OpenTSDB</td><td>© 2010-2015 The OpenTSDB Authors</td><td><a href="https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER">LGPLv2.1</a></td></tr><tr><td>Phalcon</td><td>© 2011-2015 Phalcon Framework Team</td><td><a href="https://docs.phalconphp.com/en/latest/reference/license.html">CC BY</a></td></tr><tr><td>Phaser</td><td>© 2015 Richard Davey, Photon Storm Ltd.</td><td><a href="https://raw.githubusercontent.com/photonstorm/phaser/master/license.txt">MIT</a></td></tr><tr><td>Phoenix</td><td>© 2014 Chris McCord</td><td><a href="https://raw.githubusercontent.com/phoenixframework/phoenix/master/LICENSE.md">MIT</a></td></tr><tr><td>PHP</td><td>© 1997-2015 The PHP Documentation Group</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>PHPUnit</td><td>© 2005-2015 Sebastian Bergmann</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>PostgreSQL</td><td>© 1996-2013 The PostgreSQL Global Development Group<br>© 1994 The Regents of the University of California</td><td><a href="http://www.postgresql.org/about/licence/">PostgreSQL</a></td></tr><tr><td>Python</td><td>© 1990-2015 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.</td><td><a href="http://docs.python.org/3/license.html">PSFL</a></td></tr><tr><td>Q</td><td>© 2009-2015 Kristopher Michael Kowal and contributors</td><td><a href="https://raw.githubusercontent.com/kriskowal/q/v1/LICENSE">MIT</a></td></tr><tr><td>React, React Native, Flow, Relay</td><td>© 2013-2015 Facebook Inc.</td><td><a href="https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs">CC BY</a></td></tr><tr><td>Redis</td><td>© 2009-2015 Salvatore Sanfilippo</td><td><a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></td></tr><tr><td>RequireJS</td><td>© 2010-2014 The Dojo Foundation</td><td><a href="https://raw.githubusercontent.com/jrburke/requirejs/master/LICENSE">MIT</a></td></tr><tr><td>RethinkDB</td><td>© RethinkDB contributors</td><td><a href="https://raw.githubusercontent.com/rethinkdb/docs/master/LICENSE">CC BY-SA</a></td></tr><tr><td>Ruby</td><td>© 1993-2015 Yukihiro Matsumoto</td><td><a href="https://www.ruby-lang.org/en/about/license.txt">Ruby</a></td></tr><tr><td>Ruby on Rails</td><td>© 2004-2015 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.</td><td><a href="https://raw.github.com/rails/rails/master/activerecord/MIT-LICENSE">MIT</a></td></tr><tr><td>Rust</td><td>© 2011-2015 The Rust Project Developers</td><td><a href="https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT">MIT</a></td></tr><tr><td>Sass</td><td>© 2006-2015 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein</td><td><a href="https://raw.github.com/nex3/sass/master/MIT-LICENSE">MIT</a></td></tr><tr><td>Sinon</td><td>© 2010-2015 Christian Johansen</td><td><a href="https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE">BSD</a></td></tr><tr><td>Socket.io</td><td>© 2014-2015 Automattic</td><td><a href="https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE">MIT</a></td></tr><tr><td>Symfony</td><td>© 2004-2015 Fabien Potencier</td><td><a href="http://symfony.com/doc/current/contributing/code/license.html">MIT</a></td></tr><tr><td>Underscore.js</td><td>© 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors</td><td><a href="https://raw.github.com/jashkenas/underscore/master/LICENSE">MIT</a></td></tr><tr><td>Vagrant</td><td>© 2010-2015 Mitchell Hashimoto</td><td><a href="https://raw.githubusercontent.com/mitchellh/vagrant/master/LICENSE">MIT</a></td></tr><tr><td>Vue.js</td><td>© 2013-2015 Evan You, Vue.js contributors</td><td><a href="https://raw.githubusercontent.com/yyx990803/vue/master/LICENSE">MIT</a></td></tr><tr><td>Webpack</td><td>© 2012-2015 Tobias Koppers</td><td><a href="https://raw.githubusercontent.com/webpack/webpack/master/LICENSE">MIT</a></td></tr><tr><td>Yii</td><td>© 2008-2015 by Yii Software LLC</td><td><a href="https://raw.github.com/yiisoft/yii/master/LICENSE">BSD</a>
+</td></tr></tbody></table>
+
+
+
+
+<p>About devdocs, you can read <a href="https://devdocs.io/about">this</a>.</p>
+
+
+
+
+<h2>The coming issue</h2>
+
+
+
+
+<p>After improve these static web pages, I would do the app. If you like this, please wait the coming app.</p>
+
+
+
+
+<h2>Related links</h2>
+
+
+
+
+<ul>
+<li>my project <a href="http://docs.w3cub.com/">docs.w3cub</a></li>
+<li>original project <a href="https://devdocs.io/about">devdocs</a></li>
+</ul>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>
