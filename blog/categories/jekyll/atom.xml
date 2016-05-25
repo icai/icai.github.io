@@ -4,7 +4,7 @@
   <title><![CDATA[Category: jekyll | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/jekyll/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2016-05-23T00:10:04+08:00</updated>
+  <updated>2016-05-26T01:13:04+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -12,6 +12,71 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Blog Upgrade from Octopress 2.x to Jekyll 3.x]]></title>
+    <link href="http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x/"/>
+    <updated>2016-05-25T08:06:09+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x</id>
+    <content type="html"><![CDATA[<p>Good news, my blog had Upgrade from Octopress 2.x to Jekyll 3.x. It is not difficult to do this, if you follow me step by step.</p>
+
+
+
+
+<p>As you know, Octopress 2.x is based on Jekyll 2.x. so &ldquo;Upgrade from Octopress 2.x to Jekyll 3.x&rdquo; mean that upgrading Jekyll 2.x to Jekyll 3.x.</p>
+
+
+
+
+<!--more-->
+
+
+
+
+<p><strong>Firstly</strong>, Check out and have a look the offcial upgrade turtuial <a href="https://jekyllrb.com/docs/upgrading/2-to-3/">https://jekyllrb.com/docs/upgrading/2-to-3/</a></p>
+
+
+
+
+<p><strong>Secondly</strong>, upgrade the <code>Gemfile</code> file, <code>gem 'pygments.rb'</code>, <code>gem 'jekyll','~&gt; 3.1.6'</code>, <code>gem 'jekyll-sitemap'</code>,<code>gem 'jekyll-paginate', '~&gt; 1.1'</code>, etc. and than remove the <code>Gemfile.lock</code> file and run command <code>bundle install</code>. If in the gem install process, you catch out the error or some dependencies dependency confliction, upgrading it to the newest version could be ok.</p>
+
+
+
+
+<p><strong>And Then</strong>, Add <code>gems: [jekyll-paginate]</code>  in your <code>_config.yml</code> file and remove <code>Octopress-hooks</code> plugin. if you use the <code>octopress_filters.rb</code>, you need to change the following Code：</p>
+
+
+
+
+<pre><code>  Jekyll::Hooks.register :page, :pre_render do |page|
+    OctopressFilters::pre_filter(page)
+  end
+
+  Jekyll::Hooks.register :page, :post_render do |page|
+    OctopressFilters::post_render(page)
+  end
+
+  Jekyll::Hooks.register :post, :pre_render do |post|
+    OctopressFilters::pre_filter(post)
+  end
+
+  Jekyll::Hooks.register :post, :post_render do |post|
+    OctopressFilters::post_render(post)
+  end
+</code></pre>
+
+
+
+
+<p>And the <code>sitemap_generator.rb</code> should be upgrade to the newest version.</p>
+
+
+
+
+<p>The above problem is that I encountered during the upgrade process, only for reference. I suggest that when you upgrade the jekyll like me, you should use the the command <code>jekyll build --trace</code> instead of <code>rake preview</code> that you can catch out the error easily.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[rake task for octopress]]></title>
@@ -49,49 +114,26 @@
 
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
-</span><span class='line'>rake copydot[source,dest] # copy dot files for deployment
-</span><span class='line'>rake deploy # Default deploy task
-</span><span class='line'>rake gen_deploy # 生成并部署网站
-</span><span class='line'>rake generate # 生成 jekyll 网站
-</span><span class='line'>rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
-</span><span class='line'>rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
-</span><span class='line'>rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
-</span><span class='line'>rake list # list tasks
-</span><span class='line'>rake new_page[filename] # Create a new page in source/(filename)/index.markdown
-</span><span class='line'>rake new_post[title] # Begin a new post in source/_posts
-</span><span class='line'>rake preview # preview the site in a web browser
-</span><span class='line'>rake push # ※ deploy public directory to github pages
-</span><span class='line'>rake rsync # Deploy website via rsync
-</span><span class='line'>rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
-</span><span class='line'>rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
-</span><span class='line'>rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
-</span><span class='line'>rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
-</span><span class='line'>rake watch # Watch the site and regenerate when it changes</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<p></p>
+<pre><code>    rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
+    rake copydot[source,dest] # copy dot files for deployment
+    rake deploy # Default deploy task
+    rake gen_deploy # 生成并部署网站
+    rake generate # 生成 jekyll 网站
+    rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
+    rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
+    rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
+    rake list # list tasks
+    rake new_page[filename] # Create a new page in source/(filename)/index.markdown
+    rake new_post[title] # Begin a new post in source/_posts
+    rake preview # preview the site in a web browser
+    rake push # ※ deploy public directory to github pages
+    rake rsync # Deploy website via rsync
+    rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
+    rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
+    rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
+    rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
+    rake watch # Watch the site and regenerate when it changes
+</code></pre>
 
 
 
@@ -106,7 +148,7 @@
 
 
 
-<figure class='code'><figcaption><span>Example 2 (github.js)</span> <a href='http://blog.w3cub.com/downloads/code/github.js'>download</a></figcaption>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Example 2 (github.js)</span> <a href='http://blog.w3cub.com/downloads/code/github.js'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -171,7 +213,7 @@
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>  <span class="p">};</span>
 </span><span class='line'><span class="p">})();</span>
-</span></code></pre></td></tr></table></div></figure>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 

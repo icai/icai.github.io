@@ -9,11 +9,8 @@
 	<meta name="author" content="Terry Cai">
 	
 	<meta name="description" content="Jun 19, 2015 jekyll, octopress jekyll, octopress, rake, task Comments Rake Task for Octopress [译] 原文: Move sass to sass.old, install sass theme &hellip;">
-
 	<meta name="keywords" content="泛前端开发,前端,全栈,frontend,fullstack,octopress,frontend tools">
 	
-
-	<!-- http://t.co/dKP3o1e -->
 	<meta name="HandheldFriendly" content="True">
 	<meta name="MobileOptimized" content="320">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,14 +19,9 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script src="/javascripts/application.js"></script>
-	<link rel="stylesheet" href="/stylesheets/application.css">
-
-	<!-- <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"> -->
-	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<!-- <script src="/javascripts/libs/jquery.min.js"></script> -->
+	<script src="/assets/application-9be35e4f6575576663509525f7e86c85.js"></script>
+	<link rel="stylesheet" href="/assets/application-5715c79391587d5fdda3be3d2e35d965.css">
 	
-	<!-- <link rel="stylesheet" href="/assets/slides/css/for_blog.css"> -->
 
 </head>
 
@@ -113,7 +105,7 @@
 			</div>
 		</div>
 	    <script>
-	    var bgs = [ "/images/bg/1.jpg","/images/bg/2.jpg", "/images/bg/3.jpg", "/images/bg/4.jpg", "/images/bg/5.jpg"];
+	    var bgs = [ "/assets/bg/1-6221823e65aef1bb78ab046446b888ba.jpg","/assets/bg/2-f88a510fae11607ac30047bce9f1f740.jpg", "/assets/bg/3-1dc37e2bc1906aec7092b06e0085375f.jpg", "/assets/bg/4-f083b82fb6899fc6117fa19f7bc0cee6.jpg", "/assets/bg/5-0c2f2fdcc427c642764d67252d0639a5.jpg"];
 	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
 	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
 	    </script>	
@@ -135,8 +127,6 @@
 
 
 
-
-  
 
 
 <time datetime="2015-06-19T23:35:19+08:00" data-updated="true" itemprop="datePublished">Jun 19, 2015</time></div>
@@ -190,54 +180,33 @@
 
 <p>$ rake -T</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
-</span><span class='line'>rake copydot[source,dest] # copy dot files for deployment
-</span><span class='line'>rake deploy # Default deploy task
-</span><span class='line'>rake gen_deploy # 生成并部署网站
-</span><span class='line'>rake generate # 生成 jekyll 网站
-</span><span class='line'>rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
-</span><span class='line'>rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
-</span><span class='line'>rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
-</span><span class='line'>rake list # list tasks
-</span><span class='line'>rake new_page[filename] # Create a new page in source/(filename)/index.markdown
-</span><span class='line'>rake new_post[title] # Begin a new post in source/_posts
-</span><span class='line'>rake preview # preview the site in a web browser
-</span><span class='line'>rake push # ※ deploy public directory to github pages
-</span><span class='line'>rake rsync # Deploy website via rsync
-</span><span class='line'>rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
-</span><span class='line'>rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
-</span><span class='line'>rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
-</span><span class='line'>rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
-</span><span class='line'>rake watch # Watch the site and regenerate when it changes</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
+<pre><code>    rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
+    rake copydot[source,dest] # copy dot files for deployment
+    rake deploy # Default deploy task
+    rake gen_deploy # 生成并部署网站
+    rake generate # 生成 jekyll 网站
+    rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
+    rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
+    rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
+    rake list # list tasks
+    rake new_page[filename] # Create a new page in source/(filename)/index.markdown
+    rake new_post[title] # Begin a new post in source/_posts
+    rake preview # preview the site in a web browser
+    rake push # ※ deploy public directory to github pages
+    rake rsync # Deploy website via rsync
+    rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
+    rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
+    rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
+    rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
+    rake watch # Watch the site and regenerate when it changes
+</code></pre>
 
 <!--more-->
 
 
 <p>test include_code plugin:</p>
 
-<figure class='code'><figcaption><span>Example 2 (github.js)</span> <a href='/downloads/code/github.js'>download</a></figcaption>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Example 2 (github.js)</span> <a href='/downloads/code/github.js'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -302,7 +271,7 @@
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>  <span class="p">};</span>
 </span><span class='line'><span class="p">})();</span>
-</span></code></pre></td></tr></table></div></figure>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 
@@ -343,9 +312,9 @@
     Terry Cai
 
 .
-Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-<span>Last build: <a href="/about">Readme</a></span></br></footer>
+<span>Based Jekyll 3 now, last build: <a href="/about">Readme</a></span></br></footer>
 			
 
 

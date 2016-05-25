@@ -9,11 +9,8 @@
 	<meta name="author" content="Terry Cai">
 	
 	<meta name="description" content="Aug 17, 2013 javascript getter, java, javascript, setter Comments Javascript类库中和编程语言中getter和setter 1.backbonejs中的getter和setter &hellip;">
-
 	<meta name="keywords" content="泛前端开发,前端,全栈,frontend,fullstack,octopress,frontend tools">
 	
-
-	<!-- http://t.co/dKP3o1e -->
 	<meta name="HandheldFriendly" content="True">
 	<meta name="MobileOptimized" content="320">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,14 +19,9 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script src="/javascripts/application.js"></script>
-	<link rel="stylesheet" href="/stylesheets/application.css">
-
-	<!-- <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"> -->
-	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<!-- <script src="/javascripts/libs/jquery.min.js"></script> -->
+	<script src="/assets/application-9be35e4f6575576663509525f7e86c85.js"></script>
+	<link rel="stylesheet" href="/assets/application-5715c79391587d5fdda3be3d2e35d965.css">
 	
-	<!-- <link rel="stylesheet" href="/assets/slides/css/for_blog.css"> -->
 
 </head>
 
@@ -113,7 +105,7 @@
 			</div>
 		</div>
 	    <script>
-	    var bgs = [ "/images/bg/1.jpg","/images/bg/2.jpg", "/images/bg/3.jpg", "/images/bg/4.jpg", "/images/bg/5.jpg"];
+	    var bgs = [ "/assets/bg/1-6221823e65aef1bb78ab046446b888ba.jpg","/assets/bg/2-f88a510fae11607ac30047bce9f1f740.jpg", "/assets/bg/3-1dc37e2bc1906aec7092b06e0085375f.jpg", "/assets/bg/4-f083b82fb6899fc6117fa19f7bc0cee6.jpg", "/assets/bg/5-0c2f2fdcc427c642764d67252d0639a5.jpg"];
 	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
 	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
 	    </script>	
@@ -135,8 +127,6 @@
 
 
 
-
-  
 
 
 <time datetime="2013-08-17T23:16:31+08:00" data-updated="true" itemprop="datePublished">Aug 17, 2013</time></div>
@@ -175,349 +165,201 @@
 <!--more-->
 
 
+<pre><code>    set: function(key, val, options) {
+      var attr, attrs, unset, changes, silent, changing, prev, current;
+      if (key == null) return this;
+
+      // Handle both `"key", value` and `{key: value}` -style arguments.
+      if (typeof key === 'object') {
+        attrs = key;
+        options = val;
+      } else {
+        (attrs = {})[key] = val;
+      }
+
+      options || (options = {});
+
+      // Run validation.
+      if (!this._validate(attrs, options)) return false;
+
+      // Extract attributes and options.
+      unset           = options.unset;
+      silent          = options.silent;
+      changes         = [];
+      changing        = this._changing;
+      this._changing  = true;
+
+      if (!changing) {
+        this._previousAttributes = _.clone(this.attributes);
+        this.changed = {};
+      }
+      current = this.attributes, prev = this._previousAttributes;
+
+      // Check for changes of `id`.
+      if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
+
+      // For each `set` attribute, update or delete the current value.
+      for (attr in attrs) {
+        val = attrs[attr];
+        if (!_.isEqual(current[attr], val)) changes.push(attr);
+        if (!_.isEqual(prev[attr], val)) {
+          this.changed[attr] = val;
+        } else {
+          delete this.changed[attr];
+        }
+        unset ? delete current[attr] : current[attr] = val;
+      }
+
+      // Trigger all relevant attribute changes.
+      if (!silent) {
+        if (changes.length) this._pending = true;
+        for (var i = 0, l = changes.length; i &lt; l; i++) {
+          this.trigger('change:' + changes[i], this, current[changes[i]], options);
+        }
+      }
+
+      // You might be wondering why there's a `while` loop here. Changes can
+      // be recursively nested within `"change"` events.
+      if (changing) return this;
+      if (!silent) {
+        while (this._pending) {
+          this._pending = false;
+          this.trigger('change', this, options);
+        }
+      }
+      this._pending = false;
+      this._changing = false;
+      return this;
+    }
+</code></pre>
+
+<p>2.YUI中的getter和setter
+```
+    get : function(name) {
+        return this._getAttr(name);
+    },</p>
+
+<pre><code>set : function(name, val, opts) {
+    return this._setAttr(name, val, opts);
+},
+//……
+</code></pre>
+
+<pre><code>
+
+get: `http://yuilibrary.com/yui/docs/api/files/attribute_js_AttributeCore.js.html#l343`
+
+Y.augment : `http://yuilibrary.com/yui/docs/api/files/oop_js_oop.js.html#l67`
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>set: function(key, val, options) {
-</span><span class='line'>  var attr, attrs, unset, changes, silent, changing, prev, current;
-</span><span class='line'>  if (key == null) return this;
-</span><span class='line'>
-</span><span class='line'>  // Handle both `"key", value` and `{key: value}` -style arguments.
-</span><span class='line'>  if (typeof key === 'object') {
-</span><span class='line'>    attrs = key;
-</span><span class='line'>    options = val;
-</span><span class='line'>  } else {
-</span><span class='line'>    (attrs = {})[key] = val;
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  options || (options = {});
-</span><span class='line'>
-</span><span class='line'>  // Run validation.
-</span><span class='line'>  if (!this._validate(attrs, options)) return false;
-</span><span class='line'>
-</span><span class='line'>  // Extract attributes and options.
-</span><span class='line'>  unset           = options.unset;
-</span><span class='line'>  silent          = options.silent;
-</span><span class='line'>  changes         = [];
-</span><span class='line'>  changing        = this._changing;
-</span><span class='line'>  this._changing  = true;
-</span><span class='line'>
-</span><span class='line'>  if (!changing) {
-</span><span class='line'>    this._previousAttributes = _.clone(this.attributes);
-</span><span class='line'>    this.changed = {};
-</span><span class='line'>  }
-</span><span class='line'>  current = this.attributes, prev = this._previousAttributes;
-</span><span class='line'>
-</span><span class='line'>  // Check for changes of `id`.
-</span><span class='line'>  if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
-</span><span class='line'>
-</span><span class='line'>  // For each `set` attribute, update or delete the current value.
-</span><span class='line'>  for (attr in attrs) {
-</span><span class='line'>    val = attrs[attr];
-</span><span class='line'>    if (!_.isEqual(current[attr], val)) changes.push(attr);
-</span><span class='line'>    if (!_.isEqual(prev[attr], val)) {
-</span><span class='line'>      this.changed[attr] = val;
-</span><span class='line'>    } else {
-</span><span class='line'>      delete this.changed[attr];
-</span><span class='line'>    }
-</span><span class='line'>    unset ? delete current[attr] : current[attr] = val;
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  // Trigger all relevant attribute changes.
-</span><span class='line'>  if (!silent) {
-</span><span class='line'>    if (changes.length) this._pending = true;
-</span><span class='line'>    for (var i = 0, l = changes.length; i &lt; l; i++) {
-</span><span class='line'>      this.trigger('change:' + changes[i], this, current[changes[i]], options);
-</span><span class='line'>    }
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  // You might be wondering why there's a `while` loop here. Changes can
-</span><span class='line'>  // be recursively nested within `"change"` events.
-</span><span class='line'>  if (changing) return this;
-</span><span class='line'>  if (!silent) {
-</span><span class='line'>    while (this._pending) {
-</span><span class='line'>      this._pending = false;
-</span><span class='line'>      this.trigger('change', this, options);
-</span><span class='line'>    }
-</span><span class='line'>  }
-</span><span class='line'>  this._pending = false;
-</span><span class='line'>  this._changing = false;
-</span><span class='line'>  return this;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
-<p>2.YUI中的getter和setter</p>
+3.javascript中的getter和setter
+</code></pre>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>get : function(name) {
-</span><span class='line'>    return this._getAttr(name);
-</span><span class='line'>},
-</span><span class='line'>
-</span><span class='line'>set : function(name, val, opts) {
-</span><span class='line'>    return this._setAttr(name, val, opts);
-</span><span class='line'>},
-</span><span class='line'>//……</span></code></pre></td></tr></table></div></figure>
+<pre><code>// 对象构造实现，javascript类库中最常用的方法
 
+function Field(val){
+    var value = val;
 
-<p>get: <code>http://yuilibrary.com/yui/docs/api/files/attribute_js_AttributeCore.js.html#l343</code></p>
+    this.getValue = function(){
+        return value;
+    };
 
-<p>Y.augment : <code>http://yuilibrary.com/yui/docs/api/files/oop_js_oop.js.html#l67</code></p>
+    this.setValue = function(val){
+        value = val;
+    };
+} 
 
-<p>3.javascript中的getter和setter</p>
+// 模拟“hidden value property” 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>// 对象构造实现，javascript类库中最常用的方法
-</span><span class='line'>
-</span><span class='line'>function Field(val){
-</span><span class='line'>    var value = val;
-</span><span class='line'>       
-</span><span class='line'>    this.getValue = function(){
-</span><span class='line'>      return value;
-</span><span class='line'>    };
-</span><span class='line'>       
-</span><span class='line'>    this.setValue = function(val){
-</span><span class='line'>      value = val;
-</span><span class='line'>    };
-</span><span class='line'>} 
-</span><span class='line'>
-</span><span class='line'>// 模拟“hidden value property” 
-</span><span class='line'>
-</span><span class='line'>function Field(val){
-</span><span class='line'>  var value = val;
-</span><span class='line'>   
-</span><span class='line'>    this.__defineGetter__("value", function(){
-</span><span class='line'>      return value;
-</span><span class='line'>    });
-</span><span class='line'>       
-</span><span class='line'>    this.__defineSetter__("value", function(val){
-</span><span class='line'>      value = val;
-</span><span class='line'>    });
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>// es6 是实现
-</span><span class='line'>function Field(val){
-</span><span class='line'>  this.value = val;
-</span><span class='line'>}
-</span><span class='line'> 
-</span><span class='line'>Field.prototype = {
-</span><span class='line'>    get value(){
-</span><span class='line'>      return this._value;
-</span><span class='line'>    },
-</span><span class='line'>    set value(val){
-</span><span class='line'>      this._value = val;
-</span><span class='line'>    }
-</span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
+function Field(val){
+    var value = val;
+
+    this.__defineGetter__("value", function(){
+        return value;
+    });
+
+    this.__defineSetter__("value", function(val){
+        value = val;
+    });
+}
+
+// es6 是实现
+function Field(val){
+    this.value = val;
+}
+
+Field.prototype = {
+    get value(){
+        return this._value;
+    },
+    set value(val){
+        this._value = val;
+    }
+};
+</code></pre>
+
+<pre><code>
 
 
-<p>4.java中的getter和setter</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>public class TestGetterSetter { //TestGetterSetter.class
-</span><span class='line'>  
-</span><span class='line'>  private String name ;
-</span><span class='line'>
-</span><span class='line'>  public void setName(String name){
-</span><span class='line'>      if(this.name != name){
-</span><span class='line'>          System.out.println("name is changeing!");
-</span><span class='line'>          this.name = name ;
-</span><span class='line'>          // trigger change  event
-</span><span class='line'>      }
-</span><span class='line'>
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>public String getName(String name){
-</span><span class='line'>    if (this.name == null ){
-</span><span class='line'>    setName("Guest");
-</span><span class='line'>    }
-</span><span class='line'>    return this.name ;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>  public String getName() {
-</span><span class='line'>      return name;
-</span><span class='line'>  }
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>public class TestMain { //TestMain.class
-</span><span class='line'>  TestGetterSetter tb ;
-</span><span class='line'>
-</span><span class='line'>  public static void main(String[] args) {
-</span><span class='line'>      
-</span><span class='line'>      new TestMain().todo();
-</span><span class='line'>      // TODO Auto-generated method stub
-</span><span class='line'>
-</span><span class='line'>  }
-</span><span class='line'>  public TestMain(){ // init
-</span><span class='line'>      
-</span><span class='line'>       super();
-</span><span class='line'>       System.out.println("init TestMain !!");
-</span><span class='line'>  }
-</span><span class='line'>  public void todo(){
-</span><span class='line'>       tb  =  new TestGetterSetter();
-</span><span class='line'>       tb.setName("caicai");
-</span><span class='line'>       System.out.println(tb.getName());
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
+
+
+4.java中的getter和setter
+</code></pre>
+
+<pre><code>public class TestGetterSetter { //TestGetterSetter.class
+
+    private String name ;
+
+    public void setName(String name){
+        if(this.name != name){
+            System.out.println("name is changeing!");
+            this.name = name ;
+            // trigger change  event
+        }
+
+}
+
+public String getName(String name){
+    if (this.name == null ){
+    setName("Guest");
+    }
+    return this.name ;
+}
+
+    public String getName() {
+        return name;
+    }
+}
+
+
+public class TestMain { //TestMain.class
+    TestGetterSetter tb ;
+
+    public static void main(String[] args) {
+
+        new TestMain().todo();
+        // TODO Auto-generated method stub
+
+    }
+    public TestMain(){ // init
+
+         super();
+         System.out.println("init TestMain !!");
+    }
+    public void todo(){
+         tb  =  new TestGetterSetter();
+         tb.setName("caicai");
+         System.out.println(tb.getName());
+    }
+
+}
+</code></pre>
+
+<p>```</p>
 
 <p>总结：</p>
 
@@ -570,9 +412,9 @@
     Terry Cai
 
 .
-Powered by <a href="http://octopress.org">Octopress</a>,  <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-<span>Last build: <a href="/about">Readme</a></span></br></footer>
+<span>Based Jekyll 3 now, last build: <a href="/about">Readme</a></span></br></footer>
 			
 
 
