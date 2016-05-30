@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question/</loc>
+<lastmod>2016-05-28T16:09:21+08:00</lastmod>
+</url>
+<url>
 <loc>http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x/</loc>
 <lastmod>2016-05-25T08:06:09+08:00</lastmod>
 </url>
@@ -142,6 +146,15 @@
 <loc>http://blog.w3cub.com/blog/tags/w3cub/</loc>
 </url>
 <url>
+<loc>http://blog.w3cub.com/blog/tags/shell/</loc>
+</url>
+<url>
+<loc>http://blog.w3cub.com/blog/tags/ubuntu/</loc>
+</url>
+<url>
+<loc>http://blog.w3cub.com/blog/tags/linux/</loc>
+</url>
+<url>
 <loc>http://blog.w3cub.com/blog/categories/music/</loc>
 </url>
 <url>
@@ -161,6 +174,9 @@
 </url>
 <url>
 <loc>http://blog.w3cub.com/blog/categories/project/</loc>
+</url>
+<url>
+<loc>http://blog.w3cub.com/blog/categories/shell/</loc>
 </url>
 <url>
 <loc>http://blog.w3cub.com/slides/ruby-bus-get-start/</loc>

@@ -18,6 +18,7 @@ java
 javascript
 jekyll
 lazy
+linux
 music
 octopress
 project
@@ -149,6 +150,7 @@ setter &hellip;">
 <li><a style="font-size: 100%" href="/blog/tags/javascript/">javascript</a></li>
 <li><a style="font-size: 220%" href="/blog/tags/jekyll/">jekyll</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/lazy/">lazy</a></li>
+<li><a style="font-size: 100%" href="/blog/tags/linux/">linux</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/music/">music</a></li>
 <li><a style="font-size: 220%" href="/blog/tags/octopress/">octopress</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/project/">project</a></li>
@@ -158,9 +160,11 @@ setter &hellip;">
 <li><a style="font-size: 100%" href="/blog/tags/rvm/">rvm</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/search/">search</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/setter/">setter</a></li>
+<li><a style="font-size: 100%" href="/blog/tags/shell/">shell</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/shrimp/">shrimp</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/song/">song</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/task/">task</a></li>
+<li><a style="font-size: 100%" href="/blog/tags/ubuntu/">ubuntu</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/ux/">ux</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/w3cub/">w3cub</a></li>
 <li><a style="font-size: 100%" href="/blog/tags/zhou/">粥</a></li>

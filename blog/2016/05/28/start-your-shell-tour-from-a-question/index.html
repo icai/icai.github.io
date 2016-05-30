@@ -1,0 +1,343 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>start your shell tour from a question - 泛前端开发</title>
+	<meta name="author" content="Terry Cai">
+	
+	<meta name="description" content="May 28, 2016 shell linux, shell, ubuntu Comments Start Your Shell Tour From a Question Learn bash shell, by interest or needed. what is your reason &hellip;">
+	<meta name="keywords" content="shell,rename, bash, ubuntu,linux">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<script src="/assets/application-9be35e4f6575576663509525f7e86c85.js"></script>
+	<link rel="stylesheet" href="/assets/application-5715c79391587d5fdda3be3d2e35d965.css">
+	
+
+</head>
+
+
+<body class="blog">
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+		<img src="/assets/images/avatar.jpeg" style="width: 160px;" />
+	
+</div>
+<h1><a href="/">泛前端开发</a></h1>
+<p class="subtitle">I am Terry，习惯阅读无注释代码</p>
+<nav id="main-nav"><ul class="main">
+	<li class=""><a href="/">主页  Blog</a></li>
+    <li class=""><a href="/blog/archives">归档  Archives</a></li>
+    <li class="inline"><a href="/blog/categories">分类  Categories</a></li>
+    <li class="inline" ><a href="/blog/tags">标签  Tags</a></li>
+    
+    <li><a href="/slides">演讲 talks</a></li>
+    
+    <li><a href="/about">关于  About</a></li>
+</ul>
+<ul class="main">
+    <li><a href="/navs">前端网址导航  Navs</a></li>
+    <li><a href="/tools">前端工具箱  Tools</a></li>
+</ul></nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+
+		
+		<a class="weibo" href="http://weibo.com/328765211" target="_blank" title="Weibo">Weibo</a>
+		
+		
+			<a class="facebook" href="http://www.facebook.com/terry.cai.7921" target="_blank" title="Facebook">Facebook</a>
+		
+		
+		
+
+		
+		<a class="netease" href="http://blog.163.com/328765211" target="_blank" title="Netease">Netease</a>
+		
+
+		
+			<a class="github" href="https://github.com/icai" target="_blank" title="GitHub">GitHub</a>
+		
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" target="_blank" title="RSS">RSS</a>
+		
+
+
+
+	</div>
+</nav>
+
+<section class="aboutme">
+  <p class="motto">
+    <script>
+    var mottos = ["多数人25岁就死了，一直到75岁才埋。——Horus9527 译","人民不应该怕政府，政府才应该怕人民。","天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。  ——老子","爱国者的责任就是保护国家不受政府侵犯——托马斯·潘恩","计算机就跟比基尼一样，省去了人们许多的胡思乱想。 ——萨姆·尤因","想了解一个人的个性，那就赋予他权力。 ——林肯","如果你怀疑自己，那么你的立足点确实不稳固了。","在民主和独裁的斗争中，纸上的宪法敌不过独裁者的刺刀。——林语堂","国家是危险的机器 ——华盛顿","冬天已经到来，春天还会远吗？ ——雪莱","工作撵跑三个魔鬼：无聊、堕落和贫穷。","老大哥在看着你。——奥威尔","宗教上最深的误解——认为坏人没有宗教。——尼采","国家是为人而建立，而人不是为国家而生存。——爱因斯坦","肚子大不可怕，可怕的是肚子里没有好东西。——加菲猫","任何有可能出错的事将会出错 ——墨菲定理","管得最少，就是最好的政府。——大卫·梭罗","人人生而平等 ——美国独立宣言","其实人跟树是一样的，越是向往高处的阳光，它的根就越要伸向黑暗的地底。——尼采"];
+    document.writeln(mottos[Math.floor(Math.random() * mottos.length)])
+    </script>
+  </p>
+</section>
+</header>				
+			</div>
+		</div>
+	    <script>
+	    var bgs = [ "/assets/bg/1-6221823e65aef1bb78ab046446b888ba.jpg","/assets/bg/2-f88a510fae11607ac30047bce9f1f740.jpg", "/assets/bg/3-1dc37e2bc1906aec7092b06e0085375f.jpg", "/assets/bg/4-f083b82fb6899fc6117fa19f7bc0cee6.jpg", "/assets/bg/5-0c2f2fdcc427c642764d67252d0639a5.jpg"];
+	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
+	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
+	    </script>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+
+
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+
+<time datetime="2016-05-28T16:09:21+08:00" data-updated="true" itemprop="datePublished">May 28, 2016</time></div>
+		<div class="cats">
+
+
+	<a class='category' href='/blog/categories/shell/'>shell</a>
+
+
+</div>
+		
+
+<div class="tags">
+  
+    <a class='tag' href='/blog/tags/linux/'>linux</a>, <a class='tag' href='/blog/tags/shell/'>shell</a>, <a class='tag' href='/blog/tags/ubuntu/'>ubuntu</a>
+  
+</div>
+
+		
+			<span class="comments"><a href="#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name">Start Your Shell Tour From a Question
+	
+	</h1>
+	
+
+	
+	<hr />
+	<div class="entry-content" itemprop="articleBody"><p>Learn bash shell, by interest or needed. what is your reason to learn the shell? I think the best reason is that what you need is what you learn.</p>
+
+<p>A few days ago, I rewrite the project css to sass, so  I need to rename the css. So I brought out a question, how to &ldquo;Rename multiple files shell&rdquo;? To people, solving problems with search engine is the method of least time. I am no exception, I encountered the same problem, and find out the answer in stackoverflow <a href="https://stackoverflow.com/questions/6911301/rename-multiple-files-shell">https://stackoverflow.com/questions/6911301/rename-multiple-files-shell</a>.</p>
+
+<!--more-->
+
+
+<pre><code>for file in linux_*.mp4 ; do mv "$file" "${file#linux_}" ; done
+</code></pre>
+
+<p>But this isnot for my question, so I need to modify this shell ,in order to suit for my situation. I also I found this solution in the comments on the question<a href="http://pubs.opengroup.org/onlinepubs/9699919799/">http://pubs.opengroup.org/onlinepubs/9699919799/</a>.And you may want to know about the <a href="https://en.wikipedia.org/wiki/POSIX">POSIX</a>.</p>
+
+<p>After check the POSIX wiki, you know that. The Portable Operating System Interface (POSIX) is a family of standards specified by the IEEE Computer Society for maintaining compatibility between operating systems. POSIX defines the application programming interface (API), along with command line shells and utility interfaces, for software compatibility with variants of Unix and other operating systems.</p>
+
+<p>But now, we should focus on solving my question. I review the stackoverflow question and the best answer.</p>
+
+<p><strong>Q</strong>: I have multiple files in a directory, example: <code>linux_file1.mp4</code>, <code>linux_file2.mp4</code> and so on. How do I move these files, using shell, so that the names are <code>file1.mp4</code>, <code>file2.mp4</code> and so on. I have about 30 files that I want to move to the new name.</p>
+
+<p><strong>A</strong>: <code>for file in linux_*.mp4 ; do mv "$file" "${file#linux_}" ; done</code></p>
+
+<p>So I guess <code>${file#linux_}</code>  is remove <code>linux_</code> from the filename. As my guess, i am right, you can have a look at the <a href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02">documentation</a>. I suggest that you should read the <a href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html">documentation</a> at lest one time. And about the syntax of bash shell you can type the bash help in your terminal.</p>
+
+<p>~$>help</p>
+
+<pre><code>GNU bash，版本 4.3.11(1)-release (x86_64-pc-linux-gnu)
+这些 shell 命令是内部定义的。请输入 `help' 以获取一个列表。
+输入 `help 名称' 以得到有关函数`名称'的更多信息。
+使用 `info bash' 来获得关于 shell 的更多一般性信息。
+使用 `man -k' 或 `info' 来获取不在列表中的命令的更多信息。
+
+名称旁边的星号(*)表示该命令被禁用。
+
+ job_spec [&amp;]                            history [-c] [-d 偏移量] [n] 或 history &gt;
+ (( 表达式 ))                               if 命令; then 命令; [ elif 命令; then 命令; &gt;
+ . 文件名 [参数]                              jobs [-lnprs] [任务声明 ...] 或 jobs -x 命&gt;
+ :                                       kill [-s 信号声明 | -n 信号编号 | -信号声明] 进程号&gt;
+ [ 参数... ]                               let 参数 [参数 ...]
+ [[ 表达式 ]]                               local [option] 名称[=值] ...
+ alias [-p] [名称[=值] ... ]                logout [n]
+ bg [任务声明 ...]                           mapfile [-n 计数] [-O 起始序号] [-s 计数] [-&gt;
+ bind [-lpsvPSVX] [-m keymap] [-f file&gt;  popd [-n] [+N | -N]
+ break [n]                               printf [-v var] 格式 [参数]
+ builtin [shell 内建 [参数 ...]]             pushd [-n] [+N | -N | 目录]
+ caller [表达式]                            pwd [-LP]
+ case 词 in [模式 [| 模式]...) 命令 ;;]... es&gt;         read [-ers] [-a 数组] [-d 分隔符] [-i 缓冲区&gt;
+ cd [-L|[-P [-e]] [-@]] [dir]            readarray [-n 计数] [-O 起始序号] [-s 计数] &gt;
+ command [-pVv] 命令 [参数 ...]              readonly [-aAf] [名称[=值] ...] 或 reado&gt;
+ compgen [-abcdefgjksuv] [-o 选项]  [-A &gt;    return [n]
+ complete [-abcdefgjksuv] [-pr] [-DE] &gt;  select NAME [in 词语 ... ;] do 命令; don&gt;
+ compopt [-o|+o 选项] [-DE] [名称 ...]       set [--abefhkmnptuvxBCHP] [-o 选项名] [&gt;
+ continue [n]                            shift [n]
+ coproc [名称] 命令 [重定向]                    shopt [-pqsu] [-o] [选项名 ...]
+ declare [-aAfFgilnrtux] [-p] [name[=v&gt;  source 文件名 [参数]
+ dirs [-clpv] [+N] [-N]                  suspend [-f]
+ disown [-h] [-ar] [任务声明 ...]            test [表达式]
+ echo [-neE] [参数 ...]                    time [-p] 管道
+ enable [-a] [-dnps] [-f 文件名] [名称 ...]&gt;       times
+ eval [参数 ...]                           trap [-lp] [[参数] 信号声明 ...]
+ exec [-cl] [-a 名称] [命令 [参数 ...]] [重定向&gt;        true
+ exit [n]                                type [-afptP] 名称 [名称 ...]
+ export [-fn] [名称[=值] ...] 或 export -p&gt;      typeset [-aAfFgilrtux] [-p] 名称[=值] .&gt;
+ false                                   ulimit [-SHabcdefilmnpqrstuvxT] [lim&gt;
+ fc [-e 编辑器名] [-lnr] [起始] [终结] 或 fc -s&gt;          umask [-p] [-S] [模式]
+ fg [任务声明]                               unalias [-a] 名称 [名称 ...]
+ for 名称 [in 词语 ... ] ; do 命令; done        unset [-f] [-v] [-n] [name ...]
+ for (( 表达式1; 表达式2; 表达式3 )); do 命令; do&gt;           until 命令; do 命令; done
+ function 名称 { 命令 ; } 或 name () { 命令 ;&gt;       variables - 一些 shell 变量的名称和含义
+ getopts 选项字符串 名称 [参数]                   wait [-n] [id ...]
+ hash [-lr] [-p 路径名] [-dt] [名称 ...]       while 命令; do 命令; done
+ help [-dms] [模式 ...]                    { 命令 ; }
+</code></pre>
+
+<p>Now, I brought out my question :</p>
+
+<p><strong>Q</strong>: Rename the css suffix all current directory file <code>.css</code> to <code>.scss</code> and underscore the file prefix.</p>
+
+<p><strong>A</strong>: <code>for file in *.css ; do mv "$file" "_${file%.css}.scss" ; done</code></p>
+
+<p>About the syntax, you can have a look at the chapter <code>2.6.2 Parameter Expansion</code>.</p>
+
+<p>&hellip;</p>
+
+<p>${parameter%[word]}</p>
+
+<p><strong>Remove Smallest Suffix Pattern</strong>. The word shall be expanded to produce a pattern. The parameter expansion shall then result in parameter, with the smallest portion of the suffix matched by the pattern deleted. If present, word shall not begin with an unquoted &lsquo;%&rsquo;.</p>
+
+<p>${parameter%%[word]}</p>
+
+<p><strong>Remove Largest Suffix Pattern</strong>. The word shall be expanded to produce a pattern. The parameter expansion shall then result in parameter, with the largest portion of the suffix matched by the pattern deleted.</p>
+
+<p>${parameter#[word]}</p>
+
+<p><strong>Remove Smallest Prefix Pattern</strong>. The word shall be expanded to produce a pattern. The parameter expansion shall then result in parameter, with the smallest portion of the prefix matched by the pattern deleted. If present, word shall not begin with an unquoted &lsquo;#&rsquo;.</p>
+
+<p>${parameter##[word]}</p>
+
+<p><strong>Remove Largest Prefix Pattern</strong>. The word shall be expanded to produce a pattern. The parameter expansion shall then result in parameter, with the largest portion of the prefix matched by the pattern deleted.</p>
+
+<p>&hellip;</p>
+
+<p>My question has been solved.</p>
+
+<p>Good luck to you.</p>
+</div>
+
+	
+		<br>
+<br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">Creative Commons BY-NC-ND 3.0</a></br>
+	
+
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+	
+	<a class="addthis_button_sinaweibo"></a>
+	
+	
+	
+	<a class="addthis_button_twitter"></a>
+	
+	
+	
+	<a class="addthis_button_compact"></a>
+	<a class="addthis_counter addthis_bubble_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-558841b45b591663"></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner">Copyright &copy; 2016
+
+    Terry Cai
+
+.
+Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
+<span>Based Jekyll 3 now, last build: <a href="/about">Readme</a></span></br></footer>
+			
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'w3cub';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question/';
+        var disqus_url = 'http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-64597109-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>
