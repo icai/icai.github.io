@@ -47,6 +47,9 @@
 <loc>http://blog.w3cub.com/about/</loc>
 </url>
 <url>
+<loc>http://blog.w3cub.com/easing/</loc>
+</url>
+<url>
 <loc>http://blog.w3cub.com/blog/categories/</loc>
 </url>
 <url>
@@ -1067,7 +1070,7 @@
 <loc>http://blog.w3cub.com/tools/csspacker/</loc>
 </url>
 <url>
-<loc>http://blog.w3cub.com/tools/googlehost/</loc>
+<loc>http://blog.w3cub.com/tools/googlehosts/</loc>
 </url>
 <url>
 <loc>http://blog.w3cub.com/tools/highlight/</loc>
