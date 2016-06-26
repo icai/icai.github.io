@@ -33,28 +33,30 @@ Follow me: <iframe src="https://ghbtns.com/github-btn.html?user=icai&type=follow
 
 -------
 
-###Change log
+##Change log
 
-2015-12-17:  use sprockets handle assets
+**Had upgrade from Octopress 2 to Jekyll 3, and keep Octopress 2 Rake task.**
 
-2015-08-01:  add goolgehosts tool, fix style 404 bug, seo home page description.
+2015-12-17: use sprockets handle assets
 
-2015-07-05:  add slide page.
+2015-08-01: add goolgehosts tool, fix style 404 bug, seo home page description.
 
-2015-07-04:  404 redesign, random mottos.
+2015-07-05: add slide page.
 
-2015-07-01:  add keycode table tool and support meta keywords, optimize page seo
+2015-07-04: 404 redesign, random mottos.
 
-2015-06-29:  add translation style and merge style, fix google analytics id
+2015-07-01: add keycode table tool and support meta keywords, optimize page seo
+
+2015-06-29: add translation style and merge style, fix google analytics id 
+
 <br>
 <br>
 
 ###Last build
 
-<span> {{'now' | date: '%s' | date_to_xmlschema }}</span>
+<span> {{'now' | date: '%s' | date_to_xmlschema }}</span> <br>
 
-<iframe src="https://ghbtns.com/github-btn.html?user=icai&repo=icai.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px" class="ghbtn"></iframe>
-<iframe src="https://ghbtns.com/github-btn.html?user=icai&repo=icai.github.io&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px" class="ghbtn" ></iframe>
+<iframe src="https://ghbtns.com/github-btn.html?user=icai&repo=icai.github.io&type=star&count=true" frameborder="0" scrolling="0" width="160px" height="30px" class="ghbtn"></iframe>
 
 <br>
 

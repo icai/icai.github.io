@@ -42,6 +42,10 @@ collections:
     permalink: /slides/:path/
 
 
+sprockets:
+    debug: true
+
+
 # ----------------------- #
 #    Jekyll & Plugins     #
 # ----------------------- #
@@ -51,7 +55,8 @@ root: /
 permalink: /blog/:year/:month/:day/:title/
 source: source
 destination: public
-plugins: plugins
+
+plugins_dir: plugins
 code_dir: /downloads/code
 category_dir: blog/categories
 tag_dir: blog/tags 
@@ -61,7 +66,7 @@ rdiscount:
     - autolink
     - footnotes
     - smart
-highlighter: pygments # default python pygments have been replaced by pygments.rb
+# highlighter: pygments # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
 paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
@@ -134,8 +139,52 @@ addthis_profile_id: ra-558841b45b591663
 weibo_share: true
 
 
+gems: [jekyll-paginate]
+
 exclude:
+    - assets/fonts/*
+    - assets/stylesheets/*
+
+    - assets/images/bg/*
+    - assets/images/fancybox/*
+    - assets/images/posts/*
+    - assets/images/social/*
+
+    - assets/images/avatar.png
+    - assets/images/bird_32_gray_fail.png
+    - assets/images/bird_32_gray.png
+    - assets/images/code_bg.png
+    - assets/images/dotted-border.png
+    - assets/images/email.png
+    - assets/images/line-tile.png
+    - assets/images/loading_gray.gif
+    - assets/images/loading_pacman.gif
+    - assets/images/noise.png
+    - assets/images/rss.png
+    - assets/images/search.png
+
+    - assets/javascripts/application.js
+    - assets/javascripts/bootstrap-sprockets.js
+    - assets/javascripts/md5.js
+    - assets/javascripts/modernizr-2.0.js
+    - assets/javascripts/twitter.js
+    - assets/javascripts/github.js         
+    - assets/javascripts/octopress.js
+    - assets/javascripts/bootstrap.js
+    - assets/javascripts/jquery.fancybox.pack.js
+    - assets/javascripts/pinboard.js
+    - assets/javascripts/bootstrap.min.js
+    - assets/javascripts/slash.js
+
+    - assets/javascripts/bootstrap/*
+    - assets/javascripts/libs/*
+
     - assets/reveal.js/css/theme/source/*
     - assets/reveal.js/css/theme/template/*
     - assets/reveal.js/index.html
     - assets/reveal.js/*.md
+
+
+include:
+    - assets/images/avatar.jpeg
+    - assets/javascripts/tools/*

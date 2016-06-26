@@ -24,7 +24,7 @@ slides: blood
 
 * A PROGRAMMER'S BEST FRIEND
 
-![Ruby Logo](/images/posts/ruby-bus/ruby_logo.png =200x200)
+![Ruby Logo]({%image_path posts/ruby-bus/ruby_logo.png%} =200x200)
 
 {% slide %}
 

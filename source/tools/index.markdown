@@ -7,7 +7,8 @@ sharing: true
 footer: true
 ---
 
-{% assign groups = site.tools | group_by: "category" | sort: "title" %}
+
+{% assign groups = site.data.tools | group_by: "category" | sort: "title" %}
 
 <div class="items f2enav">
 	{% for group in groups %}

@@ -4,7 +4,8 @@ title: "rvm help"
 date: 2015-06-28 13:12:54 +0800
 comments: true
 categories: ruby
-tags: rvm ruby
+tags: [rvm,ruby]
+keywords: rvm, help, ruby
 ---
 
 常用命令（Action）：

@@ -1,0 +1,84 @@
+-
+  name: keycode
+  icon: keyboard-o
+  title: KeyCode Table
+  category: 常用对照表
+  url: "/tools/keycode/"
+-
+  name: pinyin
+  icon: paragraph
+  title: 中文转拼音
+  category: 常用工具
+  url: "/tools/pinyin/"
+-
+  name: mimetype
+  icon: file-code-o
+  title: HTTP Content Type
+  category: 常用对照表
+  url: "/tools/mimetype/"
+-
+  name: js
+  icon: code
+  title: JS加密/压缩/格式化/解压
+  category: 常用工具
+  url: "/tools/jspacker/"
+-
+  name: jsonyamlconvert
+  icon: exchange
+  title: Json/Yaml转换
+  category: 常用工具
+  url: "/tools/jsonyamlconvert/"
+-
+  name: js-html
+  icon: anchor
+  title: JS转HTML
+  category: 常用工具
+  url: "/tools/js-html/"
+-
+  name: jquery
+  icon: css3
+  title: jQuery 手册
+  category: 常用对照表
+  url: "/tools/jquery/"
+-
+  name: httpcode
+  icon: umbrella
+  title: HTTP状态码对照表
+  category: 常用对照表
+  url: "/tools/httpcode/"
+-
+  name: html-gov
+  icon: sitemap
+  title: HTML代码转换
+  category: 常用工具
+  url: "/tools/htmlcodegov/"
+-
+  name: symbol
+  icon: font
+  title: HTML特殊符号
+  category: 常用对照表
+  url: "/tools/htmlchar/"
+-
+  name: highlight
+  icon: header
+  title: 在线代码高亮
+  category: 常用工具
+  url: "/tools/highlight/"
+-
+  name: googlehosts
+  icon: globe
+  title: Google Hosts
+  category: 常用工具
+  url: "/tools/googlehosts/"
+-
+  name: css
+  icon: dedent
+  title: CSS压缩/格式化
+  category: 常用工具
+  url: "/tools/csspacker/"
+-
+  name: easing
+  icon: play
+  title: Easing Effects
+  category: 常用对照表
+  url: "/easing/"

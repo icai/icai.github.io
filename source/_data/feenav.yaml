@@ -1251,11 +1251,6 @@
   title: 蓝色理想
 -
   category: 工具
-  desc: 包含Ps、Ae、Au、Br、Dw、En、Fw、Fb、Fl、Ai、Id、Pl、Pr、Sg等Adobe家族全系列工具，简体中文，支持更新，稳定无报错
-  link: 'http://kuai.xunlei.com/d/2KvOAwIenABKGzhRab0'
-  title: 'Adobe CS6 大'
--
-  category: 工具
   desc: 一款可以跨平台、跨设备开发应用程序设计模型的网页应用程序
   link: 'https://www.fluidui.com/editor/live/'
   title: 'Fluid UI'
@@ -1509,6 +1504,11 @@
   desc: 个性字体不必用图片，用字符就可以实现
   link: 'http://www.google.com/webfonts'
   title: 谷歌网络字体
+-
+  category: 字体
+  desc: Handpicked free fonts for graphic designers with commercial-use licenses
+  link: 'https://www.fontsquirrel.com/'
+  title: Font Squirrel
 -
   category: 图库
   desc: 微利正版创意图片素材服务

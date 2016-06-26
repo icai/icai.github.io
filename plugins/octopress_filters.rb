@@ -1,6 +1,5 @@
 #custom filters for Octopress
 require './plugins/backtick_code_block'
-require 'octopress-hooks'
 require 'jekyll-sitemap'
 require 'octopress-date-format'
 require './plugins/raw'
@@ -20,25 +19,22 @@ module OctopressFilters
     end
   end
 
-  class PageFilters < Octopress::Hooks::Page
-    def pre_render(page)
-      OctopressFilters::pre_filter(page)
-    end
-
-    def post_render(page)
-      OctopressFilters::post_filter(page)
-    end
+  Jekyll::Hooks.register :page, :pre_render do |page|
+    OctopressFilters::pre_filter(page)
   end
 
-  class PostFilters < Octopress::Hooks::Post
-    def pre_render(post)
-      OctopressFilters::pre_filter(post)
-    end
-
-    def post_render(post)
-      OctopressFilters::post_filter(post)
-    end
+  Jekyll::Hooks.register :page, :post_render do |page|
+    OctopressFilters::post_render(page)
   end
+
+  Jekyll::Hooks.register :post, :pre_render do |post|
+    OctopressFilters::pre_filter(post)
+  end
+
+  Jekyll::Hooks.register :post, :post_render do |post|
+    OctopressFilters::post_render(post)
+  end
+
 end
 
 

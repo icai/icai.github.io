@@ -3,9 +3,10 @@ layout: post
 title: "octopress configuration"
 date: 2015-06-20 23:16:31 +0800
 comments: true
-categories: octopress jekyll
-tags: [octopress]
+categories: octopress
+tags: [octopress,jekyll]
 statement: true
+keywords: octopress, install, github
 ---
 
 ##前言

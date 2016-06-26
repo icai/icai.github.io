@@ -4,8 +4,9 @@ title: "鲜香虾粥"
 date: 2015-08-20 22:53:49 +0800
 comments: true
 categories: life
-tags: shrimp,congee,虾粥,粥
+tags: [shrimp,congee,虾粥,粥]
 statement: true
+keywords: shrimp,congee,虾粥,粥
 ---
 ##前言
 
@@ -35,30 +36,30 @@ statement: true
 1. 把米放到锅里面洗干净，放进适量的水。
 其实我也不知道适量是多少，以前本港台中午的烹饪节目就是那么说的。
 可以开火了，1000W 煲到沸，转600W。
->![第一步, 洗米](/images/posts/shrimpcongee/IMG_20150820_185200.png =720x)
+>![第一步, 洗米]({%image_path posts/shrimpcongee/IMG_20150820_185200.png %} =720x)
 
 
 2. 在煲的过程中，我们开始处理主要材料。
 明虾去头，虾脚等，由腹开刀，去除虾线。把尾也去掉吧。
->![第二步, 处理虾](/images/posts/shrimpcongee/IMG_20150820_190823.png =720x)
+>![第二步, 处理虾]({%image_path posts/shrimpcongee/IMG_20150820_190823.png %} =720x)
 
 
 3. 腌虾。当粥煮到沸，__米变粗，没有变花__的时候，开始腌虾，盐少许，油适量。盐不要放太多，是个人口味而定，这里已经放盐了，之后就不用放了。
->![第三步, 腌虾](/images/posts/shrimpcongee/IMG_20150820_195056.png =720x)
+>![第三步, 腌虾]({%image_path posts/shrimpcongee/IMG_20150820_195056.png %} =720x)
 
 
 4. 准备配料。洗净，去头，切段。假如，你能把头洗净的话，可以留头。姜，拍扁。
->![第四步, 准备配料](/images/posts/shrimpcongee/IMG_20150820_195127.png =720x)
+>![第四步, 准备配料]({%image_path posts/shrimpcongee/IMG_20150820_195127.png %} =720x)
 
 
 5. __米变粗__，放入姜。
 
 6. 米开花，煮好的白粥，放料。把火调到1000w。
->![第五步,白粥](/images/posts/shrimpcongee/IMG_20150820_195312.png =720x)
+>![第五步,白粥]({%image_path posts/shrimpcongee/IMG_20150820_195312.png %} =720x)
 
 
 7. 等待煮沸，放入香草，OK。
->![最后完成](/images/posts/shrimpcongee/IMG_20150820_200346.png =720x)
+>![最后完成]({%image_path posts/shrimpcongee/IMG_20150820_200346.png %} =720x)
 
 
 ##点评：

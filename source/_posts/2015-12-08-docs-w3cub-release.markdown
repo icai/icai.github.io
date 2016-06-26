@@ -4,9 +4,10 @@ title: "docs w3cub is on"
 date: 2015-12-08 22:23:26 +0800
 comments: true
 categories: project
-tags: project,development,documents,w3cub
+tags: [project,development,documents,w3cub]
 statement: true
 translate: false
+keywords: project,development,documents,w3cub
 ---
 
 ##Preface

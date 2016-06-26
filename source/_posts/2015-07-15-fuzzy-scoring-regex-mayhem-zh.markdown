@@ -4,7 +4,7 @@ title: "模糊匹配查询正则表达式探究"
 date: 2015-07-15 22:09:43 +0800
 comments: true
 categories: javascript
-tags: fuzzy search ux regex lazy
+tags: [fuzzy,search,ux,regex,lazy]
 statement: true
 translate: true
 originaltitle: "Fuzzy Scoring Regex Mayhem"

@@ -1,7 +1,10 @@
+# This plugin still has some bugs.
+# Don't have any config in config in _config.yml
+# Author: https://github.com/icai
+
 require "sprockets"
 require "sprockets-sass"
 require "sprockets-helpers"
-require "octopress-hooks"
 require "fileutils"
 require "compass"
 require "bootstrap-sass"
@@ -9,28 +12,31 @@ require "font-awesome-sass"
 
 module Jekyll
   class Site
-    attr_accessor :sprockets
+    attr_accessor :sprocketsEnv
   end
 end
 
 
 def sprocketsHooks(site)
-  assets_prefix = "source/_assets"
+  assets_prefix = "source/assets"
   docs_path     = File.expand_path('..', File.dirname(__FILE__))
+
   manifest_path = ".assets-cache/manifest.json"
   # Get relevant paths
   project_root = docs_path
   # Initialize Sprockets
-  environment = Sprockets::Environment.new
+  environment = Sprockets::Environment.new(docs_path)
   # import variable
-  site.sprockets = environment 
+  site.sprocketsEnv = environment
+
   Dir[Pathname.new(project_root).join(assets_prefix, '*/')].each do |path|
     environment.append_path(path)
   end
-
   # Set configuration
   environment.js_compressor  = :uglifier
   environment.css_compressor = :sass
+  
+  assets_compile =  %w(*.eot *.svg *.ttf *.woff *.woff2 *.jpg *.gif *.png application.js application.css slide.css)
 
   Sprockets::Helpers.configure do |config|
     config.environment = environment
@@ -38,10 +44,13 @@ def sprocketsHooks(site)
     config.public_path = "public"
     config.digest = true
     config.protocol = :relative
+    # config.expand = true
+    # config.manifest = false
+    # config.debug = true
   end
-  assets_compile =  %w(*.eot *.svg *.ttf *.woff *.woff2 *.jpg *.png application.js application.css slide.css)
   manifest = Sprockets::Manifest.new(environment, manifest_path)
   manifest.compile assets_compile
+
 end
 
 def copyAssetsToTarget(site)
@@ -49,25 +58,15 @@ def copyAssetsToTarget(site)
   FileUtils.rm_rf [Dir.glob(".assets-cache/**")]
 end
 
-if defined?(Jekyll::Hooks)
-  Jekyll::Hooks.register :site, :pre_render, priority: :low do |site|
-    sprocketsHooks(site)
-  end
-  Jekyll::Hooks.register :site, :post_write, priority: :low do |site|
-    copyAssetsToTarget(site)
-  end
-else
-  require 'octopress-hooks'
-  class SiteHooks < Octopress::Hooks::Site
-    priority :low
-    def pre_render(site)
-      sprocketsHooks(site)
-    end
-    def post_write(site)
-      copyAssetsToTarget(site)
-    end
-  end
+# , priority: :low
+
+Jekyll::Hooks.register :site, :pre_render do |site|
+  sprocketsHooks(site)
 end
+Jekyll::Hooks.register :site, :post_write do |site|
+  copyAssetsToTarget(site)
+end
+
 
 
 module Jekyll
@@ -88,7 +87,7 @@ module Jekyll
 
       def render(context)
         site = context.registers[:site]
-        sprockets = Sprockets::Context.new(site.sprockets, '', Pathname.new(''))
+        sprockets = Sprockets::Context.new(site.sprocketsEnv, '', Pathname.new(''))
         sprockets.method(@tag).call(@path)
 
       end

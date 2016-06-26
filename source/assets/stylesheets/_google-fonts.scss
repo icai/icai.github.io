@@ -1,0 +1,35 @@
+@function ga-font-path($path) {
+     @return font-path($path);
+}
+$open-sans-asset-helper: true;
+
+$open-sans-asset-helper: false !default;
+$open-sans-path: if($open-sans-asset-helper, "opensans/", "../fonts/opensans/") !default;
+$open-sans-name: "OpenSans" !default;
+$open-sans-bold-name: "OpenSans-Bold" !default;
+$open-sans-italic-name: "OpenSans-Italic" !default;
+
+
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url(ga-font-path('#{$open-sans-path}#{$open-sans-name}.woff')) format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url(ga-font-path('#{$open-sans-path}#{$open-sans-bold-name}.woff')) format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Open Sans Italic'), local('OpenSans-Italic'), url(ga-font-path('#{$open-sans-path}#{$open-sans-italic-name}.woff')) format('woff');
+}
+
+
