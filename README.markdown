@@ -1,6 +1,22 @@
-## A blog with Jekyll 3
+## A blog using Jekyll 3
 
 
-Had convert Octpress 2 to Jekyll 3
+###Theme
+
+Current theme based on  [Shashank Mehta](https://shashankmehta.in/archive/2012/greyshade.html). 
+
+Use Bootstrap 3 to rewrite.
+
+
+###Octopress Rakefile
+
+
+Keep Octopress 2 Rakefile task
+
+
+
+###sprockets Assets
+
+use Ruby Sprockets to handle asset files.
 
 
