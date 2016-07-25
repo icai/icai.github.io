@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2016-07-26T00:10:21+08:00</updated>
+  <updated>2016-07-26T00:30:59+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -29,7 +29,7 @@
 
 <h4>安装</h4>
 
-<p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg"></a></p>
+<p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" class="only" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg"></a></p>
 
 <p>或者到官网 <a href="http://cozhihu.w3cub.com/">http://cozhihu.w3cub.com/</a>进行安装。</p>
 
@@ -45,7 +45,7 @@
 
 <h3>预览</h3>
 
-<p><img aria-hidden="true" class="h-A-Ce-ze-Yf A-Ce-ze-Yf" src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" ></p>
+<p><img aria-hidden="true"  src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" ></p>
 
 <h3>开源协议</h3>
 
@@ -60,7 +60,7 @@
 
 <h4>Install</h4>
 
-<p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg"></a></p>
+<p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" class="only" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg"></a></p>
 
 <h3>Features</h3>
 
@@ -74,7 +74,7 @@
 
 <h3>Preview</h3>
 
-<p><img aria-hidden="true" class="h-A-Ce-ze-Yf A-Ce-ze-Yf" src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" ></p>
+<p><img aria-hidden="true" src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" ></p>
 
 <p>If you like this, Give me star please:</p>
 
