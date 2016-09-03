@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /404.html
-
-Sitemap: http://blog.w3cub.com/sitemap.xml 
