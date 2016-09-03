@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Easing Effects - Easing demo (extended EaseOutIn)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="Keywords" content="easeoutin,easing,animate,EaseOutIn">
+	
+	<link rel="canonical" href="http://blog.w3cub.com/easing/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<script type="text/javascript" src="/assets/application-aef091093a626c70310e267bf1fddbda83482959fca1e1ad4a05b90853163b0e.js"></script>
+	<script src="./easing.js"></script>
+	<style>
+	body {
+	    font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+	    font-size: 62.5%;
+	    margin: 30px 30px;
+	}
+	.graph {
+		float: left;
+		margin-right: 10px;
+	}
+	.clearfix:after,.clearfix:before{
+	    display: table;
+	    content: " "
+	}
+
+	.clearfix:after{
+	    clear: both
+	}
+	</style>
+	<script>
+	$(function() {
+		if ( !$( "<canvas>" )[0].getContext ) {
+			$( "<div>" ).text(
+				"Your browser doesn't support canvas, which is required for this demo."
+			).appendTo( "#graphs" );
+			return;
+		}
+
+		var i = 0,
+			width = 150,
+			height = 150;
+
+		$.each( $.easing, function( name, impl ) {
+			var graph = $( "<div>" ).addClass( "graph" ).appendTo( "#graphs" ),
+				text = $( "<div>" ).text( ++i + ". " + name ).appendTo( graph ),
+				wrap = $( "<div>" ).appendTo( graph ).css( 'overflow', 'hidden' ),
+				canvas = $( "<canvas>" ).appendTo( wrap )[ 0 ];
+
+			canvas.width = width;
+			canvas.height = height;
+			var drawHeight = height * 0.8,
+				cradius = 10;
+				ctx = canvas.getContext( "2d" );
+			ctx.fillStyle = "black";
+
+			// draw background
+			ctx.beginPath();
+			ctx.moveTo( cradius, 0 );
+			ctx.quadraticCurveTo( 0, 0, 0, cradius );
+			ctx.lineTo( 0, height - cradius );
+			ctx.quadraticCurveTo( 0, height, cradius, height );
+			ctx.lineTo( width - cradius, height );
+			ctx.quadraticCurveTo( width, height, width, height - cradius );
+			ctx.lineTo( width, 0 );
+			ctx.lineTo( cradius, 0 );
+			ctx.fill();
+
+			// draw bottom line
+			ctx.strokeStyle = "#555";
+			ctx.beginPath();
+			ctx.moveTo( width * 0.1, drawHeight + .5 );
+			ctx.lineTo( width * 0.9, drawHeight + .5 );
+			ctx.stroke();
+
+			// draw top line
+			ctx.strokeStyle = "#555";
+			ctx.beginPath();
+			ctx.moveTo( width * 0.1, drawHeight * .3 - .5 );
+			ctx.lineTo( width * 0.9, drawHeight * .3 - .5 );
+			ctx.stroke();
+
+			// plot easing
+			ctx.strokeStyle = "white";
+			ctx.beginPath();
+			ctx.lineWidth = 2;
+			ctx.moveTo( width * 0.1, drawHeight );
+			$.each( new Array( width ), function( position ) {
+				var state = position / width,
+					val = impl( state, position, 0, 1, width );
+				ctx.lineTo( position * 0.8 + width * 0.1,
+					drawHeight - drawHeight * val * 0.7 );
+			});
+			ctx.stroke();
+
+			// animate on click
+			graph.click(function() {
+				wrap
+					.animate( { height: "hide" }, 2000, name )
+					.delay( 800 )
+					.animate( { height: "show" }, 2000, name );
+			});
+
+			graph.width( width ).height( height + text.height() + 10 );
+		});
+	});
+	</script>
+</head>
+<body>
+<h1>Easing Demo</h1>
+<p>Based on jQuery UI Effects Easing demo, extended easeOutIn.</p>
+<div class="clearfix">
+<div id="graphs"></div>
+</div>
+<div class="clearfix">
+
+<p><a href="javascript:;" onclick="$('#gistCode').show();">Show Code</a></p>
+<div style="display:none;" id="gistCode">
+true<script src="https://gist.github.com/icai/cb836cd5fd27727a6f1e5904acb679ee.js"> </script>
+</div>
+</div>
+</body>
+</html>

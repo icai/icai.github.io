@@ -1,0 +1,338 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>jQuery - jQuery.cssHooks - 泛前端开发</title>
+	<meta name="author" content="Terry Cai">
+	
+	<meta name="description" content="jQuery - jQuery.cssHooks 返回值:ObjectjQuery.cssHooks 1.4.3概述 直接向 jQuery 中添加钩子，用于覆盖设置或获取特定 CSS 属性时的方法，目的是为了标准化 CSS 属性名或创建自定义属性。 $.cssHooks &hellip;">
+	<meta name="keywords" content="jQuery.cssHooks, jquery, documents">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://blog.w3cub.com/tools/jquery/jQuery.cssHooks/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<script type="text/javascript" src="/assets/application-aef091093a626c70310e267bf1fddbda83482959fca1e1ad4a05b90853163b0e.js"></script>
+	<link type="text/css" rel="stylesheet" href="/assets/application-ae59766550296186498f0aec989266a88822cdb7942be7da6db0faabf2dae7d8.css">
+	
+
+</head>
+
+
+<body class="blog">
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+		<img src="/assets/images/avatar.jpeg" style="width: 160px;" />
+	
+</div>
+<h1><a href="/">泛前端开发</a></h1>
+<p class="subtitle">I am Terry，习惯阅读无注释代码</p>
+<nav id="main-nav"><ul class="main">
+	<li class=""><a href="/">主页  Blog</a></li>
+    <li class=""><a href="/blog/archives">归档  Archives</a></li>
+    <li class="inline"><a href="/blog/categories">分类  Categories</a></li>
+    <li class="inline" ><a href="/blog/tags">标签  Tags</a></li>
+    
+    <li><a href="/slides">演讲 talks</a></li>
+    
+    <li><a href="/about">关于  About</a></li>
+</ul>
+<ul class="main">
+    <li><a href="/navs">前端网址导航  Navs</a></li>
+    <li><a href="/tools">前端工具箱  Tools</a></li>
+</ul></nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+
+		
+		<a class="weibo" href="http://weibo.com/328765211" target="_blank" title="Weibo">Weibo</a>
+		
+		
+			<a class="facebook" href="http://www.facebook.com/terry.cai.7921" target="_blank" title="Facebook">Facebook</a>
+		
+		
+		
+
+		
+
+		
+			<a class="github" href="https://github.com/icai" target="_blank" title="GitHub">GitHub</a>
+		
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" target="_blank" title="RSS">RSS</a>
+		
+
+
+
+	</div>
+</nav>
+
+<section class="aboutme">
+  <p class="motto">
+    <script>
+    var mottos = ["多数人25岁就死了，一直到75岁才埋。——Horus9527 译","人民不应该怕政府，政府才应该怕人民。","天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。  ——老子","爱国者的责任就是保护国家不受政府侵犯——托马斯·潘恩","计算机就跟比基尼一样，省去了人们许多的胡思乱想。 ——萨姆·尤因","想了解一个人的个性，那就赋予他权力。 ——林肯","如果你怀疑自己，那么你的立足点确实不稳固了。","在民主和独裁的斗争中，纸上的宪法敌不过独裁者的刺刀。——林语堂","国家是危险的机器 ——华盛顿","冬天已经到来，春天还会远吗？ ——雪莱","工作撵跑三个魔鬼：无聊、堕落和贫穷。","老大哥在看着你。——奥威尔","宗教上最深的误解——认为坏人没有宗教。——尼采","国家是为人而建立，而人不是为国家而生存。——爱因斯坦","肚子大不可怕，可怕的是肚子里没有好东西。——加菲猫","任何有可能出错的事将会出错 ——墨菲定理","管得最少，就是最好的政府。——大卫·梭罗","人人生而平等 ——美国独立宣言","其实人跟树是一样的，越是向往高处的阳光，它的根就越要伸向黑暗的地底。——尼采"];
+    document.writeln(mottos[Math.floor(Math.random() * mottos.length)])
+    </script>
+  </p>
+</section>
+</header>				
+			</div>
+		</div>
+	    <script>
+	    var bgs = [ "/assets/bg/1-f973be5947bbf4eef0b33318584073a92ab8acf476c64cda2da499c23323d4ba.jpg","/assets/bg/2-13e4c1631648e86fe0b42c01572ec112ae6b58efb1cd0c01456649094be136a1.jpg", "/assets/bg/3-f8b604e9c6816760cdc770f0c6fc15b05d2126c4326524966e5c95fe3d591d4d.jpg", "/assets/bg/5-9f5520bfe3ff9e7ab2ed0a7d6db32e4d06d5b8456683420e9f1944ad082e48d4.jpg"];
+	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
+	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
+	    </script>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="tool" >
+	<h1><i class="fa fa-css3"></i> jQuery - jQuery.cssHooks</h1>
+	<hr>
+	<div class="content">
+		<div class="jq-page-content">
+<div rel="jQuery.cssHooks">
+    <h2>
+<span>返回值:Object</span>jQuery.cssHooks</h2>
+    <h3>
+<em>1.4.3</em>概述</h3>
+    <div class="desc">
+      <p>直接向 jQuery 中添加钩子，用于覆盖设置或获取特定 CSS 属性时的方法，目的是为了标准化 CSS 属性名或创建自定义属性。</p>
+      <div class="longdesc">
+        <div>
+          <p>$.cssHooks 对象提供了一种通过定义函数来获取或设置特定 CSS 值的方法。可以用它来创建新的 cssHooks 用于标准化 CSS3 功能，例如，盒子阴影（box shadows）及渐变（gradients）。 </p>
+          <p>例如，某些基于 Webkit 的浏览器会使用 -webkit-border-radius 来设置对象的 border-radius，然而,早先版本的 Firefox 则使用 -moz-border-radius。cssHook 就可以将这些不同的写法进行标准化，从而让 .css() 可以使用统一的标准化属性名(border-radius 或对应的 DOM 属性写法 borderRadius)。 </p>
+          <p>该方法除了提供了对特定样式的处理可以采用更加细致的控制外，$.cssHooks 同时还扩展了 .animate() 方法上的属性集。 </p>
+          <p>定义一个新的 cssHook 十分简单。下面的模板可以方便您创建自己的 cssHook：</p>
+          <pre>(function($) {
+    // first, check to see if cssHooks are supported
+    if ( !$.cssHooks ) {
+      // if not, output an error message
+      throw("jQuery 1.4.3 or above is required for this plugin to work");
+      return;
+    }
+      $.cssHooks["someCSSProp"] = {
+      get: function( elem, computed, extra ) {
+        // handle getting the CSS property
+      },      set: function( elem, value ) {
+        // handle setting the CSS value 
+     }
+    };
+  })(jQuery);  </pre>
+          <h4 id="feature-testing">功能测试</h4>
+          <p>在标准化 CSS 属性之前，首先要判断浏览器是否支持待标准的属性或经过变化（例如，带前缀）的属性。例如，要检查浏览器是否支持 border-radius 属性，还要检查该属性的任何变种写法是否是临时元素的 style 对象中的成员。 </p>
+          <pre>(function($) {
+    function styleSupport( prop ) {
+      var vendorProp, supportedProp,
+            // capitalize first character of the prop to test vendor prefix
+          capProp = prop.charAt(0).toUpperCase() + prop.slice(1),
+          prefixes = [ "Moz", "Webkit", "O", "ms" ],
+          div = document.createElement( "div" );
+        if ( prop in div.style ) {
+          // browser supports standard CSS property name 
+       supportedProp = prop;
+      } else {
+          // otherwise test support for vendor-prefixed property names
+        for ( var i = 0; i &lt; prefixes.length; i++ ) {
+          vendorProp = prefixes[i] + capProp;
+          if ( vendorProp in div.style ) {
+            supportedProp = vendorProp;
+            break;
+          }
+        }
+      }
+        // avoid memory leak in IE
+      div = null;
+            // add property to $.support so it can be accessed elsewhere
+      $.support[ prop ] = supportedProp;
+            return supportedProp;
+    }
+      // call the function, e.g. testing for "border-radius" support:
+    styleSupport( "borderRadius" );
+  })(jQuery);  </pre>
+          <h4 id="defining-complete-csshook">定义一个完整的 cssHook</h4>
+          <p>为了定义一个完整的 cssHook，首先我们需要测试您当前使用的 jQuery 版本是否支持 cssHooks 方法，此外，还要结合上面提到的例子：</p>
+          <pre>(function($) {
+    if ( !$.cssHooks ) {
+      throw("jQuery 1.4.3+ is needed for this plugin to work");
+      return;
+    }
+        function styleSupport( prop ) {
+      var vendorProp, supportedProp,
+          capProp = prop.charAt(0).toUpperCase() + prop.slice(1),
+          prefixes = [ "Moz", "Webkit", "O", "ms" ],
+          div = document.createElement( "div" );
+        if ( prop in div.style ) {
+        supportedProp = prop;
+      } else {
+        for ( var i = 0; i &lt; prefixes.length; i++ ) {
+          vendorProp = prefixes[i] + capProp;
+          if ( vendorProp in div.style ) {
+            supportedProp = vendorProp;
+            break;
+          }
+        }
+      }
+        div = null;
+      $.support[ prop ] = supportedProp
+      return supportedProp;
+    }
+      var borderRadius = styleSupport( "borderRadius" );
+      // Set cssHooks only for browsers that
+    // support a vendor-prefixed border radius
+    if ( borderRadius &amp;&amp; borderRadius !== "borderRadius" ) {
+      $.cssHooks.borderRadius = {
+        get: function( elem, computed, extra ) {
+          return $.css( elem, borderRadius );
+        },
+        set: function( elem, value) {
+          elem.style[ borderRadius ] = value;
+        }
+      };
+    }
+  })(jQuery);  </pre>
+          <p>之后，您就可以在支持该属性的浏览器中使用 DOM (camel 式) 样式的写法或使用 CSS (带连字符号) 样式的写法来设置边框的半径了：</p>
+          <pre>$("#element").css("borderRadius", "10px");
+  $("#another").css("border-radius", "20px");  </pre>
+          <p>如果浏览器不支持任何一种形式的 CSS 属性写法，并且也不支持任何前缀写法，那么该样式是不会应用到元素上的。但是，如果浏览器支持某种特殊的写法，那么可以在 cssHooks 中添加对该特殊用法的支持。</p>
+          <pre> (function($) {
+    // feature test for support of a CSS property
+    // and a proprietary alternative
+    // ...
+       if ( $.support.someCSSProp &amp;&amp; $.support.someCSSProp !== "someCSSProp" ) {
+        // Set cssHooks for browsers that
+      // support only a vendor-prefixed someCSSProp
+      $.cssHooks.someCSSProp = {
+        get: function( elem, computed, extra ) {
+          return $.css( elem, $.support.someCSSProp );
+        },
+        set: function( elem, value) {
+          elem.style[ $.support.someCSSProp ] = value;
+        }
+      };
+    } else if ( supportsProprietaryAlternative ) {
+      $.cssHooks.someCSSProp = {
+        get: function( elem, computed, extra ) {
+          // Handle crazy conversion from the proprietary alternative
+         },
+        set: function( elem, value ) {
+          // Handle crazy conversion to the proprietary alternative
+        }
+      }
+   }
+    })(jQuery);  </pre>
+          <h4 id="special-units">特殊单位</h4>
+          <p>默认情况下，通过 .css() 方法设置的值，jQuery 会为其加上 "px" 单位。您可以通过向 jQuery.cssNumber 对象中添加属性的方法来防止这种行为的发生。 </p>
+          <pre>$.cssNumber["someCSSProp"] = true;</pre>
+          <h4 id="animating">动画与 cssHooks</h4>
+          <p>通过向 jQuery.fx.step 对象中添加属性，cssHook 同样可以向 jQuery 的动画机制中添加钩子： </p>
+          <pre>$.fx.step["someCSSProp"] = function(fx){
+    $.cssHooks["someCSSProp"].set( fx.elem, fx.now + fx.unit );
+  };  </pre>
+          <p>注意，上述这种用法应用于简单的数值属性的动画是最好的。根据不同的 CSS 属性，返回值的类型以及动画的复杂性，可能需要在 cssHooks 写更多的代码。</p>
+        </div>
+        <p> </p>
+      </div>
+    </div>
+  </div></div><div class="jquery-home"><a href="/tools/jquery/" class="btn btn-default" title="jQuery Home"><i class="fa fa-css3"></i></a></div>
+	</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+	
+	<a class="addthis_button_sinaweibo"></a>
+	
+	
+	
+	<a class="addthis_button_twitter"></a>
+	
+	
+	
+	<a class="addthis_button_compact"></a>
+	<a class="addthis_counter addthis_bubble_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-558841b45b591663"></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner">Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
+Copyright &copy; 2016
+
+    Terry Cai
+
+</br></footer>
+			
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'w3cub';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.w3cub.com/tools/jquery/jQuery.cssHooks/';
+        var disqus_url = 'http://blog.w3cub.com/tools/jquery/jQuery.cssHooks/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-64597109-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>

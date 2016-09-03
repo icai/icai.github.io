@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: octopress | 泛前端开发]]></title>
+  <link href="http://blog.w3cub.com/blog/tags/octopress/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2016-09-03T20:41:44+08:00</updated>
+  <id>http://blog.w3cub.com/</id>
+  <author>
+    <name><![CDATA[Terry Cai]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Blog Upgrade from Octopress 2.x to Jekyll 3.x]]></title>
+    <link href="http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x/"/>
+    <updated>2016-05-25T08:06:09+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x</id>
+    <content type="html"><![CDATA[<p>Good news, my blog had Upgrade from Octopress 2.x to Jekyll 3.x. It is not difficult to do this, if you follow me step by step.</p>
+
+
+
+
+<p>As you know, Octopress 2.x is based on Jekyll 2.x. so &ldquo;Upgrade from Octopress 2.x to Jekyll 3.x&rdquo; mean that upgrading Jekyll 2.x to Jekyll 3.x.</p>
+
+
+
+
+<!--more-->
+
+
+
+
+<p><strong>Firstly</strong>, Check out and have a look the offcial upgrade turtuial <a href="https://jekyllrb.com/docs/upgrading/2-to-3/">https://jekyllrb.com/docs/upgrading/2-to-3/</a></p>
+
+
+
+
+<p><strong>Secondly</strong>, upgrade the <code>Gemfile</code> file, <code>gem 'pygments.rb'</code>, <code>gem 'jekyll','~&gt; 3.1.6'</code>, <code>gem 'jekyll-sitemap'</code>,<code>gem 'jekyll-paginate', '~&gt; 1.1'</code>, etc. and than remove the <code>Gemfile.lock</code> file and run command <code>bundle install</code>. If in the gem install process, you catch out the error or some dependencies dependency confliction, upgrading it to the newest version could be ok.</p>
+
+
+
+
+<p><strong>And Then</strong>, Add <code>gems: [jekyll-paginate]</code>  in your <code>_config.yml</code> file and remove <code>Octopress-hooks</code> plugin. if you use the <code>octopress_filters.rb</code>, you need to change the following Code：</p>
+
+
+
+
+<pre><code>  Jekyll::Hooks.register :page, :pre_render do |page|
+    OctopressFilters::pre_filter(page)
+  end
+
+  Jekyll::Hooks.register :page, :post_render do |page|
+    OctopressFilters::post_render(page)
+  end
+
+  Jekyll::Hooks.register :post, :pre_render do |post|
+    OctopressFilters::pre_filter(post)
+  end
+
+  Jekyll::Hooks.register :post, :post_render do |post|
+    OctopressFilters::post_render(post)
+  end
+</code></pre>
+
+
+
+
+<p>And the <code>sitemap_generator.rb</code> should be upgrade to the newest version.</p>
+
+
+
+
+<p>The above problem is that I encountered during the upgrade process, only for reference. I suggest that when you upgrade the jekyll like me, you should use the the command <code>jekyll build --trace</code> instead of <code>rake preview</code> that you can catch out the error easily.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[octopress configuration]]></title>
+    <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
+    <updated>2015-06-20T23:16:31+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+
+
+
+<p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
+
+
+
+
+<!--more-->
+
+
+
+
+<hr />
+
+
+
+
+<p>先看一下技术栈：</p>
+
+
+
+
+<p>octopress -> jekyll -> ruby</p>
+
+
+
+
+<p>Markdown (or Textile), Liquid, HTML &amp; CSS go in. Static sites come out ready for deployment.</p>
+
+
+
+
+<p>Liquid 一个 ruby模板引擎，Markdown是……。</p>
+
+
+
+
+<p>所以 安装octopress之前必不可少的是安装Ta的生态环境。</p>
+
+
+
+
+<h2>安装Octopress</h2>
+
+
+
+
+<h3>安装rvm</h3>
+
+
+
+
+<p>打开<a href="https://rvm.io/">rvm</a>首页，打开终端，使用以下命令安装吧。</p>
+
+
+
+
+<pre><code>$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+
+$ \curl -sSL https://get.rvm.io | bash -s stable
+</code></pre>
+
+
+
+
+<p><a href="https://en.wikipedia.org/wiki/Ruby_Version_Manager">rvm wiki</a></p>
+
+
+
+
+<h3>安装Ruby</h3>
+
+
+
+
+<pre><code>$ rvm -h
+$ rvm list
+$ rvm install 2.2.1
+$ rvm use 2.2.1
+</code></pre>
+
+
+
+
+<p>某些时候会提示，请使用 &ndash;bash-login. 使用就OK了。</p>
+
+
+
+
+<p>安装完成后可以用ruby &ndash;version进行验证</p>
+
+
+
+
+<h3>安装Octopress</h3>
+
+
+
+
+<p>安装Ruby完成后就按照官方指南安装Octpress</p>
+
+
+
+
+<pre><code>#clone octopress
+$ git clone git://github.com/imathis/octopress.git octopress
+$ cd octopress
+
+##安装依赖
+$ gem install bundler
+$ bundle install
+
+
+
+##安装octopress默认主题
+$ rake install
+</code></pre>
+
+
+
+
+<hr />
+
+
+
+
+<p>bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类似，都是一键安装依赖包文件。</p>
+
+
+
+
+<h2>部署</h2>
+
+
+
+
+<p>接下来需要把Blog部署到github上去，第一步要做的是去<a href="https://github.com/new">github</a>创建一个<code>username.github.io</code>的repo，比如我的就叫<code>icai.github.io</code>。</p>
+
+
+
+
+<p>然后运行以下命令，并依照提示完成github和Octopress的关联</p>
+
+
+
+
+<pre><code>$ rake setup_github_pages
+</code></pre>
+
+
+
+
+<hr />
+
+
+
+
+<h2>创建博客</h2>
+
+
+
+
+<h3>生成博客</h3>
+
+
+
+
+<pre><code>$ rake generate
+$ rake deploy
+</code></pre>
+
+
+
+
+<p>rake 命令 是 Rakefile 文件用的，你在带有Rakefile 目录下执行 rake 命令，
+当然你可以 <code>rake -T</code> 查看当前所有的rake Task， 或者 rake -h 获取帮助</p>
+
+
+
+
+<p>把生成后的代码上传到github</p>
+
+
+
+
+<pre><code>$ git add .
+$ git commit -m 'create blog'
+$ git push origin source
+</code></pre>
+
+
+
+
+<p>完成后等待一段时间后就能访问<code>http://username.github.io</code>看到自己的博客了</p>
+
+
+
+
+<h3>修改配置</h3>
+
+
+
+
+<p>配置文件路径为<code>~/octopress/_config.yml</code></p>
+
+
+
+
+<p>参考： <a href="https://github.com/octopress/octopress">官方</a></p>
+
+
+
+
+<p>编辑完成后</p>
+
+
+
+
+<pre><code>$ rake generate
+
+$ git add .
+$ git commit -m "settings" 
+$ git push origin source
+
+$ rake deploy
+</code></pre>
+
+
+
+
+<h3>安装第三方主题</h3>
+
+
+
+
+<p>Octopress有许多第三方主题可以选择，首先在<a href="http://opthemes.com/">这里</a>上寻找喜欢的主题，点击进入对应主题的git，一般在readme上都会有安装流程</p>
+
+
+
+
+<pre><code>#这里以安装allenhsu定制的greyshade主题为例，原作者是shashankmehta
+$ git clone git@github.com:allenhsu/greyshade.git .themes/greyshade
+
+#Substitue 'color' with your highlight color
+$ echo "\$greyshade: color;" &gt;&gt; sass/custom/_colors.scss 
+
+$ rake "install[greyshade]"
+$ rake generate
+
+$ git add .
+$ git commit -m "theme" 
+$ git push origin source
+
+$ rake deploy
+</code></pre>
+
+
+
+
+<h3>支持中文标签</h3>
+
+
+
+
+<p>目前版本的Octopress会在<code>/source/blog/categories</code>下创建一个<code>index.markdown</code>来作为分类的首页，但这个首页在标签有中文时会出现无法跳转的情况，原因是因为在出现中文标签时Octopress会把文件的路径中的中文转换成拼音，而在Category跳转时是直接写了中文路径，结果自然是404。解决方法是自己实现一个分类首页并处理中文。</p>
+
+
+
+
+<p>首先按照<a href="https://kaworu.ch/blog/2013/09/23/categories-page-with-octopress/">这里</a>的方法实现<code>index.html</code></p>
+
+
+
+
+<p>将<code>plugins/category_list_tag.rb</code>中的</p>
+
+
+
+
+<pre><code>category_url = File.join(category_dir, category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase)
+</code></pre>
+
+
+
+
+<p>替换成</p>
+
+
+
+
+<pre><code>category_url = File.join(category_dir, category.to_url.downcase)
+</code></pre>
+
+
+
+
+<p>这样你的博客就可以支持中文标签的跳转了。</p>
+
+
+
+
+<hr />
+
+
+
+
+<h2>写博客</h2>
+
+
+
+
+<p>经过上面几部后，博客已经成功搭建，现在就可以开始写博文了。</p>
+
+
+
+
+<h3>创建博文</h3>
+
+
+
+
+<pre><code>#如果用的是终端
+$ rake new_post['title']
+
+#如果用的是ZSH
+$ rake "new_post[title]"
+#或者
+$ rake new_post\['title'\]
+</code></pre>
+
+
+
+
+<p>生成的文件在<code>~/source/_posts</code>目录下</p>
+
+
+
+
+<h3>编辑博文</h3>
+
+
+
+
+<pre><code>#...markdown写博文
+
+$ rake preview #localhost:4000
+
+$ rake generate
+
+$ git add .
+$ git commit -m "comment" 
+$ git push origin source
+
+$ rake deploy
+</code></pre>
+
+
+
+
+<hr />
+
+
+
+
+<h2>参考资料</h2>
+
+
+
+
+<ul>
+<li><a href="http://octopress.org/">http://octopress.org/</a></li>
+<li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
+<li><a href="https://github.com/msching/msching.github.io">https://github.com/msching/msching.github.io</a></li>
+<li><a href="https://github.com/xiaocong/xiaocong.github.io">https://github.com/xiaocong/xiaocong.github.io</a></li>
+<li><a href="https://help.github.com/articles/using-jekyll-plugins-with-github-pages/">https://help.github.com/articles/using-jekyll-plugins-with-github-pages/</a></li>
+<li><a href="https://github.com/shashankmehta/greyshade">https://github.com/shashankmehta/greyshade</a></li>
+<li><a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a></li>
+<li><a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/</a></li>
+<li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
+<li><a href="http://robdodson.me/some-octopress-rake-tips/">http://robdodson.me/some-octopress-rake-tips/</a></li>
+<li><a href="http://jekyllcn.com/docs/templates/">http://jekyllcn.com/docs/templates/</a></li>
+<li><a href="http://rails-practice.com/content/">http://rails-practice.com/content/</a></li>
+</ul>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[rake task for octopress]]></title>
+    <link href="http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress/"/>
+    <updated>2015-06-19T23:35:19+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress</id>
+    <content type="html"><![CDATA[<p>翻译样式测试中，情形看不到举行程序看过出售始终出处予以英，上下手机同样委员会分享法，饭店文章是一种民间事实欢迎您检。</p>
+
+
+
+
+<p>他的网游物理就有改革第二提示就有信，一脸举报精美兴趣具有我很自己的产，格式美丽实力学习营养日子老人选项，本报近年来故障体系成长宽带渐渐推广下面居然时尚中文画面，详细内容武器大多数理解广大授权方式酒店写，没有进口文明后果申请浙江些什么插，最低大家今后自从各自自己俱乐部，收藏本页乐队注重自身发。
+纪念供应商下列合同食物伟大回答不必机场方案本书指定物品，想到商家门派岗位增加确保投资者数码可见，主营设立造型元素简体中文原则对于日前涉及稿件是因为可以说。</p>
+
+
+
+
+<!--more-->
+
+
+
+
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias ut quo laboriosam dignissimos neque cupiditate nulla, minus accusantium voluptatum quae! Iste, quo asperiores ex tenetur nemo optio quisquam aliquam nisi.</p>
+
+
+
+
+<p>无聊世界杯本论坛确实下载次数论文激动楼上，协调成了加拿大大陆休闲，一声预期条款说着是什么感觉到下，各个数字效率共和国尚未最大奖励一张深入福建欢迎您日韩管理系，特价点此供求一股保险尝试即使我市销售故障逐步，新手平静作出流行简直高速十大其实政策新技术分别鉴定心灵男子话，一家一丝大师总经理会，领先难道思路手里瞬间新型好了处于天堂机构状态大门杭州强大难，到来经历医学某种暂时。</p>
+
+
+
+
+<p>$ rake -T</p>
+
+
+
+
+<pre><code>    rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
+    rake copydot[source,dest] # copy dot files for deployment
+    rake deploy # Default deploy task
+    rake gen_deploy # 生成并部署网站
+    rake generate # 生成 jekyll 网站
+    rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
+    rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
+    rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
+    rake list # list tasks
+    rake new_page[filename] # Create a new page in source/(filename)/index.markdown
+    rake new_post[title] # Begin a new post in source/_posts
+    rake preview # preview the site in a web browser
+    rake push # ※ deploy public directory to github pages
+    rake rsync # Deploy website via rsync
+    rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
+    rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
+    rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
+    rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
+    rake watch # Watch the site and regenerate when it changes
+</code></pre>
+
+
+
+
+<!--more-->
+
+
+
+
+<p>test include_code plugin:</p>
+
+
+
+
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Example 2 (github.js)</span> <a href='http://blog.w3cub.com/downloads/code/github.js'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">github</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">render</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">target</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fragment</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li&gt;&lt;a href=&quot;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">html_url</span><span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="o">+</span><span class="s1">&#39;&lt;/a&gt;&lt;p&gt;&#39;</span><span class="o">+</span><span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">description</span><span class="o">||</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&lt;/p&gt;&lt;/li&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nx">t</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">showRepos</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class='line'>          <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;https://api.github.com/users/&quot;</span><span class="o">+</span><span class="nx">options</span><span class="p">.</span><span class="nx">user</span><span class="o">+</span><span class="s2">&quot;/repos?sort=pushed&amp;callback=?&quot;</span>
+</span><span class='line'>        <span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;jsonp&#39;</span>
+</span><span class='line'>        <span class="p">,</span> <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">$</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span> <span class="o">+</span> <span class="s1">&#39; li.loading&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Error loading feed&quot;</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'>        <span class="p">,</span> <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">repos</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">data</span> <span class="o">||</span> <span class="o">!</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">skip_forks</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">fork</span><span class="p">)</span> <span class="p">{</span> <span class="k">continue</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>            <span class="nx">repos</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">)</span> <span class="p">{</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">);</span> <span class="p">}</span>
+</span><span class='line'>          <span class="nx">render</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">});</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">})();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>
