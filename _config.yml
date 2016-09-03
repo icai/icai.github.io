@@ -68,6 +68,8 @@ rdiscount:
     - smart
 # highlighter: pygments # default python pygments have been replaced by pygments.rb
 
+
+
 paginate: 10          # Posts per page on the blog index
 paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
@@ -85,6 +87,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # blog_index_asides:
 # post_asides:
 # page_asides:
+
 
 # ----------------------- #
 #   3rd Party Settings    #
@@ -133,15 +136,19 @@ facebook_like: false
 weibo_user: 328765211
 
 # netease
-netease_user: 328765211
+# netease_user: 328765211
 
 addthis_profile_id: ra-558841b45b591663
 weibo_share: true
 
 
-gems: [jekyll-paginate]
+gems: 
+    - jekyll-paginate
+    - jekyll-gist
+    - jekyll-assets
 
 exclude:
+    - assets/bower/*
     - assets/fonts/*
     - assets/stylesheets/*
 
@@ -188,3 +195,54 @@ exclude:
 include:
     - assets/images/avatar.jpeg
     - assets/javascripts/tools/*
+
+
+assets:
+  # compress:
+  #   css: false | true | default - development: false, production: true
+  #   js: false | true | default - development: false, production: true
+
+
+  autowrite: true
+  # cache: false | directory | default: .asset-cache
+  # cache_type: memory | filesystem | default: filesystem
+  # cdn: https://cdn.example.com
+  # skip_baseurl_with_cdn: false
+  # skip_prefix_with_cdn: false
+  prefix: "/assets"
+  digest: true
+
+  autoprefixer:
+    browsers:
+      - "last 2 versions"
+      - "IE >= 9"
+  #
+
+  assets:
+    - "*.eot" 
+    - "*.svg" 
+    - "*.ttf" 
+    - ".woff" 
+    - "*.woff2" 
+    - "*.jpg" 
+    - "*.gif" 
+    - "*.png" 
+    - "application.js" 
+    - "application.css" 
+    - "slide.css"
+  # compress:
+  #   css: sass
+  #   js: uglifier
+
+  sources:
+    - assets/css
+    - assets/images
+    - assets/javascripts
+    - assets/stylesheets
+    - assets/fonts
+
+  # features:
+  #   liquid: true | false | default: false
+  #   integrity: true | false | default: false
+  #   automatic_img_size: true | false | n(fixnum): 2,4,6,8 | default: true
+  #   automatic_img_alt : true | false | default: true

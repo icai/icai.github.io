@@ -11,7 +11,7 @@ layout: null
 	{% capture canonical %}{{ site.url }}{% if site.permalink contains '.html' %}{{ page.url }}{% else %}{{ page.url | remove:'index.html' }}{% endif %}{% endcapture %}
 	<link rel="canonical" href="{{ canonical }}">
 	<link href="{{ root_url }}/favicon.png" rel="shortcut icon">
-	{% javascript_tag application.js %}
+	{% javascript application.js %}
 	<script src="./easing.js"></script>
 	<style>
 	body {
@@ -111,12 +111,17 @@ layout: null
 	</script>
 </head>
 <body>
+<h1>Easing Demo</h1>
 <p>Based on jQuery UI Effects Easing demo, extended easeOutIn.</p>
 <div class="clearfix">
 <div id="graphs"></div>
 </div>
 <div class="clearfix">
-<p>Note: easeCircularSegment based on <a href="http://www.mathopenref.com/segmentareaht.html">Area of a Circular Segment given its height</a>, Segment Area/Full Circular Area</p>
+
+<p><a href="javascript:;" onclick="$('#gistCode').show();">Show Code</a></p>
+<div style="display:none;" id="gistCode">
+{%gist icai/cb836cd5fd27727a6f1e5904acb679ee %}
+</div>
 </div>
 </body>
 </html>

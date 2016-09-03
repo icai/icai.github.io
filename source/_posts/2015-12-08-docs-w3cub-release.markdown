@@ -12,7 +12,7 @@ keywords: project,development,documents,w3cub
 
 ##Preface
 
-[docs.w3cub](http://docs.w3cub.com/) project is based on <a href="https://github.com/Thibaut/devdocs">open source</a><iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&amp;repo=devdocs&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>. we use jekyll system to rewrite and hosted on Github Pages. This project continued for several months and written in my spare time. 
+[docs.w3cub](http://docs.w3cub.com/) project is based on <a href="https://github.com/Thibaut/devdocs">open source</a><iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&amp;repo=devdocs&amp;type=star&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>. we use jekyll system to rewrite and hosted on Github Pages. This project continued for several months and written in my spare time. 
 
 As you know, all pages are static. we think that this would be more fast than using backend router. The most important thing is that Github Pages is free. we also thought about using frondend history router to rewrite this project, but Github Pages don't support the nginx rule. However we have permission to use 404 page, but useing the 404 page as the frontend router is very crazy idea. So at last we use the jekyll system to generate the static pages. 
 <!--more-->

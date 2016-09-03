@@ -8,7 +8,10 @@ public
 sass.old
 source.old
 source/_stash
-source/stylesheets/screen.css
+source/_drafts
+source/.asset-cache
+source/assets/bower
+source/.jekyll-metadata
 vendor
 node_modules
 Gemfile.lock

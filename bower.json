@@ -1,0 +1,22 @@
+{
+  "name": "Blog",
+  "homepage": "https://github.com/icai/icai.github.io",
+  "authors": [
+    "Terry <gidcai@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "source/assets/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "compass-mixins": "^1.0.2"
+  }
+}

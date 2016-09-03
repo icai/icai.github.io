@@ -83,10 +83,11 @@ body {
 		}
 	}
 	.mid-col {
-		position: absolute;
-  		right: 0;
+		position: relative;
+  		// right: 0;
   		min-height: 100%;
-		width: 77%;
+		// width: auto;
+		margin-left: 300px;
 		background: white;
 		// whitesmoke
 		#banner {
@@ -101,7 +102,7 @@ body {
 		  width: auto;
 		}
 		.mid-col-container {
-			padding: 0px 70px 0px 40px;
+			padding: 0px 40px;
 			#content {
 				width: 100%;
 				article {
@@ -190,7 +191,7 @@ body {
 	.left-col:hover {
 	}
 	.left-col {
-		width: 23%;
+		width: 300px;
 		position: fixed;
 		color: $color-gray05;
 		opacity: $opacity-sidebar;
@@ -310,6 +311,7 @@ body {
 		.mid-col {
 			float: none;
 			width: 100%;
+			margin-left: 0px;
 			.mid-col-container {
 				padding: 15px 15px;
 				#content {

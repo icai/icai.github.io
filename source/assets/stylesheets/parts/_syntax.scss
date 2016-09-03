@@ -85,7 +85,7 @@ figure.code{
 			margin: -5px -15px 0;
 			padding: 5px 15px;
 			display: block;
-			@include background(linear-gradient(top, $pre-border, $pre-bg));
+			@include background(linear-gradient(to bottom, $pre-border, $pre-bg));
 			&:empty{
 				display: none;
 			}
@@ -149,7 +149,7 @@ figure.code{
 			line-height: 1.5;
 			margin: 0 -16px -6px;
 			padding: 5px 15px;
-			@include background(linear-gradient(top, $pre-bg, $pre-border));
+			@include background(linear-gradient(to bottom, $pre-bg, $pre-border));
 			a{
 				color: $color-main;
 				&:first-of-type{
@@ -164,7 +164,7 @@ figure.code{
 					left: 0;
 					padding: 5px 15px;
 					width: 100%;
-					@include background(linear-gradient(top, $pre-border, $pre-bg));
+					@include background(linear-gradient(to bottom, $pre-border, $pre-bg));
 				}
 			}
 		}

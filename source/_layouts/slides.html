@@ -25,13 +25,13 @@
 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-	{% stylesheet_tag application.css %}
+	{% stylesheet application.css %}
 	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/css/reveal.min.css">
 	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/css/theme/{{ page.slides }}.css">
 	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/css/print/paper.css">
 	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/lib/css/zenburn.css">
-	{% stylesheet_tag slide.css %}
-	{% javascript_tag application.js %}
+	{% stylesheet slide.css %}
+	{% javascript application.js %}
 </head>
 <body>
 	{% assign useinverse = "simple|sky|beige|serif|solarized" | split: "|"  %}

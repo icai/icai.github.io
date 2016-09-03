@@ -1,4 +1,4 @@
-@import "compass";
+@import "../bower/compass-mixins/lib/compass";
 
 // $icon-font-path: "/assets/fonts/bootstrap/";
 // $twbs-font-path: "/assets/fonts/bootstrap/";
@@ -12,10 +12,7 @@
 @import "font-awesome";
 
 @import "google-fonts";
-// *{
-// 	margin:0;
-// 	padding:0;
-// }
+
 
 @import "base";
 @import "parts";

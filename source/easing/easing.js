@@ -56,8 +56,4 @@
 
 
 	});
-	$.easing.easeCircularSegment = function(h){
-		var r = 0.5;
-		return (r * r * Math.acos((r - h) / r) - (r - h) * Math.sqrt(2 * r * h - h * h))/ (Math.PI * r * r)
-	}
 })();	

@@ -66,7 +66,7 @@
 				@include inline-block;
 				&:before{
 					color: $color-gray03;
-					font: 1.3em $font-icon;
+					font: 1.1em $font-icon;
 					padding-right: 10px;
 				}
 			}
@@ -79,6 +79,7 @@
 			}
 			.date:before{content: "\f073";}
 			.tags:before{content: "\f02c";}
+			.cats:before{content: "";}
 			.comments:before{content: "\f075"; padding-right: 10px; }
 		}
 	}

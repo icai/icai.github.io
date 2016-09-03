@@ -1,6 +1,7 @@
 require 'sass-globbing'
 require "bootstrap-sass"
 require "font-awesome-sass"
+require "compass"
 
 
 # Require any additional compass plugins here.

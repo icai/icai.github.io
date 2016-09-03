@@ -1,0 +1,23 @@
+.categories{
+
+	h1.title{
+		// text-indent: 1em;
+	}
+
+	.entry-content{
+
+		.categories-lists{
+			padding-left: 0;
+		    // list-style: none;
+		    // color: #999;
+		    // font-size: 22px;
+		    li{
+		    	margin-bottom: 10px;
+				a{
+					color: #999;
+				}
+		    }
+		}
+	}
+
+}
