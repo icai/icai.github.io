@@ -1,7 +1,9 @@
+
 @function ga-font-path($path) {
      @return font-path($path);
 }
 $open-sans-asset-helper: true;
+
 
 $open-sans-asset-helper: false !default;
 $open-sans-path: if($open-sans-asset-helper, "opensans/", "../fonts/opensans/") !default;
@@ -31,5 +33,4 @@ $open-sans-italic-name: "OpenSans-Italic" !default;
     font-weight: 400;
     src: local('Open Sans Italic'), local('OpenSans-Italic'), url(ga-font-path('#{$open-sans-path}#{$open-sans-italic-name}.woff')) format('woff');
 }
-
 
