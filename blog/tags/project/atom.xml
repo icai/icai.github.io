@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: project | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/project/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2016-09-04T02:08:20+08:00</updated>
+  <updated>2016-10-18T23:39:21+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -18,7 +18,9 @@
     <link href="http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release/"/>
     <updated>2015-12-08T22:23:26+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release</id>
-    <content type="html"><![CDATA[<h2>Preface</h2>
+    <content type="html"><![CDATA[<p><a name="Preface"></a></p>
+
+<h2>Preface</h2>
 
 
 
@@ -41,7 +43,7 @@
 <p>After subsequent improvement, we will open some jekyll plug-ins and source code.</p>
 
 
-
+<p><a name="Credits"></a></p>
 
 <h2>Credits</h2>
 
@@ -67,7 +69,7 @@
 <p>About devdocs, you can read <a href="https://devdocs.io/about">this</a>.</p>
 
 
-
+<p><a name="The.coming.issue"></a></p>
 
 <h2>The coming issue</h2>
 
@@ -77,7 +79,7 @@
 <p>After improve these static web pages, I would do the app. If you like this, please wait the coming app.</p>
 
 
-
+<p><a name="Related.links"></a></p>
 
 <h2>Related links</h2>
 

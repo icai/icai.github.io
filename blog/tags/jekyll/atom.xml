@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: jekyll | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/jekyll/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2016-09-04T02:08:20+08:00</updated>
+  <updated>2016-10-18T23:39:21+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -83,7 +83,9 @@
     <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
     <updated>2015-06-20T23:16:31+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
+    <content type="html"><![CDATA[<p><a name="L......"></a></p>
+
+<h2>前言</h2>
 
 
 
@@ -126,12 +128,12 @@
 <p>所以 安装octopress之前必不可少的是安装Ta的生态环境。</p>
 
 
-
+<p><a name="L......Octopress"></a></p>
 
 <h2>安装Octopress</h2>
 
 
-
+<p><a name="L......rvm"></a></p>
 
 <h3>安装rvm</h3>
 
@@ -154,7 +156,7 @@ $ \curl -sSL https://get.rvm.io | bash -s stable
 <p><a href="https://en.wikipedia.org/wiki/Ruby_Version_Manager">rvm wiki</a></p>
 
 
-
+<p><a name="L......Ruby"></a></p>
 
 <h3>安装Ruby</h3>
 
@@ -178,7 +180,7 @@ $ rvm use 2.2.1
 <p>安装完成后可以用ruby &ndash;version进行验证</p>
 
 
-
+<p><a name="L......Octopress"></a></p>
 
 <h3>安装Octopress</h3>
 
@@ -215,7 +217,7 @@ $ rake install
 <p>bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类似，都是一键安装依赖包文件。</p>
 
 
-
+<p><a name="L......"></a></p>
 
 <h2>部署</h2>
 
@@ -241,12 +243,12 @@ $ rake install
 <hr />
 
 
-
+<p><a name="L............"></a></p>
 
 <h2>创建博客</h2>
 
 
-
+<p><a name="L............"></a></p>
 
 <h3>生成博客</h3>
 
@@ -282,7 +284,7 @@ $ git push origin source
 <p>完成后等待一段时间后就能访问<code>http://username.github.io</code>看到自己的博客了</p>
 
 
-
+<p><a name="L............"></a></p>
 
 <h3>修改配置</h3>
 
@@ -314,7 +316,7 @@ $ rake deploy
 </code></pre>
 
 
-
+<p><a name="L....................."></a></p>
 
 <h3>安装第三方主题</h3>
 
@@ -343,7 +345,7 @@ $ rake deploy
 </code></pre>
 
 
-
+<p><a name="L.................."></a></p>
 
 <h3>支持中文标签</h3>
 
@@ -390,7 +392,7 @@ $ rake deploy
 <hr />
 
 
-
+<p><a name="L........."></a></p>
 
 <h2>写博客</h2>
 
@@ -400,7 +402,7 @@ $ rake deploy
 <p>经过上面几部后，博客已经成功搭建，现在就可以开始写博文了。</p>
 
 
-
+<p><a name="L............"></a></p>
 
 <h3>创建博文</h3>
 
@@ -422,7 +424,7 @@ $ rake new_post\['title'\]
 <p>生成的文件在<code>~/source/_posts</code>目录下</p>
 
 
-
+<p><a name="L............"></a></p>
 
 <h3>编辑博文</h3>
 
@@ -448,7 +450,7 @@ $ rake deploy
 <hr />
 
 
-
+<p><a name="L............"></a></p>
 
 <h2>参考资料</h2>
 

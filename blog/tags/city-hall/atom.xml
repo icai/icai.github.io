@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: City Hall | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/city-hall/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2016-09-04T02:08:20+08:00</updated>
+  <updated>2016-10-18T23:39:21+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -18,7 +18,9 @@
     <link href="http://blog.w3cub.com/blog/2012/11/10/music-city-hall/"/>
     <updated>2012-11-10T23:35:19+08:00</updated>
     <id>http://blog.w3cub.com/blog/2012/11/10/music-city-hall</id>
-    <content type="html"><![CDATA[<div><embed src="http://www.xiami.com/widget/0_141216/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed></div>
+    <content type="html"><![CDATA[<div>
+<embed src="http://www.xiami.com/widget/0_141216/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed>
+</div>
 
 
 

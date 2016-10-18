@@ -19,8 +19,8 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script type="text/javascript" src="/assets/application-aef091093a626c70310e267bf1fddbda83482959fca1e1ad4a05b90853163b0e.js"></script>
-	<link type="text/css" rel="stylesheet" href="/assets/application-c607a57986108ad0ee2273032b03e070d4be7db7b3b510fbb19e8c0ada202e4f.css">
+	<script type="text/javascript" src="/assets/application-072dcd8bae42cbf7207b7a9e6d95d503a262071dd4919722c5dd8b7db34ff124.js"></script>
+	<link type="text/css" rel="stylesheet" href="/assets/application-2a58bf2757ee44b3fbfda54729ad39930bfd601b4df2a67c3af17835e667379e.css">
 	
 
 </head>
@@ -102,11 +102,11 @@
 </header>				
 			</div>
 		</div>
-	    <script>
+	    <!-- <script>
 	    var bgs = [ "/assets/bg/1-f973be5947bbf4eef0b33318584073a92ab8acf476c64cda2da499c23323d4ba.jpg","/assets/bg/2-13e4c1631648e86fe0b42c01572ec112ae6b58efb1cd0c01456649094be136a1.jpg", "/assets/bg/3-f8b604e9c6816760cdc770f0c6fc15b05d2126c4326524966e5c95fe3d591d4d.jpg", "/assets/bg/5-9f5520bfe3ff9e7ab2ed0a7d6db32e4d06d5b8456683420e9f1944ad082e48d4.jpg"];
 	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
 	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
-	    </script>	
+	    </script> -->
 		<div class="mid-col">
 			
 				
@@ -131,7 +131,7 @@
 		<div class="cats">
 
 
-	<a class='category' href='/blog/categories/octopress/'>octopress</a>
+	octopress
 
 
 </div>
@@ -154,7 +154,8 @@
 
 	
 	<hr />
-	<div class="entry-content" itemprop="articleBody"><h2>前言</h2>
+	<div class="entry-content" itemprop="articleBody"><a name="L......"></a>
+<h2>前言</h2>
 
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
 
@@ -173,8 +174,10 @@
 
 <p>所以 安装octopress之前必不可少的是安装Ta的生态环境。</p>
 
+<a name="L......Octopress"></a>
 <h2>安装Octopress</h2>
 
+<a name="L......rvm"></a>
 <h3>安装rvm</h3>
 
 <p>打开<a href="https://rvm.io/">rvm</a>首页，打开终端，使用以下命令安装吧。</p>
@@ -186,6 +189,7 @@ $ \curl -sSL https://get.rvm.io | bash -s stable
 
 <p><a href="https://en.wikipedia.org/wiki/Ruby_Version_Manager">rvm wiki</a></p>
 
+<a name="L......Ruby"></a>
 <h3>安装Ruby</h3>
 
 <pre><code>$ rvm -h
@@ -198,6 +202,7 @@ $ rvm use 2.2.1
 
 <p>安装完成后可以用ruby &ndash;version进行验证</p>
 
+<a name="L......Octopress"></a>
 <h3>安装Octopress</h3>
 
 <p>安装Ruby完成后就按照官方指南安装Octpress</p>
@@ -220,6 +225,7 @@ $ rake install
 
 <p>bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类似，都是一键安装依赖包文件。</p>
 
+<a name="L......"></a>
 <h2>部署</h2>
 
 <p>接下来需要把Blog部署到github上去，第一步要做的是去<a href="https://github.com/new">github</a>创建一个<code>username.github.io</code>的repo，比如我的就叫<code>icai.github.io</code>。</p>
@@ -231,8 +237,10 @@ $ rake install
 
 <hr />
 
+<a name="L............"></a>
 <h2>创建博客</h2>
 
+<a name="L............"></a>
 <h3>生成博客</h3>
 
 <pre><code>$ rake generate
@@ -251,6 +259,7 @@ $ git push origin source
 
 <p>完成后等待一段时间后就能访问<code>http://username.github.io</code>看到自己的博客了</p>
 
+<a name="L............"></a>
 <h3>修改配置</h3>
 
 <p>配置文件路径为<code>~/octopress/_config.yml</code></p>
@@ -268,6 +277,7 @@ $ git push origin source
 $ rake deploy
 </code></pre>
 
+<a name="L....................."></a>
 <h3>安装第三方主题</h3>
 
 <p>Octopress有许多第三方主题可以选择，首先在<a href="http://opthemes.com/">这里</a>上寻找喜欢的主题，点击进入对应主题的git，一般在readme上都会有安装流程</p>
@@ -288,6 +298,7 @@ $ git push origin source
 $ rake deploy
 </code></pre>
 
+<a name="L.................."></a>
 <h3>支持中文标签</h3>
 
 <p>目前版本的Octopress会在<code>/source/blog/categories</code>下创建一个<code>index.markdown</code>来作为分类的首页，但这个首页在标签有中文时会出现无法跳转的情况，原因是因为在出现中文标签时Octopress会把文件的路径中的中文转换成拼音，而在Category跳转时是直接写了中文路径，结果自然是404。解决方法是自己实现一个分类首页并处理中文。</p>
@@ -308,10 +319,12 @@ $ rake deploy
 
 <hr />
 
+<a name="L........."></a>
 <h2>写博客</h2>
 
 <p>经过上面几部后，博客已经成功搭建，现在就可以开始写博文了。</p>
 
+<a name="L............"></a>
 <h3>创建博文</h3>
 
 <pre><code>#如果用的是终端
@@ -325,6 +338,7 @@ $ rake new_post\['title'\]
 
 <p>生成的文件在<code>~/source/_posts</code>目录下</p>
 
+<a name="L............"></a>
 <h3>编辑博文</h3>
 
 <pre><code>#...markdown写博文
@@ -342,6 +356,7 @@ $ rake deploy
 
 <hr />
 
+<a name="L............"></a>
 <h2>参考资料</h2>
 
 <ul>
