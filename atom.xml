@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2016-09-04T02:08:20+08:00</updated>
+  <updated>2017-01-02T13:05:45+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -27,12 +27,14 @@
 <!-- more -->
 
 
+<a name="L......"></a>
 <h4>安装</h4>
 
 <p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" class="only" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg"></a></p>
 
 <p>或者到官网 <a href="http://cozhihu.w3cub.com/">http://cozhihu.w3cub.com/</a>进行安装。</p>
 
+<a name="L......"></a>
 <h3>特色</h3>
 
 <ul>
@@ -43,10 +45,12 @@
 </ul>
 
 
+<a name="L......"></a>
 <h3>预览</h3>
 
 <p><img aria-hidden="true"  src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" ></p>
 
+<a name="L............"></a>
 <h3>开源协议</h3>
 
 <p>Copyright &copy; 2016 Terry Cai. Licensed under the MIT license.
@@ -58,10 +62,12 @@
 
 <blockquote><p>cozhihu is a chrome extension for zhihu skins.</p></blockquote>
 
+<a name="Install"></a>
 <h4>Install</h4>
 
 <p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" class="only" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg"></a></p>
 
+<a name="Features"></a>
 <h3>Features</h3>
 
 <ul>
@@ -72,6 +78,7 @@
 </ul>
 
 
+<a name="Preview"></a>
 <h3>Preview</h3>
 
 <p><img aria-hidden="true" src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" ></p>
@@ -242,7 +249,8 @@
     <link href="http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release/"/>
     <updated>2015-12-08T22:23:26+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release</id>
-    <content type="html"><![CDATA[<h2>Preface</h2>
+    <content type="html"><![CDATA[<a name="Preface"></a>
+<h2>Preface</h2>
 
 <p><a href="http://docs.w3cub.com/">docs.w3cub</a> project is based on <a href="https://github.com/Thibaut/devdocs">open source</a><iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&amp;repo=devdocs&amp;type=star&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>. we use jekyll system to rewrite and hosted on Github Pages. This project continued for several months and written in my spare time.</p>
 
@@ -253,6 +261,7 @@
 
 <p>After subsequent improvement, we will open some jekyll plug-ins and source code.</p>
 
+<a name="Credits"></a>
 <h2>Credits</h2>
 
 <p>Following credits copy from devdocs.</p>
@@ -268,10 +277,12 @@
 
 <p>About devdocs, you can read <a href="https://devdocs.io/about">this</a>.</p>
 
+<a name="The.coming.issue"></a>
 <h2>The coming issue</h2>
 
 <p>After improve these static web pages, I would do the app. If you like this, please wait the coming app.</p>
 
+<a name="Related.links"></a>
 <h2>Related links</h2>
 
 <ul>
@@ -287,13 +298,15 @@
     <link href="http://blog.w3cub.com/blog/2015/08/20/shrimpcongee/"/>
     <updated>2015-08-20T22:53:49+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/08/20/shrimpcongee</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
+    <content type="html"><![CDATA[<a name="L......"></a>
+<h2>前言</h2>
 
 <p>你会不会经常大排档吃砂锅粥呢，各种虾粥，蟹粥之类的。在广州，潮汕大排档这些东西是最普遍不过了。要么味道太浓，味精太多，要么吃不出什么鲜肉。对于我这种喜欢折腾的人来说，自然就是少不了在家DIY了.</p>
 
 <!-- more -->
 
 
+<a name="L........."></a>
 <h2>食材：</h2>
 
 <p>米 150  毫升 （电饭锅米杯差不多满杯）</p>
@@ -306,6 +319,7 @@
 
 <p>盐油 小许</p>
 
+<a name="L........."></a>
 <h2>步骤：</h2>
 
 <ol>
@@ -313,27 +327,28 @@
 其实我也不知道适量是多少，以前本港台中午的烹饪节目就是那么说的。
 可以开火了，1000W 煲到沸，转600W。</p>
 
-<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_185200-ab4ea285f212a3930d6c47638223ac092f9d79492faa1fd56bd6221b3f449fad.png" width="720" alt="第一步, 洗米" /></p></blockquote></li>
+<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_185200-ab4ea285f212a3930d6c47638223ac092f9d79492faa1fd56bd6221b3f449fad.png" alt="第一步, 洗米" /></p></blockquote></li>
 <li><p>在煲的过程中，我们开始处理主要材料。
 明虾去头，虾脚等，由腹开刀，去除虾线。把尾也去掉吧。</p>
 
-<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_190823-99aa8352a9b8e078d4eb8d56d703ae11dcc2d9d5c47904940739f569aa96dcad.png" width="720" alt="第二步, 处理虾" /></p></blockquote></li>
+<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_190823-99aa8352a9b8e078d4eb8d56d703ae11dcc2d9d5c47904940739f569aa96dcad.png" alt="第二步, 处理虾" /></p></blockquote></li>
 <li><p>腌虾。当粥煮到沸，<strong>米变粗，没有变花</strong>的时候，开始腌虾，盐少许，油适量。盐不要放太多，是个人口味而定，这里已经放盐了，之后就不用放了。</p>
 
-<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_195056-89493e813c72b42aa0dc969e90bbde0c53a426e3bf2f52b42f9a0a8d02b043b9.png" width="720" alt="第三步, 腌虾" /></p></blockquote></li>
+<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_195056-89493e813c72b42aa0dc969e90bbde0c53a426e3bf2f52b42f9a0a8d02b043b9.png" alt="第三步, 腌虾" /></p></blockquote></li>
 <li><p>准备配料。洗净，去头，切段。假如，你能把头洗净的话，可以留头。姜，拍扁。</p>
 
-<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_195127-015749ef609849ed4662af64fe3652945c37c324c1545285ec5ddf5cafbb9de5.png" width="720" alt="第四步, 准备配料" /></p></blockquote></li>
+<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_195127-015749ef609849ed4662af64fe3652945c37c324c1545285ec5ddf5cafbb9de5.png" alt="第四步, 准备配料" /></p></blockquote></li>
 <li><p><strong>米变粗</strong>，放入姜。</p></li>
 <li><p>米开花，煮好的白粥，放料。把火调到1000w。</p>
 
-<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_195312-1c47c1f564b2ff34a6b1b3af01242d2fcb5d6554a48344208a8f4c9f7be09172.png" width="720" alt="第五步,白粥" /></p></blockquote></li>
+<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_195312-1c47c1f564b2ff34a6b1b3af01242d2fcb5d6554a48344208a8f4c9f7be09172.png" alt="第五步,白粥" /></p></blockquote></li>
 <li><p>等待煮沸，放入香草，OK。</p>
 
-<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_200346-aa68687cc1891b945300fc192247d6e48fdb9ffe10b643d3e065287404dcb692.png" width="720" alt="最后完成" /></p></blockquote></li>
+<blockquote><p><img src="http://blog.w3cub.com/assets/posts/shrimpcongee/IMG_20150820_200346-aa68687cc1891b945300fc192247d6e48fdb9ffe10b643d3e065287404dcb692.png" alt="最后完成" /></p></blockquote></li>
 </ol>
 
 
+<a name="L........."></a>
 <h2>点评：</h2>
 
 <p>过程，虾处理十分耗时，煮白粥也要相当一段时间。放下米的时候，开始处理就好了。</p>
@@ -401,8 +416,10 @@
 
 <p>Warning： 别分心，不然效率极低的，bebebe～～～</p>
 
+<a name="Let...s.begin."></a>
 <h2>Let’s begin!</h2>
 
+<a name="L.................."></a>
 <h2>我们入正题：</h2>
 
 <p>A static France might look like this:</p>
@@ -1069,7 +1086,8 @@ limitations under the License.
     <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
     <updated>2015-06-20T23:16:31+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
-    <content type="html"><![CDATA[<h2>前言</h2>
+    <content type="html"><![CDATA[<a name="L......"></a>
+<h2>前言</h2>
 
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
 
@@ -1088,8 +1106,10 @@ limitations under the License.
 
 <p>所以 安装octopress之前必不可少的是安装Ta的生态环境。</p>
 
+<a name="L......Octopress"></a>
 <h2>安装Octopress</h2>
 
+<a name="L......rvm"></a>
 <h3>安装rvm</h3>
 
 <p>打开<a href="https://rvm.io/">rvm</a>首页，打开终端，使用以下命令安装吧。</p>
@@ -1101,6 +1121,7 @@ $ \curl -sSL https://get.rvm.io | bash -s stable
 
 <p><a href="https://en.wikipedia.org/wiki/Ruby_Version_Manager">rvm wiki</a></p>
 
+<a name="L......Ruby"></a>
 <h3>安装Ruby</h3>
 
 <pre><code>$ rvm -h
@@ -1113,6 +1134,7 @@ $ rvm use 2.2.1
 
 <p>安装完成后可以用ruby &ndash;version进行验证</p>
 
+<a name="L......Octopress"></a>
 <h3>安装Octopress</h3>
 
 <p>安装Ruby完成后就按照官方指南安装Octpress</p>
@@ -1135,6 +1157,7 @@ $ rake install
 
 <p>bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类似，都是一键安装依赖包文件。</p>
 
+<a name="L......"></a>
 <h2>部署</h2>
 
 <p>接下来需要把Blog部署到github上去，第一步要做的是去<a href="https://github.com/new">github</a>创建一个<code>username.github.io</code>的repo，比如我的就叫<code>icai.github.io</code>。</p>
@@ -1146,8 +1169,10 @@ $ rake install
 
 <hr />
 
+<a name="L............"></a>
 <h2>创建博客</h2>
 
+<a name="L............"></a>
 <h3>生成博客</h3>
 
 <pre><code>$ rake generate
@@ -1166,6 +1191,7 @@ $ git push origin source
 
 <p>完成后等待一段时间后就能访问<code>http://username.github.io</code>看到自己的博客了</p>
 
+<a name="L............"></a>
 <h3>修改配置</h3>
 
 <p>配置文件路径为<code>~/octopress/_config.yml</code></p>
@@ -1183,6 +1209,7 @@ $ git push origin source
 $ rake deploy
 </code></pre>
 
+<a name="L....................."></a>
 <h3>安装第三方主题</h3>
 
 <p>Octopress有许多第三方主题可以选择，首先在<a href="http://opthemes.com/">这里</a>上寻找喜欢的主题，点击进入对应主题的git，一般在readme上都会有安装流程</p>
@@ -1203,6 +1230,7 @@ $ git push origin source
 $ rake deploy
 </code></pre>
 
+<a name="L.................."></a>
 <h3>支持中文标签</h3>
 
 <p>目前版本的Octopress会在<code>/source/blog/categories</code>下创建一个<code>index.markdown</code>来作为分类的首页，但这个首页在标签有中文时会出现无法跳转的情况，原因是因为在出现中文标签时Octopress会把文件的路径中的中文转换成拼音，而在Category跳转时是直接写了中文路径，结果自然是404。解决方法是自己实现一个分类首页并处理中文。</p>
@@ -1223,10 +1251,12 @@ $ rake deploy
 
 <hr />
 
+<a name="L........."></a>
 <h2>写博客</h2>
 
 <p>经过上面几部后，博客已经成功搭建，现在就可以开始写博文了。</p>
 
+<a name="L............"></a>
 <h3>创建博文</h3>
 
 <pre><code>#如果用的是终端
@@ -1240,6 +1270,7 @@ $ rake new_post\['title'\]
 
 <p>生成的文件在<code>~/source/_posts</code>目录下</p>
 
+<a name="L............"></a>
 <h3>编辑博文</h3>
 
 <pre><code>#...markdown写博文
@@ -1257,6 +1288,7 @@ $ rake deploy
 
 <hr />
 
+<a name="L............"></a>
 <h2>参考资料</h2>
 
 <ul>
@@ -1355,7 +1387,7 @@ $ rake deploy
 <span class='line-number'>30</span>
 <span class='line-number'>31</span>
 <span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">github</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span></span><span class="kd">var</span> <span class="nx">github</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
 </span><span class='line'>  <span class="kd">function</span> <span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
 </span><span class='line'>  <span class="p">}</span>
@@ -1408,7 +1440,7 @@ $ rake deploy
 <!--more-->
 
 
-<pre><code>    set: function(key, val, options) {
+<pre><code class="javascript">    set: function(key, val, options) {
       var attr, attrs, unset, changes, silent, changing, prev, current;
       if (key == null) return this;
 
@@ -1476,133 +1508,117 @@ $ rake deploy
     }
 </code></pre>
 
-<p>2.YUI中的getter和setter
-```
-    get : function(name) {
+<p>2.YUI中的getter和setter</p>
+
+<pre><code class="javascript">    get : function(name) {
         return this._getAttr(name);
-    },</p>
-
-<pre><code>set : function(name, val, opts) {
-    return this._setAttr(name, val, opts);
-},
-//……
-</code></pre>
-
-<pre><code>
-
-get: `http://yuilibrary.com/yui/docs/api/files/attribute_js_AttributeCore.js.html#l343`
-
-Y.augment : `http://yuilibrary.com/yui/docs/api/files/oop_js_oop.js.html#l67`
-
-
-
-
-3.javascript中的getter和setter
-</code></pre>
-
-<pre><code>// 对象构造实现，javascript类库中最常用的方法
-
-function Field(val){
-    var value = val;
-
-    this.getValue = function(){
-        return value;
-    };
-
-    this.setValue = function(val){
-        value = val;
-    };
-} 
-
-// 模拟“hidden value property” 
-
-function Field(val){
-    var value = val;
-
-    this.__defineGetter__("value", function(){
-        return value;
-    });
-
-    this.__defineSetter__("value", function(val){
-        value = val;
-    });
-}
-
-// es6 是实现
-function Field(val){
-    this.value = val;
-}
-
-Field.prototype = {
-    get value(){
-        return this._value;
     },
-    set value(val){
-        this._value = val;
+
+    set : function(name, val, opts) {
+        return this._setAttr(name, val, opts);
+    },
+    //……
+</code></pre>
+
+<p>get: <code>http://yuilibrary.com/yui/docs/api/files/attribute_js_AttributeCore.js.html#l343</code></p>
+
+<p>Y.augment : <code>http://yuilibrary.com/yui/docs/api/files/oop_js_oop.js.html#l67</code></p>
+
+<p>3.javascript中的getter和setter</p>
+
+<pre><code class="javascript">    // 对象构造实现，javascript类库中最常用的方法
+
+    function Field(val){
+        var value = val;
+
+        this.getValue = function(){
+            return value;
+        };
+
+        this.setValue = function(val){
+            value = val;
+        };
+    } 
+
+    // 模拟“hidden value property” 
+
+    function Field(val){
+        var value = val;
+
+        this.__defineGetter__("value", function(){
+            return value;
+        });
+
+        this.__defineSetter__("value", function(val){
+            value = val;
+        });
     }
-};
+
+    // es6 是实现
+    function Field(val){
+        this.value = val;
+    }
+
+    Field.prototype = {
+        get value(){
+            return this._value;
+        },
+        set value(val){
+            this._value = val;
+        }
+    };
 </code></pre>
 
-<pre><code>
+<p>4.java中的getter和setter</p>
+
+<pre><code class="javascript">    public class TestGetterSetter { //TestGetterSetter.class
+
+        private String name ;
+
+        public void setName(String name){
+            if(this.name != name){
+                System.out.println("name is changeing!");
+                this.name = name ;
+                // trigger change  event
+            }
+
+    }
+
+    public String getName(String name){
+        if (this.name == null ){
+        setName("Guest");
+        }
+        return this.name ;
+    }
+
+        public String getName() {
+            return name;
+        }
+    }
 
 
+    public class TestMain { //TestMain.class
+        TestGetterSetter tb ;
 
+        public static void main(String[] args) {
 
+            new TestMain().todo();
+            // TODO Auto-generated method stub
 
+        }
+        public TestMain(){ // init
 
-4.java中的getter和setter
-</code></pre>
-
-<pre><code>public class TestGetterSetter { //TestGetterSetter.class
-
-    private String name ;
-
-    public void setName(String name){
-        if(this.name != name){
-            System.out.println("name is changeing!");
-            this.name = name ;
-            // trigger change  event
+             super();
+             System.out.println("init TestMain !!");
+        }
+        public void todo(){
+             tb  =  new TestGetterSetter();
+             tb.setName("caicai");
+             System.out.println(tb.getName());
         }
 
-}
-
-public String getName(String name){
-    if (this.name == null ){
-    setName("Guest");
     }
-    return this.name ;
-}
-
-    public String getName() {
-        return name;
-    }
-}
-
-
-public class TestMain { //TestMain.class
-    TestGetterSetter tb ;
-
-    public static void main(String[] args) {
-
-        new TestMain().todo();
-        // TODO Auto-generated method stub
-
-    }
-    public TestMain(){ // init
-
-         super();
-         System.out.println("init TestMain !!");
-    }
-    public void todo(){
-         tb  =  new TestGetterSetter();
-         tb.setName("caicai");
-         System.out.println(tb.getName());
-    }
-
-}
 </code></pre>
-
-<p>```</p>
 
 <p>总结：</p>
 
@@ -1623,7 +1639,9 @@ public class TestMain { //TestMain.class
     <link href="http://blog.w3cub.com/blog/2012/11/10/music-city-hall/"/>
     <updated>2012-11-10T23:35:19+08:00</updated>
     <id>http://blog.w3cub.com/blog/2012/11/10/music-city-hall</id>
-    <content type="html"><![CDATA[<div><embed src="http://www.xiami.com/widget/0_141216/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed></div>
+    <content type="html"><![CDATA[<div>
+<embed src="http://www.xiami.com/widget/0_141216/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed>
+</div>
 
 
 <p>Lyrics:</p>
