@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: task | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/task/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2016-10-18T23:39:21+08:00</updated>
+  <updated>2017-05-08T23:17:48+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -116,7 +116,7 @@
 <span class='line-number'>30</span>
 <span class='line-number'>31</span>
 <span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">github</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span></span><span class="kd">var</span> <span class="nx">github</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
 </span><span class='line'>  <span class="kd">function</span> <span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
 </span><span class='line'>  <span class="p">}</span>
