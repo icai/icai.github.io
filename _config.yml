@@ -65,15 +65,26 @@ plugins_dir: plugins
 code_dir: /downloads/code
 category_dir: blog/categories
 tag_dir: blog/tags 
+
+
+
+# markdown: kramdown
+# kramdown:
+#   auto_ids: true
+#   input: GFM
+#   toc_levels: 1..6
+#   smart_quotes: lsquo,rsquo,ldquo,rdquo
+#   enable_coderay: true
+#   hard_wrap: true
+#   syntax_highlighter: rouge
+
 markdown: rdiscount
 rdiscount:
-  extensions:
-    - autolink
-    - footnotes
-    - smart
+  extensions: ["autolink", "footnotes", "generate_toc", "smart"]
+  toc_token: "[TOC]"
+
+highlighter: rouge
 # highlighter: pygments # default python pygments have been replaced by pygments.rb
-
-
 
 paginate: 10          # Posts per page on the blog index
 paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
@@ -145,6 +156,8 @@ weibo_user: 328765211
 
 addthis_profile_id: ra-558841b45b591663
 weibo_share: true
+
+cv: https://github.com/icai/
 
 
 

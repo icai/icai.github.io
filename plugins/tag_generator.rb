@@ -127,9 +127,12 @@ module Jekyll
 
   end
 
+end
+
+
 
   # Adds some extra filters used during the tag creation process.
-  module Filters
+  module TagsFilters
 
     # Outputs a list of tags as comma-separated <a> links. This is used
     # to output the tag list for each post on a tag page.
@@ -168,4 +171,5 @@ module Jekyll
 
   end
 
-end
+
+  Liquid::Template.register_filter TagsFilters

@@ -20,7 +20,7 @@ tags: [getter,setter,javascript,java]
 
 <!--more-->
 
-```
+```javascript
     set: function(key, val, options) {
       var attr, attrs, unset, changes, silent, changing, prev, current;
       if (key == null) return this;
@@ -90,7 +90,8 @@ tags: [getter,setter,javascript,java]
 ```
 
 2.YUI中的getter和setter
-```
+
+```javascript
 	get : function(name) {
         return this._getAttr(name);
     },
@@ -111,7 +112,7 @@ Y.augment : `http://yuilibrary.com/yui/docs/api/files/oop_js_oop.js.html#l67`
 
 3.javascript中的getter和setter
 
-```
+```javascript
     // 对象构造实现，javascript类库中最常用的方法
     
     function Field(val){
@@ -163,7 +164,7 @@ Y.augment : `http://yuilibrary.com/yui/docs/api/files/oop_js_oop.js.html#l67`
 
 4.java中的getter和setter
 
-```
+```javascript
     public class TestGetterSetter { //TestGetterSetter.class
     	
     	private String name ;

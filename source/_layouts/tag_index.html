@@ -7,7 +7,7 @@ footer: false
 <h1 class="title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
 {% endif %}
 <div itemscope itemtype="http://schema.org/Blog">
-{% for post in site.tags[page.tag] reverse %}
+{% for post in site.tags[page.tag] %}
 	{% include archive_post.html %}
 {% endfor %}
   </section>

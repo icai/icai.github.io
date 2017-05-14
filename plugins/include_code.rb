@@ -23,6 +23,7 @@
 require './plugins/pygments_code'
 require './plugins/raw'
 require 'pathname'
+require 'rouge'
 
 module Jekyll
 

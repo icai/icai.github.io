@@ -8,11 +8,11 @@
 			<header id="header" class="inner">{% include header.html %}</header>				
 			</div>
 		</div>
-	    <script>
+	    <!-- <script>
 	    var bgs = [ "{% image_path bg/1.jpg %}","{% image_path bg/2.jpg %}", "{% image_path bg/3.jpg %}", "{% image_path bg/5.jpg %}"];
 	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
 	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
-	    </script>	
+	    </script> -->
 		<div class="mid-col">
 			{% unless page.banner == false %}
 				{% include banner.html %}

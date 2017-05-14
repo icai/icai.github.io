@@ -10,6 +10,7 @@
 #   ...will output...
 require 'delegate'
 require 'json'
+require "kramdown"
 
 module Jekyll
   SLIDE_BEGIN_TAG = "<section.+><div class='content'>"
