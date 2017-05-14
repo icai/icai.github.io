@@ -1,12 +1,12 @@
 ## A blog using Jekyll 3
 
 
-###Theme
+### Theme
 
 Current theme based on [Shashank Mehta](https://shashankmehta.in/archive/2012/greyshade.html). 
 
 
-###Plugins
+### Plugins
 
 ```
 	plugins
@@ -44,7 +44,7 @@ Current theme based on [Shashank Mehta](https://shashankmehta.in/archive/2012/gr
 ```
 
 
-###Style and Assets
+### Style and Assets
 
 ```
 
@@ -60,10 +60,32 @@ Current theme based on [Shashank Mehta](https://shashankmehta.in/archive/2012/gr
 ```
 
 
-###Task
+### Task
 
 Octopress 2 Rakefile
 
+```
+	rake clean                     # Clean out caches: .pygments-cache, .gist-c...
+	rake copydot[source,dest]      # copy dot files for deployment
+	rake deploy                    # Default deploy task
+	rake gen_deploy                # Generate website and deploy
+	rake generate                  # Generate jekyll site
+	rake install[theme]            # Initial setup for Octopress: copies the de...
+	rake integrate                 # Move all stashed posts back into the posts...
+	rake isolate[filename]         # Move all other posts than the one currentl...
+	rake list                      # list tasks
+	rake new_page[filename]        # Create a new page in source/(filename)/ind...
+	rake new_post[title]           # Begin a new post in source/_posts
+	rake preview                   # preview the site in a web browser
+	rake push                      # deploy public directory to github pages
+	rake rsync                     # Deploy website via rsync
+	rake set_root_dir[dir]         # Update configurations to support publishin...
+	rake setup_github_pages[repo]  # Set up _deploy folder and deploy branch fo...
+	rake update_source[theme]      # Move source to source.old, install source ...
+	rake update_style[theme]       # Move sass to sass.old, install sass theme ...
+	rake watch                     # Watch the site and regenerate when it changes
+
+```
 
 
 
