@@ -2415,6 +2415,72 @@ e=f(this),c=this.selector||"",k=function(g){var h=f(this).blur(),j=d,k,l;!g.ctrl
 ":not('.fancybox-item, .fancybox-nav')","click.fb-start",k);this.filter("[data-fancybox-start=1]").trigger("click");return this};p.ready(function(){var a,d;f.scrollbarWidth===v&&(f.scrollbarWidth=function(){var a=f('<div style="width:50px;height:50px;overflow:auto"><div/></div>').appendTo("body"),b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});if(f.support.fixedPosition===v){a=f.support;d=f('<div style="position:fixed;top:20px;"></div>').appendTo("body");var e=20===
 d[0].offsetTop||15===d[0].offsetTop;d.remove();a.fixedPosition=e}f.extend(b.defaults,{scrollbarWidth:f.scrollbarWidth(),fixed:f.support.fixedPosition,parent:f("body")});a=f(r).width();J.addClass("fancybox-lock-test");d=f(r).width();J.removeClass("fancybox-lock-test");f("<style type='text/css'>.fancybox-margin{margin-right:"+(d-a)+"px;}</style>").appendTo("head")})})(window,document,jQuery);
 $(function(){
+
+var doc = document;
+var win = window;
+var Dom = {};
+
+var utils = {
+    isMob : (function() {
+      var ua = navigator.userAgent.toLowerCase();
+      var agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'];
+      var result = false;
+      for(var i = 0; i < agents.length; i++) {
+        if(ua.indexOf(agents[i].toLowerCase()) > -1) {
+          result = true;
+        }
+      }
+      return result;
+    })()
+  }
+
+
+  try{
+  	var Dom = {
+		$sidebar : $('#sidebar'),
+		$sidebar_mask : $('#sidebar-mask'),
+		$body : doc.body,
+		$btn_side : $('#topbar .btn-bar'),
+	};
+
+	Dom.bindEvent = function() {
+
+	    var me = this,
+	      body_class_name = 'side',
+	      eventFirst = 'click',
+	      eventSecond = 'click';
+
+	    if(utils.isMob) {
+	      eventFirst = 'touchstart';
+	      eventSecond = 'touchend';
+	    }
+
+	    this.$btn_side.on(eventSecond, function() {
+	      if(me.$body.className.indexOf(body_class_name) > -1) {
+	        me.$body.className = me.$body.className.replace(body_class_name, '');
+	        me.$sidebar_mask.hide();
+	      }else{
+	        me.$body.className += (' ' + body_class_name);
+	        me.$sidebar_mask.show();
+	      }
+	    });
+
+	    this.$sidebar_mask.on(eventFirst, function(e) {
+	      me.$body.className = me.$body.className.replace(body_class_name, '');
+	      me.$sidebar_mask.hide();
+	      e.preventDefault();
+	    });
+
+
+	    $(win).on('resize', function() {
+	      me.$body.className = me.$body.className.replace(body_class_name, '');
+	      me.$sidebar_mask.hide();
+	    });
+	}
+	Dom.bindEvent();
+  }catch(e){}
+
+
 	// Open external links in new window
 	var externalLinks = function(){
 		var host = location.host;
