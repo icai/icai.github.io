@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: information | 泛前端开发]]></title>
+  <link href="http://blog.w3cub.com/blog/categories/information/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2017-06-21T00:55:48+08:00</updated>
+  <id>http://blog.w3cub.com/</id>
+  <author>
+    <name><![CDATA[Terry Cai]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[每日一点点之scrapy]]></title>
+    <link href="http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy/"/>
+    <updated>2017-06-20T23:19:58+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy</id>
+    <content type="html"><![CDATA[<p>Scrapy 是什么？</p>
+
+
+
+
+<p>Scrapy是一个基于Python的高级爬虫框架，只需要简单的配置就可以实现你大大的需求。</p>
+
+
+
+
+<p>为什么要介绍Scrapy，内容时代了，没有内容再好看的网站，那又有什么用呢？</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+<p>对不对？对对对。</p>
+
+
+
+
+<p>学习scrapy有什么需求吗？</p>
+
+
+
+
+<p>python是基于python语言的，那么自然你要懂一些python的基础啦！</p>
+
+
+
+
+<p>还有简单的xpath语法或类似于jQuery选择器语法，一边用一边学也可以的。</p>
+
+
+
+
+<p>建议在Linux或者Mac下进行学习，Windows下可能会遇到各种入门级的问题。例如安装过程中报错，缺少这个，那个的问题。</p>
+
+
+
+
+<p>只需要准备一样东西，就是官方文档 <a href="https://docs.scrapy.org/en/latest/">https://docs.scrapy.org/en/latest/</a></p>
+
+
+
+
+<p>可以一边看，一边实践。</p>
+
+
+<p><a name="L......"></a></p>
+
+<h3>安装</h3>
+
+
+
+
+<pre><code class="bash">pip install Scrapy
+</code></pre>
+
+
+
+
+<p>官方推荐你安装python虚拟环境进行 Scrapy，不装也没有问题！ 虚拟环境会虚拟IP么？ 不会，不是这一回事</p>
+
+
+
+
+<pre><code class="bash">pip install virtualenv
+</code></pre>
+
+
+
+
+<p>接着来来读一下官方教程：</p>
+
+
+
+
+<p><a href="https://docs.scrapy.org/en/latest/intro/tutorial.html">https://docs.scrapy.org/en/latest/intro/tutorial.html</a></p>
+
+
+
+
+<pre><code class="bash">scrapy startproject 项目名字
+</code></pre>
+
+
+
+
+<p>A: 假如你想知道parse接着会干什么，parse里面能干什么，我觉得你去了解一下Scrapy的钩子函数，以及整体架构。</p>
+
+
+
+
+<p>B: 假如你对yield语法不是很了解的，可以去理解一下yield语法（python基础）。</p>
+
+
+
+
+<p>入门是很快的。</p>
+
+
+
+
+<p>假如你感兴趣，接着你可能会提出一些问题：</p>
+
+
+
+
+<p>比如，怎么在一个页面抓取多条？怎么去重？等等</p>
+
+
+
+
+<p>为什么会介绍Scrapy？</p>
+
+
+
+
+<p>其实Scrapy不单只是一个爬虫框架，而且是一个很好的Python入门学习项目，假设你怎么会Python。</p>
+
+
+
+
+<p>-EOF-</p>
+
+]]></content>
+  </entry>
+  
+</feed>

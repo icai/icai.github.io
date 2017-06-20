@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy/</loc>
+<lastmod>2017-06-20T23:19:58+08:00</lastmod>
+</url>
+<url>
 <loc>http://blog.w3cub.com/blog/2017/01/02/hello-2017/</loc>
 <lastmod>2017-01-02T16:27:08+08:00</lastmod>
 </url>
@@ -203,6 +207,9 @@
 </url>
 <url>
 <loc>http://blog.w3cub.com/blog/categories/shell/</loc>
+</url>
+<url>
+<loc>http://blog.w3cub.com/blog/categories/information/</loc>
 </url>
 <url>
 <loc>http://blog.w3cub.com/slides/ruby-bus-get-start/</loc>
