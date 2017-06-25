@@ -87,7 +87,7 @@ task :preview do
   # system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
   jekyllPid = Process.spawn({"JEKYLL_ENV"=>"development"}, "jekyll build --watch --incremental")
   # compassPid = Process.spawn("compass watch")
-  rackupPid = Process.spawn("rackup --port #{server_port}")
+  rackupPid = Process.spawn("rackup --host 0.0.0.0 --port #{server_port}")
 
   trap("INT") {
     [jekyllPid, 

@@ -35,19 +35,9 @@ $header-height: 30px;
 		margin-top: 15px;
 	}
 	>ul{
-		@media screen and (max-width: 600px){
-			display: none;
-		}
 		>li{
 			margin-left: 50px;
 			@include inline-block;
-			@media screen and (max-width: 1040px){
-				margin-left: 0;
-				margin-right: 50px;
-				&:last-of-type{
-					margin-right: 0;
-				}
-			}
 			&:hover{
 				>a{
 					color: $color-main;

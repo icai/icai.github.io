@@ -226,8 +226,10 @@ assets:
 
   autoprefixer:
     browsers:
-      - "last 2 versions"
+      - "chrome >= 34"
+      - "safari >= 7"
       - "IE >= 9"
+      - "android >= 4.4"
   #
 
   assets:

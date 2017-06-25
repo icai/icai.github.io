@@ -1,4 +1,68 @@
 $(function(){
+
+var doc = document;
+var win = window;
+var Dom = {};
+
+var utils = {
+    isMob : (function() {
+      var ua = navigator.userAgent.toLowerCase();
+      var agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'];
+      var result = false;
+      for(var i = 0; i < agents.length; i++) {
+        if(ua.indexOf(agents[i].toLowerCase()) > -1) {
+          result = true;
+        }
+      }
+      return result;
+    })()
+  }
+
+
+  try{
+  	var Dom = {
+		$sidebar : $('#sidebar'),
+		$sidebar_mask : $('#sidebar-mask'),
+		$body : $(doc.body),
+		$btn_side : $('#topbar .btn-bar'),
+	};
+
+	Dom.bindEvent = function() {
+
+	    var me = this,
+	      body_class_name = 'side',
+	      eventFirst = 'click',
+	      eventSecond = 'click';
+
+	    if(utils.isMob) {
+	      eventFirst = 'touchstart';
+	      eventSecond = 'touchend';
+	    }
+
+	    this.$btn_side.on(eventSecond, function() {
+	      if(me.$body.hasClass(body_class_name)) {
+	        me.$body.removeClass(body_class_name);
+	        me.$sidebar_mask.hide();
+	      }else{
+	        me.$body.addClass(body_class_name);
+	        me.$sidebar_mask.show();
+	      }
+	    });
+
+	    this.$sidebar_mask.on(eventFirst, function(e) {
+	      me.$body.removeClass(body_class_name);
+	      me.$sidebar_mask.hide();
+	      e.preventDefault();
+	    });
+	    $(win).on('resize', function() {
+	      me.$body.removeClass(body_class_name);
+	      me.$sidebar_mask.hide();
+	    });
+	}
+	Dom.bindEvent();
+  }catch(e){}
+
+
 	// Open external links in new window
 	var externalLinks = function(){
 		var host = location.host;
