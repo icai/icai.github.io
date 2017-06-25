@@ -6,6 +6,62 @@
 Current theme based on [Shashank Mehta](https://shashankmehta.in/archive/2012/greyshade.html). 
 
 
+### Setup
+
+```
+
+## install nodejs
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -   
+sudo apt-get install -y nodejs
+
+## install python
+sudo apt install python3 python-minimal
+
+
+## for Chinese
+sudo npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+## install bower
+[c]npm install -g bower
+
+## install bower dependencies
+bower install
+
+
+## install rvm
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+\curl -sSL https://get.rvm.io | bash -s stable
+source ~/.bashrc
+source ~/.bash_profile
+
+## source add
+echo "ruby_url=https://cache.ruby-china.org/pub/ruby" > ~/.rvm/user/db
+
+
+## install rvm ruby
+rvm list known   
+rvm install 2.4 --disable-binary
+
+
+## gem source (China)
+gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
+
+## install bundler
+gem install bundler
+
+## install Gemfile
+bundle install
+
+
+### All success ###
+
+## Preview blog
+rake preview
+
+```
+
+
+
 ### Plugins
 
 ```
