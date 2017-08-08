@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2017-06-21T00:57:17+08:00</updated>
+  <updated>2017-08-08T22:15:36+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -12,6 +12,221 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[《html5数据推送应用开发》读书摘要]]></title>
+    <link href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/"/>
+    <updated>2017-08-06T17:18:14+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note</id>
+    <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。
+基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……
+可以总结为如下：</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+<p>《Data Push Apps with HTML5 SSE》 读书摘要</p>
+
+
+<p><a name="L......"></a></p>
+
+<h2>摘要</h2>
+
+
+
+
+<ul>
+<li>EventSource方法 new EventSource(&ldquo;url&rdquo;);</li>
+<li>MIME类型text/event-stream</li>
+<li>数据传输格式"data:&ldquo; + new Date().toISOString() + &rdquo;\n\n";</li>
+</ul>
+
+
+<p><a name="SSE......"></a></p>
+
+<h2>SSE示例</h2>
+
+
+
+
+<pre><code>    &lt;!doctype html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Basic SSE Example&lt;/title&gt;
+    &lt;script src="//code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;pre id="x"&gt;Initializing...&lt;/pre&gt;
+    &lt;script&gt;
+        var es = new EventSource("basic_sse.php");
+        es.addEventListener("message", function(e){
+            $("#x").append("\n" + e.data);
+        },false);
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+</code></pre>
+
+
+
+
+<pre><code class="javascript">var http = require("http"),
+    fs = require("fs");
+var port = parseInt(process.argv[2] || 1234);
+http.createServer(function(request, response) {
+    console.log("Client connected:" + request.url);
+    if (request.url != "/sse") {
+        fs.readFile("basic_sse.html", function(err, file) {
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            var s = file.toString(); //file is a buffer
+            s = s.replace("basic_sse.php", "sse");
+            response.end(s);
+        });
+        return;
+    }
+    //Below is to handle SSE request. It never returns.
+    response.writeHead(200, { "Content-Type": "text/event-stream" });
+    var timer = setInterval(function() {
+        var content = "data:" + new Date().toISOString() + "\n\n";
+        var b = response.write(content);
+        if (!b) console.log("Data got queued in memory (content=" + content + ")");
+        else console.log("Flushed! (content=" + content + ")");
+    }, 1000);
+    request.connection.on("close", function() {
+        response.end();
+        clearInterval(timer);
+        console.log("Client closed connection. Aborting.");
+    });
+}).listen(port);
+console.log("Server running at http://localhost:" + port);
+</code></pre>
+
+
+<p><a name="L........."></a></p>
+
+<h2>兼容性</h2>
+
+
+
+
+<p>startEventSource()</p>
+
+
+
+
+<ul>
+<li>Basically all Firefox and Chromea</li>
+<li>Desktop Safari 5.0+</li>
+<li>iOS Safari 4.0+</li>
+<li>Android 4.4+ (earlier where Chrome is default browser)</li>
+<li>Chrome for Android (all versions)</li>
+<li>Firefox for Android (all versions)</li>
+<li>Opera since 11.0</li>
+<li>Opera Mobile since 11.1</li>
+<li>BlackBerry since 7.0</li>
+</ul>
+
+
+
+
+<p>startXHR()</p>
+
+
+
+
+<ul>
+<li>IE10+</li>
+<li>Firefox 3.6 (and earlier)</li>
+<li>Safari 3.x</li>
+<li>Android 4.1 to 4.3 (unless Chrome is default browser)</li>
+<li>Android 3.x</li>
+</ul>
+
+
+
+
+<p>startIframe()</p>
+
+
+
+
+<ul>
+<li>IE8</li>
+<li>IE9</li>
+</ul>
+
+
+
+
+<p><del>startLongpoll()
+- IE6 <br/>
+- IE7
+- Android 2.x
+- Anything else not in the preceding list that has Ajax support
+</del></p>
+
+
+
+
+<p><del>(none)
+- Any browser with JavaScript disabled
+</del></p>
+
+
+
+
+<p><del>a Technically since Firefox 6 and Chrome 6, but they have been auto-updating since Firefox 4, and Chrome since it came out
+of beta, so you can reasonably expect no one is still using versions that do not support SSE.
+</del></p>
+
+
+
+
+<p>书本代码，书本代码，书本代码。</p>
+
+
+<p><a name="L............"></a></p>
+
+<h2>参考资料</h2>
+
+
+
+
+<ul>
+<li><a href="https://github.com/DarrenCook/ssebook">书本代码</a></li>
+<li><a href="https://caniuse.com/#feat=eventsource">eventsource浏览器支持</a></li>
+<li><a href="https://www.w3.org/TR/eventsource/">https://www.w3.org/TR/eventsource/</a></li>
+<li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: Server-sent events</a></li>
+<li><a href="https://github.com/Yaffle/EventSource">a polyfill for http://www.w3.org/TR/eventsource/</a></li>
+</ul>
+
+
+<p><a name="L............"></a></p>
+
+<h2>其他参考</h2>
+
+
+
+
+<ul>
+<li><a href="https://www.ibm.com/developerworks/library/wa-http-server-push-with-websocket-sse/">HTTP server push with WebSocket and SSE</a></li>
+<li><a href="https://www.zhihu.com/question/27498235">Ajax长轮询与服务器推的长连接的区别是？</a></li>
+<li><a href="http://goeasy.io/cn/demos">商业化示例</a></li>
+</ul>
+
+
+
+
+<p>-EOF-</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[模糊匹配查询正则表达式探究]]></title>
