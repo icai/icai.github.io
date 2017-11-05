@@ -11,9 +11,12 @@ graduated: true
 ---
 
 <h2>
-	Google Hosts: <small id="ver"></small>
+	Google Hosts with your customize: <small id="ver"></small>
 </h2>
 <textarea class="tarea" id="code" rows="18" >loading</textarea>
+
+<h3>Your customize(change this and refresh page): </h3>
+<textarea class="yarea" id="ycode" rows="3" placeholder="localStorage in your browser native" ></textarea>
 <div class="">
 	This hosts come from network.
 </div>
@@ -26,17 +29,48 @@ graduated: true
 <p><code>sudo /etc/init.d/networking restart</code></p>
 
 <script>
+var storage = {
+    get: function(t) {
+        try {
+            return JSON.parse(localStorage.getItem(t))
+        } catch (t) {}
+    },
+    set: function(t, e) {
+        try {
+            return localStorage.setItem(t, JSON.stringify(e)),
+            !0
+        } catch (t) {}
+    },
+    del: function(t) {
+        try {
+            return localStorage.removeItem(t),
+            !0
+        } catch (t) {}
+    },
+    reset: function() {
+        try {
+            return localStorage.clear(),
+            !0
+        } catch (t) {}
+    }
+};
 jQuery(function($) {
+    var ycode = $('#ycode');
+    ycode.on('change', function(e){
+      storage.set('_yhost', ycode.val())
+    });
+    var cache = storage.get('_yhost') || '';
+    ycode.val(cache);
     var codeField = $('#code');
     jQuery.ajax({
-      url: 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts',
+      url: 'https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts',
       type: 'GET',
       dataType: 'text',
       complete: function(xhr, textStatus) {
         //called when complete
       },
       success: function(data, textStatus, xhr) {
-         codeField.val(data);
+         codeField.val(cache + '\n\n' + data);
         //called when successful
       },
       error: function(xhr, textStatus, errorThrown) {

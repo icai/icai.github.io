@@ -1,8 +1,4 @@
-plugins: 
-    - jekyll-paginate
-    - jekyll-gist
-    - jekyll-assets
-    - jekyll-sitemap
+
 
 
 # ----------------------- #
@@ -62,6 +58,12 @@ source: source
 destination: public
 
 plugins_dir: plugins
+
+plugins:
+    - jekyll-paginate
+    - jekyll-gist
+    - jekyll-assets
+    - jekyll-sitemap
 code_dir: /downloads/code
 category_dir: blog/categories
 tag_dir: blog/tags 
