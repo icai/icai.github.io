@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: fuzzy | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/fuzzy/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2017-11-05T15:24:16+08:00</updated>
+  <updated>2017-11-05T15:42:34+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -845,12 +845,7 @@ var scorers = [
 
 
 
-<blockquote><p>比例投票法：【A，B】候选人，每人有100%的投票额度。%A + %B + %X = 1。X 代表 你放弃的额度。 你的投票额度代表你对候选人信任度。这样的投票更具民主性。例如：我投A 70%，B 0% 那么X 就是30%。懂么，我发明的。[挖鼻屎] <a href="http://weibo.com/1356859197/BqrPv2rRL?type=comment">链接</a></p></blockquote>
-
-
-
-
-<p>100%选你 就是<a href="https://github.com/bevacqua/fuzzysearch">https://github.com/bevacqua/fuzzysearch</a>所用的方法，你只能在true or false 之间选择，而padolsey所用的方法字样更加人工智能，但是在大规模数据下是非常低效的。另外在作者的博客评论中也提到的 <a href="https://github.com/gf3/Levenshtein">https://github.com/gf3/Levenshtein</a>， 可以自行wiki一下。</p>
+<p><a href="https://github.com/bevacqua/fuzzysearch">https://github.com/bevacqua/fuzzysearch</a>所用的方法，你只能在true or false 之间选择，而padolsey所用的方法字样引入了权重概念更加智能，但是在大规模数据下是非常低效的。另外在作者的博客评论中也提到的 <a href="https://github.com/gf3/Levenshtein">https://github.com/gf3/Levenshtein</a>， 可以自行wiki一下。</p>
 
 
 
