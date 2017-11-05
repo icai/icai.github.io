@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2017-05-08T23:33:14+08:00</updated>
+  <updated>2017-11-05T14:57:33+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -12,6 +12,275 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[《html5数据推送应用开发》读书摘要]]></title>
+    <link href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/"/>
+    <updated>2017-08-06T17:18:14+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note</id>
+    <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。
+基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……
+可以总结为如下：</p>
+
+<!-- more -->
+
+
+<p>《Data Push Apps with HTML5 SSE》 读书摘要</p>
+
+<a name="L......"></a>
+<h2>摘要</h2>
+
+<ul>
+<li>EventSource方法 new EventSource(&ldquo;url&rdquo;);</li>
+<li>MIME类型text/event-stream</li>
+<li>数据传输格式"data:&ldquo; + new Date().toISOString() + &rdquo;\n\n";</li>
+</ul>
+
+
+<a name="SSE......"></a>
+<h2>SSE示例</h2>
+
+<pre><code>    &lt;!doctype html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Basic SSE Example&lt;/title&gt;
+    &lt;script src="//code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;pre id="x"&gt;Initializing...&lt;/pre&gt;
+    &lt;script&gt;
+        var es = new EventSource("basic_sse.php");
+        es.addEventListener("message", function(e){
+            $("#x").append("\n" + e.data);
+        },false);
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+</code></pre>
+
+<pre><code class="javascript">var http = require("http"),
+    fs = require("fs");
+var port = parseInt(process.argv[2] || 1234);
+http.createServer(function(request, response) {
+    console.log("Client connected:" + request.url);
+    if (request.url != "/sse") {
+        fs.readFile("basic_sse.html", function(err, file) {
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            var s = file.toString(); //file is a buffer
+            s = s.replace("basic_sse.php", "sse");
+            response.end(s);
+        });
+        return;
+    }
+    //Below is to handle SSE request. It never returns.
+    response.writeHead(200, { "Content-Type": "text/event-stream" });
+    var timer = setInterval(function() {
+        var content = "data:" + new Date().toISOString() + "\n\n";
+        var b = response.write(content);
+        if (!b) console.log("Data got queued in memory (content=" + content + ")");
+        else console.log("Flushed! (content=" + content + ")");
+    }, 1000);
+    request.connection.on("close", function() {
+        response.end();
+        clearInterval(timer);
+        console.log("Client closed connection. Aborting.");
+    });
+}).listen(port);
+console.log("Server running at http://localhost:" + port);
+</code></pre>
+
+<a name="L........."></a>
+<h2>兼容性</h2>
+
+<p>startEventSource()</p>
+
+<ul>
+<li>Basically all Firefox and Chromea</li>
+<li>Desktop Safari 5.0+</li>
+<li>iOS Safari 4.0+</li>
+<li>Android 4.4+ (earlier where Chrome is default browser)</li>
+<li>Chrome for Android (all versions)</li>
+<li>Firefox for Android (all versions)</li>
+<li>Opera since 11.0</li>
+<li>Opera Mobile since 11.1</li>
+<li>BlackBerry since 7.0</li>
+</ul>
+
+
+<p>startXHR()</p>
+
+<ul>
+<li>IE10+</li>
+<li>Firefox 3.6 (and earlier)</li>
+<li>Safari 3.x</li>
+<li>Android 4.1 to 4.3 (unless Chrome is default browser)</li>
+<li>Android 3.x</li>
+</ul>
+
+
+<p>startIframe()</p>
+
+<ul>
+<li>IE8</li>
+<li>IE9</li>
+</ul>
+
+
+<p><del>startLongpoll()
+- IE6 <br/>
+- IE7
+- Android 2.x
+- Anything else not in the preceding list that has Ajax support
+</del></p>
+
+<p><del>(none)
+- Any browser with JavaScript disabled
+</del></p>
+
+<p><del>a Technically since Firefox 6 and Chrome 6, but they have been auto-updating since Firefox 4, and Chrome since it came out
+of beta, so you can reasonably expect no one is still using versions that do not support SSE.
+</del></p>
+
+<p>书本代码，书本代码，书本代码。</p>
+
+<a name="L............"></a>
+<h2>参考资料</h2>
+
+<ul>
+<li><a href="https://github.com/DarrenCook/ssebook">书本代码</a></li>
+<li><a href="https://caniuse.com/#feat=eventsource">eventsource浏览器支持</a></li>
+<li><a href="https://www.w3.org/TR/eventsource/">https://www.w3.org/TR/eventsource/</a></li>
+<li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: Server-sent events</a></li>
+<li><a href="https://github.com/Yaffle/EventSource">a polyfill for http://www.w3.org/TR/eventsource/</a></li>
+</ul>
+
+
+<a name="L............"></a>
+<h2>其他参考</h2>
+
+<ul>
+<li><a href="https://www.ibm.com/developerworks/library/wa-http-server-push-with-websocket-sse/">HTTP server push with WebSocket and SSE</a></li>
+<li><a href="https://www.zhihu.com/question/27498235">Ajax长轮询与服务器推的长连接的区别是？</a></li>
+<li><a href="http://goeasy.io/cn/demos">商业化示例</a></li>
+</ul>
+
+
+<p>-EOF-</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[每日一点点之scrapy]]></title>
+    <link href="http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy/"/>
+    <updated>2017-06-20T23:19:58+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy</id>
+    <content type="html"><![CDATA[<p>Scrapy 是什么？</p>
+
+<p>Scrapy是一个基于Python的高级爬虫框架，只需要简单的配置就可以实现你大大的需求。</p>
+
+<p>为什么要介绍Scrapy，内容时代了，没有内容再好看的网站，那又有什么用呢？</p>
+
+<!-- more -->
+
+
+<p>对不对？对对对。</p>
+
+<p>学习scrapy有什么需求吗？</p>
+
+<p>python是基于python语言的，那么自然你要懂一些python的基础啦！</p>
+
+<p>还有简单的xpath语法或类似于jQuery选择器语法，一边用一边学也可以的。</p>
+
+<p>建议在Linux或者Mac下进行学习，Windows下可能会遇到各种入门级的问题。例如安装过程中报错，缺少这个，那个的问题。</p>
+
+<p>只需要准备一样东西，就是官方文档 <a href="https://docs.scrapy.org/en/latest/">https://docs.scrapy.org/en/latest/</a></p>
+
+<p>可以一边看，一边实践。</p>
+
+<a name="L......"></a>
+<h3>安装</h3>
+
+<pre><code class="bash">pip install Scrapy
+</code></pre>
+
+<p>官方推荐你安装python虚拟环境进行 Scrapy，不装也没有问题！ 虚拟环境会虚拟IP么？ 不会，不是这一回事</p>
+
+<pre><code class="bash">pip install virtualenv
+</code></pre>
+
+<p>接着来来读一下官方教程：</p>
+
+<p><a href="https://docs.scrapy.org/en/latest/intro/tutorial.html">https://docs.scrapy.org/en/latest/intro/tutorial.html</a></p>
+
+<pre><code class="bash">scrapy startproject 项目名字
+</code></pre>
+
+<p>A: 假如你想知道parse接着会干什么，parse里面能干什么，我觉得你去了解一下Scrapy的钩子函数，以及整体架构。</p>
+
+<p>B: 假如你对yield语法不是很了解的，可以去理解一下yield语法（python基础）。</p>
+
+<p>入门是很快的。</p>
+
+<p>假如你感兴趣，接着你可能会提出一些问题：</p>
+
+<p>比如，怎么在一个页面抓取多条？怎么去重？等等</p>
+
+<p>为什么会介绍Scrapy？</p>
+
+<p>其实Scrapy不单只是一个爬虫框架，而且是一个很好的Python入门学习项目，假设你怎么会Python。</p>
+
+<p>-EOF-</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[你好2017]]></title>
+    <link href="http://blog.w3cub.com/blog/2017/01/02/hello-2017/"/>
+    <updated>2017-01-02T16:27:08+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2017/01/02/hello-2017</id>
+    <content type="html"><![CDATA[<p>2017年，起床的第一天，朋友圈里面的都是困难群众。谢谢主席关心的调侃。</p>
+
+<p>2016的计划完成了多少，小目标还是有的，天马行空的就别谈了。该写的写了，头脑发热能折腾到2,3点。</p>
+
+<!-- more -->
+
+
+<p>2016看了很多电视，看了很多时政新闻，把台湾大选全程直播都看了，你懂的。</p>
+
+<p>2016年底离开了工作三年的<a href="https://www.thecn.com/aboutus">TheCN</a>（CourseNetworking），结束了"Changing the Way the World Learns"，也是我工作五年里面最长的一份工作。没事周五就溜回家，可能这也是在TheCN工作的特殊记忆。 <br/>
+2016年没有过多的留念与怀念，参加了几场婚礼，大部分都是中学同学。
+翻开微博，看一看2016的自己都干了什么，都是都是时事之类的观点，微博并没有过多的私隐东西，再翻开QQ空间也没有记录太多特别的，平淡的2016，还是发生了什么特别的事情，我没有记录。回去参加同学同学的婚礼，同学说，怎么你还是跟以前一模一样，好像一点都没有变化。好像也是，除了瘦了几斤，好像真的没有多大变化。
+再翻看Github看看，2013就想写的chrome插件，终于在2016写了，还有一堆基于公司需求的开源扩展。</p>
+
+<p>回想起，这些年从事前端工作，头一两年，那些人还在炫耀IE6,IE7 bug，本质上是清零了。剩下的经验都是自己平时阅读开源代码积累的。kissy, ueditor, jQuery, Backbone, underscore, requriejs…… 感谢这些优秀的开源代码。</p>
+
+<p>当别人问Angular，react，vue，gulp， webpack…… 你懂么的时候，还好我还没有掉队。 会点吧。</p>
+
+<p>2016后端语言写的怎么样了，有用的都学了，都是一边做一边学。ruby，python, php …… 用记得，不用就忘记 ……</p>
+
+<p>或许这是今年的目标，“今年要不要去拿个软件专利著作权，2017”，说白就是给自己一个学习的催化剂。
+不知道能不能完成，但是当开始了，就意味着收获。与其说是2017年的目标，不如说是没有完成计划。</p>
+
+<p>2016好像写博客的次数越来越少了，Greader阅读习惯也少了, 反而印象笔记的收藏多了。</p>
+
+<p>2016过了， 一直想去旅游，可惜缺少游伴。辞职的时候，同事说，去个旅游先吧。我也想，去哪里好呢，想不到，没有游伴。</p>
+
+<p>2016,2017能为你做的什么呢！急不了…… 每次都想勤点写blog，可惜总不能坚持，一是想不到想写的内容，二或许不能出口成文，文笔空洞，放弃了。</p>
+
+<p>回到家里看见那本《网页设计三剑客8》，还有那一箱高高的电脑爱好者，还有那些年天天折腾Ghost的日子，这些年走来，真的不容易。以前同事说，这就叫做青春。</p>
+
+<p>可能吧，可能这些叫青春。</p>
+
+<p>2017给自己的生活作息定个目标吧，同学说都我瘦了，可能作息不规律吧。这几年看见了离别的离别，住院的住院。</p>
+
+<p>给自己生活一个小目标吧：定期饮食，增肥，定期运动，定时睡眠。</p>
+
+<p>不知不觉，真正工作已经步入了第六个年头了。</p>
+
+<p>2017继续拥抱变化，拥抱生活吧。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[多彩知乎发布啦]]></title>

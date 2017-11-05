@@ -5,11 +5,13 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>鲜香虾粥 - 泛前端开发</title>
+	<title>《html5数据推送应用开发》读书摘要 - 泛前端开发</title>
 	<meta name="author" content="Terry Cai">
 	
-	<meta name="description" content="Aug 20, 2015 life congee, shrimp, 粥, 虾粥 Comments 鲜香虾粥 前言 你会不会经常大排档吃砂锅粥呢，各种虾粥，蟹粥之类的。在广州，潮汕大排档这些东西是最普遍不过了。要么味道太浓，味精太多，要么吃不出什么鲜肉。对于我这种喜欢折腾的人来说， &hellip;">
-	<meta name="keywords" content="shrimp,congee,虾粥,粥">
+	<meta name="description" content="Aug 06, 2017 javascript Comments 《html5数据推送应用开发》读书摘要 书很薄，在图书馆瞄了一下，知识点不多。
+基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……
+可以总结为如下： 《Data Push Apps with HTML5 SSE》 &hellip;">
+	<meta name="keywords" content="sse,data push">
 	
 	<meta name="HandheldFriendly" content="True">
 	<meta name="MobileOptimized" content="320">
@@ -17,10 +19,10 @@
 
 	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://blog.w3cub.com/blog/2015/08/20/shrimpcongee/">
+	<link rel="canonical" href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script type="text/javascript" src="/assets/application-65636289f08b34f95ed909c9a09c10d973a76824e8e18b35d2edc59a5ee462e3.js"></script>
-	<link type="text/css" rel="stylesheet" href="/assets/application-2178420d608318b1b533b05530e49bbbb4aae7269df50e366f2a4217be5a831a.css">
+	<script type="text/javascript" src="/assets/application-310321f5474cf276181a5652a99926e03e1f068dad80b82ce7a9f6fadb49c8e2.js"></script>
+	<link type="text/css" rel="stylesheet" href="/assets/application-f15872c481517f1e86b0490f734f9b2fb688bcc450f4fc63d97faa10187b5357.css">
 	
 
 </head>
@@ -28,7 +30,7 @@
 
 <body class="blog">
 	<div class="container">
-		<div class="left-col">
+		<div class="sidebar">
 			<div class="intrude-less">
 			<header id="header" class="inner"><div class="profilepic">
 	
@@ -102,16 +104,17 @@
 </header>				
 			</div>
 		</div>
-	    <!-- <script>
-	    var bgs = [ "/assets/bg/1-f973be5947bbf4eef0b33318584073a92ab8acf476c64cda2da499c23323d4ba.jpg","/assets/bg/2-13e4c1631648e86fe0b42c01572ec112ae6b58efb1cd0c01456649094be136a1.jpg", "/assets/bg/3-f8b604e9c6816760cdc770f0c6fc15b05d2126c4326524966e5c95fe3d591d4d.jpg", "/assets/bg/5-9f5520bfe3ff9e7ab2ed0a7d6db32e4d06d5b8456683420e9f1944ad082e48d4.jpg"];
-	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
-	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
-	    </script> -->
-		<div class="mid-col">
+		<div id="topbar" class="topbar">
+			<div class="btn-bar"><i></i></div> 
+			<h1><a href="/">泛前端开发</a></h1> 
+			<a class="me" href="/about/"><img src="/assets/images/avatar.jpeg" alt="泛前端开发"></a>
+		</div>
+		<div id="sidebar-mask" style="display: none;"></div>
+		<div class="main-col">
 			
 				
 			
-			<div class="mid-col-container">
+			<div class="main-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 	
 
@@ -127,89 +130,176 @@
 
 
 
-<time datetime="2015-08-20T22:53:49+08:00" data-updated="true" itemprop="datePublished">Aug 20, 2015</time></div>
+<time datetime="2017-08-06T17:18:14+08:00" data-updated="true" itemprop="datePublished">Aug 06, 2017</time></div>
 		<div class="cats">
 
 
-	life
+	javascript
 
 
 </div>
 		
-
-<div class="tags">
-  
-    <a class='tag' href='/blog/tags/congee/'>congee</a>, <a class='tag' href='/blog/tags/shrimp/'>shrimp</a>, <a class='tag' href='/blog/tags/zhou/'>粥</a>, <a class='tag' href='/blog/tags/xia-zhou/'>虾粥</a>
-  
-</div>
 
 		
 			<span class="comments"><a href="#disqus_thread">Comments</a></span>
 		
 	</div>
-	<h1 class="title" itemprop="name">鲜香虾粥
+	<h1 class="title" itemprop="name">《html5数据推送应用开发》读书摘要
 	
 	</h1>
 	
 
 	
 	<hr />
-	<div class="entry-content" itemprop="articleBody"><a name="L......"></a>
-<h2>前言</h2>
-
-<p>你会不会经常大排档吃砂锅粥呢，各种虾粥，蟹粥之类的。在广州，潮汕大排档这些东西是最普遍不过了。要么味道太浓，味精太多，要么吃不出什么鲜肉。对于我这种喜欢折腾的人来说，自然就是少不了在家DIY了.</p>
+	<div class="entry-content" itemprop="articleBody"><p>书很薄，在图书馆瞄了一下，知识点不多。
+基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……
+可以总结为如下：</p>
 
 <!-- more -->
 
 
+<p>《Data Push Apps with HTML5 SSE》 读书摘要</p>
+
+<a name="L......"></a>
+<h2>摘要</h2>
+
+<ul>
+<li>EventSource方法 new EventSource(&ldquo;url&rdquo;);</li>
+<li>MIME类型text/event-stream</li>
+<li>数据传输格式"data:&ldquo; + new Date().toISOString() + &rdquo;\n\n";</li>
+</ul>
+
+
+<a name="SSE......"></a>
+<h2>SSE示例</h2>
+
+<pre><code>    &lt;!doctype html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Basic SSE Example&lt;/title&gt;
+    &lt;script src="//code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;pre id="x"&gt;Initializing...&lt;/pre&gt;
+    &lt;script&gt;
+        var es = new EventSource("basic_sse.php");
+        es.addEventListener("message", function(e){
+            $("#x").append("\n" + e.data);
+        },false);
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+</code></pre>
+
+<pre><code class="javascript">var http = require("http"),
+    fs = require("fs");
+var port = parseInt(process.argv[2] || 1234);
+http.createServer(function(request, response) {
+    console.log("Client connected:" + request.url);
+    if (request.url != "/sse") {
+        fs.readFile("basic_sse.html", function(err, file) {
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            var s = file.toString(); //file is a buffer
+            s = s.replace("basic_sse.php", "sse");
+            response.end(s);
+        });
+        return;
+    }
+    //Below is to handle SSE request. It never returns.
+    response.writeHead(200, { "Content-Type": "text/event-stream" });
+    var timer = setInterval(function() {
+        var content = "data:" + new Date().toISOString() + "\n\n";
+        var b = response.write(content);
+        if (!b) console.log("Data got queued in memory (content=" + content + ")");
+        else console.log("Flushed! (content=" + content + ")");
+    }, 1000);
+    request.connection.on("close", function() {
+        response.end();
+        clearInterval(timer);
+        console.log("Client closed connection. Aborting.");
+    });
+}).listen(port);
+console.log("Server running at http://localhost:" + port);
+</code></pre>
+
 <a name="L........."></a>
-<h2>食材：</h2>
+<h2>兼容性</h2>
 
-<p>米 150  毫升 （电饭锅米杯差不多满杯）</p>
+<p>startEventSource()</p>
 
-<p>虾 600 克 （shrimp）</p>
-
-<p>香菜（芫荽） 50 克</p>
-
-<p>姜 小许</p>
-
-<p>盐油 小许</p>
-
-<a name="L........."></a>
-<h2>步骤：</h2>
-
-<ol>
-<li><p>把米放到锅里面洗干净，放进适量的水。
-其实我也不知道适量是多少，以前本港台中午的烹饪节目就是那么说的。
-可以开火了，1000W 煲到沸，转600W。</p>
-
-<blockquote><p><img src="/assets/posts/shrimpcongee/IMG_20150820_185200-ab4ea285f212a3930d6c47638223ac092f9d79492faa1fd56bd6221b3f449fad.png" alt="第一步, 洗米" /></p></blockquote></li>
-<li><p>在煲的过程中，我们开始处理主要材料。
-明虾去头，虾脚等，由腹开刀，去除虾线。把尾也去掉吧。</p>
-
-<blockquote><p><img src="/assets/posts/shrimpcongee/IMG_20150820_190823-99aa8352a9b8e078d4eb8d56d703ae11dcc2d9d5c47904940739f569aa96dcad.png" alt="第二步, 处理虾" /></p></blockquote></li>
-<li><p>腌虾。当粥煮到沸，<strong>米变粗，没有变花</strong>的时候，开始腌虾，盐少许，油适量。盐不要放太多，是个人口味而定，这里已经放盐了，之后就不用放了。</p>
-
-<blockquote><p><img src="/assets/posts/shrimpcongee/IMG_20150820_195056-89493e813c72b42aa0dc969e90bbde0c53a426e3bf2f52b42f9a0a8d02b043b9.png" alt="第三步, 腌虾" /></p></blockquote></li>
-<li><p>准备配料。洗净，去头，切段。假如，你能把头洗净的话，可以留头。姜，拍扁。</p>
-
-<blockquote><p><img src="/assets/posts/shrimpcongee/IMG_20150820_195127-015749ef609849ed4662af64fe3652945c37c324c1545285ec5ddf5cafbb9de5.png" alt="第四步, 准备配料" /></p></blockquote></li>
-<li><p><strong>米变粗</strong>，放入姜。</p></li>
-<li><p>米开花，煮好的白粥，放料。把火调到1000w。</p>
-
-<blockquote><p><img src="/assets/posts/shrimpcongee/IMG_20150820_195312-1c47c1f564b2ff34a6b1b3af01242d2fcb5d6554a48344208a8f4c9f7be09172.png" alt="第五步,白粥" /></p></blockquote></li>
-<li><p>等待煮沸，放入香草，OK。</p>
-
-<blockquote><p><img src="/assets/posts/shrimpcongee/IMG_20150820_200346-aa68687cc1891b945300fc192247d6e48fdb9ffe10b643d3e065287404dcb692.png" alt="最后完成" /></p></blockquote></li>
-</ol>
+<ul>
+<li>Basically all Firefox and Chromea</li>
+<li>Desktop Safari 5.0+</li>
+<li>iOS Safari 4.0+</li>
+<li>Android 4.4+ (earlier where Chrome is default browser)</li>
+<li>Chrome for Android (all versions)</li>
+<li>Firefox for Android (all versions)</li>
+<li>Opera since 11.0</li>
+<li>Opera Mobile since 11.1</li>
+<li>BlackBerry since 7.0</li>
+</ul>
 
 
-<a name="L........."></a>
-<h2>点评：</h2>
+<p>startXHR()</p>
 
-<p>过程，虾处理十分耗时，煮白粥也要相当一段时间。放下米的时候，开始处理就好了。</p>
+<ul>
+<li>IE10+</li>
+<li>Firefox 3.6 (and earlier)</li>
+<li>Safari 3.x</li>
+<li>Android 4.1 to 4.3 (unless Chrome is default browser)</li>
+<li>Android 3.x</li>
+</ul>
 
-<p>味道, 十分鲜味，还有米和姜的香。十分OK啦。</p>
+
+<p>startIframe()</p>
+
+<ul>
+<li>IE8</li>
+<li>IE9</li>
+</ul>
+
+
+<p><del>startLongpoll()
+- IE6 <br/>
+- IE7
+- Android 2.x
+- Anything else not in the preceding list that has Ajax support
+</del></p>
+
+<p><del>(none)
+- Any browser with JavaScript disabled
+</del></p>
+
+<p><del>a Technically since Firefox 6 and Chrome 6, but they have been auto-updating since Firefox 4, and Chrome since it came out
+of beta, so you can reasonably expect no one is still using versions that do not support SSE.
+</del></p>
+
+<p>书本代码，书本代码，书本代码。</p>
+
+<a name="L............"></a>
+<h2>参考资料</h2>
+
+<ul>
+<li><a href="https://github.com/DarrenCook/ssebook">书本代码</a></li>
+<li><a href="https://caniuse.com/#feat=eventsource">eventsource浏览器支持</a></li>
+<li><a href="https://www.w3.org/TR/eventsource/">https://www.w3.org/TR/eventsource/</a></li>
+<li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: Server-sent events</a></li>
+<li><a href="https://github.com/Yaffle/EventSource">a polyfill for http://www.w3.org/TR/eventsource/</a></li>
+</ul>
+
+
+<a name="L............"></a>
+<h2>其他参考</h2>
+
+<ul>
+<li><a href="https://www.ibm.com/developerworks/library/wa-http-server-push-with-websocket-sse/">HTTP server push with WebSocket and SSE</a></li>
+<li><a href="https://www.zhihu.com/question/27498235">Ajax长轮询与服务器推的长连接的区别是？</a></li>
+<li><a href="http://goeasy.io/cn/demos">商业化示例</a></li>
+</ul>
+
+
+<p>-EOF-</p>
 </div>
 
 	
@@ -260,8 +350,8 @@ Copyright &copy; 2017
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.w3cub.com/blog/2015/08/20/shrimpcongee/';
-        var disqus_url = 'http://blog.w3cub.com/blog/2015/08/20/shrimpcongee/';
+        var disqus_identifier = 'http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/';
+        var disqus_url = 'http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/';
         var disqus_script = 'embed.js';
       
     (function () {

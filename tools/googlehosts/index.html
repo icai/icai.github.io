@@ -8,9 +8,7 @@
 	<title>Google Hosts - 泛前端开发</title>
 	<meta name="author" content="Terry Cai">
 	
-	<meta name="description" content="Google Hosts Google Hosts: loading This hosts come from network. How to change hosts?
-windows:
-notepad %windir%\system32\drivers\etc\hosts ubuntu: &hellip;">
+	<meta name="description" content="Google Hosts Google Hosts with your customize: loading Your customize(change this and refresh page): This hosts come from network. How to change &hellip;">
 	<meta name="keywords" content="google,hosts,proxy">
 	
 	<meta name="HandheldFriendly" content="True">
@@ -21,8 +19,8 @@ notepad %windir%\system32\drivers\etc\hosts ubuntu: &hellip;">
 	
 	<link rel="canonical" href="http://blog.w3cub.com/tools/googlehosts/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script type="text/javascript" src="/assets/application-65636289f08b34f95ed909c9a09c10d973a76824e8e18b35d2edc59a5ee462e3.js"></script>
-	<link type="text/css" rel="stylesheet" href="/assets/application-2178420d608318b1b533b05530e49bbbb4aae7269df50e366f2a4217be5a831a.css">
+	<script type="text/javascript" src="/assets/application-310321f5474cf276181a5652a99926e03e1f068dad80b82ce7a9f6fadb49c8e2.js"></script>
+	<link type="text/css" rel="stylesheet" href="/assets/application-f15872c481517f1e86b0490f734f9b2fb688bcc450f4fc63d97faa10187b5357.css">
 	
 
 </head>
@@ -30,7 +28,7 @@ notepad %windir%\system32\drivers\etc\hosts ubuntu: &hellip;">
 
 <body class="blog">
 	<div class="container">
-		<div class="left-col">
+		<div class="sidebar">
 			<div class="intrude-less">
 			<header id="header" class="inner"><div class="profilepic">
 	
@@ -104,24 +102,28 @@ notepad %windir%\system32\drivers\etc\hosts ubuntu: &hellip;">
 </header>				
 			</div>
 		</div>
-	    <!-- <script>
-	    var bgs = [ "/assets/bg/1-f973be5947bbf4eef0b33318584073a92ab8acf476c64cda2da499c23323d4ba.jpg","/assets/bg/2-13e4c1631648e86fe0b42c01572ec112ae6b58efb1cd0c01456649094be136a1.jpg", "/assets/bg/3-f8b604e9c6816760cdc770f0c6fc15b05d2126c4326524966e5c95fe3d591d4d.jpg", "/assets/bg/5-9f5520bfe3ff9e7ab2ed0a7d6db32e4d06d5b8456683420e9f1944ad082e48d4.jpg"];
-	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
-	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
-	    </script> -->
-		<div class="mid-col">
+		<div id="topbar" class="topbar">
+			<div class="btn-bar"><i></i></div> 
+			<h1><a href="/">泛前端开发</a></h1> 
+			<a class="me" href="/about/"><img src="/assets/images/avatar.jpeg" alt="泛前端开发"></a>
+		</div>
+		<div id="sidebar-mask" style="display: none;"></div>
+		<div class="main-col">
 			
 				
 			
-			<div class="mid-col-container">
+			<div class="main-col-container">
 				<div id="content" class="inner"><article class="tool" >
 	<h1><i class="fa fa-globe"></i> Google Hosts</h1>
 	<hr>
 	<div class="content">
 		<h2>
-	Google Hosts: <small id="ver"></small>
+	Google Hosts with your customize: <small id="ver"></small>
 </h2>
 <textarea class="tarea" id="code" rows="18" >loading</textarea>
+
+<h3>Your customize(change this and refresh page): </h3>
+<textarea class="yarea" id="ycode" rows="3" placeholder="localStorage in your browser native" ></textarea>
 <div class="">
 	This hosts come from network.
 </div>
@@ -134,17 +136,48 @@ notepad %windir%\system32\drivers\etc\hosts ubuntu: &hellip;">
 <p><code>sudo /etc/init.d/networking restart</code></p>
 
 <script>
+var storage = {
+    get: function(t) {
+        try {
+            return JSON.parse(localStorage.getItem(t))
+        } catch (t) {}
+    },
+    set: function(t, e) {
+        try {
+            return localStorage.setItem(t, JSON.stringify(e)),
+            !0
+        } catch (t) {}
+    },
+    del: function(t) {
+        try {
+            return localStorage.removeItem(t),
+            !0
+        } catch (t) {}
+    },
+    reset: function() {
+        try {
+            return localStorage.clear(),
+            !0
+        } catch (t) {}
+    }
+};
 jQuery(function($) {
+    var ycode = $('#ycode');
+    ycode.on('change', function(e){
+      storage.set('_yhost', ycode.val())
+    });
+    var cache = storage.get('_yhost') || '';
+    ycode.val(cache);
     var codeField = $('#code');
     jQuery.ajax({
-      url: 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts',
+      url: 'https://raw.githubusercontent.com/googlehosts/hosts/master/hosts-files/hosts',
       type: 'GET',
       dataType: 'text',
       complete: function(xhr, textStatus) {
         //called when complete
       },
       success: function(data, textStatus, xhr) {
-         codeField.val(data);
+         codeField.val(cache + '\n\n' + data);
         //called when successful
       },
       error: function(xhr, textStatus, errorThrown) {

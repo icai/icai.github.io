@@ -19,8 +19,8 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/tools/jquery/jQuery.extend_object/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script type="text/javascript" src="/assets/application-65636289f08b34f95ed909c9a09c10d973a76824e8e18b35d2edc59a5ee462e3.js"></script>
-	<link type="text/css" rel="stylesheet" href="/assets/application-2178420d608318b1b533b05530e49bbbb4aae7269df50e366f2a4217be5a831a.css">
+	<script type="text/javascript" src="/assets/application-310321f5474cf276181a5652a99926e03e1f068dad80b82ce7a9f6fadb49c8e2.js"></script>
+	<link type="text/css" rel="stylesheet" href="/assets/application-f15872c481517f1e86b0490f734f9b2fb688bcc450f4fc63d97faa10187b5357.css">
 	
 
 </head>
@@ -28,7 +28,7 @@
 
 <body class="blog">
 	<div class="container">
-		<div class="left-col">
+		<div class="sidebar">
 			<div class="intrude-less">
 			<header id="header" class="inner"><div class="profilepic">
 	
@@ -102,16 +102,17 @@
 </header>				
 			</div>
 		</div>
-	    <!-- <script>
-	    var bgs = [ "/assets/bg/1-f973be5947bbf4eef0b33318584073a92ab8acf476c64cda2da499c23323d4ba.jpg","/assets/bg/2-13e4c1631648e86fe0b42c01572ec112ae6b58efb1cd0c01456649094be136a1.jpg", "/assets/bg/3-f8b604e9c6816760cdc770f0c6fc15b05d2126c4326524966e5c95fe3d591d4d.jpg", "/assets/bg/5-9f5520bfe3ff9e7ab2ed0a7d6db32e4d06d5b8456683420e9f1944ad082e48d4.jpg"];
-	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
-	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
-	    </script> -->
-		<div class="mid-col">
+		<div id="topbar" class="topbar">
+			<div class="btn-bar"><i></i></div> 
+			<h1><a href="/">泛前端开发</a></h1> 
+			<a class="me" href="/about/"><img src="/assets/images/avatar.jpeg" alt="泛前端开发"></a>
+		</div>
+		<div id="sidebar-mask" style="display: none;"></div>
+		<div class="main-col">
 			
 				
 			
-			<div class="mid-col-container">
+			<div class="main-col-container">
 				<div id="content" class="inner"><article class="tool" >
 	<h1><i class="fa fa-css3"></i> jQuery - jQuery.extend(object)</h1>
 	<hr>

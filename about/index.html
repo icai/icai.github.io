@@ -8,7 +8,7 @@
 	<title>About - 泛前端开发</title>
 	<meta name="author" content="Terry Cai">
 	
-	<meta name="description" content="关于我 一个程序员，你可以叫我Terry. location at China, Guangzhou. 热爱前端开发，但不限于前端开发。欢迎gmail me&lt;gidcai#gmail.com>。 Follow me: 关于本站 本站主要用于个人博客资讯记录，Github Pages &hellip;">
+	<meta name="description" content="关于我 一个程序员，你可以叫我Terry. 地球寄居者，location at China, Guangzhou. 热爱前端开发，但不限于前端开发。平时习惯阅读各种优秀源代码，为什么我在左侧强调无注释，因为优秀的代码过多的注释反而影响阅读。同时阅读“无注释代码”，也是一种学习方法。 &hellip;">
 	<meta name="keywords" content="泛前端开发,前端,全栈,frontend,fullstack,octopress,frontend tools">
 	
 	<meta name="HandheldFriendly" content="True">
@@ -19,8 +19,8 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/about/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script type="text/javascript" src="/assets/application-65636289f08b34f95ed909c9a09c10d973a76824e8e18b35d2edc59a5ee462e3.js"></script>
-	<link type="text/css" rel="stylesheet" href="/assets/application-2178420d608318b1b533b05530e49bbbb4aae7269df50e366f2a4217be5a831a.css">
+	<script type="text/javascript" src="/assets/application-310321f5474cf276181a5652a99926e03e1f068dad80b82ce7a9f6fadb49c8e2.js"></script>
+	<link type="text/css" rel="stylesheet" href="/assets/application-f15872c481517f1e86b0490f734f9b2fb688bcc450f4fc63d97faa10187b5357.css">
 	
 
 </head>
@@ -28,7 +28,7 @@
 
 <body class="blog">
 	<div class="container">
-		<div class="left-col">
+		<div class="sidebar">
 			<div class="intrude-less">
 			<header id="header" class="inner"><div class="profilepic">
 	
@@ -102,16 +102,17 @@
 </header>				
 			</div>
 		</div>
-	    <!-- <script>
-	    var bgs = [ "/assets/bg/1-f973be5947bbf4eef0b33318584073a92ab8acf476c64cda2da499c23323d4ba.jpg","/assets/bg/2-13e4c1631648e86fe0b42c01572ec112ae6b58efb1cd0c01456649094be136a1.jpg", "/assets/bg/3-f8b604e9c6816760cdc770f0c6fc15b05d2126c4326524966e5c95fe3d591d4d.jpg", "/assets/bg/5-9f5520bfe3ff9e7ab2ed0a7d6db32e4d06d5b8456683420e9f1944ad082e48d4.jpg"];
-	    var lcol = document.querySelector('.left-col') || document.getElementsByClassName('left-col')[0];
-	    	lcol && (lcol.style.backgroundImage = "url(" + bgs[Math.floor(Math.random() * bgs.length)] +")");
-	    </script> -->
-		<div class="mid-col">
+		<div id="topbar" class="topbar">
+			<div class="btn-bar"><i></i></div> 
+			<h1><a href="/">泛前端开发</a></h1> 
+			<a class="me" href="/about/"><img src="/assets/images/avatar.jpeg" alt="泛前端开发"></a>
+		</div>
+		<div id="sidebar-mask" style="display: none;"></div>
+		<div class="main-col">
 			
 				
 			
-			<div class="mid-col-container">
+			<div class="main-col-container">
 				<div id="content" class="inner"><article class="page ">
     
     <h1 class="title"> About</h1>
@@ -121,9 +122,13 @@
 
 <p>一个程序员，你可以叫我<a href="https://github.com/icai">Terry</a>.</p>
 
-<p><i class="fa fa-map-marker fa-lg"></i><span class="sr-only">location at</span> China, Guangzhou.</p>
+<p>地球寄居者，<i class="fa fa-map-marker fa-lg"></i><span class="sr-only">location at</span> China, Guangzhou.</p>
 
-<p>热爱前端开发，但不限于前端开发。欢迎gmail me&lt;gidcai#gmail.com>。</p>
+<p>热爱前端开发，但不限于前端开发。平时习惯阅读各种优秀源代码，为什么我在左侧强调无注释，因为优秀的代码过多的注释反而影响阅读。同时阅读“无注释代码”，也是一种学习方法。也是一个自学软件工程师和爱好者。在没有计算机的时代，我认为在日常生活中，跟现在软件工程模型最像的就是图书馆。</p>
+
+<p>平时爱好：篮球好久没有到球场了，阅读，电影，电视剧，……</p>
+
+<p>欢迎gmail me&lt;gidcai#gmail.com>。</p>
 
 <p>Follow me: <iframe src="https://ghbtns.com/github-btn.html?user=icai&type=follow&count=true" frameborder="0" scrolling="0" width="170px" height="20px" class="ghbtn"></iframe>
 <br></p>
@@ -139,27 +144,24 @@
 <a name="L......w3cub"></a>
 <h2>关于w3cub</h2>
 
-<p>目前w3cub已经启用的二级域名有 <a href="http://blog.w3cub.com/" target="_blank">blog.w3cub.com</a>, <a href="http://jplugin.w3cub.com/" target="_blank">jplugin.w3cub.com</a>, <a href="http://markdown.w3cub.com/" target="_blank">markdown.w3cub.com</a>, <a href="http://docs.w3cub.com/" target="_blank">docs.w3cub.com</a>
-<br></p>
+<p>目前w3cub已经启用的二级域名有</p>
 
-<hr />
+<p>-泛前端开发
+<a href="http://blog.w3cub.com/" target="_blank">blog.w3cub.com</a>, 个人博客</p>
 
-<a name="Change.log"></a>
-<h2>Change log</h2>
+<p>-jQuery插件
+<a href="http://jplugin.w3cub.com/" target="_blank">jplugin.w3cub.com</a>, 以前写的一些jQuery插件</p>
 
-<p><strong>Had upgrade from Octopress 2 to Jekyll 3, and keep Octopress 2 Rake task.</strong></p>
+<p>-Markdown编辑器
+<a href="http://markdown.w3cub.com/" target="_blank">markdown.w3cub.com</a>, markdown双向编辑器</p>
 
-<p>2015-12-17: use sprockets handle assets</p>
+<p>-W3cubDocs
+<a href="http://docs.w3cub.com/" target="_blank">docs.w3cub.com</a>, 前沿技术文档</p>
 
-<p>2015-08-01: add goolgehosts tool, fix style 404 bug, seo home page description.</p>
+<p>-多彩知乎
+<a href="http://cozhihu.w3cub.com/" target="_blank">cozhihu.w3cub.com</a> chrome插件官网</p>
 
-<p>2015-07-05: add slide page.</p>
-
-<p>2015-07-04: 404 redesign, random mottos.</p>
-
-<p>2015-07-01: add keycode table tool and support meta keywords, optimize page seo</p>
-
-<p>2015-06-29: add translation style and merge style, fix google analytics id</p>
+<p><br></p>
 
 <p><br>
 <br></p>
@@ -167,7 +169,7 @@
 <a name="Last.build"></a>
 <h3>Last build</h3>
 
-<p><span> 2017-05-08T23:33:17+08:00</span> <br></p>
+<p><span> 2017-11-05T15:18:55+08:00</span> <br></p>
 
 <iframe src="https://ghbtns.com/github-btn.html?user=icai&repo=icai.github.io&type=star&count=true" frameborder="0" scrolling="0" width="160px" height="30px" class="ghbtn"></iframe>
 
