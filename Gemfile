@@ -1,18 +1,19 @@
-source "https://gems.ruby-china.org"
+source "https://gems.ruby-china.com"
 
 group :development do
   gem 'rake', '~> 12.0'
-  gem 'jekyll', '~> 3.6', '>= 3.6.2'
+  gem 'jekyll', '~> 3.6', '>= 3.8.3'
   
   gem 'rdiscount', '~> 2.0'
-  gem 'RedCloth', '~> 4.2.9'
+  gem 'RedCloth', '~> 4.3', '>= 4.3.2'
   gem 'haml', '~> 4.0'
   gem 'pygments.rb'
   gem 'rouge'
   gem 'rb-fsevent', '~> 0.9'
   gem 'stringex', '~> 1.4.0'
-  gem 'bootstrap-sass', '~> 3.3.5'
-  gem 'font-awesome-sass', '~> 4.6.2'
+
+  gem 'nokogiri', '~> 1.8', '>= 1.8.4'
+
   gem 'mini_magick'
   gem 'autoprefixer-rails'
   gem 'uglifier'
@@ -20,9 +21,12 @@ group :development do
   gem 'coffee-script'
   gem 'bower'
   
-end
 
+
+end
 group :jekyll_plugins do
+  gem 'bootstrap-sass', '~> 3.3.5'
+  gem 'font-awesome-sass', '~> 4.6.2'
   gem 'jekyll-sitemap'
   gem 'jekyll-paginate'
   gem 'jekyll-gist'

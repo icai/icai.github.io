@@ -23,6 +23,13 @@
 			</div>
 			<footer id="footer" class="inner">{% include footer.html %}</footer>
 			{% include after_footer.html %}
+
+			<link rel="stylesheet" type="text/css" href="{{ root_url }}/assets/prism/prism.css"/>
+			<script src="{{ root_url }}/assets/prism/prism.js" type="text/javascript"></script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
+			</script>
+			<script type="text/javascript" src="http://cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 		</div>
 	</div>
 </body>

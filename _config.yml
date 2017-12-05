@@ -71,21 +71,25 @@ tag_dir: blog/tags
 
 
 # markdown: kramdown
-# kramdown:
-#   auto_ids: true
-#   input: GFM
-#   toc_levels: 1..6
-#   smart_quotes: lsquo,rsquo,ldquo,rdquo
-#   enable_coderay: true
-#   hard_wrap: true
-#   syntax_highlighter: rouge
+kramdown:
+  auto_ids: true
+  input: GFM
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  # enable_coderay: true
+  hard_wrap: true
+  extensions:
+    - autolink
+    - footnotes
+    - smart
+  # syntax_highlighter: rouge
 
-markdown: rdiscount
+# markdown: rdiscount
 rdiscount:
   extensions: ["autolink", "footnotes", "generate_toc", "smart"]
   toc_token: "[TOC]"
 
-highlighter: rouge
+highlighter: coderay
 # highlighter: pygments # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
@@ -258,7 +262,7 @@ assets:
     - assets/fonts
 
   # features:
-  #   liquid: true | false | default: false
+  #   liquid: true
   #   integrity: true | false | default: false
   #   automatic_img_size: true | false | n(fixnum): 2,4,6,8 | default: true
   #   automatic_img_alt : true | false | default: true

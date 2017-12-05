@@ -1,5 +1,5 @@
 #custom filters for Octopress
-# require './plugins/backtick_code_block'
+require './plugins/backtick_code_block'
 require 'jekyll-sitemap'
 require 'octopress-date-format'
 require './plugins/raw'

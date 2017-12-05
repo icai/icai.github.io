@@ -24,11 +24,12 @@ slides: blood
 
 * A PROGRAMMER'S BEST FRIEND
 
-![Ruby Logo]({%image_path posts/ruby-bus/ruby_logo.png%} =200x200)
+![Ruby Logo]({%asset posts/ruby-bus/ruby_logo.png @path %} =200x200)
 
 {% slide %}
 
-###Hello world
+### Hello world
+
 
 ```ruby
 	# Ruby knows what you
@@ -50,7 +51,7 @@ slides: blood
 
 {% slide %}
 
-###Read document
+### Read document
 
 https://devdocs.io/ruby/
 
@@ -58,21 +59,22 @@ https://devdocs.io/ruby/
 
 
 {%slide%}
-###Ruby language
+### Ruby language
 
 https://devdocs.io/ruby-language/
 
 {%slide%}
 
-##Methods implement
+## Methods implement
 
+```ruby
 	def one_plus_one
 	  1 + 1
 	end
-
+```
 {% slide_top %}
 
-###Calling Methods
+### Calling Methods
 
 	one_plus_one()
 
@@ -81,7 +83,7 @@ https://devdocs.io/ruby-language/
 	one_plus_one
 
 {% slide_bottom %}
-###Receiver
+### Receiver
 
 **self**
 - self is the default receiver.
@@ -99,6 +101,6 @@ https://devdocs.io/ruby-language/
 Questions?
 
 {%slide%}
-##つづく
+## つづく
 {% endslide %}
 

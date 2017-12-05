@@ -11,7 +11,7 @@ permalink: /about/
 
 
 
-##关于我
+## 关于我
 
 一个程序员，你可以叫我[Terry](https://github.com/icai). 
 
@@ -24,17 +24,17 @@ permalink: /about/
 
 欢迎gmail me<gidcai#gmail.com>。
 
-
-
+<div>
 Follow me: <iframe src="https://ghbtns.com/github-btn.html?user=icai&type=follow&count=true" frameborder="0" scrolling="0" width="170px" height="20px" class="ghbtn"></iframe>
+</div>
 <br>
 
-##关于本站
+## 关于本站
 本站主要用于个人博客资讯记录，Github Pages 静态化页面，可在网页下方找到源代码。
 以前一直在百度空间写日志，最高的文章PV达8k。百度空间关闭后，把日志备份在<a class="netease" href="http://blog.163.com/{{ site.netease_user }}" target="_blank" title="Netease">Netease</a>。
 
 <br>
-##关于w3cub
+## 关于w3cub
 目前w3cub已经启用的二级域名有 
 
 -泛前端开发
@@ -60,7 +60,7 @@ Follow me: <iframe src="https://ghbtns.com/github-btn.html?user=icai&type=follow
 <br>
 <br>
 
-###Last build
+### Last build
 
 <span> {{'now' | date: '%s' | date_to_xmlschema }}</span> <br>
 

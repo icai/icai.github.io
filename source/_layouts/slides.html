@@ -25,13 +25,13 @@
 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-	{% stylesheet application.css %}
+	{% asset application.css %}
 	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/css/reveal.min.css">
 	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/css/theme/{{ page.slides }}.css">
 	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/css/print/paper.css">
 	<link rel="stylesheet" href="{{ root_url }}/assets/reveal.js/lib/css/zenburn.css">
-	{% stylesheet slide.css %}
-	{% javascript application.js %}
+	{% asset slide.css %}
+	{% asset application.js %}
 </head>
 <body>
 	{% assign useinverse = "simple|sky|beige|serif|solarized" | split: "|"  %}
@@ -70,7 +70,7 @@
 					<div class="reveal">
 						<!-- Any section element inside of this container is displayed as a slide -->
 						<div class="slides">
-						  {{ content | expand_urls: root_url }}
+						  {{ content | expand_urls: root_url | rdiscount }}
 						</div>
 					</div>
 				</div>
@@ -120,6 +120,7 @@
 			{% include after_footer.html %}
 	<script src="{{ root_url }}/assets/reveal.js/lib/js/head.min.js"></script>
 	<script src="{{ root_url }}/assets/reveal.js/js/reveal.min.js"></script>
+	<script src="{{ root_url }}/assets/markdown/markdown.min.js"></script>
   	<script>
   	var Fullscreen = {
         enter: function(t) {
@@ -152,15 +153,20 @@
     }
     $(function(){
 	    var domElement = $('.slides-nav');
-		$(document).on("webkitfullscreenchange mozfullscreenchange MSFullscreenChange fullscreenchange", Reveal.layout);
+			$(document).on("webkitfullscreenchange mozfullscreenchange MSFullscreenChange fullscreenchange", Reveal.layout);
 
-		$(window).on("scroll.headertoogle", function(){
-			onWindowScroll(domElement)
-		})
+			$(window).on("scroll.headertoogle", function(){
+				onWindowScroll(domElement)
+			})
 	    $('#fullscreen_btn').click(function(){
 	    	onFullScreenClicked()
-	    })    	
+	    }) 
+
+			// $('.slide .content').each(function(i, el){
+			// 	$(el).html(markdown.toHTML(el.innerHTML))
+			// })
     })
+
 
   	</script>
 	<script>

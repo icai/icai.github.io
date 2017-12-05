@@ -25,24 +25,24 @@ keywords: sse,data push
 
 ## SSE示例
 
-```
-    <!doctype html>
-    <html>
-    <head>
-    <meta charset="UTF-8">
-    <title>Basic SSE Example</title>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    </head>
-    <body>
-    <pre id="x">Initializing...</pre>
-    <script>
-        var es = new EventSource("basic_sse.php");
-        es.addEventListener("message", function(e){
-            $("#x").append("\n" + e.data);
-        },false);
-    </script>
-    </body>
-    </html>
+```html
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Basic SSE Example</title>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+<pre id="x">Initializing...</pre>
+<script>
+    var es = new EventSource("basic_sse.php");
+    es.addEventListener("message", function(e){
+        $("#x").append("\n" + e.data);
+    },false);
+</script>
+</body>
+</html>
 ```
 
 ```javascript

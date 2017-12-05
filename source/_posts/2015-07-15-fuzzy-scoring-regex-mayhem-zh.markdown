@@ -446,10 +446,8 @@ And with that, I’ll shut-up and wish you merry regex’ing!
 
 就是通过匹配度分数进行排序，而不是单单的boolean 值指定，再a-z 排序输出，
 
->比例投票法：【A，B】候选人，每人有100%的投票额度。%A + %B + %X = 1。X 代表 你放弃的额度。 你的投票额度代表你对候选人信任度。这样的投票更具民主性。例如：我投A 70%，B 0% 那么X 就是30%。懂么，我发明的。[挖鼻屎] [链接](http://weibo.com/1356859197/BqrPv2rRL?type=comment)
 
-
-100%选你 就是<https://github.com/bevacqua/fuzzysearch>所用的方法，你只能在true or false 之间选择，而padolsey所用的方法字样更加人工智能，但是在大规模数据下是非常低效的。另外在作者的博客评论中也提到的 <https://github.com/gf3/Levenshtein>， 可以自行wiki一下。
+<https://github.com/bevacqua/fuzzysearch>所用的方法，你只能在true or false 之间选择，而padolsey所用的方法字样引入了权重概念更加智能，但是在大规模数据下是非常低效的。另外在作者的博客评论中也提到的 <https://github.com/gf3/Levenshtein>， 可以自行wiki一下。
 
 
 ---

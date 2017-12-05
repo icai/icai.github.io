@@ -29,6 +29,8 @@ module Jekyll
   
   class SlideBase < Liquid::Tag
     
+    alias_method :render_block, :render
+    
     def initialize(tag_name, text, token)
       @tag_name = tag_name
       @text = text
