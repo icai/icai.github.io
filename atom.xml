@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2017-12-05T22:47:28+08:00</updated>
+  <updated>2018-08-30T17:27:48+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -14,52 +14,437 @@
 
   
   <entry>
+    <title type="html"><![CDATA[How to properly uninstall Service Worker？]]></title>
+    <link href="http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker/"/>
+    <updated>2018-06-01T15:10:43+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker</id>
+    <content type="html"><![CDATA[<p>如何正确地卸载Service Worker？</p>
+
+<p>以下链接， Google Developers Service Worker工作原理：<br />
+https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#updates</p>
+
+<p>但是假如某一天你网站不需要 Service Worker，如何正确地卸载呢？</p>
+
+<p>以下以 create-react-app 为例子:</p>
+
+<!-- more -->
+
+<ul>
+  <li>千万不要直接从服务器干掉 service-worker.js （sw.js），或者去掉 sw-precache-webpack-plugin 插件直接build。</li>
+</ul>
+
+<ol>
+  <li>假如你服务器是增量更新的，<br />
+<img src="https://user-images.githubusercontent.com/1061012/40846563-8b73ce96-65ec-11e8-8781-e374c38c77ba.png" alt="image" /></li>
+</ol>
+
+<p>那么你的服务器文件service-worker.js永远都在，假如用户之前访问了你的网站，并且用户不清缓存的话，cache就永远都在了，你怎么更新，用户还是访问旧的版本。</p>
+
+<ol>
+  <li>你说把你服务器的 service-worker.js 干掉，那么假如用户之前访问过呢？本地有一份service-worker.js，那么按照service-worker工作原理，本地一直生效，不管你网站怎么更新，用户看到的依旧是旧的内容。</li>
+</ol>
+
+<p>service-worker.js</p>
+
+<pre><code class="language-js">
+'use strict';
+
+var precacheConfig = [
+["/index.html","a16310808c31e9e89b8d72aa2ddb058c"],
+["/plugin.dll.0cf858ac.js","7268282b6a4415b541c4658c1478febc"],
+["/vendor.dll.830d2c27.js","097dfeec5dda4f277752cb36b5d548ee"]
+];
+var cacheName = 'sw-precache-v3-sw-precache-webpack-plugin-' + (self.registration ? self.registration.scope : '');
+
+
+var ignoreUrlParametersMatching = [/^utm_/];
+
+
+
+var addDirectoryIndex = function (originalUrl, index) {
+    var url = new URL(originalUrl);
+    if (url.pathname.slice(-1) === '/') {
+      url.pathname += index;
+    }
+    return url.toString();
+  };
+
+var cleanResponse = function (originalResponse) {
+    // If this is not a redirected response, then we don't have to do anything.
+    if (!originalResponse.redirected) {
+      return Promise.resolve(originalResponse);
+    }
+
+    // Firefox 50 and below doesn't support the Response.body stream, so we may
+    // need to read the entire body to memory as a Blob.
+    var bodyPromise = 'body' in originalResponse ?
+      Promise.resolve(originalResponse.body) :
+      originalResponse.blob();
+
+    return bodyPromise.then(function(body) {
+      // new Response() is happy when passed either a stream or a Blob.
+      return new Response(body, {
+        headers: originalResponse.headers,
+        status: originalResponse.status,
+        statusText: originalResponse.statusText
+      });
+    });
+  };
+
+var createCacheKey = function (originalUrl, paramName, paramValue,
+                           dontCacheBustUrlsMatching) {
+    // Create a new URL object to avoid modifying originalUrl.
+    var url = new URL(originalUrl);
+
+    // If dontCacheBustUrlsMatching is not set, or if we don't have a match,
+    // then add in the extra cache-busting URL parameter.
+    if (!dontCacheBustUrlsMatching ||
+        !(url.pathname.match(dontCacheBustUrlsMatching))) {
+      url.search += (url.search ? '&amp;' : '') +
+        encodeURIComponent(paramName) + '=' + encodeURIComponent(paramValue);
+    }
+
+    return url.toString();
+  };
+
+var isPathWhitelisted = function (whitelist, absoluteUrlString) {
+    // If the whitelist is empty, then consider all URLs to be whitelisted.
+    if (whitelist.length === 0) {
+      return true;
+    }
+
+    // Otherwise compare each path regex to the path of the URL passed in.
+    var path = (new URL(absoluteUrlString)).pathname;
+    return whitelist.some(function(whitelistedPathRegex) {
+      return path.match(whitelistedPathRegex);
+    });
+  };
+
+var stripIgnoredUrlParameters = function (originalUrl,
+    ignoreUrlParametersMatching) {
+    var url = new URL(originalUrl);
+    // Remove the hash; see https://github.com/GoogleChrome/sw-precache/issues/290
+    url.hash = '';
+
+    url.search = url.search.slice(1) // Exclude initial '?'
+      .split('&amp;') // Split into an array of 'key=value' strings
+      .map(function(kv) {
+        return kv.split('='); // Split each 'key=value' string into a [key, value] array
+      })
+      .filter(function(kv) {
+        return ignoreUrlParametersMatching.every(function(ignoredRegex) {
+          return !ignoredRegex.test(kv[0]); // Return true iff the key doesn't match any of the regexes.
+        });
+      })
+      .map(function(kv) {
+        return kv.join('='); // Join each [key, value] array into a 'key=value' string
+      })
+      .join('&amp;'); // Join the array of 'key=value' strings into a string with '&amp;' in between each
+
+    return url.toString();
+  };
+
+
+var hashParamName = '_sw-precache';
+var urlsToCacheKeys = new Map(
+  precacheConfig.map(function(item) {
+    var relativeUrl = item[0];
+    var hash = item[1];
+    var absoluteUrl = new URL(relativeUrl, self.location);
+    var cacheKey = createCacheKey(absoluteUrl, hashParamName, hash, /\.\w{8}\./);
+    return [absoluteUrl.toString(), cacheKey];
+  })
+);
+
+function setOfCachedUrls(cache) {
+  return cache.keys().then(function(requests) {
+    return requests.map(function(request) {
+      return request.url;
+    });
+  }).then(function(urls) {
+    return new Set(urls);
+  });
+}
+
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return setOfCachedUrls(cache).then(function(cachedUrls) {
+        return Promise.all(
+          Array.from(urlsToCacheKeys.values()).map(function(cacheKey) {
+            // If we don't have a key matching url in the cache already, add it.
+            if (!cachedUrls.has(cacheKey)) {
+              var request = new Request(cacheKey, {credentials: 'same-origin'});
+              return fetch(request).then(function(response) {
+                // Bail out of installation unless we get back a 200 OK for
+                // every request.
+                if (!response.ok) {
+                  throw new Error('Request for ' + cacheKey + ' returned a ' +
+                    'response with status ' + response.status);
+                }
+
+                return cleanResponse(response).then(function(responseToCache) {
+                  return cache.put(cacheKey, responseToCache);
+                });
+              });
+            }
+          })
+        );
+      });
+    }).then(function() {
+      
+      // Force the SW to transition from installing -&gt; active state
+      return self.skipWaiting();
+      
+    })
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  var setOfExpectedUrls = new Set(urlsToCacheKeys.values());
+
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return cache.keys().then(function(existingRequests) {
+        return Promise.all(
+          existingRequests.map(function(existingRequest) {
+            if (!setOfExpectedUrls.has(existingRequest.url)) {
+              return cache.delete(existingRequest);
+            }
+          })
+        );
+      });
+    }).then(function() {
+      
+      return self.clients.claim();
+      
+    })
+  );
+});
+
+
+self.addEventListener('fetch', function(event) {
+  if (event.request.method === 'GET') {
+    // Should we call event.respondWith() inside this fetch event handler?
+    // This needs to be determined synchronously, which will give other fetch
+    // handlers a chance to handle the request if need be.
+    var shouldRespond;
+
+    // First, remove all the ignored parameters and hash fragment, and see if we
+    // have that URL in our cache. If so, great! shouldRespond will be true.
+    var url = stripIgnoredUrlParameters(event.request.url, ignoreUrlParametersMatching);
+    shouldRespond = urlsToCacheKeys.has(url);
+
+    // If shouldRespond is false, check again, this time with 'index.html'
+    // (or whatever the directoryIndex option is set to) at the end.
+    var directoryIndex = 'index.html';
+    if (!shouldRespond &amp;&amp; directoryIndex) {
+      url = addDirectoryIndex(url, directoryIndex);
+      shouldRespond = urlsToCacheKeys.has(url);
+    }
+
+    // If shouldRespond is still false, check to see if this is a navigation
+    // request, and if so, whether the URL matches navigateFallbackWhitelist.
+    var navigateFallback = '/index.html';
+    if (!shouldRespond &amp;&amp;
+        navigateFallback &amp;&amp;
+        (event.request.mode === 'navigate') &amp;&amp;
+        isPathWhitelisted(["^(?!\\/__).*"], event.request.url)) {
+      url = new URL(navigateFallback, self.location).toString();
+      shouldRespond = urlsToCacheKeys.has(url);
+    }
+
+    // If shouldRespond was set to true at any point, then call
+    // event.respondWith(), using the appropriate cache key.
+    if (shouldRespond) {
+      event.respondWith(
+        caches.open(cacheName).then(function(cache) {
+          return cache.match(urlsToCacheKeys.get(url)).then(function(response) {
+            if (response) {
+              return response;
+            }
+            throw Error('The cached response that was expected is missing.');
+          });
+        }).catch(function(e) {
+          // Fall back to just fetch()ing the request if some unexpected error
+          // prevented the cached response from being valid.
+          console.warn('Couldn\'t serve response for "%s" from cache: %O', event.request.url, e);
+          return fetch(event.request);
+        })
+      );
+    }
+  }
+});
+
+</code></pre>
+
+<p>index.js 入口文件</p>
+
+<p>https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/template/src/index.js</p>
+
+<pre><code class="language-js">import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+//----vs-----
+serviceWorker.register({
+    onUpdate: async (registration) =&gt; {
+        await registration.update();
+        message.info("网站更新完成, 请刷新页面: " + moment().format('YYYY-MM-DD HH:mm:ss'), 0.5, () =&gt; {
+            window.location.reload();
+        });
+    },
+    onSuccess: () =&gt; {}
+});
+
+
+
+</code></pre>
+
+<p>假如你引入了serviceWorker文件, 并发布了，</p>
+
+<p>https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/template/src/serviceWorker.js</p>
+
+<h3 id="正确做法是">正确做法是：</h3>
+<p><code>serviceWorker.register();</code> 改成 <code>serviceWorker.unregister();</code> <br />
+但是同时千万要记住 要保留  sw-precache-webpack-plugin 去做webpack 构建（目的是为了生成新的service-worker.js，触发更新)。按照人的<strong>既定思维</strong>，既然不要了，那么当然要移除。</p>
+
+<p>假如移除了  sw-precache-webpack-plugin,  你怎么 生成新版本的 service-worker.js，还有，没有新版本 service-worker.js 又怎么会更新你的代码了，这里似乎出现<strong>双重陷阱</strong>，但是当你理解了service-worker.js 生命周期原理后，一切都可以理解。</p>
+
+<h3 id="最后总结">最后总结：</h3>
+<p>在入口加入:</p>
+
+<p>serviceWorker.unregister();</p>
+
+<p>service-worker.js 文件 依旧需要更新。</p>
+
+<p>假如真的不想引入 sw-precache-webpack-plugin 做webpack构建的话，请把服务器上面的<br />
+service-worker.js  <code>precacheConfig</code> 清空</p>
+<pre><code class="language-js">var precacheConfig = [
+];
+</code></pre>
+
+<p>https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#opting-out-of-caching</p>
+
+<p>If you would prefer not to enable service workers prior to your initial production deployment, then remove the call to registerServiceWorker() from src/index.js.</p>
+
+<p>If you had previously enabled service workers in your production deployment and have decided that you would like to disable them for all your existing users, you can swap out the call to registerServiceWorker() in src/index.js first by modifying the service worker import:</p>
+<pre><code>import { unregister } from './registerServiceWorker';
+</code></pre>
+
+<p>and then call unregister() instead. After the user visits a page that has unregister(), the service worker will be uninstalled. Note that depending on how /service-worker.js is served, it may take up to 24 hours for the cache to be invalidated.</p>
+
+<p>create-react-app 提示的测试服务器<br />
+<img src="https://user-images.githubusercontent.com/1061012/40872668-b5ae9a72-6684-11e8-9d37-ba7d3fed427e.png" alt="image" /><br />
+对service-worker.js会有HTTP缓存，部署简单nginx 服务器进行测试</p>
+
+<pre><code class="language-conf">    server {
+       listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+       location / {
+           root   D:\yourproject\build;
+           index  index.html index.htm;
+           # proxy_no_cache 1;
+           add_header Cache-Control "no-cache";
+           try_files $uri $uri/ /index.html;
+       }
+
+       location /service\-worker\.js {
+            expires -1;
+            add_header Pragma "no-cache";
+       }
+    }
+
+</code></pre>
+
+<pre><code>serviceWorker.register({
+    onUpdate: async (registration) =&gt; {
+        await registration.update(); // 这里很重要
+        message.info("网站更新完成, 请刷新页面: " + moment().format('YYYY-MM-DD HH:mm:ss'), 0.5, () =&gt; {
+            window.location.reload();
+        });
+    },
+    onSuccess: () =&gt; {}
+});
+
+</code></pre>
+
+<h3 id="延伸阅读">延伸阅读：</h3>
+
+<p>https://lavas.baidu.com/guide/v2/advanced/service-worker#%E6%B3%A8%E5%86%8C-service-worker-%E6%89%A9%E5%B1%95<br />
+注册 Service Worker (扩展)</p>
+
+<p>提示：这部分内容由 Lavas 内部处理，并不需要开发者进行参与，仅仅作为解答开发者疑问的扩展阅读存在。</p>
+
+<p>Service Worker 编写完成后，还需要进行注册才能真正生效。常规的注册代码能够在各类 Service Worker 教程或文章中找到，但在实际项目中有一个不得不考虑的问题，使得我们必须对注册代码进行一些改动，那就是 Service Worker 更新 的问题。</p>
+
+<p>https://github.com/lavas-project/sw-register-webpack-plugin</p>
+
+<p>离线指南<br />
+https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network</p>
+
+<p>假如熟悉Service Worker 缓存机制的话，那么为什么要卸载呢 ？</p>
+
+<p>本文 ： https://github.com/icai/icai.github.io/issues/1</p>
+
+<p>-EOF-</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[《html5数据推送应用开发》读书摘要]]></title>
     <link href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/"/>
-    <updated>2017-08-06T17:18:14+08:00</updated>
+    <updated>2017-08-06T09:18:14+00:00</updated>
     <id>http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note</id>
-    <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。
-基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……
+    <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。<br />
+基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……<br />
 可以总结为如下：</p>
 
 <!-- more -->
 
-
 <p>《Data Push Apps with HTML5 SSE》 读书摘要</p>
 
-<a name="L......"></a>
-<h2>摘要</h2>
+<h2 id="摘要">摘要</h2>
 
 <ul>
-<li>EventSource方法 new EventSource(&ldquo;url&rdquo;);</li>
-<li>MIME类型text/event-stream</li>
-<li>数据传输格式"data:&ldquo; + new Date().toISOString() + &rdquo;\n\n";</li>
+  <li>EventSource方法 new EventSource(“url”);</li>
+  <li>MIME类型text/event-stream</li>
+  <li>数据传输格式”data:” + new Date().toISOString() + “\n\n”;</li>
 </ul>
 
+<h2 id="sse示例">SSE示例</h2>
 
-<a name="SSE......"></a>
-<h2>SSE示例</h2>
-
-<pre><code>    &lt;!doctype html&gt;
-    &lt;html&gt;
-    &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;Basic SSE Example&lt;/title&gt;
-    &lt;script src="//code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-    &lt;pre id="x"&gt;Initializing...&lt;/pre&gt;
-    &lt;script&gt;
-        var es = new EventSource("basic_sse.php");
-        es.addEventListener("message", function(e){
-            $("#x").append("\n" + e.data);
-        },false);
-    &lt;/script&gt;
-    &lt;/body&gt;
-    &lt;/html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;Basic SSE Example&lt;/title&gt;
+&lt;script src="//code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;pre id="x"&gt;Initializing...&lt;/pre&gt;
+&lt;script&gt;
+    var es = new EventSource("basic_sse.php");
+    es.addEventListener("message", function(e){
+        $("#x").append("\n" + e.data);
+    },false);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 
-<pre><code class="javascript">var http = require("http"),
+<pre><code class="language-javascript">var http = require("http"),
     fs = require("fs");
 var port = parseInt(process.argv[2] || 1234);
 http.createServer(function(request, response) {
@@ -90,90 +475,87 @@ http.createServer(function(request, response) {
 console.log("Server running at http://localhost:" + port);
 </code></pre>
 
-<a name="L........."></a>
-<h2>兼容性</h2>
+<h2 id="兼容性">兼容性</h2>
 
 <p>startEventSource()</p>
 
 <ul>
-<li>Basically all Firefox and Chromea</li>
-<li>Desktop Safari 5.0+</li>
-<li>iOS Safari 4.0+</li>
-<li>Android 4.4+ (earlier where Chrome is default browser)</li>
-<li>Chrome for Android (all versions)</li>
-<li>Firefox for Android (all versions)</li>
-<li>Opera since 11.0</li>
-<li>Opera Mobile since 11.1</li>
-<li>BlackBerry since 7.0</li>
+  <li>Basically all Firefox and Chromea</li>
+  <li>Desktop Safari 5.0+</li>
+  <li>iOS Safari 4.0+</li>
+  <li>Android 4.4+ (earlier where Chrome is default browser)</li>
+  <li>Chrome for Android (all versions)</li>
+  <li>Firefox for Android (all versions)</li>
+  <li>Opera since 11.0</li>
+  <li>Opera Mobile since 11.1</li>
+  <li>BlackBerry since 7.0</li>
 </ul>
-
 
 <p>startXHR()</p>
 
 <ul>
-<li>IE10+</li>
-<li>Firefox 3.6 (and earlier)</li>
-<li>Safari 3.x</li>
-<li>Android 4.1 to 4.3 (unless Chrome is default browser)</li>
-<li>Android 3.x</li>
+  <li>IE10+</li>
+  <li>Firefox 3.6 (and earlier)</li>
+  <li>Safari 3.x</li>
+  <li>Android 4.1 to 4.3 (unless Chrome is default browser)</li>
+  <li>Android 3.x</li>
 </ul>
-
 
 <p>startIframe()</p>
 
 <ul>
-<li>IE8</li>
-<li>IE9</li>
+  <li>IE8</li>
+  <li>IE9</li>
 </ul>
 
+<p>~~startLongpoll()</p>
+<ul>
+  <li>IE6</li>
+  <li>IE7</li>
+  <li>Android 2.x</li>
+  <li>Anything else not in the preceding list that has Ajax support<br />
+~~</li>
+</ul>
 
-<p><del>startLongpoll()
-- IE6 <br/>
-- IE7
-- Android 2.x
-- Anything else not in the preceding list that has Ajax support
-</del></p>
+<p>~~(none)</p>
+<ul>
+  <li>Any browser with JavaScript disabled<br />
+~~</li>
+</ul>
 
-<p><del>(none)
-- Any browser with JavaScript disabled
-</del></p>
-
-<p><del>a Technically since Firefox 6 and Chrome 6, but they have been auto-updating since Firefox 4, and Chrome since it came out
-of beta, so you can reasonably expect no one is still using versions that do not support SSE.
-</del></p>
+<p>~~a Technically since Firefox 6 and Chrome 6, but they have been auto-updating since Firefox 4, and Chrome since it came out<br />
+of beta, so you can reasonably expect no one is still using versions that do not support SSE.<br />
+~~</p>
 
 <p>书本代码，书本代码，书本代码。</p>
 
-<a name="L............"></a>
-<h2>参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ul>
-<li><a href="https://github.com/DarrenCook/ssebook">书本代码</a></li>
-<li><a href="https://caniuse.com/#feat=eventsource">eventsource浏览器支持</a></li>
-<li><a href="https://www.w3.org/TR/eventsource/">https://www.w3.org/TR/eventsource/</a></li>
-<li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: Server-sent events</a></li>
-<li><a href="https://github.com/Yaffle/EventSource">a polyfill for http://www.w3.org/TR/eventsource/</a></li>
+  <li><a href="https://github.com/DarrenCook/ssebook">书本代码</a></li>
+  <li><a href="https://caniuse.com/#feat=eventsource">eventsource浏览器支持</a></li>
+  <li><a href="https://www.w3.org/TR/eventsource/">https://www.w3.org/TR/eventsource/</a></li>
+  <li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: Server-sent events</a></li>
+  <li><a href="https://github.com/Yaffle/EventSource">a polyfill for http://www.w3.org/TR/eventsource/</a></li>
 </ul>
 
-
-<a name="L............"></a>
-<h2>其他参考</h2>
+<h2 id="其他参考">其他参考</h2>
 
 <ul>
-<li><a href="https://www.ibm.com/developerworks/library/wa-http-server-push-with-websocket-sse/">HTTP server push with WebSocket and SSE</a></li>
-<li><a href="https://www.zhihu.com/question/27498235">Ajax长轮询与服务器推的长连接的区别是？</a></li>
-<li><a href="http://goeasy.io/cn/demos">商业化示例</a></li>
+  <li><a href="https://www.ibm.com/developerworks/library/wa-http-server-push-with-websocket-sse/">HTTP server push with WebSocket and SSE</a></li>
+  <li><a href="https://www.zhihu.com/question/27498235">Ajax长轮询与服务器推的长连接的区别是？</a></li>
+  <li><a href="http://goeasy.io/cn/demos">商业化示例</a></li>
 </ul>
-
 
 <p>-EOF-</p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[每日一点点之scrapy]]></title>
     <link href="http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy/"/>
-    <updated>2017-06-20T23:19:58+08:00</updated>
+    <updated>2017-06-20T15:19:58+00:00</updated>
     <id>http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy</id>
     <content type="html"><![CDATA[<p>Scrapy 是什么？</p>
 
@@ -182,7 +564,6 @@ of beta, so you can reasonably expect no one is still using versions that do not
 <p>为什么要介绍Scrapy，内容时代了，没有内容再好看的网站，那又有什么用呢？</p>
 
 <!-- more -->
-
 
 <p>对不对？对对对。</p>
 
@@ -194,26 +575,28 @@ of beta, so you can reasonably expect no one is still using versions that do not
 
 <p>建议在Linux或者Mac下进行学习，Windows下可能会遇到各种入门级的问题。例如安装过程中报错，缺少这个，那个的问题。</p>
 
-<p>只需要准备一样东西，就是官方文档 <a href="https://docs.scrapy.org/en/latest/">https://docs.scrapy.org/en/latest/</a></p>
+<p>只需要准备一样东西，就是官方文档 https://docs.scrapy.org/en/latest/</p>
 
 <p>可以一边看，一边实践。</p>
 
-<a name="L......"></a>
-<h3>安装</h3>
+<h3 id="安装">安装</h3>
 
-<pre><code class="bash">pip install Scrapy
+<pre><code class="language-bash">pip install Scrapy
+
 </code></pre>
 
 <p>官方推荐你安装python虚拟环境进行 Scrapy，不装也没有问题！ 虚拟环境会虚拟IP么？ 不会，不是这一回事</p>
 
-<pre><code class="bash">pip install virtualenv
+<pre><code class="language-bash">pip install virtualenv
+
 </code></pre>
 
 <p>接着来来读一下官方教程：</p>
 
-<p><a href="https://docs.scrapy.org/en/latest/intro/tutorial.html">https://docs.scrapy.org/en/latest/intro/tutorial.html</a></p>
+<p>https://docs.scrapy.org/en/latest/intro/tutorial.html</p>
 
-<pre><code class="bash">scrapy startproject 项目名字
+<pre><code class="language-bash">scrapy startproject 项目名字
+
 </code></pre>
 
 <p>A: 假如你想知道parse接着会干什么，parse里面能干什么，我觉得你去了解一下Scrapy的钩子函数，以及整体架构。</p>
@@ -231,13 +614,14 @@ of beta, so you can reasonably expect no one is still using versions that do not
 <p>其实Scrapy不单只是一个爬虫框架，而且是一个很好的Python入门学习项目，假设你怎么会Python。</p>
 
 <p>-EOF-</p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[你好2017]]></title>
     <link href="http://blog.w3cub.com/blog/2017/01/02/hello-2017/"/>
-    <updated>2017-01-02T16:27:08+08:00</updated>
+    <updated>2017-01-02T08:27:08+00:00</updated>
     <id>http://blog.w3cub.com/blog/2017/01/02/hello-2017</id>
     <content type="html"><![CDATA[<p>2017年，起床的第一天，朋友圈里面的都是困难群众。谢谢主席关心的调侃。</p>
 
@@ -245,12 +629,11 @@ of beta, so you can reasonably expect no one is still using versions that do not
 
 <!-- more -->
 
-
 <p>2016看了很多电视，看了很多时政新闻，把台湾大选全程直播都看了，你懂的。</p>
 
-<p>2016年底离开了工作三年的<a href="https://www.thecn.com/aboutus">TheCN</a>（CourseNetworking），结束了"Changing the Way the World Learns"，也是我工作五年里面最长的一份工作。没事周五就溜回家，可能这也是在TheCN工作的特殊记忆。 <br/>
-2016年没有过多的留念与怀念，参加了几场婚礼，大部分都是中学同学。
-翻开微博，看一看2016的自己都干了什么，都是都是时事之类的观点，微博并没有过多的私隐东西，再翻开QQ空间也没有记录太多特别的，平淡的2016，还是发生了什么特别的事情，我没有记录。回去参加同学同学的婚礼，同学说，怎么你还是跟以前一模一样，好像一点都没有变化。好像也是，除了瘦了几斤，好像真的没有多大变化。
+<p>2016年底离开了工作三年的<a href="https://www.thecn.com/aboutus">TheCN</a>（CourseNetworking），结束了”Changing the Way the World Learns”，也是我工作五年里面最长的一份工作。没事周五就溜回家，可能这也是在TheCN工作的特殊记忆。   <br />
+2016年没有过多的留念与怀念，参加了几场婚礼，大部分都是中学同学。<br />
+翻开微博，看一看2016的自己都干了什么，都是都是时事之类的观点，微博并没有过多的私隐东西，再翻开QQ空间也没有记录太多特别的，平淡的2016，还是发生了什么特别的事情，我没有记录。回去参加同学同学的婚礼，同学说，怎么你还是跟以前一模一样，好像一点都没有变化。好像也是，除了瘦了几斤，好像真的没有多大变化。<br />
 再翻看Github看看，2013就想写的chrome插件，终于在2016写了，还有一堆基于公司需求的开源扩展。</p>
 
 <p>回想起，这些年从事前端工作，头一两年，那些人还在炫耀IE6,IE7 bug，本质上是清零了。剩下的经验都是自己平时阅读开源代码积累的。kissy, ueditor, jQuery, Backbone, underscore, requriejs…… 感谢这些优秀的开源代码。</p>
@@ -259,7 +642,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
 
 <p>2016后端语言写的怎么样了，有用的都学了，都是一边做一边学。ruby，python, php …… 用记得，不用就忘记 ……</p>
 
-<p>或许这是今年的目标，“今年要不要去拿个软件专利著作权，2017”，说白就是给自己一个学习的催化剂。
+<p>或许这是今年的目标，“今年要不要去拿个软件专利著作权，2017”，说白就是给自己一个学习的催化剂。<br />
 不知道能不能完成，但是当开始了，就意味着收获。与其说是2017年的目标，不如说是没有完成计划。</p>
 
 <p>2016好像写博客的次数越来越少了，Greader阅读习惯也少了, 反而印象笔记的收藏多了。</p>
@@ -279,84 +662,75 @@ of beta, so you can reasonably expect no one is still using versions that do not
 <p>不知不觉，真正工作已经步入了第六个年头了。</p>
 
 <p>2017继续拥抱变化，拥抱生活吧。</p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[多彩知乎发布啦]]></title>
     <link href="http://blog.w3cub.com/blog/2016/07/25/cozhihu-release/"/>
-    <updated>2016-07-25T22:10:46+08:00</updated>
+    <updated>2016-07-25T14:10:46+00:00</updated>
     <id>http://blog.w3cub.com/blog/2016/07/25/cozhihu-release</id>
     <content type="html"><![CDATA[<p>cozhihu(多彩知乎)发布啦！</p>
 
-<blockquote><p>cozhihu是一款知乎皮肤chrome扩展应用。</p></blockquote>
+<blockquote>
+  <p>cozhihu是一款知乎皮肤chrome扩展应用。</p>
+</blockquote>
 
 <p>多彩知乎十分适合geek知乎用户。随时随地刷知乎，保护眼睛两不误。</p>
 
 <!-- more -->
 
-
-<a name="L......"></a>
-<h4>安装</h4>
-
-<p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" class="only" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg"></a></p>
+<h4 id="安装">安装</h4>
+<p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" class="only" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg" /></a></p>
 
 <p>或者到官网 <a href="http://cozhihu.w3cub.com/">http://cozhihu.w3cub.com/</a>进行安装。</p>
 
-<a name="L......"></a>
-<h3>特色</h3>
+<h3 id="特色">特色</h3>
 
 <ul>
-<li>支持动态预览颜色</li>
-<li>超过25种颜色主题可供选择，包含夜间模式</li>
-<li>多用途的魔术图标</li>
-<li>文字阴影（可选）</li>
+  <li>支持动态预览颜色</li>
+  <li>超过25种颜色主题可供选择，包含夜间模式</li>
+  <li>多用途的魔术图标</li>
+  <li>文字阴影（可选）</li>
 </ul>
 
+<h3 id="预览">预览</h3>
 
-<a name="L......"></a>
-<h3>预览</h3>
+<p><img aria-hidden="true" src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" /></p>
 
-<p><img aria-hidden="true"  src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" ></p>
+<h3 id="开源协议">开源协议</h3>
 
-<a name="L............"></a>
-<h3>开源协议</h3>
-
-<p>Copyright &copy; 2016 Terry Cai. Licensed under the MIT license.
+<p>Copyright (c) 2016 Terry Cai. Licensed under the MIT license.<br />
 开源地址：<a href="https://github.com/icai/cozhihu">https://github.com/icai/cozhihu</a></p>
 
 <p>刷知乎，防沉迷哦！</p>
 
 <hr />
 
-<blockquote><p>cozhihu is a chrome extension for zhihu skins.</p></blockquote>
+<blockquote>
+  <p>cozhihu is a chrome extension for zhihu skins.</p>
+</blockquote>
 
-<a name="Install"></a>
-<h4>Install</h4>
+<h4 id="install">Install</h4>
+<p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" class="only" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg" /></a></p>
 
-<p><a href="https://chrome.google.com/webstore/detail/oaoadbdcnpjngbdopghepdhlmlbdkgpb"><img width="300px" class="only" src="http://ww3.sinaimg.cn/large/5fd37818jw1eq7bx4bc4ej20c0038mx9.jpg"></a></p>
-
-<a name="Features"></a>
-<h3>Features</h3>
+<h3 id="features">Features</h3>
 
 <ul>
-<li>Dynamic preview the color style.</li>
-<li>A series of skin for you to choose including night mode.</li>
-<li>Magic browser action icon, website link for geek user.</li>
-<li>Text shadow for the site (optional)</li>
+  <li>Dynamic preview the color style.</li>
+  <li>A series of skin for you to choose including night mode.</li>
+  <li>Magic browser action icon, website link for geek user.</li>
+  <li>Text shadow for the site (optional)</li>
 </ul>
 
+<h3 id="preview">Preview</h3>
 
-<a name="Preview"></a>
-<h3>Preview</h3>
-
-<p><img aria-hidden="true" src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" ></p>
+<p><img aria-hidden="true" src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" /></p>
 
 <p>If you like this, Give me star please:</p>
 
 <iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=icai&amp;repo=cozhihu&amp;type=star&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
-
-
 
 ]]></content>
   </entry>
@@ -364,14 +738,13 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[start your shell tour from a question]]></title>
     <link href="http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question/"/>
-    <updated>2016-05-28T16:09:21+08:00</updated>
+    <updated>2016-05-28T08:09:21+00:00</updated>
     <id>http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question</id>
     <content type="html"><![CDATA[<p>Learn bash shell, by interest or needed. what is your reason to learn the shell? I think the best reason is that what you need is what you learn.</p>
 
-<p>A few days ago, I rewrite the project css to sass, so  I need to rename the css. So I brought out a question, how to &ldquo;Rename multiple files shell&rdquo;? To people, solving problems with search engine is the method of least time. I am no exception, I encountered the same problem, and find out the answer in stackoverflow <a href="https://stackoverflow.com/questions/6911301/rename-multiple-files-shell">https://stackoverflow.com/questions/6911301/rename-multiple-files-shell</a>.</p>
+<p>A few days ago, I rewrite the project css to sass, so  I need to rename the css. So I brought out a question, how to “Rename multiple files shell”? To people, solving problems with search engine is the method of least time. I am no exception, I encountered the same problem, and find out the answer in stackoverflow <a href="https://stackoverflow.com/questions/6911301/rename-multiple-files-shell">https://stackoverflow.com/questions/6911301/rename-multiple-files-shell</a>.</p>
 
 <!--more-->
-
 
 <pre><code>for file in linux_*.mp4 ; do mv "$file" "${file#linux_}" ; done
 </code></pre>
@@ -388,7 +761,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
 
 <p>So I guess <code>${file#linux_}</code>  is remove <code>linux_</code> from the filename. As my guess, i am right, you can have a look at the <a href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02">documentation</a>. I suggest that you should read the <a href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html">documentation</a> at lest one time. And about the syntax of bash shell you can type the bash help in your terminal.</p>
 
-<p>~$>help</p>
+<p>~$&gt;help</p>
 
 <pre><code>GNU bash，版本 4.3.11(1)-release (x86_64-pc-linux-gnu)
 这些 shell 命令是内部定义的。请输入 `help' 以获取一个列表。
@@ -446,11 +819,11 @@ of beta, so you can reasonably expect no one is still using versions that do not
 
 <p>About the syntax, you can have a look at the chapter <code>2.6.2 Parameter Expansion</code>.</p>
 
-<p>&hellip;</p>
+<p>…</p>
 
 <p>${parameter%[word]}</p>
 
-<p><strong>Remove Smallest Suffix Pattern</strong>. The word shall be expanded to produce a pattern. The parameter expansion shall then result in parameter, with the smallest portion of the suffix matched by the pattern deleted. If present, word shall not begin with an unquoted &lsquo;%&rsquo;.</p>
+<p><strong>Remove Smallest Suffix Pattern</strong>. The word shall be expanded to produce a pattern. The parameter expansion shall then result in parameter, with the smallest portion of the suffix matched by the pattern deleted. If present, word shall not begin with an unquoted ‘%’.</p>
 
 <p>${parameter%%[word]}</p>
 
@@ -458,31 +831,31 @@ of beta, so you can reasonably expect no one is still using versions that do not
 
 <p>${parameter#[word]}</p>
 
-<p><strong>Remove Smallest Prefix Pattern</strong>. The word shall be expanded to produce a pattern. The parameter expansion shall then result in parameter, with the smallest portion of the prefix matched by the pattern deleted. If present, word shall not begin with an unquoted &lsquo;#&rsquo;.</p>
+<p><strong>Remove Smallest Prefix Pattern</strong>. The word shall be expanded to produce a pattern. The parameter expansion shall then result in parameter, with the smallest portion of the prefix matched by the pattern deleted. If present, word shall not begin with an unquoted ‘#’.</p>
 
 <p>${parameter##[word]}</p>
 
 <p><strong>Remove Largest Prefix Pattern</strong>. The word shall be expanded to produce a pattern. The parameter expansion shall then result in parameter, with the largest portion of the prefix matched by the pattern deleted.</p>
 
-<p>&hellip;</p>
+<p>…</p>
 
 <p>My question has been solved.</p>
 
 <p>Good luck to you.</p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Blog Upgrade from Octopress 2.x to Jekyll 3.x]]></title>
     <link href="http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x/"/>
-    <updated>2016-05-25T08:06:09+08:00</updated>
+    <updated>2016-05-25T00:06:09+00:00</updated>
     <id>http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x</id>
     <content type="html"><![CDATA[<p>Good news, my blog had Upgrade from Octopress 2.x to Jekyll 3.x. It is not difficult to do this, if you follow me step by step.</p>
 
-<p>As you know, Octopress 2.x is based on Jekyll 2.x. so &ldquo;Upgrade from Octopress 2.x to Jekyll 3.x&rdquo; mean that upgrading Jekyll 2.x to Jekyll 3.x.</p>
+<p>As you know, Octopress 2.x is based on Jekyll 2.x. so “Upgrade from Octopress 2.x to Jekyll 3.x” mean that upgrading Jekyll 2.x to Jekyll 3.x.</p>
 
 <!--more-->
-
 
 <p><strong>Firstly</strong>, Check out and have a look the offcial upgrade turtuial <a href="https://jekyllrb.com/docs/upgrading/2-to-3/">https://jekyllrb.com/docs/upgrading/2-to-3/</a></p>
 
@@ -510,28 +883,25 @@ of beta, so you can reasonably expect no one is still using versions that do not
 <p>And the <code>sitemap_generator.rb</code> should be upgrade to the newest version.</p>
 
 <p>The above problem is that I encountered during the upgrade process, only for reference. I suggest that when you upgrade the jekyll like me, you should use the the command <code>jekyll build --trace</code> instead of <code>rake preview</code> that you can catch out the error easily.</p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[docs w3cub is on]]></title>
     <link href="http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release/"/>
-    <updated>2015-12-08T22:23:26+08:00</updated>
+    <updated>2015-12-08T14:23:26+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release</id>
-    <content type="html"><![CDATA[<a name="Preface"></a>
-<h2>Preface</h2>
+    <content type="html"><![CDATA[<h2 id="preface">Preface</h2>
 
-<p><a href="http://docs.w3cub.com/">docs.w3cub</a> project is based on <a href="https://github.com/Thibaut/devdocs">open source</a><iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&amp;repo=devdocs&amp;type=star&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>. we use jekyll system to rewrite and hosted on Github Pages. This project continued for several months and written in my spare time.</p>
+<p><a href="http://docs.w3cub.com/">docs.w3cub</a> project is based on <a href="https://github.com/Thibaut/devdocs">open source</a>&lt;iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&amp;repo=devdocs&amp;type=star&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"&gt;&lt;/iframe&gt;. we use jekyll system to rewrite and hosted on Github Pages. This project continued for several months and written in my spare time.</p>
 
-<p>As you know, all pages are static. we think that this would be more fast than using backend router. The most important thing is that Github Pages is free. we also thought about using frondend history router to rewrite this project, but Github Pages don&rsquo;t support the nginx rule. However we have permission to use 404 page, but useing the 404 page as the frontend router is very crazy idea. So at last we use the jekyll system to generate the static pages.</p>
-
-<!--more-->
-
+<p>As you know, all pages are static. we think that this would be more fast than using backend router. The most important thing is that Github Pages is free. we also thought about using frondend history router to rewrite this project, but Github Pages don’t support the nginx rule. However we have permission to use 404 page, but useing the 404 page as the frontend router is very crazy idea. So at last we use the jekyll system to generate the static pages. <br />
+<!--more--></p>
 
 <p>After subsequent improvement, we will open some jekyll plug-ins and source code.</p>
 
-<a name="Credits"></a>
-<h2>Credits</h2>
+<h2 id="credits">Credits</h2>
 
 <p>Following credits copy from devdocs.</p>
 
@@ -540,23 +910,20 @@ of beta, so you can reasonably expect no one is still using versions that do not
     <th>Documentation
     </th><th>Copyright
     </th><th>License
-  </th></tr><tr><td>Angular.js</td><td>© 2010-2015 Google, Inc.</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>Apache HTTP Server</td><td>© The Apache Software Foundation</td><td><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache</a></td></tr><tr><td>Backbone.js</td><td>© 2010-2015 Jeremy Ashkenas, DocumentCloud</td><td><a href="https://raw.github.com/jashkenas/backbone/master/LICENSE">MIT</a></td></tr><tr><td>Bower</td><td>© 2015 Bower contributors</td><td><a href="https://github.com/bower/bower.github.io/blob/b7b94ad38b72e8fb5dafb20c8ce42835a49cc98f/package.json#L20">CC BY</a></td></tr><tr><td>C<br>C++</td><td>© cppreference.com</td><td><a href="http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA">CC BY-SA</a></td></tr><tr><td>Chai</td><td>© 2011-2015 Jake Luer</td><td><a href="https://github.com/chaijs/chai/blob/master/README.md#license">MIT</a></td></tr><tr><td>Clojure</td><td>© Rich Hickey</td><td><a href="https://github.com/clojure/clojure/blob/master/epl-v10.html">EPL</a></td></tr><tr><td>CoffeeScript</td><td>© 2009-2015 Jeremy Ashkenas</td><td><a href="https://raw.github.com/jashkenas/coffee-script/master/LICENSE">MIT</a></td></tr><tr><td>Cordova</td><td>© 2012-2015 The Apache Software Foundation</td><td><a href="https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE">Apache</a></td></tr><tr><td>CSS<br>DOM<br>HTML<br>JavaScript<br>SVG<br>XPath</td><td>© 2005-2015 Mozilla Developer Network and individual contributors</td><td><a href="http://creativecommons.org/licenses/by-sa/2.5/">CC BY-SA</a></td></tr><tr><td>D3.js</td><td>© 2015 Michael Bostock</td><td><a href="https://raw.github.com/mbostock/d3/master/LICENSE">BSD</a></td></tr><tr><td>Django</td><td>© Django Software Foundation and individual contributors</td><td><a href="https://raw.githubusercontent.com/django/django/master/LICENSE">BSD</a></td></tr><tr><td>Dojo</td><td>© 2005-2015 The Dojo Foundation</td><td><a href="http://dojotoolkit.org/license.html">BSD + AFL</a></td></tr><tr><td>Drupal</td><td>© 2001-2015 by the original authors<br>Drupal is a registered trademark of Dries Buytaert.</td><td><a href="https://api.drupal.org/api/drupal/LICENSE.txt">GPLv2</a></td></tr><tr><td>Ember.js</td><td>© 2015 Yehuda Katz, Tom Dale and Ember.js contributors</td><td><a href="https://raw.github.com/emberjs/ember.js/master/LICENSE">MIT</a></td></tr><tr><td>Elixir</td><td>© 2012 Plataformatec</td><td><a href="https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE">Apache</a></td></tr><tr><td>Express</td><td>© 2009-2015 TJ Holowaychuk</td><td><a href="https://raw.githubusercontent.com/visionmedia/express/master/LICENSE">MIT</a></td></tr><tr><td>Git</td><td>© 2005-2015 Linus Torvalds and others</td><td><a href="https://raw.github.com/git/git/master/COPYING">GPLv2</a></td></tr><tr><td>Go</td><td>© Google, Inc.</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>Grunt</td><td>© 2014 Grunt Team</td><td><a href="https://raw.githubusercontent.com/gruntjs/gruntjs.com/master/LICENSE">MIT</a></td></tr><tr><td>Haskell</td><td>© The University of Glasgow</td><td><a href="http://www.haskell.org/ghc/license">BSD</a></td></tr><tr><td>io.js</td><td>© io.js contributors</td><td><a href="https://raw.githubusercontent.com/iojs/io.js/v1.x/LICENSE">MIT</a></td></tr><tr><td>jQuery</td><td>© 2009 Packt Publishing<br>© 2014 jQuery Foundation</td><td><a href="https://raw.github.com/jquery/api.jquery.com/master/LICENSE-MIT.txt">MIT</a></td></tr><tr><td>jQuery Mobile</td><td>© 2014 jQuery Foundation</td><td><a href="https://raw.github.com/jquery/api.jquerymobile.com/master/LICENSE-MIT.txt">MIT</a></td></tr><tr><td>jQuery UI</td><td>© 2014 jQuery Foundation</td><td><a href="https://raw.github.com/jquery/api.jqueryui.com/master/LICENSE-MIT.txt">MIT</a></td></tr><tr><td>Knockout.js</td><td>© Steven Sanderson, the Knockout.js team, and other contributors</td><td><a href="https://raw.github.com/knockout/knockout/master/LICENSE">MIT</a></td></tr><tr><td>Laravel</td><td>© Taylor Otwell</td><td><a href="https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt">MIT</a></td></tr><tr><td>Less</td><td>© 2009-2015 The Core Less Team</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>Lo-Dash</td><td>© 2012-2015 The Dojo Foundation</td><td><a href="https://raw.github.com/lodash/lodash/master/LICENSE.txt">MIT</a></td></tr><tr><td>Lua</td><td>© 1994–2015 Lua.org, PUC-Rio</td><td><a href="http://www.lua.org/license.html">MIT</a></td></tr><tr><td>Marionette.js</td><td>© 2015 Muted Solutions, LLC</td><td><a href="http://mutedsolutions.mit-license.org/">MIT</a></td></tr><tr><td>Markdown</td><td>© 2004 John Gruber</td><td><a href="http://daringfireball.net/projects/markdown/license">BSD</a></td></tr><tr><td>Meteor</td><td>© 2011-2015 Meteor Development Group</td><td><a href="https://raw.githubusercontent.com/meteor/meteor/master/LICENSE.txt">MIT</a></td></tr><tr><td>Minitest</td><td>© Ryan Davis, seattle.rb</td><td><a href="https://raw.githubusercontent.com/seattlerb/minitest/master/README.txt">MIT</a></td></tr><tr><td>Mocha</td><td>© 2011-2015 TJ Holowaychuk</td><td><a href="https://raw.githubusercontent.com/mochajs/mocha/master/LICENSE">MIT</a></td></tr><tr><td>Modernizr</td><td>© 2009-2014 Modernizr</td><td><a href="http://modernizr.com/license/">MIT</a></td></tr><tr><td>Moment.js</td><td>© 2011-2015 Tim Wood, Iskren Chernev, Moment.js contributors</td><td><a href="https://raw.github.com/moment/moment/master/LICENSE">MIT</a></td></tr><tr><td>Mongoose</td><td>© 2010 LearnBoost</td><td><a href="https://github.com/LearnBoost/mongoose/blob/master/README.md#license">MIT</a></td></tr><tr><td>nginx</td><td>© 2002-2015 Igor Sysoev<br>© 2011-2015 Nginx, Inc.</td><td><a href="http://nginx.org/LICENSE">BSD</a></td></tr><tr><td>Node.js</td><td>© Joyent, Inc. and other Node contributors<br>Node.js is a trademark of Joyent, Inc.</td><td><a href="https://raw.githubusercontent.com/nodejs/node/master/LICENSE">MIT</a></td></tr><tr><td>Nokogiri</td><td>© 2008-2014 2014 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha</td><td><a href="https://github.com/sparklemotion/nokogiri/blob/master/README.rdoc#license">MIT</a></td></tr><tr><td>npm</td><td>© npm, Inc. and Contributors<br>npm is a trademark of npm, Inc.</td><td><a href="https://raw.githubusercontent.com/npm/npm/master/LICENSE">npm</a></td></tr><tr><td>OpenTSDB</td><td>© 2010-2015 The OpenTSDB Authors</td><td><a href="https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER">LGPLv2.1</a></td></tr><tr><td>Phalcon</td><td>© 2011-2015 Phalcon Framework Team</td><td><a href="https://docs.phalconphp.com/en/latest/reference/license.html">CC BY</a></td></tr><tr><td>Phaser</td><td>© 2015 Richard Davey, Photon Storm Ltd.</td><td><a href="https://raw.githubusercontent.com/photonstorm/phaser/master/license.txt">MIT</a></td></tr><tr><td>Phoenix</td><td>© 2014 Chris McCord</td><td><a href="https://raw.githubusercontent.com/phoenixframework/phoenix/master/LICENSE.md">MIT</a></td></tr><tr><td>PHP</td><td>© 1997-2015 The PHP Documentation Group</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>PHPUnit</td><td>© 2005-2015 Sebastian Bergmann</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>PostgreSQL</td><td>© 1996-2013 The PostgreSQL Global Development Group<br>© 1994 The Regents of the University of California</td><td><a href="http://www.postgresql.org/about/licence/">PostgreSQL</a></td></tr><tr><td>Python</td><td>© 1990-2015 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.</td><td><a href="http://docs.python.org/3/license.html">PSFL</a></td></tr><tr><td>Q</td><td>© 2009-2015 Kristopher Michael Kowal and contributors</td><td><a href="https://raw.githubusercontent.com/kriskowal/q/v1/LICENSE">MIT</a></td></tr><tr><td>React, React Native, Flow, Relay</td><td>© 2013-2015 Facebook Inc.</td><td><a href="https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs">CC BY</a></td></tr><tr><td>Redis</td><td>© 2009-2015 Salvatore Sanfilippo</td><td><a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></td></tr><tr><td>RequireJS</td><td>© 2010-2014 The Dojo Foundation</td><td><a href="https://raw.githubusercontent.com/jrburke/requirejs/master/LICENSE">MIT</a></td></tr><tr><td>RethinkDB</td><td>© RethinkDB contributors</td><td><a href="https://raw.githubusercontent.com/rethinkdb/docs/master/LICENSE">CC BY-SA</a></td></tr><tr><td>Ruby</td><td>© 1993-2015 Yukihiro Matsumoto</td><td><a href="https://www.ruby-lang.org/en/about/license.txt">Ruby</a></td></tr><tr><td>Ruby on Rails</td><td>© 2004-2015 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.</td><td><a href="https://raw.github.com/rails/rails/master/activerecord/MIT-LICENSE">MIT</a></td></tr><tr><td>Rust</td><td>© 2011-2015 The Rust Project Developers</td><td><a href="https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT">MIT</a></td></tr><tr><td>Sass</td><td>© 2006-2015 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein</td><td><a href="https://raw.github.com/nex3/sass/master/MIT-LICENSE">MIT</a></td></tr><tr><td>Sinon</td><td>© 2010-2015 Christian Johansen</td><td><a href="https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE">BSD</a></td></tr><tr><td>Socket.io</td><td>© 2014-2015 Automattic</td><td><a href="https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE">MIT</a></td></tr><tr><td>Symfony</td><td>© 2004-2015 Fabien Potencier</td><td><a href="http://symfony.com/doc/current/contributing/code/license.html">MIT</a></td></tr><tr><td>Underscore.js</td><td>© 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors</td><td><a href="https://raw.github.com/jashkenas/underscore/master/LICENSE">MIT</a></td></tr><tr><td>Vagrant</td><td>© 2010-2015 Mitchell Hashimoto</td><td><a href="https://raw.githubusercontent.com/mitchellh/vagrant/master/LICENSE">MIT</a></td></tr><tr><td>Vue.js</td><td>© 2013-2015 Evan You, Vue.js contributors</td><td><a href="https://raw.githubusercontent.com/yyx990803/vue/master/LICENSE">MIT</a></td></tr><tr><td>Webpack</td><td>© 2012-2015 Tobias Koppers</td><td><a href="https://raw.githubusercontent.com/webpack/webpack/master/LICENSE">MIT</a></td></tr><tr><td>Yii</td><td>© 2008-2015 by Yii Software LLC</td><td><a href="https://raw.github.com/yiisoft/yii/master/LICENSE">BSD</a>
+  </th></tr><tr><td>Angular.js</td><td>© 2010-2015 Google, Inc.</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>Apache HTTP Server</td><td>© The Apache Software Foundation</td><td><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache</a></td></tr><tr><td>Backbone.js</td><td>© 2010-2015 Jeremy Ashkenas, DocumentCloud</td><td><a href="https://raw.github.com/jashkenas/backbone/master/LICENSE">MIT</a></td></tr><tr><td>Bower</td><td>© 2015 Bower contributors</td><td><a href="https://github.com/bower/bower.github.io/blob/b7b94ad38b72e8fb5dafb20c8ce42835a49cc98f/package.json#L20">CC BY</a></td></tr><tr><td>C<br />C++</td><td>© cppreference.com</td><td><a href="http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA">CC BY-SA</a></td></tr><tr><td>Chai</td><td>© 2011-2015 Jake Luer</td><td><a href="https://github.com/chaijs/chai/blob/master/README.md#license">MIT</a></td></tr><tr><td>Clojure</td><td>© Rich Hickey</td><td><a href="https://github.com/clojure/clojure/blob/master/epl-v10.html">EPL</a></td></tr><tr><td>CoffeeScript</td><td>© 2009-2015 Jeremy Ashkenas</td><td><a href="https://raw.github.com/jashkenas/coffee-script/master/LICENSE">MIT</a></td></tr><tr><td>Cordova</td><td>© 2012-2015 The Apache Software Foundation</td><td><a href="https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE">Apache</a></td></tr><tr><td>CSS<br />DOM<br />HTML<br />JavaScript<br />SVG<br />XPath</td><td>© 2005-2015 Mozilla Developer Network and individual contributors</td><td><a href="http://creativecommons.org/licenses/by-sa/2.5/">CC BY-SA</a></td></tr><tr><td>D3.js</td><td>© 2015 Michael Bostock</td><td><a href="https://raw.github.com/mbostock/d3/master/LICENSE">BSD</a></td></tr><tr><td>Django</td><td>© Django Software Foundation and individual contributors</td><td><a href="https://raw.githubusercontent.com/django/django/master/LICENSE">BSD</a></td></tr><tr><td>Dojo</td><td>© 2005-2015 The Dojo Foundation</td><td><a href="http://dojotoolkit.org/license.html">BSD + AFL</a></td></tr><tr><td>Drupal</td><td>© 2001-2015 by the original authors<br />Drupal is a registered trademark of Dries Buytaert.</td><td><a href="https://api.drupal.org/api/drupal/LICENSE.txt">GPLv2</a></td></tr><tr><td>Ember.js</td><td>© 2015 Yehuda Katz, Tom Dale and Ember.js contributors</td><td><a href="https://raw.github.com/emberjs/ember.js/master/LICENSE">MIT</a></td></tr><tr><td>Elixir</td><td>© 2012 Plataformatec</td><td><a href="https://raw.githubusercontent.com/elixir-lang/elixir/master/LICENSE">Apache</a></td></tr><tr><td>Express</td><td>© 2009-2015 TJ Holowaychuk</td><td><a href="https://raw.githubusercontent.com/visionmedia/express/master/LICENSE">MIT</a></td></tr><tr><td>Git</td><td>© 2005-2015 Linus Torvalds and others</td><td><a href="https://raw.github.com/git/git/master/COPYING">GPLv2</a></td></tr><tr><td>Go</td><td>© Google, Inc.</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>Grunt</td><td>© 2014 Grunt Team</td><td><a href="https://raw.githubusercontent.com/gruntjs/gruntjs.com/master/LICENSE">MIT</a></td></tr><tr><td>Haskell</td><td>© The University of Glasgow</td><td><a href="http://www.haskell.org/ghc/license">BSD</a></td></tr><tr><td>io.js</td><td>© io.js contributors</td><td><a href="https://raw.githubusercontent.com/iojs/io.js/v1.x/LICENSE">MIT</a></td></tr><tr><td>jQuery</td><td>© 2009 Packt Publishing<br />© 2014 jQuery Foundation</td><td><a href="https://raw.github.com/jquery/api.jquery.com/master/LICENSE-MIT.txt">MIT</a></td></tr><tr><td>jQuery Mobile</td><td>© 2014 jQuery Foundation</td><td><a href="https://raw.github.com/jquery/api.jquerymobile.com/master/LICENSE-MIT.txt">MIT</a></td></tr><tr><td>jQuery UI</td><td>© 2014 jQuery Foundation</td><td><a href="https://raw.github.com/jquery/api.jqueryui.com/master/LICENSE-MIT.txt">MIT</a></td></tr><tr><td>Knockout.js</td><td>© Steven Sanderson, the Knockout.js team, and other contributors</td><td><a href="https://raw.github.com/knockout/knockout/master/LICENSE">MIT</a></td></tr><tr><td>Laravel</td><td>© Taylor Otwell</td><td><a href="https://raw.githubusercontent.com/laravel/framework/master/LICENSE.txt">MIT</a></td></tr><tr><td>Less</td><td>© 2009-2015 The Core Less Team</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>Lo-Dash</td><td>© 2012-2015 The Dojo Foundation</td><td><a href="https://raw.github.com/lodash/lodash/master/LICENSE.txt">MIT</a></td></tr><tr><td>Lua</td><td>© 1994–2015 Lua.org, PUC-Rio</td><td><a href="http://www.lua.org/license.html">MIT</a></td></tr><tr><td>Marionette.js</td><td>© 2015 Muted Solutions, LLC</td><td><a href="http://mutedsolutions.mit-license.org/">MIT</a></td></tr><tr><td>Markdown</td><td>© 2004 John Gruber</td><td><a href="http://daringfireball.net/projects/markdown/license">BSD</a></td></tr><tr><td>Meteor</td><td>© 2011-2015 Meteor Development Group</td><td><a href="https://raw.githubusercontent.com/meteor/meteor/master/LICENSE.txt">MIT</a></td></tr><tr><td>Minitest</td><td>© Ryan Davis, seattle.rb</td><td><a href="https://raw.githubusercontent.com/seattlerb/minitest/master/README.txt">MIT</a></td></tr><tr><td>Mocha</td><td>© 2011-2015 TJ Holowaychuk</td><td><a href="https://raw.githubusercontent.com/mochajs/mocha/master/LICENSE">MIT</a></td></tr><tr><td>Modernizr</td><td>© 2009-2014 Modernizr</td><td><a href="http://modernizr.com/license/">MIT</a></td></tr><tr><td>Moment.js</td><td>© 2011-2015 Tim Wood, Iskren Chernev, Moment.js contributors</td><td><a href="https://raw.github.com/moment/moment/master/LICENSE">MIT</a></td></tr><tr><td>Mongoose</td><td>© 2010 LearnBoost</td><td><a href="https://github.com/LearnBoost/mongoose/blob/master/README.md#license">MIT</a></td></tr><tr><td>nginx</td><td>© 2002-2015 Igor Sysoev<br />© 2011-2015 Nginx, Inc.</td><td><a href="http://nginx.org/LICENSE">BSD</a></td></tr><tr><td>Node.js</td><td>© Joyent, Inc. and other Node contributors<br />Node.js is a trademark of Joyent, Inc.</td><td><a href="https://raw.githubusercontent.com/nodejs/node/master/LICENSE">MIT</a></td></tr><tr><td>Nokogiri</td><td>© 2008-2014 2014 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha</td><td><a href="https://github.com/sparklemotion/nokogiri/blob/master/README.rdoc#license">MIT</a></td></tr><tr><td>npm</td><td>© npm, Inc. and Contributors<br />npm is a trademark of npm, Inc.</td><td><a href="https://raw.githubusercontent.com/npm/npm/master/LICENSE">npm</a></td></tr><tr><td>OpenTSDB</td><td>© 2010-2015 The OpenTSDB Authors</td><td><a href="https://raw.githubusercontent.com/OpenTSDB/opentsdb.net/gh-pages/COPYING.LESSER">LGPLv2.1</a></td></tr><tr><td>Phalcon</td><td>© 2011-2015 Phalcon Framework Team</td><td><a href="https://docs.phalconphp.com/en/latest/reference/license.html">CC BY</a></td></tr><tr><td>Phaser</td><td>© 2015 Richard Davey, Photon Storm Ltd.</td><td><a href="https://raw.githubusercontent.com/photonstorm/phaser/master/license.txt">MIT</a></td></tr><tr><td>Phoenix</td><td>© 2014 Chris McCord</td><td><a href="https://raw.githubusercontent.com/phoenixframework/phoenix/master/LICENSE.md">MIT</a></td></tr><tr><td>PHP</td><td>© 1997-2015 The PHP Documentation Group</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>PHPUnit</td><td>© 2005-2015 Sebastian Bergmann</td><td><a href="http://creativecommons.org/licenses/by/3.0/">CC BY</a></td></tr><tr><td>PostgreSQL</td><td>© 1996-2013 The PostgreSQL Global Development Group<br />© 1994 The Regents of the University of California</td><td><a href="http://www.postgresql.org/about/licence/">PostgreSQL</a></td></tr><tr><td>Python</td><td>© 1990-2015 Python Software Foundation<br />Python is a trademark of the Python Software Foundation.</td><td><a href="http://docs.python.org/3/license.html">PSFL</a></td></tr><tr><td>Q</td><td>© 2009-2015 Kristopher Michael Kowal and contributors</td><td><a href="https://raw.githubusercontent.com/kriskowal/q/v1/LICENSE">MIT</a></td></tr><tr><td>React, React Native, Flow, Relay</td><td>© 2013-2015 Facebook Inc.</td><td><a href="https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs">CC BY</a></td></tr><tr><td>Redis</td><td>© 2009-2015 Salvatore Sanfilippo</td><td><a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></td></tr><tr><td>RequireJS</td><td>© 2010-2014 The Dojo Foundation</td><td><a href="https://raw.githubusercontent.com/jrburke/requirejs/master/LICENSE">MIT</a></td></tr><tr><td>RethinkDB</td><td>© RethinkDB contributors</td><td><a href="https://raw.githubusercontent.com/rethinkdb/docs/master/LICENSE">CC BY-SA</a></td></tr><tr><td>Ruby</td><td>© 1993-2015 Yukihiro Matsumoto</td><td><a href="https://www.ruby-lang.org/en/about/license.txt">Ruby</a></td></tr><tr><td>Ruby on Rails</td><td>© 2004-2015 David Heinemeier Hansson<br />Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.</td><td><a href="https://raw.github.com/rails/rails/master/activerecord/MIT-LICENSE">MIT</a></td></tr><tr><td>Rust</td><td>© 2011-2015 The Rust Project Developers</td><td><a href="https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT">MIT</a></td></tr><tr><td>Sass</td><td>© 2006-2015 Hampton Catlin, Nathan Weizenbaum, and Chris Eppstein</td><td><a href="https://raw.github.com/nex3/sass/master/MIT-LICENSE">MIT</a></td></tr><tr><td>Sinon</td><td>© 2010-2015 Christian Johansen</td><td><a href="https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE">BSD</a></td></tr><tr><td>Socket.io</td><td>© 2014-2015 Automattic</td><td><a href="https://raw.githubusercontent.com/Automattic/socket.io/master/LICENSE">MIT</a></td></tr><tr><td>Symfony</td><td>© 2004-2015 Fabien Potencier</td><td><a href="http://symfony.com/doc/current/contributing/code/license.html">MIT</a></td></tr><tr><td>Underscore.js</td><td>© 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors</td><td><a href="https://raw.github.com/jashkenas/underscore/master/LICENSE">MIT</a></td></tr><tr><td>Vagrant</td><td>© 2010-2015 Mitchell Hashimoto</td><td><a href="https://raw.githubusercontent.com/mitchellh/vagrant/master/LICENSE">MIT</a></td></tr><tr><td>Vue.js</td><td>© 2013-2015 Evan You, Vue.js contributors</td><td><a href="https://raw.githubusercontent.com/yyx990803/vue/master/LICENSE">MIT</a></td></tr><tr><td>Webpack</td><td>© 2012-2015 Tobias Koppers</td><td><a href="https://raw.githubusercontent.com/webpack/webpack/master/LICENSE">MIT</a></td></tr><tr><td>Yii</td><td>© 2008-2015 by Yii Software LLC</td><td><a href="https://raw.github.com/yiisoft/yii/master/LICENSE">BSD</a>
 </td></tr></tbody></table>
-
 
 <p>About devdocs, you can read <a href="https://devdocs.io/about">this</a>.</p>
 
-<a name="The.coming.issue"></a>
-<h2>The coming issue</h2>
+<h2 id="the-coming-issue">The coming issue</h2>
 
 <p>After improve these static web pages, I would do the app. If you like this, please wait the coming app.</p>
 
-<a name="Related.links"></a>
-<h2>Related links</h2>
+<h2 id="related-links">Related links</h2>
 
 <ul>
-<li>my project <a href="http://docs.w3cub.com/">docs.w3cub</a></li>
-<li>original project <a href="https://devdocs.io/about">devdocs</a></li>
+  <li>my project <a href="http://docs.w3cub.com/">docs.w3cub</a></li>
+  <li>original project <a href="https://devdocs.io/about">devdocs</a></li>
 </ul>
 
 ]]></content>
@@ -565,20 +932,19 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[模糊匹配查询正则表达式探究]]></title>
     <link href="http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/"/>
-    <updated>2015-07-15T22:09:43+08:00</updated>
+    <updated>2015-07-15T14:09:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh</id>
-    <content type="html"><![CDATA[<p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing &ldquo;uni&rdquo; into a country input field actually intends to select? It could match any of these:</p>
+    <content type="html"><![CDATA[<p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing “uni” into a country input field actually intends to select? It could match any of these:</p>
 
 <p>自动完成一直都是一个没完没了的问题。谁能准确地说出当一个地球人在一个国家输入框输入“uni”打算选什么？可能会出现以下情况：</p>
 
 <ul>
-<li>Tanzania, [<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Republic of</li>
-<li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Arab Emirates</li>
-<li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Kingdom</li>
-<li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted States</li>
-<li>T[<strong>u</strong>][<strong>n</strong>][<strong>i</strong>]sia</li>
+  <li>Tanzania, [<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Republic of</li>
+  <li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Arab Emirates</li>
+  <li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Kingdom</li>
+  <li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted States</li>
+  <li>T[<strong>u</strong>][<strong>n</strong>][<strong>i</strong>]sia</li>
 </ul>
-
 
 <p>Of course, it’s probably not the last one, but that right there is a human intuition that we often forget to instil into these UI interactions.</p>
 
@@ -586,18 +952,17 @@ of beta, so you can reasonably expect no one is still using versions that do not
 
 <!-- more -->
 
-
-<p>We can divine what the user <em>probably</em> intends most of the time but it&rsquo;ll always be a game of heuristics. Most solutions shy away from this game, opting instead to match the query letter-for-letter in each potential value, and this is usually sufficient, but without any other logic not only will “la” match “Latvia” but also “Angola”. And usually “Ltvia” will match nothing whatsoever, even though it’s seemingly obvious what the user is trying to type.</p>
+<p>We can divine what the user <em>probably</em> intends most of the time but it’ll always be a game of heuristics. Most solutions shy away from this game, opting instead to match the query letter-for-letter in each potential value, and this is usually sufficient, but without any other logic not only will “la” match “Latvia” but also “Angola”. And usually “Ltvia” will match nothing whatsoever, even though it’s seemingly obvious what the user is trying to type.</p>
 
 <p>我们可以推断用户在这上面花费的时间，显然这是一个启发式游戏。大多数解决方案都是尝试匹配字母之间可能潜在的值，通常已经足够了，“la” 没有任何逻辑，会匹配 “Latvia” 也会匹配 “Angola”。但绝不会匹配 “Ltvia”，尽管“Ltvia”看似是用户想要的输入类型。</p>
 
-<p>If you try implementing a fuzzy matcher to solve this, the first revelation is that you can&rsquo;t just boolean-match the query against the data like so many solutions do. You need to score each potential match. Hopefully, in the case of country selection, you end up with a sensible subset of countries that match the query to some reasonable degree. This scoring is necessary so that you know what you&rsquo;re putting at the top of the list. When typing &ldquo;U&rdquo;, the user expects Ukraine or Uzbekistan sooner than Mauritius or Sudan, for example.</p>
+<p>If you try implementing a fuzzy matcher to solve this, the first revelation is that you can’t just boolean-match the query against the data like so many solutions do. You need to score each potential match. Hopefully, in the case of country selection, you end up with a sensible subset of countries that match the query to some reasonable degree. This scoring is necessary so that you know what you’re putting at the top of the list. When typing “U”, the user expects Ukraine or Uzbekistan sooner than Mauritius or Sudan, for example.</p>
 
 <p>假如你想用模糊匹配去解决这个问题。首先，你不能像往常那样用boolean匹配去请求查询数据。你需要计算每个存在匹配的分数。 在选择国家情况下，你最终需要请求匹配查询一些合符逻辑的合理的国家子集。那么这分数是非常有必要的，以便我们可以把它们排到列表的顶部。</p>
 
 <p>（译注, boolean匹配 <a href="https://github.com/bevacqua/fuzzysearch">https://github.com/bevacqua/fuzzysearch</a>）</p>
 
-<p>Oddly, if you looked at the most common autocompletion widget out there (jQuery UI), it <a href="http://jsfiddle.net/2c11xknm/embedded/result,js,html">doesn&rsquo;t appear</a> to follow this intuition.</p>
+<p>Oddly, if you looked at the most common autocompletion widget out there (jQuery UI), it <a href="http://jsfiddle.net/2c11xknm/embedded/result,js,html">doesn’t appear</a> to follow this intuition.</p>
 
 <p>奇怪的是，假如见过最常用的jQuery UI 自动完成（autocompletion）插件，他并没有解决这个问题。</p>
 
@@ -605,9 +970,9 @@ of beta, so you can reasonably expect no one is still using versions that do not
 
 <p>即使是最优雅的解决方案，都趋向于忽视模糊处理错误，像“untied states” （united states） 和 “leichtenstein” （liechtenstein ）。当然， 就像一个人输入一个国家的名字，他们不熟悉这个国家可能性是非常很低。但人们仍然会犯错误。</p>
 
-<p>I&rsquo;ve been intrigued by this topic for quite a while and it&rsquo;s why I originally made <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a>. It solves the problem quite well, I think, and it does so in a pretty transparent way, with scores applied for various qualities such as the index of the query within the target string (&ldquo;king&rdquo; scores higher than &ldquo;dom&rdquo; in &ldquo;kingdom&rdquo;, for example), but it&rsquo;s still a quite a lot of code for such a tiny part of an overall user experience.</p>
+<p>I’ve been intrigued by this topic for quite a while and it’s why I originally made <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a>. It solves the problem quite well, I think, and it does so in a pretty transparent way, with scores applied for various qualities such as the index of the query within the target string (“king” scores higher than “dom” in “kingdom”, for example), but it’s still a quite a lot of code for such a tiny part of an overall user experience.</p>
 
-<p>我一直被这个话题吸引了很长时间，也是我写 <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a> 的原因。它可以很好地处理类似问题，我想，他的原理是非常显而易见的，就是通过分数去区分不同品质（把分数应用于品质）例如，目标字符串查询的索引(正如在查询“kingdom” &ldquo;的时候，king"的分数比 "dom"高)。但这还是需要相当多的代码去实现这小部分，相对于这样一个整体用户体验的而言。</p>
+<p>我一直被这个话题吸引了很长时间，也是我写 <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a> 的原因。它可以很好地处理类似问题，我想，他的原理是非常显而易见的，就是通过分数去区分不同品质（把分数应用于品质）例如，目标字符串查询的索引(正如在查询“kingdom” “的时候，king”的分数比 “dom”高)。但这还是需要相当多的代码去实现这小部分，相对于这样一个整体用户体验的而言。</p>
 
 <p>I have once again been playing with this problem (thanks to a certain <a href="https://twitter.com/codepo8/status/572863924887945216">tweet</a>) and have so wanted to come up with something stupefyingly graceful.</p>
 
@@ -621,11 +986,9 @@ of beta, so you can reasonably expect no one is still using versions that do not
 
 <p>Warning： 别分心，不然效率极低的，bebebe～～～</p>
 
-<a name="Let...s.begin."></a>
-<h2>Let’s begin!</h2>
+<h2 id="lets-begin">Let’s begin!</h2>
 
-<a name="L.................."></a>
-<h2>我们入正题：</h2>
+<p>##我们入正题：</p>
 
 <p>A static France might look like this:</p>
 
@@ -885,7 +1248,7 @@ score('nope');    // =&gt; 0
 
 <p>These seem like sensible enough scores, generally, but we’re more interested in autocompletion, and so there’s an obvious predictive element there. If a user types ‘o’ then that should probably score higher than ‘g’ if we’re testing against ‘omg’, but with the above mechanism they both receive a standard 10:</p>
 
-<p>这似乎是可感知的足够的分数，一般，但我们在自动完成更感兴趣，所以有一个明显的预测元素的存在。当我们我们测试‘omg’时，如果用户键入"o"那应该得分高于"g"，但上述方法都接受标准的10：</p>
+<p>这似乎是可感知的足够的分数，一般，但我们在自动完成更感兴趣，所以有一个明显的预测元素的存在。当我们我们测试‘omg’时，如果用户键入”o”那应该得分高于”g”，但上述方法都接受标准的10：</p>
 
 <pre><code>var score = createFuzzyScorer('omg');
 
@@ -961,9 +1324,9 @@ for (var i = 0, l = captures.length; i &lt; l; i += 3) {
 });
 </code></pre>
 
-<p>This means we can iterate through <code>data</code> on every relevant input event, and call the <code>score()</code>method with the current query. We can then bundle this into a <em>filter->sort->slice</em> flow to get our list of sensible suggestions:</p>
+<p>This means we can iterate through <code>data</code> on every relevant input event, and call the <code>score()</code>method with the current query. We can then bundle this into a <em>filter-&gt;sort-&gt;slice</em> flow to get our list of sensible suggestions:</p>
 
-<p>这意味着我们可以遍历每个相关的输入事件的 data ，调用 score() 方法来实现当前查询。我们可以把这变成一个 <em>filter->sort->slice</em> 得出我们列出的有判断力的建议：</p>
+<p>这意味着我们可以遍历每个相关的输入事件的 data ，调用 score() 方法来实现当前查询。我们可以把这变成一个 <em>filter-&gt;sort-&gt;slice</em> 得出我们列出的有判断力的建议：</p>
 
 <pre><code>var sorted = data.filter(function(item) {
 
@@ -1034,13 +1397,14 @@ var scorers = [
 <hr />
 
 <p>最后如有漏译，错译，欢迎指正。</p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[rvm help]]></title>
     <link href="http://blog.w3cub.com/blog/2015/06/28/rvm-help/"/>
-    <updated>2015-06-28T13:12:54+08:00</updated>
+    <updated>2015-06-28T05:12:54+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/28/rvm-help</id>
     <content type="html"><![CDATA[<p>常用命令（Action）：</p>
 
@@ -1050,7 +1414,6 @@ use         :: setup current shell to use a specific ruby version
 </code></pre>
 
 <!-- more -->
-
 
 <p>详细帮助文档（rvm -h）：</p>
 
@@ -1270,7 +1633,7 @@ limitations under the License.
   Other topics of documentation available with 'rvm help topic':
 
       alt color upgrade-notes 
-
+  
 
   For additional information please visit RVM's documentation website:
 
@@ -1287,21 +1650,17 @@ limitations under the License.
   <entry>
     <title type="html"><![CDATA[octopress configuration]]></title>
     <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
-    <updated>2015-06-20T23:16:31+08:00</updated>
+    <updated>2015-06-20T15:16:31+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
-    <content type="html"><![CDATA[<a name="L......"></a>
-<h2>前言</h2>
-
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2>
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
 
 <!--more-->
 
-
 <hr />
-
 <p>先看一下技术栈：</p>
 
-<p>octopress -> jekyll -> ruby</p>
+<p>octopress -&gt; jekyll -&gt; ruby</p>
 
 <p>Markdown (or Textile), Liquid, HTML &amp; CSS go in. Static sites come out ready for deployment.</p>
 
@@ -1309,37 +1668,32 @@ limitations under the License.
 
 <p>所以 安装octopress之前必不可少的是安装Ta的生态环境。</p>
 
-<a name="L......Octopress"></a>
-<h2>安装Octopress</h2>
+<h2 id="安装octopress">安装Octopress</h2>
 
-<a name="L......rvm"></a>
-<h3>安装rvm</h3>
+<h3 id="安装rvm">安装rvm</h3>
 
 <p>打开<a href="https://rvm.io/">rvm</a>首页，打开终端，使用以下命令安装吧。</p>
 
 <pre><code>$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 
 $ \curl -sSL https://get.rvm.io | bash -s stable
+
 </code></pre>
 
 <p><a href="https://en.wikipedia.org/wiki/Ruby_Version_Manager">rvm wiki</a></p>
 
-<a name="L......Ruby"></a>
-<h3>安装Ruby</h3>
+<h3 id="安装ruby">安装Ruby</h3>
 
 <pre><code>$ rvm -h
 $ rvm list
 $ rvm install 2.2.1
 $ rvm use 2.2.1
 </code></pre>
+<p>某些时候会提示，请使用 –bash-login. 使用就OK了。</p>
 
-<p>某些时候会提示，请使用 &ndash;bash-login. 使用就OK了。</p>
+<p>安装完成后可以用ruby –version进行验证</p>
 
-<p>安装完成后可以用ruby &ndash;version进行验证</p>
-
-<a name="L......Octopress"></a>
-<h3>安装Octopress</h3>
-
+<h3 id="安装octopress-1">安装Octopress</h3>
 <p>安装Ruby完成后就按照官方指南安装Octpress</p>
 
 <pre><code>#clone octopress
@@ -1355,34 +1709,27 @@ $ bundle install
 ##安装octopress默认主题
 $ rake install
 </code></pre>
-
 <hr />
 
 <p>bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类似，都是一键安装依赖包文件。</p>
 
-<a name="L......"></a>
-<h2>部署</h2>
-
+<h2 id="部署">部署</h2>
 <p>接下来需要把Blog部署到github上去，第一步要做的是去<a href="https://github.com/new">github</a>创建一个<code>username.github.io</code>的repo，比如我的就叫<code>icai.github.io</code>。</p>
 
 <p>然后运行以下命令，并依照提示完成github和Octopress的关联</p>
 
 <pre><code>$ rake setup_github_pages
 </code></pre>
-
 <hr />
 
-<a name="L............"></a>
-<h2>创建博客</h2>
+<h2 id="创建博客">创建博客</h2>
 
-<a name="L............"></a>
-<h3>生成博客</h3>
-
+<h3 id="生成博客">生成博客</h3>
 <pre><code>$ rake generate
 $ rake deploy
 </code></pre>
 
-<p>rake 命令 是 Rakefile 文件用的，你在带有Rakefile 目录下执行 rake 命令，
+<p>rake 命令 是 Rakefile 文件用的，你在带有Rakefile 目录下执行 rake 命令，<br />
 当然你可以 <code>rake -T</code> 查看当前所有的rake Task， 或者 rake -h 获取帮助</p>
 
 <p>把生成后的代码上传到github</p>
@@ -1391,12 +1738,9 @@ $ rake deploy
 $ git commit -m 'create blog'
 $ git push origin source
 </code></pre>
-
 <p>完成后等待一段时间后就能访问<code>http://username.github.io</code>看到自己的博客了</p>
 
-<a name="L............"></a>
-<h3>修改配置</h3>
-
+<h3 id="修改配置">修改配置</h3>
 <p>配置文件路径为<code>~/octopress/_config.yml</code></p>
 
 <p>参考： <a href="https://github.com/octopress/octopress">官方</a></p>
@@ -1412,9 +1756,7 @@ $ git push origin source
 $ rake deploy
 </code></pre>
 
-<a name="L....................."></a>
-<h3>安装第三方主题</h3>
-
+<h3 id="安装第三方主题">安装第三方主题</h3>
 <p>Octopress有许多第三方主题可以选择，首先在<a href="http://opthemes.com/">这里</a>上寻找喜欢的主题，点击进入对应主题的git，一般在readme上都会有安装流程</p>
 
 <pre><code>#这里以安装allenhsu定制的greyshade主题为例，原作者是shashankmehta
@@ -1433,9 +1775,7 @@ $ git push origin source
 $ rake deploy
 </code></pre>
 
-<a name="L.................."></a>
-<h3>支持中文标签</h3>
-
+<h3 id="支持中文标签">支持中文标签</h3>
 <p>目前版本的Octopress会在<code>/source/blog/categories</code>下创建一个<code>index.markdown</code>来作为分类的首页，但这个首页在标签有中文时会出现无法跳转的情况，原因是因为在出现中文标签时Octopress会把文件的路径中的中文转换成拼音，而在Category跳转时是直接写了中文路径，结果自然是404。解决方法是自己实现一个分类首页并处理中文。</p>
 
 <p>首先按照<a href="https://kaworu.ch/blog/2013/09/23/categories-page-with-octopress/">这里</a>的方法实现<code>index.html</code></p>
@@ -1449,19 +1789,15 @@ $ rake deploy
 
 <pre><code>category_url = File.join(category_dir, category.to_url.downcase)
 </code></pre>
-
 <p>这样你的博客就可以支持中文标签的跳转了。</p>
 
 <hr />
 
-<a name="L........."></a>
-<h2>写博客</h2>
+<h2 id="写博客">写博客</h2>
 
 <p>经过上面几部后，博客已经成功搭建，现在就可以开始写博文了。</p>
 
-<a name="L............"></a>
-<h3>创建博文</h3>
-
+<h3 id="创建博文">创建博文</h3>
 <pre><code>#如果用的是终端
 $ rake new_post['title']
 
@@ -1470,11 +1806,9 @@ $ rake "new_post[title]"
 #或者
 $ rake new_post\['title'\]
 </code></pre>
-
 <p>生成的文件在<code>~/source/_posts</code>目录下</p>
 
-<a name="L............"></a>
-<h3>编辑博文</h3>
+<h3 id="编辑博文">编辑博文</h3>
 
 <pre><code>#...markdown写博文
 
@@ -1490,160 +1824,724 @@ $ rake deploy
 </code></pre>
 
 <hr />
-
-<a name="L............"></a>
-<h2>参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ul>
-<li><a href="http://octopress.org/">http://octopress.org/</a></li>
-<li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
-<li><a href="https://github.com/msching/msching.github.io">https://github.com/msching/msching.github.io</a></li>
-<li><a href="https://github.com/xiaocong/xiaocong.github.io">https://github.com/xiaocong/xiaocong.github.io</a></li>
-<li><a href="https://help.github.com/articles/using-jekyll-plugins-with-github-pages/">https://help.github.com/articles/using-jekyll-plugins-with-github-pages/</a></li>
-<li><a href="https://github.com/shashankmehta/greyshade">https://github.com/shashankmehta/greyshade</a></li>
-<li><a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a></li>
-<li><a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/</a></li>
-<li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
-<li><a href="http://robdodson.me/some-octopress-rake-tips/">http://robdodson.me/some-octopress-rake-tips/</a></li>
-<li><a href="http://jekyllcn.com/docs/templates/">http://jekyllcn.com/docs/templates/</a></li>
-<li><a href="http://rails-practice.com/content/">http://rails-practice.com/content/</a></li>
+  <li>http://octopress.org/</li>
+  <li>https://msching.github.io/blog/2014/04/11/starting/</li>
+  <li>https://github.com/msching/msching.github.io</li>
+  <li>https://github.com/xiaocong/xiaocong.github.io</li>
+  <li>https://help.github.com/articles/using-jekyll-plugins-with-github-pages/</li>
+  <li>https://github.com/shashankmehta/greyshade</li>
+  <li>https://github.com/imathis/octopress</li>
+  <li>http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/</li>
+  <li>https://msching.github.io/blog/2014/04/11/starting/</li>
+  <li>http://robdodson.me/some-octopress-rake-tips/</li>
+  <li>http://jekyllcn.com/docs/templates/</li>
+  <li>http://rails-practice.com/content/</li>
 </ul>
-
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[rake task for octopress]]></title>
     <link href="http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress/"/>
-    <updated>2015-06-19T23:35:19+08:00</updated>
+    <updated>2015-06-19T15:35:19+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress</id>
     <content type="html"><![CDATA[<p>翻译样式测试中，情形看不到举行程序看过出售始终出处予以英，上下手机同样委员会分享法，饭店文章是一种民间事实欢迎您检。</p>
 
-<p>他的网游物理就有改革第二提示就有信，一脸举报精美兴趣具有我很自己的产，格式美丽实力学习营养日子老人选项，本报近年来故障体系成长宽带渐渐推广下面居然时尚中文画面，详细内容武器大多数理解广大授权方式酒店写，没有进口文明后果申请浙江些什么插，最低大家今后自从各自自己俱乐部，收藏本页乐队注重自身发。
+<p>他的网游物理就有改革第二提示就有信，一脸举报精美兴趣具有我很自己的产，格式美丽实力学习营养日子老人选项，本报近年来故障体系成长宽带渐渐推广下面居然时尚中文画面，详细内容武器大多数理解广大授权方式酒店写，没有进口文明后果申请浙江些什么插，最低大家今后自从各自自己俱乐部，收藏本页乐队注重自身发。<br />
 纪念供应商下列合同食物伟大回答不必机场方案本书指定物品，想到商家门派岗位增加确保投资者数码可见，主营设立造型元素简体中文原则对于日前涉及稿件是因为可以说。</p>
 
 <!--more-->
-
-
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias ut quo laboriosam dignissimos neque cupiditate nulla, minus accusantium voluptatum quae! Iste, quo asperiores ex tenetur nemo optio quisquam aliquam nisi.</p>
 
 <p>无聊世界杯本论坛确实下载次数论文激动楼上，协调成了加拿大大陆休闲，一声预期条款说着是什么感觉到下，各个数字效率共和国尚未最大奖励一张深入福建欢迎您日韩管理系，特价点此供求一股保险尝试即使我市销售故障逐步，新手平静作出流行简直高速十大其实政策新技术分别鉴定心灵男子话，一家一丝大师总经理会，领先难道思路手里瞬间新型好了处于天堂机构状态大门杭州强大难，到来经历医学某种暂时。</p>
 
 <p>$ rake -T</p>
 
-<pre><code>    rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
-    rake copydot[source,dest] # copy dot files for deployment
-    rake deploy # Default deploy task
-    rake gen_deploy # 生成并部署网站
-    rake generate # 生成 jekyll 网站
-    rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
-    rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
-    rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
-    rake list # list tasks
-    rake new_page[filename] # Create a new page in source/(filename)/index.markdown
-    rake new_post[title] # Begin a new post in source/_posts
-    rake preview # preview the site in a web browser
-    rake push # ※ deploy public directory to github pages
-    rake rsync # Deploy website via rsync
-    rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
-    rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
-    rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
-    rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
-    rake watch # Watch the site and regenerate when it changes
+<pre><code>	rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
+	rake copydot[source,dest] # copy dot files for deployment
+	rake deploy # Default deploy task
+	rake gen_deploy # 生成并部署网站
+	rake generate # 生成 jekyll 网站
+	rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
+	rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
+	rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
+	rake list # list tasks
+	rake new_page[filename] # Create a new page in source/(filename)/index.markdown
+	rake new_post[title] # Begin a new post in source/_posts
+	rake preview # preview the site in a web browser
+	rake push # ※ deploy public directory to github pages
+	rake rsync # Deploy website via rsync
+	rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
+	rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
+	rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
+	rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
+	rake watch # Watch the site and regenerate when it changes
 </code></pre>
-
 <!--more-->
-
 
 <p>test include_code plugin:</p>
 
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Example 2 (github.js)</span> <a href='http://blog.w3cub.com/downloads/code/github.js'>download</a></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span></span><span class="kd">var</span> <span class="nx">github</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>  <span class="kd">function</span> <span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="kd">function</span> <span class="nx">render</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">){</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">target</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fragment</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li class=&quot;pinned-repo-item&quot;&gt;&lt;div&gt;&lt;a href=&quot;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">html_url</span><span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="o">+</span><span class="s1">&#39;&lt;/a&gt;&lt;/div&gt;&lt;p&gt;&#39;</span><span class="o">+</span><span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">description</span><span class="o">||</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&lt;/p&gt;&lt;/li&gt;&#39;</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="nx">t</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">showRepos</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span>
-</span><span class='line'>      <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-</span><span class='line'>          <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;https://api.github.com/users/&quot;</span><span class="o">+</span><span class="nx">options</span><span class="p">.</span><span class="nx">user</span><span class="o">+</span><span class="s2">&quot;/repos?sort=&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">sort</span> <span class="o">||</span> <span class="s1">&#39;pushed&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot;&amp;callback=?&quot;</span>
-</span><span class='line'>        <span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;jsonp&#39;</span>
-</span><span class='line'>        <span class="p">,</span> <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">$</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span> <span class="o">+</span> <span class="s1">&#39; li.loading&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Error loading feed&quot;</span><span class="p">);</span> <span class="p">}</span>
-</span><span class='line'>        <span class="p">,</span> <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="kd">var</span> <span class="nx">repos</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">data</span> <span class="o">||</span> <span class="o">!</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">skip_forks</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">fork</span><span class="p">)</span> <span class="p">{</span> <span class="k">continue</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>            <span class="nx">repos</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">)</span> <span class="p">{</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">);</span> <span class="p">}</span>
-</span><span class='line'>          <span class="nx">render</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>      <span class="p">});</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'><span class="p">})();</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Example 2 (github.js)</span> <a href="http://blog.w3cub.com/downloads/code/github.js">download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span></span><span class="kd">var</span> <span class="nx">github</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">  <span class="kd">function</span> <span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="kd">function</span> <span class="nx">render</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">){</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">target</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="nx">fragment</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li class=&quot;pinned-repo-item&quot;&gt;&lt;div&gt;&lt;a href=&quot;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">html_url</span><span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="o">+</span><span class="s1">&#39;&lt;/a&gt;&lt;/div&gt;&lt;p&gt;&#39;</span><span class="o">+</span><span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">description</span><span class="o">||</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&lt;/p&gt;&lt;/li&gt;&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="nx">t</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="k">return</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">showRepos</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span>
+</span><span class="line">      <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class="line">          <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;https://api.github.com/users/&quot;</span><span class="o">+</span><span class="nx">options</span><span class="p">.</span><span class="nx">user</span><span class="o">+</span><span class="s2">&quot;/repos?sort=&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">sort</span> <span class="o">||</span> <span class="s1">&#39;pushed&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot;&amp;callback=?&quot;</span>
+</span><span class="line">        <span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;jsonp&#39;</span>
+</span><span class="line">        <span class="p">,</span> <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">$</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span> <span class="o">+</span> <span class="s1">&#39; li.loading&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Error loading feed&quot;</span><span class="p">);</span> <span class="p">}</span>
+</span><span class="line">        <span class="p">,</span> <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">          <span class="kd">var</span> <span class="nx">repos</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class="line">          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">data</span> <span class="o">||</span> <span class="o">!</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class="line">          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">            <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">skip_forks</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">fork</span><span class="p">)</span> <span class="p">{</span> <span class="k">continue</span><span class="p">;</span> <span class="p">}</span>
+</span><span class="line">            <span class="nx">repos</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class="line">          <span class="p">}</span>
+</span><span class="line">          <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">)</span> <span class="p">{</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">);</span> <span class="p">}</span>
+</span><span class="line">          <span class="nx">render</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">);</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">      <span class="p">});</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">};</span>
+</span><span class="line"><span class="p">})();</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[svg画布定位]]></title>
+    <link href="http://blog.w3cub.com/blog/2014/07/13/svg-canvas-positioning/"/>
+    <updated>2014-07-13T19:55:00+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2014/07/13/svg-canvas-positioning</id>
+    <content type="html"><![CDATA[<p>// 角度(angle)转弧度(radian)</p>
 
+<pre><code class="language-js">
+var radian = angle * Math.PI / 180;
+var angle = radian* 180/ Math.PI;
+alert(radian/ angle == Math.PI / 180);
+</code></pre>
+<!-- more -->
+<hr />
 
+<p>// Math.atan2()是弧度制</p>
+
+<pre><code class="language-js">var radian = Math.atan2((p1.y-p0.y),(p1.x-p0.x));
+</code></pre>
+
+<p>//————</p>
+
+<p>//已知角度degree(0,360)，半径(raduis)，求圆上的点(p1)</p>
+
+<pre><code class="language-js">var radian = angle * Math.PI / 180;
+    p1.x = raduis * Math.cos(radian) + p0.x;  
+    p1.y = raduis * Math.sin(radian) + p0.y;
+
+function getPointAt(p0, radius, angle) {
+
+    var radian = angle * Math.PI / 180,
+
+        p1 = {};
+
+    p1.x = raduis * Math.cos(radian) + p0.x;  
+
+    p1.y = raduis * Math.sin(radian) + p0.y; 
+    return p1; 
+
+}
+</code></pre>
+
+<p>//———-</p>
+
+<p>//两点A,B,求角度degree(0,360),A为Origin(p0).</p>
+
+<p>var radian = Math.atan2((p1.y-p0.y),(p1.x-p0.x));</p>
+
+<p>var angle = radian * 180 / Math.PI;</p>
+
+<p>//———</p>
+
+<p>//已知两点A(p0),B(p1),求AB连线上距离其中一点的D0 or D1的坐标</p>
+
+<p>// ….</p>
+
+<p>都是高中数学</p>
+
+<hr />
+
+<p>参考：</p>
+
+<p>https://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB</p>
+
+<p>https://zh.wikipedia.org/wiki/%E7%AC%9B%E5%8D%A1%E5%84%BF%E5%9D%90%E6%A0%87%E7%B3%BB</p>
+
+<p>应用场景：</p>
+
+<p><a href="https://www.thecn.com/tc129">https://www.thecn.com/tc129</a> 社交关系图</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[javascript 对象中的复制，继承，引用，浅拷贝，深拷贝，多态，静态方法]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class/"/>
+    <updated>2013-10-19T07:10:43+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class</id>
+    <content type="html"><![CDATA[<h2 id="导言">导言</h2>
+
+<p>javascript与C,C++,Java等语言，他们之间总让人感觉存在一层纱，javascript易入门，难深入，而其他则相反（个人观点）。</p>
+
+<p>其实不论什么语言，难与易的突破口都在语法基础上，当你越学得深入，你会发现语言之间的相同是如此的美妙。其实个人感觉javascript是相对其他语言是最容易学的一种语言。但部分人确认为，javascript十分难学，什么兼容性都把你搞死了。个人认为应该把javascript的难与易一分为二。javascript的语言是相对其他语言简单的，而且没有过多的语法概念（泛型，多态，模板），让编程者留下很多可以思考和想象的空间。或许多人喜欢javascript就是因为它的灵活性。</p>
+
+<!-- more -->
+
+<h2 id="前言">前言</h2>
+
+<p>javascript是一门松散的面向对象脚本语言</p>
+
+<p>为什么说是松散的呢？javascript一切皆对象（var），就是说不论数组，函数……都是继承自对象。</p>
+
+<p>javascript给我们所展现对象继承存储其实就像treegrid数据类似，但是正好相反。</p>
+
+<p>就是说javascript对象继承存储和javascript静态方法存储是相反的。</p>
+
+<p><img src="http://g.hiphotos.bdimg.com/album/pic/item/9f2f070828381f30f7ee428fab014c086e06f025.jpg" alt="" /></p>
+
+<p>图：treegrid数据</p>
+
+<hr />
+
+<p><img src="http://g.hiphotos.bdimg.com/album/pic/item/8326cffc1e178a8247764887f403738da977e84b.jpg" alt="" /></p>
+
+<p><img src="http://d.hiphotos.bdimg.com/album/pic/item/08f790529822720e378cd5dd79cb0a46f21fab52.jpg" alt="" /></p>
+
+<p>图：javascript对象继承</p>
+
+<hr />
+
+<p><img src="http://b.hiphotos.bdimg.com/album/pic/item/4b90f603738da97738a2b70cb251f8198618e303.jpg" alt="" /></p>
+
+<p>图：javascript静态方法</p>
+
+<hr />
+
+<p><img src="http://a.hiphotos.bdimg.com/album/pic/item/37d3d539b6003af3622ceb47372ac65c1038b606.jpg" alt="" /></p>
+
+<p>图：javascript Object layout</p>
+
+<p>上面所说的其实就是javascript对象构成，或许还会困惑，下面将深入分析。</p>
+
+<h2 id="一javascript对象引用">一、javascript对象引用</h2>
+
+<p>什么叫做javascript对象引用？简单地说就是非实体对象赋值，即是非String,Number,Array，Null,Undefined等对象（除Object对象）赋值。</p>
+
+<pre><code>// 引用
+var source  = {
+    warm:function(v){
+        alert(v)
+    }
+};
+var quote = source;
+delete source.warm;
+quote.warm('b');
+</code></pre>
+
+<p>上面代码会报错，因为source是非实体对象，quote内存地址指向source，当删除source.warm的时候，quote下的warm随之消失。</p>
+
+<h2 id="二javascript对象复制浅拷贝深拷贝">二、javascript对象复制，浅拷贝，深拷贝</h2>
+
+<p>对于上述的代码要想不报错的话，就必须对source.warm也赋值给quote.warm，因为source.warm是实体对象（Function）。</p>
+
+<p>对对象进行遍历，子对象一对一赋值就叫做javascript对象复制。既然是遍历，自然有深浅度。所以我们对彻底遍历叫做深拷贝，只遍历子对象第一层叫做浅拷贝。</p>
+
+<p>(1)</p>
+
+<pre><code class="language-js">    var source  = {
+        warm:function(v){
+            alert(v)
+        }
+    };
+    function extend(target, source) {
+        for (var n in source) {
+            if(source.hasOwnProperty(n)){
+                target[n] = source[n]
+            }
+        }
+        return target
+    }
+    var exObj = extend({},source);
+    delete source.warm;
+    exObj.warm('b');
+</code></pre>
+
+<p>(2)上述代码不会报错，因为source通过遍历已经把其子对象复制到exObj下了。</p>
+
+<pre><code class="language-js">var source  = {
+    warm:function(v){
+        alert(v)
+    },
+    childs:{
+        log:function(v){
+            alert('log'+v);
+        },
+        info:function(v){
+            alert('info'+v);
+        }
+    },
+    _private:{
+        _name:'source',
+        _age:12
+    }
+};
+function extend(target, source) {
+    for (var n in source) {
+        if(source.hasOwnProperty(n)){
+            target[n] = source[n]
+        }
+    }
+    return target
+}
+var exObj = extend({},source);
+</code></pre>
+
+<p>会发生错误，为什么呢？上面同样是复制，当我们执行如下代码：</p>
+
+<pre><code class="language-js">delete source.childs.log;
+delete source.childs;
+exObj.childs.log('b');
+</code></pre>
+
+<p>同理，我们执行如下：就是我们一开始所说遍历的深度不彻底，我们通过上述extend方法只遍历了source.childs,而source.childs是非实体对象，所以只是充当exObj.childs对象的引用。</p>
+
+<pre><code class="language-js">exOBj._private._age++;
+source._private._age; // 13
+
+</code></pre>
+
+<p>我们要实现深拷贝的话，就必须 判断其子对象是否是非实体对象，假如是非实体对象的话，就进行递归遍历操作。我们改变exOBj._private._age的时候，source._private.age也发生改变，道理和上面的一样。</p>
+
+<p>还记得jquery.extend api吗</p>
+
+<pre><code class="language-js">jQuery.extend( [deep ], target, object1 [, objectN ] )
+</code></pre>
+
+<p>当我们第一个参数传入true的时候，就帮我我们实施深拷贝操作。</p>
+
+<h2 id="三javascript对象继承">三、javascript对象继承</h2>
+
+<p>学过java或者c++，php等语言的读者就好理解了，刚开始前言的</p>
+
+<p>图：javascript对象继承 和 图：javascript Object layout就说的很详细了。那么他们是怎么实现的呢？</p>
+
+<p>其实javascript中还有一个很重要的概念就是作用域。</p>
+
+<p>编程语言中的继承就是子类继承父类已有的方法，属性，并做相应的拓展，进而形成自己的具有特定属性和方法的类。</p>
+
+<p>开始学面向对象语言的时候，通常都会举一个经典例子，就是动物父类，派生鸟类，鱼类……，而鸟类接着派生出鹰，麻雀……。</p>
+
+<p>而javascript（ecma5）还没有给出官方的方法进行上述操作而已。但是后续（ecma 6）将会支持。正如，一开始说所，javascript是一门松散的面向对象语言，留给变成者很多思考的空间。</p>
+
+<p>javascript中有两个很重要的方法就是call，apply。人们常谈的javascript设计模式常常都离不开call,apply,回调函数等等。</p>
+
+<p>那么如何才能实现（图：javascript对象继承）中类似的对象继承？</p>
+
+<p>接着动物的例子：</p>
+
+<p>what is animal? 它们能够对环境作出反应并移动，捕食其他生物。</p>
+
+<pre><code class="language-js">function animal(){
+    
+}
+animal.prototype = {
+    catchOther:function(){
+    
+    },
+    protectSelf:function(){
+    
+    }
+}
+</code></pre>
+
+<p>鸟类：</p>
+
+<pre><code class="language-js">function bird(){
+    
+}
+bird = wrapper(bird,animal);
+bird.prototype.fly = function(){
+    console.log('flying');
+}
+</code></pre>
+
+<p>wrapper？？用来继承，如何写才能实现如下呢？</p>
+
+<p><img src="http://f.hiphotos.bdimg.com/album/pic/item/b58f8c5494eef01f4fd433e2e2fe9925bd317dd0.jpg" alt="" /></p>
+
+<p>new 一个 animal ？？并指向bird.prototype ?</p>
+
+<p>好像可以实现,但是当我们打入</p>
+
+<p>bird.prototype.<strong>proto</strong>.constructor的时候是什么呢？？构造函数是否符合对象的构造函数的定义呢？</p>
+
+<p>我们给出一个简单的方案，至于构造函数应该执行谁的问题留作思考，网上也很多关于这方面的讨论？自己可以搜一下</p>
+
+<pre><code class="language-js">function wrapper(child, parent) {
+    var ins = function() {
+        child.apply(this, arguments);
+    };
+    var subclass = function() {};
+    subclass.prototype = parent.prototype;
+    ins.prototype = new subclass;
+    return ins;
+};
+</code></pre>
+
+<p>所谓的静态方法就是不涉及抽象对象函数实现的方法，举个很简单的例子，如jquery中的$.isFunction,$.isArray等等就属于静态方法。同样是上面的例子</p>
+
+<p>四、javascript对象静态方法</p>
+
+<pre><code class="language-js">var source  = {
+    warm:function(v){
+        alert(v)
+    },
+    childs:{
+        log:function(v){
+            alert('log'+v);
+        },
+        info:function(v){
+            alert('info'+v);
+        }
+    },
+    _private:{
+        _name:'source',
+        _age:12
+    }
+};
+function extend(target, source) {
+    for (var n in source) {
+        if(source.hasOwnProperty(n)){
+            target[n] = source[n]
+        }
+    }
+    return target
+}
+var exObj = extend({},source);
+</code></pre>
+
+<p>这里不合理的地方在于当我们对其成员可操作，假如上述是公共方法，团队每个人都可以对其调用，并假如warm方法会对其兄弟属性_private产生改变。如何_private下的是标识变量（flog ~），那么这个标识变量就违反了可操作的唯一性。</p>
+
+<h2 id="五javascript对象多态">五、javascript对象多态</h2>
+
+<p>所谓的对象多态就是和构造函数或者方法参数传递进行动态识别处理。</p>
+
+<p>依然是$.extend,还记得api有多少调用吗？</p>
+
+<p>java中的多态是不同参数类型都重新定义一遍，好像十分费劲？javascript留给编程者的思考空间就是给你一个arguments，调用当前方法的参数集合，是一个类数组。</p>
+
+<p>一般地：</p>
+
+<pre><code class="language-js">function(a){
+  var args = [].slice(arguments,0);
+  if(args[0] == 'xx')doxxx;
+  if(typeof args[0] == 'function') doxxx;
+}
+</code></pre>
+
+<p>相关阅读：是不是很有意思呢。</p>
+
+<p>1、<a href="http://hi.baidu.com/tp100/item/a18184ee589145d5eb34c941" title="javascript权威指南 源代码分析（一）Objects">javascript权威指南 源代码分析（一）Objects</a></p>
+
+<p>2、<a href="http://hi.baidu.com/tp100/item/4fbb55d18f6741352a35c741" title="javascript权威指南 源代码分析（二）Functions">javascript权威指南 源代码分析（二）Functions</a></p>
+
+<p>3、（<a href="http://www.cnblogs.com/snandy/archive/2012/09/01/2664134.html">JavaScript中<strong>proto</strong>与prototype的关系</a>）</p>
+
+<p>后记：</p>
+
+<p>码字真累，百度空间蛋疼啊，写到一半按了不知道什么键，没有了一大截……</p>
+
+<p>有高亮代码时，不要按ctrl+Z，不然你的人生十分钟会浪费掉的。</p>
+
+<p>2013/10/19</p>
+
+<p>本文来源</p>
+
+<p>菜籽油: <a href="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e" title="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e">http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e</a></p>
+
+<p>-EOF-</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[python银行数据渲染css sprite]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/08/19/python-generate-banks-data-css-sprite/"/>
+    <updated>2013-08-19T05:44:09+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/08/19/python-generate-banks-data-css-sprite</id>
+    <content type="html"><![CDATA[<p>前端处理重复列表类型数据都是十分繁琐的，让我们一劳永日吧。</p>
+
+<p>银行类表，航空公司列表,……</p>
+
+<!-- more -->
+
+<pre><code class="language-py"># encoding: utf-8
+import os
+import urllib2
+import ConfigParser
+import time
+import msvcrt
+ 
+ 
+def log(tips,exit = False):
+    print str(tips)
+ 
+    if exit:
+        msvcrt.getch()
+ 
+class BuildBank(object):
+    """docstring for BuildBank"""
+ 
+    def __init__(self):
+        super(BuildBank, self).__init__()
+ 
+        self.templatePath = raw_input("please input your template Path in 'config.ini' file :")   #"default"
+ 
+        if not os.path.exists(self.templatePath):
+            os.makedirs(self.templatePath)
+ 
+        self.getConfig()
+ 
+        if self.isgetPic == True :
+            self.getPic(self.remoteUrl)
+ 
+        self.render()
+ 
+    def getConfig(self):
+ 
+        now = str(time.time() )
+        fileName = "bank_alipay_"+ now +".html"
+        pngName = "bank_alipay_"+ now +".png"
+ 
+ 
+        cf = ConfigParser.ConfigParser()
+        cf.read("config.ini")
+        self.allBank = cf.get("main", "allBank")
+ 
+        self.template = cf.get("template",self.templatePath)
+        self.bankList = cf.get("banklist",self.templatePath)
+         
+ 
+        self.fileName = cf.get("main", "fileName") or fileName
+        self.pngName = cf.get("main", "pngName") or pngName
+        self.size = cf.getint("main", "size")
+ 
+ 
+        self.isgetPic =  cf.getboolean("main", "isgetPic")
+        self.remoteUrl = cf.get("main","remoteUrl").format(allbank = self.allBank,stamp = int(time.time()))
+         
+    def getPic(self,url):
+ 
+        _absPngName = os.path.join(self.templatePath,self.pngName)
+ 
+        if os.path.isfile(_absPngName) : return False
+        headers={'User-Agent': "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"}
+         
+        log("start getting remote pic...")
+ 
+        imgRequest = urllib2.Request(url,headers=headers);
+        imgData = urllib2.urlopen(imgRequest).read()
+         
+        output =open(_absPngName,"wb")
+        output.write(imgData)
+        output.close()
+ 
+        log ("complate getting remote pic...")
+ 
+    def renderCss(self):
+        allbankclass_tmpl = ".bank_{bank}"
+        # 所有银行 class 名 集合 模板
+        eachbankclass_tmpl = "\t.bank_{bank} {{ background-position: 0 {posy}; }}"
+        # 单个银行  class 名 模板
+ 
+ 
+        _style = ""
+        _banklist = self.allBank.lower().split(',')
+        _size = self.size
+ 
+        allbankclass = []
+        eachbankclass = []
+ 
+        for i in  range(len(_banklist)):
+            allbankclass.append( allbankclass_tmpl.format(bank=_banklist[i]) )
+            eachbankclass.append( eachbankclass_tmpl.format(bank=_banklist[i],posy=  str(- i * _size) + "px" if i &gt; 0 else str(- i * _size)))
+        else :
+            _style = '''
+            .bank_list li {
+                float: left;
+                padding: 10px 0;
+                width: 180px;
+                overflow: hidden;
+            }
+            .bank_list li .radio{
+                float: left;
+                margin: 8px 2px 0 2px;
+            }
+            .bank_list li .bank_label{ float: left; border:1px solid #e2e2e2; }
+            .bank_list li .hover,.bank_list li .checked{
+                border:1px solid #F60;
+            }
+            ''' + ",".join(allbankclass) + '''
+            { width: 126px;  height: 36px; background-image:url(
+            '''+ self.pngName + '''
+            ); background-repeat:no-repeat; cursor: pointer; display:block; }
+            ''' + "\n".join(eachbankclass)
+        return _style
+ 
+    def renderList(self,receivbank):
+        body = ""
+        for i in receivbank.lower().split(',') :
+            body += self.template.format(bank=i)
+        return body
+ 
+    def render(self):
+ 
+        style = self.renderCss()
+         
+        head = '''
+            &lt;!doctype html&gt;
+            &lt;html lang="en"&gt;
+            &lt;head&gt;
+                &lt;meta charset="UTF-8"&gt;
+                &lt;title&gt;Document&lt;/title&gt;
+                &lt;script src="http://code.jquery.com/jquery-1.7.2.js" &gt;&lt;/script&gt;
+                &lt;style&gt;
+            '''+ style +'''
+                &lt;/style&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+                &lt;ul class="bank_list" &gt;
+            '''
+        body = self.renderList(self.bankList)
+        foot = '''
+                &lt;/ul&gt;
+                &lt;script&gt;
+                $(function(){
+                    $('.bank_list .bank_label').hover(function(){
+                        $(this).addClass('hover');
+                    },function(){
+                        $(this).removeClass('hover');
+                    })
+                    $('input[type="radio"]').change(function(){
+                        var $id = $(this).attr('id'),$name = $(this).attr('name');
+                        $('label[for="'+ $id +'"]').addClass("checked").parents('li').siblings().find('label').removeClass('checked');
+                    })
+                })
+                &lt;/script&gt;    
+            &lt;/body&gt;
+            &lt;/html&gt;
+            '''
+ 
+        f=open(os.path.join(self.templatePath,self.fileName) ,"w")
+        f.write(head)
+        f.write(body)
+        f.write(foot)
+        f.close()
+ 
+        log("complate rendering html...")
+        log("press any key to exit...", True)
+ 
+ 
+ 
+###############################################################
+ 
+ 
+def main():
+    try:
+       BuildBank()
+    except:
+        log("some except error,check your config.ini and your input,please press any key to exit", true)
+      pass
+ 
+if __name__ == '__main__':
+    main()
+
+</code></pre>
+
+<p>后续加上PIL动态合成支持。</p>
+
+<p>附上exe版：</p>
+
+<p>http://vdisk.weibo.com/s/dGotZ8td0hi7</p>
+
+<p>该版本耦合了“银行”,后续版本支持 “重复列表类型数据”（通用）。</p>
+
+<p>相关参考：</p>
+
+<p><a href="https://gist.github.com/gourneau/939252">https://gist.github.com/gourneau/939252</a></p>
+
+<p><a href="https://github.com/jorgebastida/glue">https://github.com/jorgebastida/glue</a></p>
+
+<p><a href="http://yostudios.github.io/Spritemapper/">http://yostudios.github.io/Spritemapper/</a></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[javascript类库中和编程语言中getter和setter]]></title>
     <link href="http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter/"/>
-    <updated>2013-08-17T23:16:31+08:00</updated>
+    <updated>2013-08-17T15:16:31+00:00</updated>
     <id>http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter</id>
     <content type="html"><![CDATA[<p>1.backbonejs中的getter和setter</p>
 
-<p>所说的backbonejs中的getter和setter就是内部自定义get和set方法，set方法嵌入了<code>Pub/Sub模型</code>,
-例如 <code>book.on("change:title change:author", ...);</code>当<code>book.set('title':'othertitle');</code>触发<code>change</code>对用的<code>function</code>,
+<p>所说的backbonejs中的getter和setter就是内部自定义get和set方法，set方法嵌入了<code>Pub/Sub模型</code>,<br />
+例如 <code>book.on("change:title change:author", ...);</code>当<code>book.set('title':'othertitle');</code>触发<code>change</code>对用的<code>function</code>,<br />
 解开二重锁 （不等于自身和并且非正在执行change function)。</p>
 
 <!--more-->
 
-
-<pre><code class="javascript">    set: function(key, val, options) {
+<pre><code class="language-javascript">    set: function(key, val, options) {
       var attr, attrs, unset, changes, silent, changing, prev, current;
       if (key == null) return this;
 
@@ -1713,14 +2611,14 @@ $ rake deploy
 
 <p>2.YUI中的getter和setter</p>
 
-<pre><code class="javascript">    get : function(name) {
+<pre><code class="language-javascript">	get : function(name) {
         return this._getAttr(name);
     },
 
-    set : function(name, val, opts) {
+	set : function(name, val, opts) {
         return this._setAttr(name, val, opts);
     },
-    //……
+	//……
 </code></pre>
 
 <p>get: <code>http://yuilibrary.com/yui/docs/api/files/attribute_js_AttributeCore.js.html#l343</code></p>
@@ -1729,97 +2627,97 @@ $ rake deploy
 
 <p>3.javascript中的getter和setter</p>
 
-<pre><code class="javascript">    // 对象构造实现，javascript类库中最常用的方法
-
+<pre><code class="language-javascript">    // 对象构造实现，javascript类库中最常用的方法
+    
     function Field(val){
-        var value = val;
-
-        this.getValue = function(){
-            return value;
-        };
-
-        this.setValue = function(val){
-            value = val;
-        };
+	    var value = val;
+	       
+	    this.getValue = function(){
+	    	return value;
+	    };
+	       
+	    this.setValue = function(val){
+	    	value = val;
+	    };
     } 
-
+    
     // 模拟“hidden value property” 
-
+    
     function Field(val){
-        var value = val;
-
-        this.__defineGetter__("value", function(){
-            return value;
-        });
-
-        this.__defineSetter__("value", function(val){
-            value = val;
-        });
+    	var value = val;
+       
+	    this.__defineGetter__("value", function(){
+	    	return value;
+	    });
+	       
+	    this.__defineSetter__("value", function(val){
+	    	value = val;
+	    });
     }
-
+    
     // es6 是实现
     function Field(val){
-        this.value = val;
+    	this.value = val;
     }
-
+     
     Field.prototype = {
-        get value(){
-            return this._value;
-        },
-        set value(val){
-            this._value = val;
-        }
+	    get value(){
+	    	return this._value;
+	    },
+	    set value(val){
+	    	this._value = val;
+	    }
     };
 </code></pre>
 
 <p>4.java中的getter和setter</p>
 
-<pre><code class="javascript">    public class TestGetterSetter { //TestGetterSetter.class
-
-        private String name ;
-
-        public void setName(String name){
-            if(this.name != name){
-                System.out.println("name is changeing!");
-                this.name = name ;
-                // trigger change  event
-            }
-
+<pre><code class="language-javascript">    public class TestGetterSetter { //TestGetterSetter.class
+    	
+    	private String name ;
+    
+    	public void setName(String name){
+    		if(this.name != name){
+    			System.out.println("name is changeing!");
+    			this.name = name ;
+    			// trigger change  event
+    		}
+    
     }
-
+    
     public String getName(String name){
-        if (this.name == null ){
-        setName("Guest");
-        }
-        return this.name ;
+	    if (this.name == null ){
+	    setName("Guest");
+	    }
+	    return this.name ;
     }
-
-        public String getName() {
-            return name;
-        }
+    
+    	public String getName() {
+    		return name;
+    	}
     }
 
 
     public class TestMain { //TestMain.class
-        TestGetterSetter tb ;
-
-        public static void main(String[] args) {
-
-            new TestMain().todo();
-            // TODO Auto-generated method stub
-
-        }
-        public TestMain(){ // init
-
-             super();
-             System.out.println("init TestMain !!");
-        }
-        public void todo(){
-             tb  =  new TestGetterSetter();
-             tb.setName("caicai");
-             System.out.println(tb.getName());
-        }
-
+    	TestGetterSetter tb ;
+    
+    	public static void main(String[] args) {
+    		
+    		new TestMain().todo();
+    		// TODO Auto-generated method stub
+    
+    	}
+    	public TestMain(){ // init
+    		
+    		 super();
+    		 System.out.println("init TestMain !!");
+    	}
+    	public void todo(){
+    		 tb  =  new TestGetterSetter();
+    		 tb.setName("caicai");
+    		 System.out.println(tb.getName());
+    	}
+    
     }
 </code></pre>
 
@@ -1829,102 +2727,462 @@ $ rake deploy
 
 <p>参考文献：</p>
 
-<p>1.<a href="http://ejohn.org/blog/javascript-getters-and-setters/">http://ejohn.org/blog/javascript-getters-and-setters/</a></p>
+<p>1.http://ejohn.org/blog/javascript-getters-and-setters/</p>
 
 <p>2.javascript权威指南 6.6 属性getter和setter</p>
 
 <p>-EOF-</p>
+
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[city hall]]></title>
-    <link href="http://blog.w3cub.com/blog/2012/11/10/music-city-hall/"/>
-    <updated>2012-11-10T23:35:19+08:00</updated>
-    <id>http://blog.w3cub.com/blog/2012/11/10/music-city-hall</id>
-    <content type="html"><![CDATA[<div>
-<embed src="http://www.xiami.com/widget/0_141216/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed>
-</div>
+    <title type="html"><![CDATA[python shell 重命名银行数据]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/08/12/python-shell-rename-bankk-data/"/>
+    <updated>2013-08-12T05:39:59+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/08/12/python-shell-rename-bankk-data</id>
+    <content type="html"><![CDATA[<pre><code class="language-py">import os
+ 
+_reName = "ABC,BJBANK,BOC,BSB,CCB,CEB,CITIC,CMB,CMBC,COMM,DBSCN,GDB,HANABANK,HSBC,HXBANK,HZCB,ICBC,JSBANK,KLB,PSBC,SCB,SDB,SJBANK,SPABANK,BHB,SHBANK,WHCCB,BOCD,HBRCU,HDBANK,HSBK,XTB,ZJKCCB,CZCCB,JINCHB,JSB,JZBANK,YQCCB,H3CB,ORBANK,WHBANK,BOCY,BODD,BOJZ,BOYK,FSCB,FXCB,JLRCU,DAQINGB,NBBANK,NJCB,WZCB,BOSZ,CSRCB,CZRCB,EGBANK,GCB,HSBANK,JRCB,KSRB,LSBANK,TCRCB,WJRCB,WRCB,ZRCBANK,FJHXBC,JHBANK,JXBANK,NBYZ,NDHB,SXCB,ZJNX,ARCU,BOD,JJBANK,GZB,JXRCU,NCB,SRBANK,BANKWF,DYCCB,DZBANK,JNBANK,LSBC,QDCCB,QLBANK,RZB,SDRCU,TACCB,AYCB,BOP,BOZK,BZMD,CBKF,HNRCU,NYCB,SCBBANK,SCCB,XCYH,XXBANK,XYBANK,ZZBANK,HBC,HKB,HURCB,WHRCB,HNRCC,DRCBCL,GDRCC,GLBANK,GRCB,NHB,SDEB,SRCB,XLBANK,BGB,GXRCU,LZCCB,CCQTGB,CDCB,CQBANK,CRCBANK,CDRCB,CGNB,DYCB,GYCB,LSCCB,PZHCCB,SCRCU,YBCCB,ZGCCB,GZRCU,ZYCBANK,YNRCC,YXCCB,CABANK,SXRCCU,XABANK,GSRCU,LZYH,NXRCU,SZSBK".split(',')
+path = 'F:\\PSD2.0\\bankalipay\\sprite\\images\\'
+for file in os.listdir(path):
+    if os.path.isfile(os.path.join(path,file))==True:
+        _baseName = os.path.basename(file)
+        _id = int(_baseName[9:_baseName.index('.')])
+        _newName = _reName[_id - 1 ] + '.png'
+        os.rename(os.path.join(path,file),os.path.join(path,_newName))
+</code></pre>
 
+<!-- more -->
 
-<p>Lyrics:</p>
+<p>python，nodejs, php?</p>
 
-<p>Title: Blue Caravan<br/>
-Artist: Vienna Teng<br/>
-Album: Dreaming Through the Noise<br/>
-Year: 2006</p>
+<p>编辑器是python，用python吧！google 一番，改一改，成了。</p>
 
-<p>me and my baby on a february holiday<br/>
-&lsquo;cause we got the news<br/>
-yeah, we got the news<br/>
-500 miles and we&rsquo;re gonna make it all the way<br/>
-we&rsquo;ve got nothing to lose<br/>
-we&rsquo;ve got nothing to lose</p>
+<p>142个银行啊，有没有?</p>
 
-<!--more-->
+<p>一个一个处理，辅助线一条一条地拉？够蛋疼，还要重命名有没有，还要切logo出来有没有，悲催了……</p>
 
+<hr />
 
-<p>it&rsquo;s been 10 years waiting<br/>
-but it&rsquo;s better late than the never<br/>
-we&rsquo;ve been told before<br/>
-we can&rsquo;t wait one minute more</p>
+<p>一定要学一门有io操作的语言旁身，蛋疼君！</p>
 
-<p>oh, me and my baby driving down<br/>
-to a hilly seaside town in the rainfall<br/>
-oh, me and my baby stand in line<br/>
-you&rsquo;ve never seen a sight so fine<br/>
-as the love that&rsquo;s gonna shine<br/>
-at city hall</p>
+<p>ps： 银行数据</p>
 
-<p>me and my baby&rsquo;ve been through<br/>
-a lot of good and bad<br/>
-learned to kiss the sky<br/>
-made our momma&rsquo;s cry<br/>
-I&rsquo;ve seen a lot of friends<br/>
-after giving it all they had<br/>
-lay down and die<br/>
-lay down and die</p>
+<p><a href="http://ishare.iask.sina.com.cn/f/37741859.html">http://ishare.iask.sina.com.cn/f/37741859.html</a></p>
 
-<p>10 years into it<br/>
-here&rsquo;s our window<br/>
-at the vegas drive-thru chapel<br/>
-it ain&rsquo;t too much<br/>
-for &lsquo;em all to handle</p>
+<p><img src="http://b.hiphotos.bdimg.com/album/pic/item/f9198618367adab40b85e2ae8ad4b31c8601e482.jpg" alt="" /></p>
 
-<p>oh, me and my baby driving down<br/>
-to a hilly seaside town in the rainfall<br/>
-oh, me and my baby stand in line<br/>
-you&rsquo;ve never seen a sight so fine<br/>
-as the love that&rsquo;s gonna shine<br/>
-at city hall</p>
+<hr />
 
-<p>outside, they&rsquo;re handing out<br/>
-donuts and pizza pies<br/>
-for the folks in pairs in the folding chairs<br/>
-my baby&rsquo;s lookin' so damned pretty<br/>
-with those anxious eyes<br/>
-rain-speckled hair<br/>
-and my ring to wear</p>
+<p><img src="http://f.hiphotos.bdimg.com/album/pic/item/83025aafa40f4bfbde8767b9024f78f0f6361883.jpg" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[关于字符串编码[u4e00-u9fa5]]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/05/13/about-unicode/"/>
+    <updated>2013-05-13T05:05:55+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/05/13/about-unicode</id>
+    <content type="html"><![CDATA[<p>%u4e00 =</p>
 
-<p>10 years waiting for this moment of fate<br/>
-when we say the words and sign our names<br/>
-if they take it away again someday<br/>
-this beautiful thing won&rsquo;t change</p>
+<p><img src="http://e.hiphotos.baidu.com/album/pic/item/cc11728b4710b912ac88a0b6c2fdfc0392452228.jpg" alt="" /></p>
 
-<p>oh, me and my baby driving down<br/>
-to a hilly seaside town in the rainfall<br/>
-oh, me and my baby stand in line<br/>
-you&rsquo;ve never seen a sight so fine<br/>
-as the love that&rsquo;s gonna shine</p>
+<!-- more -->
 
-<p>oh, me and my baby driving down<br/>
-to a hilly seaside town in the rainfall<br/>
-oh, me and my baby stand in line<br/>
-you&rsquo;ve never seen a sight so fine<br/>
-as the love that&rsquo;s gonna shine<br/>
-at city hall</p>
+<p>%u9fa5 =</p>
 
-<p>-EOF-</p>
+<p><img src="http://e.hiphotos.baidu.com/album/pic/item/203fb80e7bec54e72a554c56b8389b504fc26a38.jpg" alt="" /></p>
+
+<hr />
+
+<p>一:</p>
+
+<p><img src="http://f.hiphotos.baidu.com/album/pic/item/b21c8701a18b87d68a8af957060828381e30fdaa.jpg" alt="" /></p>
+
+<p>龥:</p>
+
+<p><img src="http://e.hiphotos.baidu.com/album/pic/item/bd315c6034a85edfb987a36b48540923dd54756a.jpg" alt="" /></p>
+
+<p>[一-龥]</p>
+
+<p>再看看我们熟悉的A：</p>
+
+<p><img src="http://b.hiphotos.baidu.com/album/pic/item/8b13632762d0f7035025cb9409fa513d2797c5e7.jpg" alt="" /></p>
+
+<p>x00-xff:</p>
+
+<p><img src="http://d.hiphotos.baidu.com/album/pic/item/63d0f703918fa0ecb3fb2245279759ee3d6ddbbe.jpg" alt="" /></p>
+
+<hr />
+
+<p><img src="http://f.hiphotos.baidu.com/album/pic/item/0824ab18972bd40758b895b57a899e510fb3097e.jpg" alt="" /></p>
+
+<p>参考文献：</p>
+
+<p>1.<a href="http://www.doc88.com/p-900961210938.html">http://www.doc88.com/p-900961210938.html</a>（GB2312-80 6763 CJK 个汉字 (4E00—9FA5) Unicode 字）</p>
+
+<p>2.<a href="http://blog.csdn.net/nivana999/article/details/4247844">http://blog.csdn.net/nivana999/article/details/4247844</a>（UNICODE汉字数据库）</p>
+
+<p>3.<a href="http://library.ust.hk/scip98/papers/sun-wu-li.pdf">http://library.ust.hk/scip98/papers/sun-wu-li.pdf</a>（The Design and Implementation of CJK Unified Character Set on UNIX Systems）</p>
+
+<p>4.<a href="https://zh.wikipedia.org/wiki/GB_2312">https://zh.wikipedia.org/wiki/GB_2312</a>（GB 2312）</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Qunit 入门必读]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/03/30/qunitjs-header-first/"/>
+    <updated>2013-03-30T04:39:38+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/03/30/qunitjs-header-first</id>
+    <content type="html"><![CDATA[<p>0.测试如此简单：</p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;QUnit basic example&lt;/title&gt;
+  &lt;link rel="stylesheet" href="http://blog.w3cub.com/resources/qunit.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 id="qunit-header"&gt;QUnit&lt;/h1&gt;
+  &lt;h2 id="qunit-banner"&gt;&lt;/h2&gt;
+  &lt;div id="qunit-testrunner-toolbar"&gt;&lt;/div&gt;
+  &lt;h2 id="qunit-userAgent"&gt;&lt;/h2&gt;
+  &lt;ol id="qunit-tests"&gt;&lt;/ol&gt;
+  &lt;div id="qunit-fixture"&gt;&lt;/div&gt;
+
+  &lt;script src="http://blog.w3cub.com/resources/qunit.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    test( "a basic test example", function() {
+      var value = "hello";
+      equal( value, "hello", "We expect value to be hello" );
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<!-- more -->
+
+<p>1.逻辑比较：</p>
+
+<pre><code class="language-js">test( "a basic test example", function() {
+  var value = "hello";
+  equal( value, "hello", "We expect value to be hello" );
+});
+</code></pre>
+
+<p>2.告诉它有多少条断言：</p>
+
+<pre><code class="language-js">test( "a basic test example", function() {
+  expect(1)// 一个断言
+  var value = "hello";
+  equal( value, "hello", "We expect value to be hello" );
+});
+</code></pre>
+
+<p>3.单向比较：</p>
+
+<pre><code class="language-js">//ok ：ok::function 传入的第一个参数为真，则通过。
+ok( true, "true succeeds" );
+</code></pre>
+
+<p>4.双向比较：</p>
+
+<pre><code class="language-js">test("equal", 3, function() {
+  var actual = 5 - 4;
+  equal(actual, 1,     "passes because 1 == 1");
+  equal(actual, true,  "passes because 1 == true");
+  equal(actual, false, "fails because 1 != false");
+});
+</code></pre>
+
+<p>2） notEqual： notEqual::function传入的第一第二个参数不相等(==)，则通过。</p>
+
+<pre><code class="language-js">test("notEqual", 3, function() {
+  var actual = 5 - 4;
+  notEqual(actual, 0,     "passes because 1 != 0");
+  notEqual(actual, false, "passes because 1 != false");
+  notEqual(actual, true,  "fails because 1 == true");
+});
+</code></pre>
+
+<p>3）strictEqual ： strictEqual::function传入的第一第二个参数绝对相等(===)，则通过。</p>
+
+<pre><code class="language-js">test("strictEqual", 3, function() {
+  var actual = 5 - 4;
+  strictEqual(actual, 1,     "passes because 1 === 1");
+  strictEqual(actual, true,  "fails because 1 !== true");
+  strictEqual(actual, false, "fails because 1 !== false");
+});
+</code></pre>
+
+<p>4) notStrictEqual ： notStrictEqual::function传入的第一第二个参数绝对不相等(!==)，则通过。</p>
+
+<pre><code class="language-js">test("notStrictEqual", 3, function() {
+  var actual = 5 - 4;
+  notStrictEqual(actual, 1,     "fails because 1 === 1");
+  notStrictEqual(actual, true,  "passes because 1 !== true");
+  notStrictEqual(actual, false, "passes because 1 !== false");
+});
+</code></pre>
+
+<p>5） deepEqual    deepEqual::function传入的第一第二个参数完全相等(基本类型，===)，则通过。</p>
+
+<pre><code class="language-js">test("deepEqual", 7, function() {
+  var actual = {a: 1};
+
+  equal(    actual, {a: 1},   "fails because objects are different");
+  deepEqual(actual, {a: 1},   "passes because objects are equivalent");
+  deepEqual(actual, {a: "1"}, "fails because '1' !== 1");
+
+  var a = $("body &gt; *");
+  var b = $("body").children();
+
+  equal(    a,       b,       "fails because jQuery objects are different");
+  deepEqual(a,       b,       "fails because jQuery objects are not equivalent");
+  equal(    a.get(), b.get(), "fails because element arrays are different");
+  deepEqual(a.get(), b.get(), "passes because element arrays are equivalent");
+});
+</code></pre>
+
+<p>6) notDeepEqual notDeepEqual::function传入的第一第二个参数不完全相等(基本类型，===)，则通过。</p>
+
+<pre><code class="language-js">test("notDeepEqual", 3, function() {
+  var actual = {a: 1};
+
+  notEqual(    actual, {a: 1},   "passes because objects are different");
+  notDeepEqual(actual, {a: 1},   "fails because objects are equivalent");
+  notDeepEqual(actual, {a: "1"}, "passes because '1' !== 1");
+});
+</code></pre>
+
+<p>5.预期断言：</p>
+
+<p>throws()     throws::function传入的第一个参数（回调函数）抛出错误，则通过。</p>
+
+<pre><code class="language-js">test( "throws", function() {
+  function CustomError( message ) {
+    this.message = message;
+  }
+  CustomError.prototype.toString = function() {
+    return this.message;
+  };
+  throws(
+    function() {
+      throw "error"
+    },
+    "throws with just a message, no expected"
+  );
+  throws(
+    function() {
+      throw new CustomError();
+    },
+    CustomError,
+    "raised error is an instance of CustomError"
+  );
+  throws(
+    function() {
+      throw new CustomError("some error description");
+    },
+    /description/,
+    "raised error message contains 'description'"
+  );
+});
+</code></pre>
+
+<p>6.异步测试：</p>
+
+<pre><code class="language-js">test("stop &amp; start", function() {
+  expect(1);
+  var actual = false;
+  stop();// 中断测试
+  setTimeout(function() {
+    ok(actual, "this test actually runs, and fails");
+    start();// 完成测试
+  }, 1000);
+});
+
+asyncTest("asyncTest &amp; start", function() {
+  expect(1);
+  var actual = false;
+  setTimeout(function() {
+    ok(actual, "this test actually runs, and fails");
+    start();//完成测试
+  }, 1000);
+});
+</code></pre>
+
+<p>7.模块组合：</p>
+
+<p>1）简单模块组合：</p>
+
+<pre><code class="language-js">module("core");
+test("a test in the core module", function() {
+  ok(true, "this test had better pass");
+});
+test("another test in the core module", function() {
+  ok(true, "this test had also better pass");
+});
+</code></pre>
+
+<p>2) 带回调函数（setup，teardown）模块组合：</p>
+
+<pre><code>module("module2", {
+  setup: function() {
+    ok(true, "once extra assert per test");
+    this.prop = "foo";
+  },
+  teardown: function() {
+    ok(true, "and one extra assert after each test");
+  }
+});
+test("test with setup and teardown", function() {
+  expect(3);
+  same(this.prop, "foo", "this.prop === 'foo' in all tests");
+});
+</code></pre>
+
+<p>8.全局回调：</p>
+
+<pre><code>// 测试开始
+QUnit.begin = function() {
+  console.log("Running Test Suite");
+};
+// 测试结束
+QUnit.done = function(failures, total) {
+  console.info("Suite: %d failures / %d tests", failures, total);
+};
+// 在每个模块前运行
+QUnit.moduleStart = function(name) {
+  console.group("Module: " + name);
+};
+// 在每个模块后运行
+QUnit.moduleDone = function(name, failures, total) {
+  console.info("Module: %d failures / %d tests", failures, total);
+  console.groupEnd();
+};
+// 每个单元测试前运行.
+QUnit.testStart = function(name) {
+  console.group("Test: " + name);
+};
+// 每个单元测试后运行
+QUnit.testDone = function(name, failures, total) {
+  console.info("Test: %d failures / %d tests", failures, total);
+  console.groupEnd();
+};
+// 在每一个断言后运行
+QUnit.log = function(result, message) {
+  console[ result ? "log" : "error" ](message);
+};
+</code></pre>
+
+<p>9.界面转逻辑：</p>
+
+<p>1）Dom 测试容器：</p>
+
+<pre><code> #qunit-fixture
+</code></pre>
+
+<p>2）模拟事件:</p>
+
+<p><a href="https://github.com/jquery/jquery-ui/tree/master/tests">https://github.com/jquery/jquery-ui/tree/master/tests</a></p>
+
+<p>10.实用测试插件：</p>
+
+<p>1) <a href="https://github.com/jquery/jquery-ui/blob/master/tests/jquery.simulate.js">https://github.com/jquery/jquery-ui/blob/master/tests/jquery.simulate.js</a></p>
+
+<p>2) <a href="http://qunitjs.com/plugins/">http://qunitjs.com/plugins/</a></p>
+
+<p>参考阅读：</p>
+
+<p>1） <a href="http://qunitjs.com/cookbook/">http://qunitjs.com/cookbook/</a></p>
+
+<p>2）<a href="http://api.qunitjs.com/">http://api.qunitjs.com/</a></p>
+
+<p>3）<a href="http://benalman.com/talks/unit-testing-qunit.html">http://benalman.com/talks/unit-testing-qunit.html</a> （main）</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[javascript作用域迷宫图谱]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/03/29/javascript-scope-pic/"/>
+    <updated>2013-03-29T05:51:15+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/03/29/javascript-scope-pic</id>
+    <content type="html"><![CDATA[<p>分子 原子 质子 中子 电子 原子核 离子</p>
+
+<p>宇宙  银河系  太阳系  地月系</p>
+
+<p>例：我的地址是：宇宙银河系太阳系地月系地球中国广东省广州天河区XXX。</p>
+
+<p>假如外星人来我家作客，必须知道我的地址，才能来我家作客。。。</p>
+
+<p>我的私有财产你不能动，除非我允许(民主社会)：</p>
+
+<p>在javascript或其他语言的作用域中同样有类似的，就是说addClass的内部方法或变量你是不能访问的，除非它定义为全局对象（window.xxxx）。。。<br />
+<!-- more --></p>
+
+<p><img src="https://user-images.githubusercontent.com/1061012/44856346-c3d39100-ac9f-11e8-8f52-a6be11140c98.jpg" alt="scope" /></p>
+
+<p>例：</p>
+
+<pre><code class="language-js">var  outer = function (){
+    this.v1 =  this.v1 || 2;
+    var fn = this;
+    var inner = function(){
+        fn.v1++;
+        console.log(fn.v1);
+    }
+    inner();
+}
+outer(); // 3
+outer(); // 4
+
+</code></pre>
+
+<pre><code class="language-js">var  outer = function (){
+    var v1 =  2;
+    return function(){
+        v1++；
+        console.log(v1);
+    }
+}
+var instance = outer();
+instance ()// 3
+instance () // 4
+
+</code></pre>
+
+<p>这里的v1 是 outer::Function的私有变量，你只能通过执行outer()来修改它，但你不能通过outer.v1 ,或者outer().v1来访问。</p>
+
+<p>与此同时，outer()实例化对象会在内存驻扎。</p>
+
+<p>例：</p>
+
+<pre><code class="language-js">var mynamespsce = {
+util:{
+    docfire:function(){
+
+    },
+    extend:function(){
+
+    }
+    },
+    ui:{
+
+    },
+    array:{
+
+    },
+    //...
+}
+var yournamespace = {};
+</code></pre>
+
+<p>在这里加入你要访问 docfire方法就必须 通过 mynamespace.util.docfire(param),就好像外星人造访你家的例子一样，假如你通过yournamespace.util.docfire(param)访问docfire,由于yournamespace命名空间中没有docfire方法就会提示出错。</p>
+
+<p>同时，docfire 中存在私有变量或者方法,你是不能访问的。</p>
 ]]></content>
   </entry>
   

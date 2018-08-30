@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-08-30T22:03:33+08:00</updated>
+  <updated>2018-08-30T17:28:30+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[How to properly uninstall Service Worker？]]></title>
     <link href="http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker/"/>
-    <updated>2018-06-01T23:10:43+08:00</updated>
+    <updated>2018-06-01T15:10:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker</id>
     <content type="html"><![CDATA[<p>如何正确地卸载Service Worker？</p>
 
@@ -405,7 +405,7 @@ https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookb
   <entry>
     <title type="html"><![CDATA[《html5数据推送应用开发》读书摘要]]></title>
     <link href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/"/>
-    <updated>2017-08-06T17:18:14+08:00</updated>
+    <updated>2017-08-06T09:18:14+00:00</updated>
     <id>http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note</id>
     <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。<br />
 基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……<br />
@@ -555,7 +555,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[模糊匹配查询正则表达式探究]]></title>
     <link href="http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/"/>
-    <updated>2015-07-15T22:09:43+08:00</updated>
+    <updated>2015-07-15T14:09:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh</id>
     <content type="html"><![CDATA[<p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing “uni” into a country input field actually intends to select? It could match any of these:</p>
 
@@ -1026,9 +1026,9 @@ var scorers = [
   
   <entry>
     <title type="html"><![CDATA[svg画布定位]]></title>
-    <link href="http://blog.w3cub.com/blog/2014/07/14/svg-canvas-positioning/"/>
-    <updated>2014-07-14T03:55:00+08:00</updated>
-    <id>http://blog.w3cub.com/blog/2014/07/14/svg-canvas-positioning</id>
+    <link href="http://blog.w3cub.com/blog/2014/07/13/svg-canvas-positioning/"/>
+    <updated>2014-07-13T19:55:00+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2014/07/13/svg-canvas-positioning</id>
     <content type="html"><![CDATA[<p>// 角度(angle)转弧度(radian)</p>
 
 <pre><code class="language-js">
@@ -1100,7 +1100,7 @@ function getPointAt(p0, radius, angle) {
   <entry>
     <title type="html"><![CDATA[javascript 对象中的复制，继承，引用，浅拷贝，深拷贝，多态，静态方法]]></title>
     <link href="http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class/"/>
-    <updated>2013-10-19T15:10:43+08:00</updated>
+    <updated>2013-10-19T07:10:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class</id>
     <content type="html"><![CDATA[<h2 id="导言">导言</h2>
 
