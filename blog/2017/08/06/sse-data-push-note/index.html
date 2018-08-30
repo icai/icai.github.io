@@ -21,8 +21,8 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script type="text/javascript" src="/assets/application-310321f5474cf276181a5652a99926e03e1f068dad80b82ce7a9f6fadb49c8e2.js"></script>
-	<link type="text/css" rel="stylesheet" href="/assets/application-f15872c481517f1e86b0490f734f9b2fb688bcc450f4fc63d97faa10187b5357.css">
+	<script src="/assets/application-555523497a2cb672b8f83344414d95c89fc0ec37e583fccb3b2d7b79f9025439.js" integrity="sha256-VVUjSXostnK4+DNEQU2VyJ/A7Dflg/zLOy17efkCVDk=" crossorigin="anonymous" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" integrity="sha256-iZM+puF27rU6KblbX6VUFKCI3yfW1qG+EMPnJF1MM2o=" crossorigin="anonymous" href="/assets/application-89933ea6e176eeb53a29b95b5fa55414a088df27d6d6a1be10c3e7245d4c336a.css">
 	
 
 </head>
@@ -151,48 +151,44 @@
 
 	
 	<hr />
-	<div class="entry-content" itemprop="articleBody"><p>书很薄，在图书馆瞄了一下，知识点不多。
-基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……
+	<div class="entry-content" itemprop="articleBody"><p>书很薄，在图书馆瞄了一下，知识点不多。<br />
+基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……<br />
 可以总结为如下：</p>
 
 <!-- more -->
 
-
 <p>《Data Push Apps with HTML5 SSE》 读书摘要</p>
 
-<a name="L......"></a>
-<h2>摘要</h2>
+<h2 id="摘要">摘要</h2>
 
 <ul>
-<li>EventSource方法 new EventSource(&ldquo;url&rdquo;);</li>
-<li>MIME类型text/event-stream</li>
-<li>数据传输格式"data:&ldquo; + new Date().toISOString() + &rdquo;\n\n";</li>
+  <li>EventSource方法 new EventSource(“url”);</li>
+  <li>MIME类型text/event-stream</li>
+  <li>数据传输格式”data:” + new Date().toISOString() + “\n\n”;</li>
 </ul>
 
+<h2 id="sse示例">SSE示例</h2>
 
-<a name="SSE......"></a>
-<h2>SSE示例</h2>
-
-<pre><code>    &lt;!doctype html&gt;
-    &lt;html&gt;
-    &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;Basic SSE Example&lt;/title&gt;
-    &lt;script src="//code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-    &lt;pre id="x"&gt;Initializing...&lt;/pre&gt;
-    &lt;script&gt;
-        var es = new EventSource("basic_sse.php");
-        es.addEventListener("message", function(e){
-            $("#x").append("\n" + e.data);
-        },false);
-    &lt;/script&gt;
-    &lt;/body&gt;
-    &lt;/html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;Basic SSE Example&lt;/title&gt;
+&lt;script src="//code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;pre id="x"&gt;Initializing...&lt;/pre&gt;
+&lt;script&gt;
+    var es = new EventSource("basic_sse.php");
+    es.addEventListener("message", function(e){
+        $("#x").append("\n" + e.data);
+    },false);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 
-<pre><code class="javascript">var http = require("http"),
+<pre><code class="language-javascript">var http = require("http"),
     fs = require("fs");
 var port = parseInt(process.argv[2] || 1234);
 http.createServer(function(request, response) {
@@ -223,83 +219,80 @@ http.createServer(function(request, response) {
 console.log("Server running at http://localhost:" + port);
 </code></pre>
 
-<a name="L........."></a>
-<h2>兼容性</h2>
+<h2 id="兼容性">兼容性</h2>
 
 <p>startEventSource()</p>
 
 <ul>
-<li>Basically all Firefox and Chromea</li>
-<li>Desktop Safari 5.0+</li>
-<li>iOS Safari 4.0+</li>
-<li>Android 4.4+ (earlier where Chrome is default browser)</li>
-<li>Chrome for Android (all versions)</li>
-<li>Firefox for Android (all versions)</li>
-<li>Opera since 11.0</li>
-<li>Opera Mobile since 11.1</li>
-<li>BlackBerry since 7.0</li>
+  <li>Basically all Firefox and Chromea</li>
+  <li>Desktop Safari 5.0+</li>
+  <li>iOS Safari 4.0+</li>
+  <li>Android 4.4+ (earlier where Chrome is default browser)</li>
+  <li>Chrome for Android (all versions)</li>
+  <li>Firefox for Android (all versions)</li>
+  <li>Opera since 11.0</li>
+  <li>Opera Mobile since 11.1</li>
+  <li>BlackBerry since 7.0</li>
 </ul>
-
 
 <p>startXHR()</p>
 
 <ul>
-<li>IE10+</li>
-<li>Firefox 3.6 (and earlier)</li>
-<li>Safari 3.x</li>
-<li>Android 4.1 to 4.3 (unless Chrome is default browser)</li>
-<li>Android 3.x</li>
+  <li>IE10+</li>
+  <li>Firefox 3.6 (and earlier)</li>
+  <li>Safari 3.x</li>
+  <li>Android 4.1 to 4.3 (unless Chrome is default browser)</li>
+  <li>Android 3.x</li>
 </ul>
-
 
 <p>startIframe()</p>
 
 <ul>
-<li>IE8</li>
-<li>IE9</li>
+  <li>IE8</li>
+  <li>IE9</li>
 </ul>
 
+<p>~~startLongpoll()</p>
+<ul>
+  <li>IE6</li>
+  <li>IE7</li>
+  <li>Android 2.x</li>
+  <li>Anything else not in the preceding list that has Ajax support<br />
+~~</li>
+</ul>
 
-<p><del>startLongpoll()
-- IE6 <br/>
-- IE7
-- Android 2.x
-- Anything else not in the preceding list that has Ajax support
-</del></p>
+<p>~~(none)</p>
+<ul>
+  <li>Any browser with JavaScript disabled<br />
+~~</li>
+</ul>
 
-<p><del>(none)
-- Any browser with JavaScript disabled
-</del></p>
-
-<p><del>a Technically since Firefox 6 and Chrome 6, but they have been auto-updating since Firefox 4, and Chrome since it came out
-of beta, so you can reasonably expect no one is still using versions that do not support SSE.
-</del></p>
+<p>~~a Technically since Firefox 6 and Chrome 6, but they have been auto-updating since Firefox 4, and Chrome since it came out<br />
+of beta, so you can reasonably expect no one is still using versions that do not support SSE.<br />
+~~</p>
 
 <p>书本代码，书本代码，书本代码。</p>
 
-<a name="L............"></a>
-<h2>参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ul>
-<li><a href="https://github.com/DarrenCook/ssebook">书本代码</a></li>
-<li><a href="https://caniuse.com/#feat=eventsource">eventsource浏览器支持</a></li>
-<li><a href="https://www.w3.org/TR/eventsource/">https://www.w3.org/TR/eventsource/</a></li>
-<li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: Server-sent events</a></li>
-<li><a href="https://github.com/Yaffle/EventSource">a polyfill for http://www.w3.org/TR/eventsource/</a></li>
+  <li><a href="https://github.com/DarrenCook/ssebook">书本代码</a></li>
+  <li><a href="https://caniuse.com/#feat=eventsource">eventsource浏览器支持</a></li>
+  <li><a href="https://www.w3.org/TR/eventsource/">https://www.w3.org/TR/eventsource/</a></li>
+  <li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: Server-sent events</a></li>
+  <li><a href="https://github.com/Yaffle/EventSource">a polyfill for http://www.w3.org/TR/eventsource/</a></li>
 </ul>
 
-
-<a name="L............"></a>
-<h2>其他参考</h2>
+<h2 id="其他参考">其他参考</h2>
 
 <ul>
-<li><a href="https://www.ibm.com/developerworks/library/wa-http-server-push-with-websocket-sse/">HTTP server push with WebSocket and SSE</a></li>
-<li><a href="https://www.zhihu.com/question/27498235">Ajax长轮询与服务器推的长连接的区别是？</a></li>
-<li><a href="http://goeasy.io/cn/demos">商业化示例</a></li>
+  <li><a href="https://www.ibm.com/developerworks/library/wa-http-server-push-with-websocket-sse/">HTTP server push with WebSocket and SSE</a></li>
+  <li><a href="https://www.zhihu.com/question/27498235">Ajax长轮询与服务器推的长连接的区别是？</a></li>
+  <li><a href="http://goeasy.io/cn/demos">商业化示例</a></li>
 </ul>
-
 
 <p>-EOF-</p>
+
 </div>
 
 	
@@ -337,7 +330,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
 			</div>
 			<footer id="footer" class="inner">Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-Copyright &copy; 2017
+Copyright &copy; 2018
 
     Terry Cai
 
@@ -377,6 +370,13 @@ Copyright &copy; 2017
 
 
 
+
+			<link rel="stylesheet" type="text/css" href="/assets/prism/prism.css"/>
+			<script src="/assets/prism/prism.js" type="text/javascript"></script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
+			</script>
+			<script type="text/javascript" src="http://cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 		</div>
 	</div>
 </body>

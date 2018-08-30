@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: python | 泛前端开发]]></title>
+  <link href="http://blog.w3cub.com/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2018-08-30T14:52:36+08:00</updated>
+  <id>http://blog.w3cub.com/</id>
+  <author>
+    <name><![CDATA[Terry Cai]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[python银行数据渲染css sprite]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/08/19/python-generate-banks-data-css-sprite/"/>
+    <updated>2013-08-19T13:44:09+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/08/19/python-generate-banks-data-css-sprite</id>
+    <content type="html"><![CDATA[<p>前端处理重复列表类型数据都是十分繁琐的，让我们一劳永日吧。</p>
+
+<p>银行类表，航空公司列表,……</p>
+
+<!-- more -->
+
+<p>{% raw %}</p>
+<pre><code class="language-py"># encoding: utf-8
+import os
+import urllib2
+import ConfigParser
+import time
+import msvcrt
+ 
+ 
+def log(tips,exit = False):
+    print str(tips)
+ 
+    if exit:
+        msvcrt.getch()
+ 
+class BuildBank(object):
+    """docstring for BuildBank"""
+ 
+    def __init__(self):
+        super(BuildBank, self).__init__()
+ 
+        self.templatePath = raw_input("please input your template Path in 'config.ini' file :")   #"default"
+ 
+        if not os.path.exists(self.templatePath):
+            os.makedirs(self.templatePath)
+ 
+        self.getConfig()
+ 
+        if self.isgetPic == True :
+            self.getPic(self.remoteUrl)
+ 
+        self.render()
+ 
+    def getConfig(self):
+ 
+        now = str(time.time() )
+        fileName = "bank_alipay_"+ now +".html"
+        pngName = "bank_alipay_"+ now +".png"
+ 
+ 
+        cf = ConfigParser.ConfigParser()
+        cf.read("config.ini")
+        self.allBank = cf.get("main", "allBank")
+ 
+        self.template = cf.get("template",self.templatePath)
+        self.bankList = cf.get("banklist",self.templatePath)
+         
+ 
+        self.fileName = cf.get("main", "fileName") or fileName
+        self.pngName = cf.get("main", "pngName") or pngName
+        self.size = cf.getint("main", "size")
+ 
+ 
+        self.isgetPic =  cf.getboolean("main", "isgetPic")
+        self.remoteUrl = cf.get("main","remoteUrl").format(allbank = self.allBank,stamp = int(time.time()))
+         
+    def getPic(self,url):
+ 
+        _absPngName = os.path.join(self.templatePath,self.pngName)
+ 
+        if os.path.isfile(_absPngName) : return False
+        headers={'User-Agent': "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"}
+         
+        log("start getting remote pic...")
+ 
+        imgRequest = urllib2.Request(url,headers=headers);
+        imgData = urllib2.urlopen(imgRequest).read()
+         
+        output =open(_absPngName,"wb")
+        output.write(imgData)
+        output.close()
+ 
+        log ("complate getting remote pic...")
+ 
+    def renderCss(self):
+        allbankclass_tmpl = ".bank_{bank}"
+        # 所有银行 class 名 集合 模板
+        eachbankclass_tmpl = "\t.bank_{bank} {{ background-position: 0 {posy}; }}"
+        # 单个银行  class 名 模板
+ 
+ 
+        _style = ""
+        _banklist = self.allBank.lower().split(',')
+        _size = self.size
+ 
+        allbankclass = []
+        eachbankclass = []
+ 
+        for i in  range(len(_banklist)):
+            allbankclass.append( allbankclass_tmpl.format(bank=_banklist[i]) )
+            eachbankclass.append( eachbankclass_tmpl.format(bank=_banklist[i],posy=  str(- i * _size) + "px" if i &gt; 0 else str(- i * _size)))
+        else :
+            _style = '''
+            .bank_list li {
+                float: left;
+                padding: 10px 0;
+                width: 180px;
+                overflow: hidden;
+            }
+            .bank_list li .radio{
+                float: left;
+                margin: 8px 2px 0 2px;
+            }
+            .bank_list li .bank_label{ float: left; border:1px solid #e2e2e2; }
+            .bank_list li .hover,.bank_list li .checked{
+                border:1px solid #F60;
+            }
+            ''' + ",".join(allbankclass) + '''
+            { width: 126px;  height: 36px; background-image:url(
+            '''+ self.pngName + '''
+            ); background-repeat:no-repeat; cursor: pointer; display:block; }
+            ''' + "\n".join(eachbankclass)
+        return _style
+ 
+    def renderList(self,receivbank):
+        body = ""
+        for i in receivbank.lower().split(',') :
+            body += self.template.format(bank=i)
+        return body
+ 
+    def render(self):
+ 
+        style = self.renderCss()
+         
+        head = '''
+            &lt;!doctype html&gt;
+            &lt;html lang="en"&gt;
+            &lt;head&gt;
+                &lt;meta charset="UTF-8"&gt;
+                &lt;title&gt;Document&lt;/title&gt;
+                &lt;script src="http://code.jquery.com/jquery-1.7.2.js" &gt;&lt;/script&gt;
+                &lt;style&gt;
+            '''+ style +'''
+                &lt;/style&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+                &lt;ul class="bank_list" &gt;
+            '''
+        body = self.renderList(self.bankList)
+        foot = '''
+                &lt;/ul&gt;
+                &lt;script&gt;
+                $(function(){
+                    $('.bank_list .bank_label').hover(function(){
+                        $(this).addClass('hover');
+                    },function(){
+                        $(this).removeClass('hover');
+                    })
+                    $('input[type="radio"]').change(function(){
+                        var $id = $(this).attr('id'),$name = $(this).attr('name');
+                        $('label[for="'+ $id +'"]').addClass("checked").parents('li').siblings().find('label').removeClass('checked');
+                    })
+                })
+                &lt;/script&gt;    
+            &lt;/body&gt;
+            &lt;/html&gt;
+            '''
+ 
+        f=open(os.path.join(self.templatePath,self.fileName) ,"w")
+        f.write(head)
+        f.write(body)
+        f.write(foot)
+        f.close()
+ 
+        log("complate rendering html...")
+        log("press any key to exit...", True)
+ 
+ 
+ 
+###############################################################
+ 
+ 
+def main():
+    try:
+       BuildBank()
+    except:
+        log("some except error,check your config.ini and your input,please press any key to exit", true)
+      pass
+ 
+if __name__ == '__main__':
+    main()
+
+</code></pre>
+<p>{% endraw %}</p>
+
+<p>后续加上PIL动态合成支持。</p>
+
+<p>附上exe版：</p>
+
+<p>http://vdisk.weibo.com/s/dGotZ8td0hi7</p>
+
+<p>该版本耦合了“银行”,后续版本支持 “重复列表类型数据”（通用）。</p>
+
+<p>相关参考：</p>
+
+<p><a href="https://gist.github.com/gourneau/939252">https://gist.github.com/gourneau/939252</a></p>
+
+<p><a href="https://github.com/jorgebastida/glue">https://github.com/jorgebastida/glue</a></p>
+
+<p><a href="http://yostudios.github.io/Spritemapper/">http://yostudios.github.io/Spritemapper/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[python shell 重命名银行数据]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/08/12/python-shell-rename-bankk-data/"/>
+    <updated>2013-08-12T13:39:59+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/08/12/python-shell-rename-bankk-data</id>
+    <content type="html"><![CDATA[<pre><code class="language-py">import os
+ 
+_reName = "ABC,BJBANK,BOC,BSB,CCB,CEB,CITIC,CMB,CMBC,COMM,DBSCN,GDB,HANABANK,HSBC,HXBANK,HZCB,ICBC,JSBANK,KLB,PSBC,SCB,SDB,SJBANK,SPABANK,BHB,SHBANK,WHCCB,BOCD,HBRCU,HDBANK,HSBK,XTB,ZJKCCB,CZCCB,JINCHB,JSB,JZBANK,YQCCB,H3CB,ORBANK,WHBANK,BOCY,BODD,BOJZ,BOYK,FSCB,FXCB,JLRCU,DAQINGB,NBBANK,NJCB,WZCB,BOSZ,CSRCB,CZRCB,EGBANK,GCB,HSBANK,JRCB,KSRB,LSBANK,TCRCB,WJRCB,WRCB,ZRCBANK,FJHXBC,JHBANK,JXBANK,NBYZ,NDHB,SXCB,ZJNX,ARCU,BOD,JJBANK,GZB,JXRCU,NCB,SRBANK,BANKWF,DYCCB,DZBANK,JNBANK,LSBC,QDCCB,QLBANK,RZB,SDRCU,TACCB,AYCB,BOP,BOZK,BZMD,CBKF,HNRCU,NYCB,SCBBANK,SCCB,XCYH,XXBANK,XYBANK,ZZBANK,HBC,HKB,HURCB,WHRCB,HNRCC,DRCBCL,GDRCC,GLBANK,GRCB,NHB,SDEB,SRCB,XLBANK,BGB,GXRCU,LZCCB,CCQTGB,CDCB,CQBANK,CRCBANK,CDRCB,CGNB,DYCB,GYCB,LSCCB,PZHCCB,SCRCU,YBCCB,ZGCCB,GZRCU,ZYCBANK,YNRCC,YXCCB,CABANK,SXRCCU,XABANK,GSRCU,LZYH,NXRCU,SZSBK".split(',')
+path = 'F:\\PSD2.0\\bankalipay\\sprite\\images\\'
+for file in os.listdir(path):
+    if os.path.isfile(os.path.join(path,file))==True:
+        _baseName = os.path.basename(file)
+        _id = int(_baseName[9:_baseName.index('.')])
+        _newName = _reName[_id - 1 ] + '.png'
+        os.rename(os.path.join(path,file),os.path.join(path,_newName))
+</code></pre>
+
+<!-- more -->
+
+<p>python，nodejs, php?</p>
+
+<p>编辑器是python，用python吧！google 一番，改一改，成了。</p>
+
+<p>142个银行啊，有没有?</p>
+
+<p>一个一个处理，辅助线一条一条地拉？够蛋疼，还要重命名有没有，还要切logo出来有没有，悲催了……</p>
+
+<hr />
+
+<p>一定要学一门有io操作的语言旁身，蛋疼君！</p>
+
+<p>ps： 银行数据</p>
+
+<p><a href="http://ishare.iask.sina.com.cn/f/37741859.html">http://ishare.iask.sina.com.cn/f/37741859.html</a></p>
+
+<p><img src="http://b.hiphotos.bdimg.com/album/pic/item/f9198618367adab40b85e2ae8ad4b31c8601e482.jpg" alt="" /></p>
+
+<hr />
+
+<p><img src="http://f.hiphotos.bdimg.com/album/pic/item/83025aafa40f4bfbde8767b9024f78f0f6361883.jpg" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[python概念转换dictionary、tuple、和 list]]></title>
+    <link href="http://blog.w3cub.com/blog/2012/06/16/python-starter-for-jser/"/>
+    <updated>2012-06-16T13:29:31+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2012/06/16/python-starter-for-jser</id>
+    <content type="html"><![CDATA[<p>1.**Dictionar **–&gt;Object json</p>
+
+<pre><code class="language-py">d = {"server":"mpilgrim", "database":"master"}
+</code></pre>
+
+<p>Dictionary 的 key 是大小写敏感的.</p>
+
+<pre><code class="language-py">d["server"]
+
+del d["server"] #删除单个
+
+d.clear()  #清空
+</code></pre>
+<!-- more -->
+
+<p>2.<strong>List</strong>–&gt;String Array</p>
+
+<hr />
+
+<pre><code class="language-py">
+li = ["a", "b", "mpilgrim", "z", "example"]
+li[0] #start
+li[-1] #end
+li[-3] == li[5 - 3] == li[2]
+li[1:3]
+
+</code></pre>
+<p>==&gt;[‘b’, ‘mpilgrim’]</p>
+
+<pre><code class="language-py">
+li[1:-1]
+</code></pre>
+
+<p>==&gt;[‘b’, ‘mpilgrim’, ‘z’]</p>
+
+<pre><code class="language-py">
+li[:3]  # ==&gt;li[0:3]
+li[3:] #==&gt;li[3:len(li)]
+li[:] # ==&gt;li[0:len(li)]
+</code></pre>
+
+<hr />
+
+<pre><code class="language-py">li.append("new")   #then   remove('new') ==&gt; unchange
+</code></pre>
+
+<p>//==&gt;[‘a’, ‘b’, ‘mpilgrim’, ‘z’, ‘example’, ‘new’]</p>
+
+<pre><code class="language-py">li.insert(2, "new")
+</code></pre>
+
+<p>//==&gt;[‘a’, ‘b’, ‘<strong>new</strong>’, ‘mpilgrim’, ‘z’, ‘example’, ‘new’]</p>
+
+<pre><code class="language-py">li.extend(["two", "elements"])
+
+# ==&gt; 
+
+li.append("two")
+li.append("elements")
+</code></pre>
+
+<p><img src="http://g.hiphotos.baidu.com/space/pic/item/242dd42a2834349b85f2952fc9ea15ce37d3bea0.jpg" alt="" /></p>
+
+<hr />
+
+<p>搜索 list  index –&gt;indexOf</p>
+<pre><code class="language-py">li.index("example")
+# //==&gt;+number
+</code></pre>
+
+<pre><code class="language-py">li.index("c") #//==&gt;  error
+
+"c" in li  #//==&gt;False
+
+</code></pre>
+<hr />
+
+<pre><code class="language-py">li +=['cc','bb']
+
+li =li+ li
+
+li = li*2
+</code></pre>
+
+<hr />
+
+<p><strong>Tuple</strong>是不可变的 list</p>
+
+<p><img src="http://e.hiphotos.baidu.com/space/pic/item/e4dde71190ef76c61bb701819d16fdfaaf516737.jpg" alt="" /></p>
+
+<p><a href="http://woodpecker.org.cn/diveintopython/index.html">深入 Python :Dive Into Python 中文版</a></p>
+]]></content>
+  </entry>
+  
+</feed>

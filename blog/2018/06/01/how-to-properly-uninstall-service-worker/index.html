@@ -1,0 +1,621 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>How to properly uninstall Service Worker？ - 泛前端开发</title>
+	<meta name="author" content="Terry Cai">
+	
+	<meta name="description" content="Jun 01, 2018 javascript Comments How to Properly Uninstall Service Worker？ 如何正确地卸载Service Worker？ 以下链接， Google Developers Service Worker工作原理：
+https &hellip;">
+	<meta name="keywords" content="Service Worker, cache">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<script src="/assets/application-555523497a2cb672b8f83344414d95c89fc0ec37e583fccb3b2d7b79f9025439.js" integrity="sha256-VVUjSXostnK4+DNEQU2VyJ/A7Dflg/zLOy17efkCVDk=" crossorigin="anonymous" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" integrity="sha256-iZM+puF27rU6KblbX6VUFKCI3yfW1qG+EMPnJF1MM2o=" crossorigin="anonymous" href="/assets/application-89933ea6e176eeb53a29b95b5fa55414a088df27d6d6a1be10c3e7245d4c336a.css">
+	
+
+</head>
+
+
+<body class="blog">
+	<div class="container">
+		<div class="sidebar">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+		<img src="/assets/images/avatar.jpeg" style="width: 160px;" />
+	
+</div>
+<h1><a href="/">泛前端开发</a></h1>
+<p class="subtitle">I am Terry，习惯阅读无注释代码</p>
+<nav id="main-nav"><ul class="main">
+	<li class=""><a href="/">主页  Blog</a></li>
+    <li class=""><a href="/blog/archives">归档  Archives</a></li>
+    <li class="inline"><a href="/blog/categories">分类  Categories</a></li>
+    <li class="inline" ><a href="/blog/tags">标签  Tags</a></li>
+    
+    <li><a href="/slides">演讲 talks</a></li>
+    
+    <li><a href="/about">关于  About</a></li>
+</ul>
+<ul class="main">
+    <li><a href="http://site.w3cub.com/" target="_blank">前端网址导航  Navs</a></li>
+    <li><a href="/tools">前端工具箱  Tools</a></li>
+</ul></nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+
+		
+		<a class="weibo" href="http://weibo.com/328765211" target="_blank" title="Weibo">Weibo</a>
+		
+		
+			<a class="facebook" href="http://www.facebook.com/terry.cai.7921" target="_blank" title="Facebook">Facebook</a>
+		
+		
+		
+
+		
+
+		
+			<a class="github" href="https://github.com/icai" target="_blank" title="GitHub">GitHub</a>
+		
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" target="_blank" title="RSS">RSS</a>
+		
+
+
+
+	</div>
+</nav>
+
+<section class="aboutme">
+  <p class="motto">
+    <script>
+    var mottos = ["多数人25岁就死了，一直到75岁才埋。——Horus9527 译","人民不应该怕政府，政府才应该怕人民。","天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。  ——老子","爱国者的责任就是保护国家不受政府侵犯——托马斯·潘恩","计算机就跟比基尼一样，省去了人们许多的胡思乱想。 ——萨姆·尤因","想了解一个人的个性，那就赋予他权力。 ——林肯","如果你怀疑自己，那么你的立足点确实不稳固了。","在民主和独裁的斗争中，纸上的宪法敌不过独裁者的刺刀。——林语堂","国家是危险的机器 ——华盛顿","冬天已经到来，春天还会远吗？ ——雪莱","工作撵跑三个魔鬼：无聊、堕落和贫穷。","老大哥在看着你。——奥威尔","宗教上最深的误解——认为坏人没有宗教。——尼采","国家是为人而建立，而人不是为国家而生存。——爱因斯坦","肚子大不可怕，可怕的是肚子里没有好东西。——加菲猫","任何有可能出错的事将会出错 ——墨菲定理","管得最少，就是最好的政府。——大卫·梭罗","人人生而平等 ——美国独立宣言","其实人跟树是一样的，越是向往高处的阳光，它的根就越要伸向黑暗的地底。——尼采"];
+    document.writeln(mottos[Math.floor(Math.random() * mottos.length)])
+    </script>
+  </p>
+</section>
+</header>				
+			</div>
+		</div>
+		<div id="topbar" class="topbar">
+			<div class="btn-bar"><i></i></div> 
+			<h1><a href="/">泛前端开发</a></h1> 
+			<a class="me" href="/about/"><img src="/assets/images/avatar.jpeg" alt="泛前端开发"></a>
+		</div>
+		<div id="sidebar-mask" style="display: none;"></div>
+		<div class="main-col">
+			
+				
+			
+			<div class="main-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+
+
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+
+<time datetime="2018-06-01T23:10:43+08:00" data-updated="true" itemprop="datePublished">Jun 01, 2018</time></div>
+		<div class="cats">
+
+
+	javascript
+
+
+</div>
+		
+
+		
+			<span class="comments"><a href="#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name">How to Properly Uninstall Service Worker？
+	
+	</h1>
+	
+
+	
+	<hr />
+	<div class="entry-content" itemprop="articleBody"><p>如何正确地卸载Service Worker？</p>
+
+<p>以下链接， Google Developers Service Worker工作原理：<br />
+https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#updates</p>
+
+<p>但是假如某一天你网站不需要 Service Worker，如何正确地卸载呢？</p>
+
+<p>以下以 create-react-app 为例子:</p>
+
+<!-- more -->
+
+<ul>
+  <li>千万不要直接从服务器干掉 service-worker.js （sw.js），或者去掉 sw-precache-webpack-plugin 插件直接build。</li>
+</ul>
+
+<ol>
+  <li>假如你服务器是增量更新的，<br />
+<img src="https://user-images.githubusercontent.com/1061012/40846563-8b73ce96-65ec-11e8-8781-e374c38c77ba.png" alt="image" /></li>
+</ol>
+
+<p>那么你的服务器文件service-worker.js永远都在，假如用户之前访问了你的网站，并且用户不清缓存的话，cache就永远都在了，你怎么更新，用户还是访问旧的版本。</p>
+
+<ol>
+  <li>你说把你服务器的 service-worker.js 干掉，那么假如用户之前访问过呢？本地有一份service-worker.js，那么按照service-worker工作原理，本地一直生效，不管你网站怎么更新，用户看到的依旧是旧的内容。</li>
+</ol>
+
+<p>service-worker.js</p>
+
+<pre><code class="language-js">
+'use strict';
+
+var precacheConfig = [
+["/index.html","a16310808c31e9e89b8d72aa2ddb058c"],
+["/plugin.dll.0cf858ac.js","7268282b6a4415b541c4658c1478febc"],
+["/vendor.dll.830d2c27.js","097dfeec5dda4f277752cb36b5d548ee"]
+];
+var cacheName = 'sw-precache-v3-sw-precache-webpack-plugin-' + (self.registration ? self.registration.scope : '');
+
+
+var ignoreUrlParametersMatching = [/^utm_/];
+
+
+
+var addDirectoryIndex = function (originalUrl, index) {
+    var url = new URL(originalUrl);
+    if (url.pathname.slice(-1) === '/') {
+      url.pathname += index;
+    }
+    return url.toString();
+  };
+
+var cleanResponse = function (originalResponse) {
+    // If this is not a redirected response, then we don't have to do anything.
+    if (!originalResponse.redirected) {
+      return Promise.resolve(originalResponse);
+    }
+
+    // Firefox 50 and below doesn't support the Response.body stream, so we may
+    // need to read the entire body to memory as a Blob.
+    var bodyPromise = 'body' in originalResponse ?
+      Promise.resolve(originalResponse.body) :
+      originalResponse.blob();
+
+    return bodyPromise.then(function(body) {
+      // new Response() is happy when passed either a stream or a Blob.
+      return new Response(body, {
+        headers: originalResponse.headers,
+        status: originalResponse.status,
+        statusText: originalResponse.statusText
+      });
+    });
+  };
+
+var createCacheKey = function (originalUrl, paramName, paramValue,
+                           dontCacheBustUrlsMatching) {
+    // Create a new URL object to avoid modifying originalUrl.
+    var url = new URL(originalUrl);
+
+    // If dontCacheBustUrlsMatching is not set, or if we don't have a match,
+    // then add in the extra cache-busting URL parameter.
+    if (!dontCacheBustUrlsMatching ||
+        !(url.pathname.match(dontCacheBustUrlsMatching))) {
+      url.search += (url.search ? '&amp;' : '') +
+        encodeURIComponent(paramName) + '=' + encodeURIComponent(paramValue);
+    }
+
+    return url.toString();
+  };
+
+var isPathWhitelisted = function (whitelist, absoluteUrlString) {
+    // If the whitelist is empty, then consider all URLs to be whitelisted.
+    if (whitelist.length === 0) {
+      return true;
+    }
+
+    // Otherwise compare each path regex to the path of the URL passed in.
+    var path = (new URL(absoluteUrlString)).pathname;
+    return whitelist.some(function(whitelistedPathRegex) {
+      return path.match(whitelistedPathRegex);
+    });
+  };
+
+var stripIgnoredUrlParameters = function (originalUrl,
+    ignoreUrlParametersMatching) {
+    var url = new URL(originalUrl);
+    // Remove the hash; see https://github.com/GoogleChrome/sw-precache/issues/290
+    url.hash = '';
+
+    url.search = url.search.slice(1) // Exclude initial '?'
+      .split('&amp;') // Split into an array of 'key=value' strings
+      .map(function(kv) {
+        return kv.split('='); // Split each 'key=value' string into a [key, value] array
+      })
+      .filter(function(kv) {
+        return ignoreUrlParametersMatching.every(function(ignoredRegex) {
+          return !ignoredRegex.test(kv[0]); // Return true iff the key doesn't match any of the regexes.
+        });
+      })
+      .map(function(kv) {
+        return kv.join('='); // Join each [key, value] array into a 'key=value' string
+      })
+      .join('&amp;'); // Join the array of 'key=value' strings into a string with '&amp;' in between each
+
+    return url.toString();
+  };
+
+
+var hashParamName = '_sw-precache';
+var urlsToCacheKeys = new Map(
+  precacheConfig.map(function(item) {
+    var relativeUrl = item[0];
+    var hash = item[1];
+    var absoluteUrl = new URL(relativeUrl, self.location);
+    var cacheKey = createCacheKey(absoluteUrl, hashParamName, hash, /\.\w{8}\./);
+    return [absoluteUrl.toString(), cacheKey];
+  })
+);
+
+function setOfCachedUrls(cache) {
+  return cache.keys().then(function(requests) {
+    return requests.map(function(request) {
+      return request.url;
+    });
+  }).then(function(urls) {
+    return new Set(urls);
+  });
+}
+
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return setOfCachedUrls(cache).then(function(cachedUrls) {
+        return Promise.all(
+          Array.from(urlsToCacheKeys.values()).map(function(cacheKey) {
+            // If we don't have a key matching url in the cache already, add it.
+            if (!cachedUrls.has(cacheKey)) {
+              var request = new Request(cacheKey, {credentials: 'same-origin'});
+              return fetch(request).then(function(response) {
+                // Bail out of installation unless we get back a 200 OK for
+                // every request.
+                if (!response.ok) {
+                  throw new Error('Request for ' + cacheKey + ' returned a ' +
+                    'response with status ' + response.status);
+                }
+
+                return cleanResponse(response).then(function(responseToCache) {
+                  return cache.put(cacheKey, responseToCache);
+                });
+              });
+            }
+          })
+        );
+      });
+    }).then(function() {
+      
+      // Force the SW to transition from installing -&gt; active state
+      return self.skipWaiting();
+      
+    })
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  var setOfExpectedUrls = new Set(urlsToCacheKeys.values());
+
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return cache.keys().then(function(existingRequests) {
+        return Promise.all(
+          existingRequests.map(function(existingRequest) {
+            if (!setOfExpectedUrls.has(existingRequest.url)) {
+              return cache.delete(existingRequest);
+            }
+          })
+        );
+      });
+    }).then(function() {
+      
+      return self.clients.claim();
+      
+    })
+  );
+});
+
+
+self.addEventListener('fetch', function(event) {
+  if (event.request.method === 'GET') {
+    // Should we call event.respondWith() inside this fetch event handler?
+    // This needs to be determined synchronously, which will give other fetch
+    // handlers a chance to handle the request if need be.
+    var shouldRespond;
+
+    // First, remove all the ignored parameters and hash fragment, and see if we
+    // have that URL in our cache. If so, great! shouldRespond will be true.
+    var url = stripIgnoredUrlParameters(event.request.url, ignoreUrlParametersMatching);
+    shouldRespond = urlsToCacheKeys.has(url);
+
+    // If shouldRespond is false, check again, this time with 'index.html'
+    // (or whatever the directoryIndex option is set to) at the end.
+    var directoryIndex = 'index.html';
+    if (!shouldRespond &amp;&amp; directoryIndex) {
+      url = addDirectoryIndex(url, directoryIndex);
+      shouldRespond = urlsToCacheKeys.has(url);
+    }
+
+    // If shouldRespond is still false, check to see if this is a navigation
+    // request, and if so, whether the URL matches navigateFallbackWhitelist.
+    var navigateFallback = '/index.html';
+    if (!shouldRespond &amp;&amp;
+        navigateFallback &amp;&amp;
+        (event.request.mode === 'navigate') &amp;&amp;
+        isPathWhitelisted(["^(?!\\/__).*"], event.request.url)) {
+      url = new URL(navigateFallback, self.location).toString();
+      shouldRespond = urlsToCacheKeys.has(url);
+    }
+
+    // If shouldRespond was set to true at any point, then call
+    // event.respondWith(), using the appropriate cache key.
+    if (shouldRespond) {
+      event.respondWith(
+        caches.open(cacheName).then(function(cache) {
+          return cache.match(urlsToCacheKeys.get(url)).then(function(response) {
+            if (response) {
+              return response;
+            }
+            throw Error('The cached response that was expected is missing.');
+          });
+        }).catch(function(e) {
+          // Fall back to just fetch()ing the request if some unexpected error
+          // prevented the cached response from being valid.
+          console.warn('Couldn\'t serve response for "%s" from cache: %O', event.request.url, e);
+          return fetch(event.request);
+        })
+      );
+    }
+  }
+});
+
+</code></pre>
+
+<p>index.js 入口文件</p>
+
+<p>https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/template/src/index.js</p>
+
+<pre><code class="language-js">import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+//----vs-----
+serviceWorker.register({
+    onUpdate: async (registration) =&gt; {
+        await registration.update();
+        message.info("网站更新完成, 请刷新页面: " + moment().format('YYYY-MM-DD HH:mm:ss'), 0.5, () =&gt; {
+            window.location.reload();
+        });
+    },
+    onSuccess: () =&gt; {}
+});
+
+
+
+</code></pre>
+
+<p>假如你引入了serviceWorker文件, 并发布了，</p>
+
+<p>https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/template/src/serviceWorker.js</p>
+
+<h3 id="正确做法是">正确做法是：</h3>
+<p><code>serviceWorker.register();</code> 改成 <code>serviceWorker.unregister();</code> <br />
+但是同时千万要记住 要保留  sw-precache-webpack-plugin 去做webpack 构建（目的是为了生成新的service-worker.js，触发更新)。按照人的<strong>既定思维</strong>，既然不要了，那么当然要移除。</p>
+
+<p>假如移除了  sw-precache-webpack-plugin,  你怎么 生成新版本的 service-worker.js，还有，没有新版本 service-worker.js 又怎么会更新你的代码了，这里似乎出现<strong>双重陷阱</strong>，但是当你理解了service-worker.js 生命周期原理后，一切都可以理解。</p>
+
+<h3 id="最后总结">最后总结：</h3>
+<p>在入口加入:</p>
+
+<p>serviceWorker.unregister();</p>
+
+<p>service-worker.js 文件 依旧需要更新。</p>
+
+<p>假如真的不想引入 sw-precache-webpack-plugin 做webpack构建的话，请把服务器上面的<br />
+service-worker.js  <code>precacheConfig</code> 清空</p>
+<pre><code class="language-js">var precacheConfig = [
+];
+</code></pre>
+
+<p>https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#opting-out-of-caching</p>
+
+<p>If you would prefer not to enable service workers prior to your initial production deployment, then remove the call to registerServiceWorker() from src/index.js.</p>
+
+<p>If you had previously enabled service workers in your production deployment and have decided that you would like to disable them for all your existing users, you can swap out the call to registerServiceWorker() in src/index.js first by modifying the service worker import:</p>
+<pre><code>import { unregister } from './registerServiceWorker';
+</code></pre>
+
+<p>and then call unregister() instead. After the user visits a page that has unregister(), the service worker will be uninstalled. Note that depending on how /service-worker.js is served, it may take up to 24 hours for the cache to be invalidated.</p>
+
+<p>create-react-app 提示的测试服务器<br />
+<img src="https://user-images.githubusercontent.com/1061012/40872668-b5ae9a72-6684-11e8-9d37-ba7d3fed427e.png" alt="image" /><br />
+对service-worker.js会有HTTP缓存，部署简单nginx 服务器进行测试</p>
+
+<pre><code class="language-conf">    server {
+       listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+       location / {
+           root   D:\yourproject\build;
+           index  index.html index.htm;
+           # proxy_no_cache 1;
+           add_header Cache-Control "no-cache";
+           try_files $uri $uri/ /index.html;
+       }
+
+       location /service\-worker\.js {
+            expires -1;
+            add_header Pragma "no-cache";
+       }
+    }
+
+</code></pre>
+
+<pre><code>serviceWorker.register({
+    onUpdate: async (registration) =&gt; {
+        await registration.update(); // 这里很重要
+        message.info("网站更新完成, 请刷新页面: " + moment().format('YYYY-MM-DD HH:mm:ss'), 0.5, () =&gt; {
+            window.location.reload();
+        });
+    },
+    onSuccess: () =&gt; {}
+});
+
+</code></pre>
+
+<h3 id="延伸阅读">延伸阅读：</h3>
+
+<p>https://lavas.baidu.com/guide/v2/advanced/service-worker#%E6%B3%A8%E5%86%8C-service-worker-%E6%89%A9%E5%B1%95<br />
+注册 Service Worker (扩展)</p>
+
+<p>提示：这部分内容由 Lavas 内部处理，并不需要开发者进行参与，仅仅作为解答开发者疑问的扩展阅读存在。</p>
+
+<p>Service Worker 编写完成后，还需要进行注册才能真正生效。常规的注册代码能够在各类 Service Worker 教程或文章中找到，但在实际项目中有一个不得不考虑的问题，使得我们必须对注册代码进行一些改动，那就是 Service Worker 更新 的问题。</p>
+
+<p>https://github.com/lavas-project/sw-register-webpack-plugin</p>
+
+<p>离线指南<br />
+https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network</p>
+
+<p>假如熟悉Service Worker 缓存机制的话，那么为什么要卸载呢 ？</p>
+
+<p>本文 ： https://github.com/icai/icai.github.io/issues/1</p>
+
+<p>-EOF-</p>
+
+</div>
+
+	
+		<br>
+<br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">Creative Commons BY-NC-ND 3.0</a></br>
+	
+
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+	
+	<a class="addthis_button_sinaweibo"></a>
+	
+	
+	
+	<a class="addthis_button_twitter"></a>
+	
+	
+	
+	<a class="addthis_button_compact"></a>
+	<a class="addthis_counter addthis_bubble_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-558841b45b591663"></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner">Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
+Copyright &copy; 2018
+
+    Terry Cai
+
+</br></footer>
+			
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'w3cub';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker/';
+        var disqus_url = 'http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-64597109-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+			<link rel="stylesheet" type="text/css" href="/assets/prism/prism.css"/>
+			<script src="/assets/prism/prism.js" type="text/javascript"></script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
+			</script>
+			<script type="text/javascript" src="http://cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		</div>
+	</div>
+</body>
+</html>

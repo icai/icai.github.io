@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: ruby | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/ruby/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2017-11-05T15:42:34+08:00</updated>
+  <updated>2018-08-30T14:52:36+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -20,26 +20,14 @@
     <id>http://blog.w3cub.com/blog/2015/06/28/rvm-help</id>
     <content type="html"><![CDATA[<p>常用命令（Action）：</p>
 
-
-
-
 <pre><code>list        :: show currently installed rubies, interactive output.
 install     :: install one or many ruby versions
 use         :: setup current shell to use a specific ruby version
 </code></pre>
 
-
-
-
 <!-- more -->
 
-
-
-
 <p>详细帮助文档（rvm -h）：</p>
-
-
-
 
 <pre><code>= rvm
 
@@ -257,7 +245,7 @@ limitations under the License.
   Other topics of documentation available with 'rvm help topic':
 
       alt color upgrade-notes 
-
+  
 
   For additional information please visit RVM's documentation website:
 
@@ -268,7 +256,6 @@ limitations under the License.
 
       http://webchat.freenode.net/?channels=rvm
 </code></pre>
-
 ]]></content>
   </entry>
   

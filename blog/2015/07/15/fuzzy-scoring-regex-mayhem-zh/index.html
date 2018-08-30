@@ -19,8 +19,8 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script type="text/javascript" src="/assets/application-310321f5474cf276181a5652a99926e03e1f068dad80b82ce7a9f6fadb49c8e2.js"></script>
-	<link type="text/css" rel="stylesheet" href="/assets/application-f15872c481517f1e86b0490f734f9b2fb688bcc450f4fc63d97faa10187b5357.css">
+	<script src="/assets/application-555523497a2cb672b8f83344414d95c89fc0ec37e583fccb3b2d7b79f9025439.js" integrity="sha256-VVUjSXostnK4+DNEQU2VyJ/A7Dflg/zLOy17efkCVDk=" crossorigin="anonymous" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" integrity="sha256-iZM+puF27rU6KblbX6VUFKCI3yfW1qG+EMPnJF1MM2o=" crossorigin="anonymous" href="/assets/application-89933ea6e176eeb53a29b95b5fa55414a088df27d6d6a1be10c3e7245d4c336a.css">
 	
 
 </head>
@@ -165,18 +165,17 @@
 
 	
 	<hr />
-	<div class="entry-content" itemprop="articleBody"><p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing &ldquo;uni&rdquo; into a country input field actually intends to select? It could match any of these:</p>
+	<div class="entry-content" itemprop="articleBody"><p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing “uni” into a country input field actually intends to select? It could match any of these:</p>
 
 <p>自动完成一直都是一个没完没了的问题。谁能准确地说出当一个地球人在一个国家输入框输入“uni”打算选什么？可能会出现以下情况：</p>
 
 <ul>
-<li>Tanzania, [<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Republic of</li>
-<li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Arab Emirates</li>
-<li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Kingdom</li>
-<li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted States</li>
-<li>T[<strong>u</strong>][<strong>n</strong>][<strong>i</strong>]sia</li>
+  <li>Tanzania, [<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Republic of</li>
+  <li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Arab Emirates</li>
+  <li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Kingdom</li>
+  <li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted States</li>
+  <li>T[<strong>u</strong>][<strong>n</strong>][<strong>i</strong>]sia</li>
 </ul>
-
 
 <p>Of course, it’s probably not the last one, but that right there is a human intuition that we often forget to instil into these UI interactions.</p>
 
@@ -184,18 +183,17 @@
 
 <!-- more -->
 
-
-<p>We can divine what the user <em>probably</em> intends most of the time but it&rsquo;ll always be a game of heuristics. Most solutions shy away from this game, opting instead to match the query letter-for-letter in each potential value, and this is usually sufficient, but without any other logic not only will “la” match “Latvia” but also “Angola”. And usually “Ltvia” will match nothing whatsoever, even though it’s seemingly obvious what the user is trying to type.</p>
+<p>We can divine what the user <em>probably</em> intends most of the time but it’ll always be a game of heuristics. Most solutions shy away from this game, opting instead to match the query letter-for-letter in each potential value, and this is usually sufficient, but without any other logic not only will “la” match “Latvia” but also “Angola”. And usually “Ltvia” will match nothing whatsoever, even though it’s seemingly obvious what the user is trying to type.</p>
 
 <p>我们可以推断用户在这上面花费的时间，显然这是一个启发式游戏。大多数解决方案都是尝试匹配字母之间可能潜在的值，通常已经足够了，“la” 没有任何逻辑，会匹配 “Latvia” 也会匹配 “Angola”。但绝不会匹配 “Ltvia”，尽管“Ltvia”看似是用户想要的输入类型。</p>
 
-<p>If you try implementing a fuzzy matcher to solve this, the first revelation is that you can&rsquo;t just boolean-match the query against the data like so many solutions do. You need to score each potential match. Hopefully, in the case of country selection, you end up with a sensible subset of countries that match the query to some reasonable degree. This scoring is necessary so that you know what you&rsquo;re putting at the top of the list. When typing &ldquo;U&rdquo;, the user expects Ukraine or Uzbekistan sooner than Mauritius or Sudan, for example.</p>
+<p>If you try implementing a fuzzy matcher to solve this, the first revelation is that you can’t just boolean-match the query against the data like so many solutions do. You need to score each potential match. Hopefully, in the case of country selection, you end up with a sensible subset of countries that match the query to some reasonable degree. This scoring is necessary so that you know what you’re putting at the top of the list. When typing “U”, the user expects Ukraine or Uzbekistan sooner than Mauritius or Sudan, for example.</p>
 
 <p>假如你想用模糊匹配去解决这个问题。首先，你不能像往常那样用boolean匹配去请求查询数据。你需要计算每个存在匹配的分数。 在选择国家情况下，你最终需要请求匹配查询一些合符逻辑的合理的国家子集。那么这分数是非常有必要的，以便我们可以把它们排到列表的顶部。</p>
 
 <p>（译注, boolean匹配 <a href="https://github.com/bevacqua/fuzzysearch">https://github.com/bevacqua/fuzzysearch</a>）</p>
 
-<p>Oddly, if you looked at the most common autocompletion widget out there (jQuery UI), it <a href="http://jsfiddle.net/2c11xknm/embedded/result,js,html">doesn&rsquo;t appear</a> to follow this intuition.</p>
+<p>Oddly, if you looked at the most common autocompletion widget out there (jQuery UI), it <a href="http://jsfiddle.net/2c11xknm/embedded/result,js,html">doesn’t appear</a> to follow this intuition.</p>
 
 <p>奇怪的是，假如见过最常用的jQuery UI 自动完成（autocompletion）插件，他并没有解决这个问题。</p>
 
@@ -203,9 +201,9 @@
 
 <p>即使是最优雅的解决方案，都趋向于忽视模糊处理错误，像“untied states” （united states） 和 “leichtenstein” （liechtenstein ）。当然， 就像一个人输入一个国家的名字，他们不熟悉这个国家可能性是非常很低。但人们仍然会犯错误。</p>
 
-<p>I&rsquo;ve been intrigued by this topic for quite a while and it&rsquo;s why I originally made <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a>. It solves the problem quite well, I think, and it does so in a pretty transparent way, with scores applied for various qualities such as the index of the query within the target string (&ldquo;king&rdquo; scores higher than &ldquo;dom&rdquo; in &ldquo;kingdom&rdquo;, for example), but it&rsquo;s still a quite a lot of code for such a tiny part of an overall user experience.</p>
+<p>I’ve been intrigued by this topic for quite a while and it’s why I originally made <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a>. It solves the problem quite well, I think, and it does so in a pretty transparent way, with scores applied for various qualities such as the index of the query within the target string (“king” scores higher than “dom” in “kingdom”, for example), but it’s still a quite a lot of code for such a tiny part of an overall user experience.</p>
 
-<p>我一直被这个话题吸引了很长时间，也是我写 <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a> 的原因。它可以很好地处理类似问题，我想，他的原理是非常显而易见的，就是通过分数去区分不同品质（把分数应用于品质）例如，目标字符串查询的索引(正如在查询“kingdom” &ldquo;的时候，king"的分数比 "dom"高)。但这还是需要相当多的代码去实现这小部分，相对于这样一个整体用户体验的而言。</p>
+<p>我一直被这个话题吸引了很长时间，也是我写 <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a> 的原因。它可以很好地处理类似问题，我想，他的原理是非常显而易见的，就是通过分数去区分不同品质（把分数应用于品质）例如，目标字符串查询的索引(正如在查询“kingdom” “的时候，king”的分数比 “dom”高)。但这还是需要相当多的代码去实现这小部分，相对于这样一个整体用户体验的而言。</p>
 
 <p>I have once again been playing with this problem (thanks to a certain <a href="https://twitter.com/codepo8/status/572863924887945216">tweet</a>) and have so wanted to come up with something stupefyingly graceful.</p>
 
@@ -219,11 +217,9 @@
 
 <p>Warning： 别分心，不然效率极低的，bebebe～～～</p>
 
-<a name="Let...s.begin."></a>
-<h2>Let’s begin!</h2>
+<h2 id="lets-begin">Let’s begin!</h2>
 
-<a name="L.................."></a>
-<h2>我们入正题：</h2>
+<p>##我们入正题：</p>
 
 <p>A static France might look like this:</p>
 
@@ -483,7 +479,7 @@ score('nope');    // =&gt; 0
 
 <p>These seem like sensible enough scores, generally, but we’re more interested in autocompletion, and so there’s an obvious predictive element there. If a user types ‘o’ then that should probably score higher than ‘g’ if we’re testing against ‘omg’, but with the above mechanism they both receive a standard 10:</p>
 
-<p>这似乎是可感知的足够的分数，一般，但我们在自动完成更感兴趣，所以有一个明显的预测元素的存在。当我们我们测试‘omg’时，如果用户键入"o"那应该得分高于"g"，但上述方法都接受标准的10：</p>
+<p>这似乎是可感知的足够的分数，一般，但我们在自动完成更感兴趣，所以有一个明显的预测元素的存在。当我们我们测试‘omg’时，如果用户键入”o”那应该得分高于”g”，但上述方法都接受标准的10：</p>
 
 <pre><code>var score = createFuzzyScorer('omg');
 
@@ -559,9 +555,9 @@ for (var i = 0, l = captures.length; i &lt; l; i += 3) {
 });
 </code></pre>
 
-<p>This means we can iterate through <code>data</code> on every relevant input event, and call the <code>score()</code>method with the current query. We can then bundle this into a <em>filter->sort->slice</em> flow to get our list of sensible suggestions:</p>
+<p>This means we can iterate through <code>data</code> on every relevant input event, and call the <code>score()</code>method with the current query. We can then bundle this into a <em>filter-&gt;sort-&gt;slice</em> flow to get our list of sensible suggestions:</p>
 
-<p>这意味着我们可以遍历每个相关的输入事件的 data ，调用 score() 方法来实现当前查询。我们可以把这变成一个 <em>filter->sort->slice</em> 得出我们列出的有判断力的建议：</p>
+<p>这意味着我们可以遍历每个相关的输入事件的 data ，调用 score() 方法来实现当前查询。我们可以把这变成一个 <em>filter-&gt;sort-&gt;slice</em> 得出我们列出的有判断力的建议：</p>
 
 <pre><code>var sorted = data.filter(function(item) {
 
@@ -632,6 +628,7 @@ var scorers = [
 <hr />
 
 <p>最后如有漏译，错译，欢迎指正。</p>
+
 </div>
 
 	
@@ -669,7 +666,7 @@ var scorers = [
 			</div>
 			<footer id="footer" class="inner">Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-Copyright &copy; 2017
+Copyright &copy; 2018
 
     Terry Cai
 
@@ -709,6 +706,13 @@ Copyright &copy; 2017
 
 
 
+
+			<link rel="stylesheet" type="text/css" href="/assets/prism/prism.css"/>
+			<script src="/assets/prism/prism.js" type="text/javascript"></script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
+			</script>
+			<script type="text/javascript" src="http://cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 		</div>
 	</div>
 </body>

@@ -8,7 +8,8 @@
 	<title>octopress configuration - 泛前端开发</title>
 	<meta name="author" content="Terry Cai">
 	
-	<meta name="description" content="Jun 20, 2015 octopress jekyll, octopress Comments Octopress Configuration 前言 假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress &hellip;">
+	<meta name="description" content="Jun 20, 2015 octopress jekyll, octopress Comments Octopress Configuration 前言
+假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress &hellip;">
 	<meta name="keywords" content="octopress, install, github">
 	
 	<meta name="HandheldFriendly" content="True">
@@ -19,8 +20,8 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script type="text/javascript" src="/assets/application-310321f5474cf276181a5652a99926e03e1f068dad80b82ce7a9f6fadb49c8e2.js"></script>
-	<link type="text/css" rel="stylesheet" href="/assets/application-f15872c481517f1e86b0490f734f9b2fb688bcc450f4fc63d97faa10187b5357.css">
+	<script src="/assets/application-555523497a2cb672b8f83344414d95c89fc0ec37e583fccb3b2d7b79f9025439.js" integrity="sha256-VVUjSXostnK4+DNEQU2VyJ/A7Dflg/zLOy17efkCVDk=" crossorigin="anonymous" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" integrity="sha256-iZM+puF27rU6KblbX6VUFKCI3yfW1qG+EMPnJF1MM2o=" crossorigin="anonymous" href="/assets/application-89933ea6e176eeb53a29b95b5fa55414a088df27d6d6a1be10c3e7245d4c336a.css">
 	
 
 </head>
@@ -155,19 +156,15 @@
 
 	
 	<hr />
-	<div class="entry-content" itemprop="articleBody"><a name="L......"></a>
-<h2>前言</h2>
-
+	<div class="entry-content" itemprop="articleBody"><h2 id="前言">前言</h2>
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
 
 <!--more-->
 
-
 <hr />
-
 <p>先看一下技术栈：</p>
 
-<p>octopress -> jekyll -> ruby</p>
+<p>octopress -&gt; jekyll -&gt; ruby</p>
 
 <p>Markdown (or Textile), Liquid, HTML &amp; CSS go in. Static sites come out ready for deployment.</p>
 
@@ -175,37 +172,32 @@
 
 <p>所以 安装octopress之前必不可少的是安装Ta的生态环境。</p>
 
-<a name="L......Octopress"></a>
-<h2>安装Octopress</h2>
+<h2 id="安装octopress">安装Octopress</h2>
 
-<a name="L......rvm"></a>
-<h3>安装rvm</h3>
+<h3 id="安装rvm">安装rvm</h3>
 
 <p>打开<a href="https://rvm.io/">rvm</a>首页，打开终端，使用以下命令安装吧。</p>
 
 <pre><code>$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 
 $ \curl -sSL https://get.rvm.io | bash -s stable
+
 </code></pre>
 
 <p><a href="https://en.wikipedia.org/wiki/Ruby_Version_Manager">rvm wiki</a></p>
 
-<a name="L......Ruby"></a>
-<h3>安装Ruby</h3>
+<h3 id="安装ruby">安装Ruby</h3>
 
 <pre><code>$ rvm -h
 $ rvm list
 $ rvm install 2.2.1
 $ rvm use 2.2.1
 </code></pre>
+<p>某些时候会提示，请使用 –bash-login. 使用就OK了。</p>
 
-<p>某些时候会提示，请使用 &ndash;bash-login. 使用就OK了。</p>
+<p>安装完成后可以用ruby –version进行验证</p>
 
-<p>安装完成后可以用ruby &ndash;version进行验证</p>
-
-<a name="L......Octopress"></a>
-<h3>安装Octopress</h3>
-
+<h3 id="安装octopress-1">安装Octopress</h3>
 <p>安装Ruby完成后就按照官方指南安装Octpress</p>
 
 <pre><code>#clone octopress
@@ -221,34 +213,27 @@ $ bundle install
 ##安装octopress默认主题
 $ rake install
 </code></pre>
-
 <hr />
 
 <p>bundle 命令 是 Gemfile 文件用的，和 nodejs 项目的 package.json 类似，都是一键安装依赖包文件。</p>
 
-<a name="L......"></a>
-<h2>部署</h2>
-
+<h2 id="部署">部署</h2>
 <p>接下来需要把Blog部署到github上去，第一步要做的是去<a href="https://github.com/new">github</a>创建一个<code>username.github.io</code>的repo，比如我的就叫<code>icai.github.io</code>。</p>
 
 <p>然后运行以下命令，并依照提示完成github和Octopress的关联</p>
 
 <pre><code>$ rake setup_github_pages
 </code></pre>
-
 <hr />
 
-<a name="L............"></a>
-<h2>创建博客</h2>
+<h2 id="创建博客">创建博客</h2>
 
-<a name="L............"></a>
-<h3>生成博客</h3>
-
+<h3 id="生成博客">生成博客</h3>
 <pre><code>$ rake generate
 $ rake deploy
 </code></pre>
 
-<p>rake 命令 是 Rakefile 文件用的，你在带有Rakefile 目录下执行 rake 命令，
+<p>rake 命令 是 Rakefile 文件用的，你在带有Rakefile 目录下执行 rake 命令，<br />
 当然你可以 <code>rake -T</code> 查看当前所有的rake Task， 或者 rake -h 获取帮助</p>
 
 <p>把生成后的代码上传到github</p>
@@ -257,12 +242,9 @@ $ rake deploy
 $ git commit -m 'create blog'
 $ git push origin source
 </code></pre>
-
 <p>完成后等待一段时间后就能访问<code>http://username.github.io</code>看到自己的博客了</p>
 
-<a name="L............"></a>
-<h3>修改配置</h3>
-
+<h3 id="修改配置">修改配置</h3>
 <p>配置文件路径为<code>~/octopress/_config.yml</code></p>
 
 <p>参考： <a href="https://github.com/octopress/octopress">官方</a></p>
@@ -278,9 +260,7 @@ $ git push origin source
 $ rake deploy
 </code></pre>
 
-<a name="L....................."></a>
-<h3>安装第三方主题</h3>
-
+<h3 id="安装第三方主题">安装第三方主题</h3>
 <p>Octopress有许多第三方主题可以选择，首先在<a href="http://opthemes.com/">这里</a>上寻找喜欢的主题，点击进入对应主题的git，一般在readme上都会有安装流程</p>
 
 <pre><code>#这里以安装allenhsu定制的greyshade主题为例，原作者是shashankmehta
@@ -299,9 +279,7 @@ $ git push origin source
 $ rake deploy
 </code></pre>
 
-<a name="L.................."></a>
-<h3>支持中文标签</h3>
-
+<h3 id="支持中文标签">支持中文标签</h3>
 <p>目前版本的Octopress会在<code>/source/blog/categories</code>下创建一个<code>index.markdown</code>来作为分类的首页，但这个首页在标签有中文时会出现无法跳转的情况，原因是因为在出现中文标签时Octopress会把文件的路径中的中文转换成拼音，而在Category跳转时是直接写了中文路径，结果自然是404。解决方法是自己实现一个分类首页并处理中文。</p>
 
 <p>首先按照<a href="https://kaworu.ch/blog/2013/09/23/categories-page-with-octopress/">这里</a>的方法实现<code>index.html</code></p>
@@ -315,19 +293,15 @@ $ rake deploy
 
 <pre><code>category_url = File.join(category_dir, category.to_url.downcase)
 </code></pre>
-
 <p>这样你的博客就可以支持中文标签的跳转了。</p>
 
 <hr />
 
-<a name="L........."></a>
-<h2>写博客</h2>
+<h2 id="写博客">写博客</h2>
 
 <p>经过上面几部后，博客已经成功搭建，现在就可以开始写博文了。</p>
 
-<a name="L............"></a>
-<h3>创建博文</h3>
-
+<h3 id="创建博文">创建博文</h3>
 <pre><code>#如果用的是终端
 $ rake new_post['title']
 
@@ -336,11 +310,9 @@ $ rake "new_post[title]"
 #或者
 $ rake new_post\['title'\]
 </code></pre>
-
 <p>生成的文件在<code>~/source/_posts</code>目录下</p>
 
-<a name="L............"></a>
-<h3>编辑博文</h3>
+<h3 id="编辑博文">编辑博文</h3>
 
 <pre><code>#...markdown写博文
 
@@ -356,25 +328,22 @@ $ rake deploy
 </code></pre>
 
 <hr />
-
-<a name="L............"></a>
-<h2>参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ul>
-<li><a href="http://octopress.org/">http://octopress.org/</a></li>
-<li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
-<li><a href="https://github.com/msching/msching.github.io">https://github.com/msching/msching.github.io</a></li>
-<li><a href="https://github.com/xiaocong/xiaocong.github.io">https://github.com/xiaocong/xiaocong.github.io</a></li>
-<li><a href="https://help.github.com/articles/using-jekyll-plugins-with-github-pages/">https://help.github.com/articles/using-jekyll-plugins-with-github-pages/</a></li>
-<li><a href="https://github.com/shashankmehta/greyshade">https://github.com/shashankmehta/greyshade</a></li>
-<li><a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a></li>
-<li><a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/</a></li>
-<li><a href="https://msching.github.io/blog/2014/04/11/starting/">https://msching.github.io/blog/2014/04/11/starting/</a></li>
-<li><a href="http://robdodson.me/some-octopress-rake-tips/">http://robdodson.me/some-octopress-rake-tips/</a></li>
-<li><a href="http://jekyllcn.com/docs/templates/">http://jekyllcn.com/docs/templates/</a></li>
-<li><a href="http://rails-practice.com/content/">http://rails-practice.com/content/</a></li>
+  <li>http://octopress.org/</li>
+  <li>https://msching.github.io/blog/2014/04/11/starting/</li>
+  <li>https://github.com/msching/msching.github.io</li>
+  <li>https://github.com/xiaocong/xiaocong.github.io</li>
+  <li>https://help.github.com/articles/using-jekyll-plugins-with-github-pages/</li>
+  <li>https://github.com/shashankmehta/greyshade</li>
+  <li>https://github.com/imathis/octopress</li>
+  <li>http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/</li>
+  <li>https://msching.github.io/blog/2014/04/11/starting/</li>
+  <li>http://robdodson.me/some-octopress-rake-tips/</li>
+  <li>http://jekyllcn.com/docs/templates/</li>
+  <li>http://rails-practice.com/content/</li>
 </ul>
-
 </div>
 
 	
@@ -412,7 +381,7 @@ $ rake deploy
 			</div>
 			<footer id="footer" class="inner">Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
-Copyright &copy; 2017
+Copyright &copy; 2018
 
     Terry Cai
 
@@ -452,6 +421,13 @@ Copyright &copy; 2017
 
 
 
+
+			<link rel="stylesheet" type="text/css" href="/assets/prism/prism.css"/>
+			<script src="/assets/prism/prism.js" type="text/javascript"></script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
+			</script>
+			<script type="text/javascript" src="http://cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 		</div>
 	</div>
 </body>

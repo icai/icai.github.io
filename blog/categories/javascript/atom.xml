@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2017-11-05T15:42:34+08:00</updated>
+  <updated>2018-08-30T14:52:36+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -14,69 +14,437 @@
 
   
   <entry>
+    <title type="html"><![CDATA[How to properly uninstall Service Worker？]]></title>
+    <link href="http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker/"/>
+    <updated>2018-06-01T23:10:43+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker</id>
+    <content type="html"><![CDATA[<p>如何正确地卸载Service Worker？</p>
+
+<p>以下链接， Google Developers Service Worker工作原理：<br />
+https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle#updates</p>
+
+<p>但是假如某一天你网站不需要 Service Worker，如何正确地卸载呢？</p>
+
+<p>以下以 create-react-app 为例子:</p>
+
+<!-- more -->
+
+<ul>
+  <li>千万不要直接从服务器干掉 service-worker.js （sw.js），或者去掉 sw-precache-webpack-plugin 插件直接build。</li>
+</ul>
+
+<ol>
+  <li>假如你服务器是增量更新的，<br />
+<img src="https://user-images.githubusercontent.com/1061012/40846563-8b73ce96-65ec-11e8-8781-e374c38c77ba.png" alt="image" /></li>
+</ol>
+
+<p>那么你的服务器文件service-worker.js永远都在，假如用户之前访问了你的网站，并且用户不清缓存的话，cache就永远都在了，你怎么更新，用户还是访问旧的版本。</p>
+
+<ol>
+  <li>你说把你服务器的 service-worker.js 干掉，那么假如用户之前访问过呢？本地有一份service-worker.js，那么按照service-worker工作原理，本地一直生效，不管你网站怎么更新，用户看到的依旧是旧的内容。</li>
+</ol>
+
+<p>service-worker.js</p>
+
+<pre><code class="language-js">
+'use strict';
+
+var precacheConfig = [
+["/index.html","a16310808c31e9e89b8d72aa2ddb058c"],
+["/plugin.dll.0cf858ac.js","7268282b6a4415b541c4658c1478febc"],
+["/vendor.dll.830d2c27.js","097dfeec5dda4f277752cb36b5d548ee"]
+];
+var cacheName = 'sw-precache-v3-sw-precache-webpack-plugin-' + (self.registration ? self.registration.scope : '');
+
+
+var ignoreUrlParametersMatching = [/^utm_/];
+
+
+
+var addDirectoryIndex = function (originalUrl, index) {
+    var url = new URL(originalUrl);
+    if (url.pathname.slice(-1) === '/') {
+      url.pathname += index;
+    }
+    return url.toString();
+  };
+
+var cleanResponse = function (originalResponse) {
+    // If this is not a redirected response, then we don't have to do anything.
+    if (!originalResponse.redirected) {
+      return Promise.resolve(originalResponse);
+    }
+
+    // Firefox 50 and below doesn't support the Response.body stream, so we may
+    // need to read the entire body to memory as a Blob.
+    var bodyPromise = 'body' in originalResponse ?
+      Promise.resolve(originalResponse.body) :
+      originalResponse.blob();
+
+    return bodyPromise.then(function(body) {
+      // new Response() is happy when passed either a stream or a Blob.
+      return new Response(body, {
+        headers: originalResponse.headers,
+        status: originalResponse.status,
+        statusText: originalResponse.statusText
+      });
+    });
+  };
+
+var createCacheKey = function (originalUrl, paramName, paramValue,
+                           dontCacheBustUrlsMatching) {
+    // Create a new URL object to avoid modifying originalUrl.
+    var url = new URL(originalUrl);
+
+    // If dontCacheBustUrlsMatching is not set, or if we don't have a match,
+    // then add in the extra cache-busting URL parameter.
+    if (!dontCacheBustUrlsMatching ||
+        !(url.pathname.match(dontCacheBustUrlsMatching))) {
+      url.search += (url.search ? '&amp;' : '') +
+        encodeURIComponent(paramName) + '=' + encodeURIComponent(paramValue);
+    }
+
+    return url.toString();
+  };
+
+var isPathWhitelisted = function (whitelist, absoluteUrlString) {
+    // If the whitelist is empty, then consider all URLs to be whitelisted.
+    if (whitelist.length === 0) {
+      return true;
+    }
+
+    // Otherwise compare each path regex to the path of the URL passed in.
+    var path = (new URL(absoluteUrlString)).pathname;
+    return whitelist.some(function(whitelistedPathRegex) {
+      return path.match(whitelistedPathRegex);
+    });
+  };
+
+var stripIgnoredUrlParameters = function (originalUrl,
+    ignoreUrlParametersMatching) {
+    var url = new URL(originalUrl);
+    // Remove the hash; see https://github.com/GoogleChrome/sw-precache/issues/290
+    url.hash = '';
+
+    url.search = url.search.slice(1) // Exclude initial '?'
+      .split('&amp;') // Split into an array of 'key=value' strings
+      .map(function(kv) {
+        return kv.split('='); // Split each 'key=value' string into a [key, value] array
+      })
+      .filter(function(kv) {
+        return ignoreUrlParametersMatching.every(function(ignoredRegex) {
+          return !ignoredRegex.test(kv[0]); // Return true iff the key doesn't match any of the regexes.
+        });
+      })
+      .map(function(kv) {
+        return kv.join('='); // Join each [key, value] array into a 'key=value' string
+      })
+      .join('&amp;'); // Join the array of 'key=value' strings into a string with '&amp;' in between each
+
+    return url.toString();
+  };
+
+
+var hashParamName = '_sw-precache';
+var urlsToCacheKeys = new Map(
+  precacheConfig.map(function(item) {
+    var relativeUrl = item[0];
+    var hash = item[1];
+    var absoluteUrl = new URL(relativeUrl, self.location);
+    var cacheKey = createCacheKey(absoluteUrl, hashParamName, hash, /\.\w{8}\./);
+    return [absoluteUrl.toString(), cacheKey];
+  })
+);
+
+function setOfCachedUrls(cache) {
+  return cache.keys().then(function(requests) {
+    return requests.map(function(request) {
+      return request.url;
+    });
+  }).then(function(urls) {
+    return new Set(urls);
+  });
+}
+
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return setOfCachedUrls(cache).then(function(cachedUrls) {
+        return Promise.all(
+          Array.from(urlsToCacheKeys.values()).map(function(cacheKey) {
+            // If we don't have a key matching url in the cache already, add it.
+            if (!cachedUrls.has(cacheKey)) {
+              var request = new Request(cacheKey, {credentials: 'same-origin'});
+              return fetch(request).then(function(response) {
+                // Bail out of installation unless we get back a 200 OK for
+                // every request.
+                if (!response.ok) {
+                  throw new Error('Request for ' + cacheKey + ' returned a ' +
+                    'response with status ' + response.status);
+                }
+
+                return cleanResponse(response).then(function(responseToCache) {
+                  return cache.put(cacheKey, responseToCache);
+                });
+              });
+            }
+          })
+        );
+      });
+    }).then(function() {
+      
+      // Force the SW to transition from installing -&gt; active state
+      return self.skipWaiting();
+      
+    })
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  var setOfExpectedUrls = new Set(urlsToCacheKeys.values());
+
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return cache.keys().then(function(existingRequests) {
+        return Promise.all(
+          existingRequests.map(function(existingRequest) {
+            if (!setOfExpectedUrls.has(existingRequest.url)) {
+              return cache.delete(existingRequest);
+            }
+          })
+        );
+      });
+    }).then(function() {
+      
+      return self.clients.claim();
+      
+    })
+  );
+});
+
+
+self.addEventListener('fetch', function(event) {
+  if (event.request.method === 'GET') {
+    // Should we call event.respondWith() inside this fetch event handler?
+    // This needs to be determined synchronously, which will give other fetch
+    // handlers a chance to handle the request if need be.
+    var shouldRespond;
+
+    // First, remove all the ignored parameters and hash fragment, and see if we
+    // have that URL in our cache. If so, great! shouldRespond will be true.
+    var url = stripIgnoredUrlParameters(event.request.url, ignoreUrlParametersMatching);
+    shouldRespond = urlsToCacheKeys.has(url);
+
+    // If shouldRespond is false, check again, this time with 'index.html'
+    // (or whatever the directoryIndex option is set to) at the end.
+    var directoryIndex = 'index.html';
+    if (!shouldRespond &amp;&amp; directoryIndex) {
+      url = addDirectoryIndex(url, directoryIndex);
+      shouldRespond = urlsToCacheKeys.has(url);
+    }
+
+    // If shouldRespond is still false, check to see if this is a navigation
+    // request, and if so, whether the URL matches navigateFallbackWhitelist.
+    var navigateFallback = '/index.html';
+    if (!shouldRespond &amp;&amp;
+        navigateFallback &amp;&amp;
+        (event.request.mode === 'navigate') &amp;&amp;
+        isPathWhitelisted(["^(?!\\/__).*"], event.request.url)) {
+      url = new URL(navigateFallback, self.location).toString();
+      shouldRespond = urlsToCacheKeys.has(url);
+    }
+
+    // If shouldRespond was set to true at any point, then call
+    // event.respondWith(), using the appropriate cache key.
+    if (shouldRespond) {
+      event.respondWith(
+        caches.open(cacheName).then(function(cache) {
+          return cache.match(urlsToCacheKeys.get(url)).then(function(response) {
+            if (response) {
+              return response;
+            }
+            throw Error('The cached response that was expected is missing.');
+          });
+        }).catch(function(e) {
+          // Fall back to just fetch()ing the request if some unexpected error
+          // prevented the cached response from being valid.
+          console.warn('Couldn\'t serve response for "%s" from cache: %O', event.request.url, e);
+          return fetch(event.request);
+        })
+      );
+    }
+  }
+});
+
+</code></pre>
+
+<p>index.js 入口文件</p>
+
+<p>https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/template/src/index.js</p>
+
+<pre><code class="language-js">import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+//----vs-----
+serviceWorker.register({
+    onUpdate: async (registration) =&gt; {
+        await registration.update();
+        message.info("网站更新完成, 请刷新页面: " + moment().format('YYYY-MM-DD HH:mm:ss'), 0.5, () =&gt; {
+            window.location.reload();
+        });
+    },
+    onSuccess: () =&gt; {}
+});
+
+
+
+</code></pre>
+
+<p>假如你引入了serviceWorker文件, 并发布了，</p>
+
+<p>https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/template/src/serviceWorker.js</p>
+
+<h3 id="正确做法是">正确做法是：</h3>
+<p><code>serviceWorker.register();</code> 改成 <code>serviceWorker.unregister();</code> <br />
+但是同时千万要记住 要保留  sw-precache-webpack-plugin 去做webpack 构建（目的是为了生成新的service-worker.js，触发更新)。按照人的<strong>既定思维</strong>，既然不要了，那么当然要移除。</p>
+
+<p>假如移除了  sw-precache-webpack-plugin,  你怎么 生成新版本的 service-worker.js，还有，没有新版本 service-worker.js 又怎么会更新你的代码了，这里似乎出现<strong>双重陷阱</strong>，但是当你理解了service-worker.js 生命周期原理后，一切都可以理解。</p>
+
+<h3 id="最后总结">最后总结：</h3>
+<p>在入口加入:</p>
+
+<p>serviceWorker.unregister();</p>
+
+<p>service-worker.js 文件 依旧需要更新。</p>
+
+<p>假如真的不想引入 sw-precache-webpack-plugin 做webpack构建的话，请把服务器上面的<br />
+service-worker.js  <code>precacheConfig</code> 清空</p>
+<pre><code class="language-js">var precacheConfig = [
+];
+</code></pre>
+
+<p>https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#opting-out-of-caching</p>
+
+<p>If you would prefer not to enable service workers prior to your initial production deployment, then remove the call to registerServiceWorker() from src/index.js.</p>
+
+<p>If you had previously enabled service workers in your production deployment and have decided that you would like to disable them for all your existing users, you can swap out the call to registerServiceWorker() in src/index.js first by modifying the service worker import:</p>
+<pre><code>import { unregister } from './registerServiceWorker';
+</code></pre>
+
+<p>and then call unregister() instead. After the user visits a page that has unregister(), the service worker will be uninstalled. Note that depending on how /service-worker.js is served, it may take up to 24 hours for the cache to be invalidated.</p>
+
+<p>create-react-app 提示的测试服务器<br />
+<img src="https://user-images.githubusercontent.com/1061012/40872668-b5ae9a72-6684-11e8-9d37-ba7d3fed427e.png" alt="image" /><br />
+对service-worker.js会有HTTP缓存，部署简单nginx 服务器进行测试</p>
+
+<pre><code class="language-conf">    server {
+       listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+       location / {
+           root   D:\yourproject\build;
+           index  index.html index.htm;
+           # proxy_no_cache 1;
+           add_header Cache-Control "no-cache";
+           try_files $uri $uri/ /index.html;
+       }
+
+       location /service\-worker\.js {
+            expires -1;
+            add_header Pragma "no-cache";
+       }
+    }
+
+</code></pre>
+
+<pre><code>serviceWorker.register({
+    onUpdate: async (registration) =&gt; {
+        await registration.update(); // 这里很重要
+        message.info("网站更新完成, 请刷新页面: " + moment().format('YYYY-MM-DD HH:mm:ss'), 0.5, () =&gt; {
+            window.location.reload();
+        });
+    },
+    onSuccess: () =&gt; {}
+});
+
+</code></pre>
+
+<h3 id="延伸阅读">延伸阅读：</h3>
+
+<p>https://lavas.baidu.com/guide/v2/advanced/service-worker#%E6%B3%A8%E5%86%8C-service-worker-%E6%89%A9%E5%B1%95<br />
+注册 Service Worker (扩展)</p>
+
+<p>提示：这部分内容由 Lavas 内部处理，并不需要开发者进行参与，仅仅作为解答开发者疑问的扩展阅读存在。</p>
+
+<p>Service Worker 编写完成后，还需要进行注册才能真正生效。常规的注册代码能够在各类 Service Worker 教程或文章中找到，但在实际项目中有一个不得不考虑的问题，使得我们必须对注册代码进行一些改动，那就是 Service Worker 更新 的问题。</p>
+
+<p>https://github.com/lavas-project/sw-register-webpack-plugin</p>
+
+<p>离线指南<br />
+https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/#cache-falling-back-to-network</p>
+
+<p>假如熟悉Service Worker 缓存机制的话，那么为什么要卸载呢 ？</p>
+
+<p>本文 ： https://github.com/icai/icai.github.io/issues/1</p>
+
+<p>-EOF-</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[《html5数据推送应用开发》读书摘要]]></title>
     <link href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/"/>
     <updated>2017-08-06T17:18:14+08:00</updated>
     <id>http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note</id>
-    <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。
-基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……
+    <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。<br />
+基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……<br />
 可以总结为如下：</p>
-
-
-
 
 <!-- more -->
 
-
-
-
 <p>《Data Push Apps with HTML5 SSE》 读书摘要</p>
 
-
-<p><a name="L......"></a></p>
-
-<h2>摘要</h2>
-
-
-
+<h2 id="摘要">摘要</h2>
 
 <ul>
-<li>EventSource方法 new EventSource(&ldquo;url&rdquo;);</li>
-<li>MIME类型text/event-stream</li>
-<li>数据传输格式"data:&ldquo; + new Date().toISOString() + &rdquo;\n\n";</li>
+  <li>EventSource方法 new EventSource(“url”);</li>
+  <li>MIME类型text/event-stream</li>
+  <li>数据传输格式”data:” + new Date().toISOString() + “\n\n”;</li>
 </ul>
 
+<h2 id="sse示例">SSE示例</h2>
 
-<p><a name="SSE......"></a></p>
-
-<h2>SSE示例</h2>
-
-
-
-
-<pre><code>    &lt;!doctype html&gt;
-    &lt;html&gt;
-    &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;Basic SSE Example&lt;/title&gt;
-    &lt;script src="//code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-    &lt;pre id="x"&gt;Initializing...&lt;/pre&gt;
-    &lt;script&gt;
-        var es = new EventSource("basic_sse.php");
-        es.addEventListener("message", function(e){
-            $("#x").append("\n" + e.data);
-        },false);
-    &lt;/script&gt;
-    &lt;/body&gt;
-    &lt;/html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;Basic SSE Example&lt;/title&gt;
+&lt;script src="//code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;pre id="x"&gt;Initializing...&lt;/pre&gt;
+&lt;script&gt;
+    var es = new EventSource("basic_sse.php");
+    es.addEventListener("message", function(e){
+        $("#x").append("\n" + e.data);
+    },false);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 
-
-
-
-<pre><code class="javascript">var http = require("http"),
+<pre><code class="language-javascript">var http = require("http"),
     fs = require("fs");
 var port = parseInt(process.argv[2] || 1234);
 http.createServer(function(request, response) {
@@ -107,121 +475,77 @@ http.createServer(function(request, response) {
 console.log("Server running at http://localhost:" + port);
 </code></pre>
 
-
-<p><a name="L........."></a></p>
-
-<h2>兼容性</h2>
-
-
-
+<h2 id="兼容性">兼容性</h2>
 
 <p>startEventSource()</p>
 
-
-
-
 <ul>
-<li>Basically all Firefox and Chromea</li>
-<li>Desktop Safari 5.0+</li>
-<li>iOS Safari 4.0+</li>
-<li>Android 4.4+ (earlier where Chrome is default browser)</li>
-<li>Chrome for Android (all versions)</li>
-<li>Firefox for Android (all versions)</li>
-<li>Opera since 11.0</li>
-<li>Opera Mobile since 11.1</li>
-<li>BlackBerry since 7.0</li>
+  <li>Basically all Firefox and Chromea</li>
+  <li>Desktop Safari 5.0+</li>
+  <li>iOS Safari 4.0+</li>
+  <li>Android 4.4+ (earlier where Chrome is default browser)</li>
+  <li>Chrome for Android (all versions)</li>
+  <li>Firefox for Android (all versions)</li>
+  <li>Opera since 11.0</li>
+  <li>Opera Mobile since 11.1</li>
+  <li>BlackBerry since 7.0</li>
 </ul>
-
-
-
 
 <p>startXHR()</p>
 
-
-
-
 <ul>
-<li>IE10+</li>
-<li>Firefox 3.6 (and earlier)</li>
-<li>Safari 3.x</li>
-<li>Android 4.1 to 4.3 (unless Chrome is default browser)</li>
-<li>Android 3.x</li>
+  <li>IE10+</li>
+  <li>Firefox 3.6 (and earlier)</li>
+  <li>Safari 3.x</li>
+  <li>Android 4.1 to 4.3 (unless Chrome is default browser)</li>
+  <li>Android 3.x</li>
 </ul>
-
-
-
 
 <p>startIframe()</p>
 
-
-
-
 <ul>
-<li>IE8</li>
-<li>IE9</li>
+  <li>IE8</li>
+  <li>IE9</li>
 </ul>
 
+<p>~~startLongpoll()</p>
+<ul>
+  <li>IE6</li>
+  <li>IE7</li>
+  <li>Android 2.x</li>
+  <li>Anything else not in the preceding list that has Ajax support<br />
+~~</li>
+</ul>
 
+<p>~~(none)</p>
+<ul>
+  <li>Any browser with JavaScript disabled<br />
+~~</li>
+</ul>
 
-
-<p><del>startLongpoll()
-- IE6 <br/>
-- IE7
-- Android 2.x
-- Anything else not in the preceding list that has Ajax support
-</del></p>
-
-
-
-
-<p><del>(none)
-- Any browser with JavaScript disabled
-</del></p>
-
-
-
-
-<p><del>a Technically since Firefox 6 and Chrome 6, but they have been auto-updating since Firefox 4, and Chrome since it came out
-of beta, so you can reasonably expect no one is still using versions that do not support SSE.
-</del></p>
-
-
-
+<p>~~a Technically since Firefox 6 and Chrome 6, but they have been auto-updating since Firefox 4, and Chrome since it came out<br />
+of beta, so you can reasonably expect no one is still using versions that do not support SSE.<br />
+~~</p>
 
 <p>书本代码，书本代码，书本代码。</p>
 
-
-<p><a name="L............"></a></p>
-
-<h2>参考资料</h2>
-
-
-
+<h2 id="参考资料">参考资料</h2>
 
 <ul>
-<li><a href="https://github.com/DarrenCook/ssebook">书本代码</a></li>
-<li><a href="https://caniuse.com/#feat=eventsource">eventsource浏览器支持</a></li>
-<li><a href="https://www.w3.org/TR/eventsource/">https://www.w3.org/TR/eventsource/</a></li>
-<li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: Server-sent events</a></li>
-<li><a href="https://github.com/Yaffle/EventSource">a polyfill for http://www.w3.org/TR/eventsource/</a></li>
+  <li><a href="https://github.com/DarrenCook/ssebook">书本代码</a></li>
+  <li><a href="https://caniuse.com/#feat=eventsource">eventsource浏览器支持</a></li>
+  <li><a href="https://www.w3.org/TR/eventsource/">https://www.w3.org/TR/eventsource/</a></li>
+  <li><a href="https://html.spec.whatwg.org/multipage/server-sent-events.html">HTML Living Standard: Server-sent events</a></li>
+  <li><a href="https://github.com/Yaffle/EventSource">a polyfill for http://www.w3.org/TR/eventsource/</a></li>
 </ul>
 
-
-<p><a name="L............"></a></p>
-
-<h2>其他参考</h2>
-
-
-
+<h2 id="其他参考">其他参考</h2>
 
 <ul>
-<li><a href="https://www.ibm.com/developerworks/library/wa-http-server-push-with-websocket-sse/">HTTP server push with WebSocket and SSE</a></li>
-<li><a href="https://www.zhihu.com/question/27498235">Ajax长轮询与服务器推的长连接的区别是？</a></li>
-<li><a href="http://goeasy.io/cn/demos">商业化示例</a></li>
+  <li><a href="https://www.ibm.com/developerworks/library/wa-http-server-push-with-websocket-sse/">HTTP server push with WebSocket and SSE</a></li>
+  <li><a href="https://www.zhihu.com/question/27498235">Ajax长轮询与服务器推的长连接的区别是？</a></li>
+  <li><a href="http://goeasy.io/cn/demos">商业化示例</a></li>
 </ul>
-
-
-
 
 <p>-EOF-</p>
 
@@ -233,278 +557,122 @@ of beta, so you can reasonably expect no one is still using versions that do not
     <link href="http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/"/>
     <updated>2015-07-15T22:09:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh</id>
-    <content type="html"><![CDATA[<p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing &ldquo;uni&rdquo; into a country input field actually intends to select? It could match any of these:</p>
-
-
-
+    <content type="html"><![CDATA[<p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing “uni” into a country input field actually intends to select? It could match any of these:</p>
 
 <p>自动完成一直都是一个没完没了的问题。谁能准确地说出当一个地球人在一个国家输入框输入“uni”打算选什么？可能会出现以下情况：</p>
 
-
-
-
 <ul>
-<li>Tanzania, [<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Republic of</li>
-<li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Arab Emirates</li>
-<li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Kingdom</li>
-<li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted States</li>
-<li>T[<strong>u</strong>][<strong>n</strong>][<strong>i</strong>]sia</li>
+  <li>Tanzania, [<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Republic of</li>
+  <li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Arab Emirates</li>
+  <li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted Kingdom</li>
+  <li>[<strong>U</strong>][<strong>n</strong>][<strong>i</strong>]ted States</li>
+  <li>T[<strong>u</strong>][<strong>n</strong>][<strong>i</strong>]sia</li>
 </ul>
-
-
-
 
 <p>Of course, it’s probably not the last one, but that right there is a human intuition that we often forget to instil into these UI interactions.</p>
 
-
-
-
 <p>当然，这可能不是最后一个，但人类的直觉通常会忘记灌输这些UI交互。</p>
-
-
-
 
 <!-- more -->
 
-
-
-
-<p>We can divine what the user <em>probably</em> intends most of the time but it&rsquo;ll always be a game of heuristics. Most solutions shy away from this game, opting instead to match the query letter-for-letter in each potential value, and this is usually sufficient, but without any other logic not only will “la” match “Latvia” but also “Angola”. And usually “Ltvia” will match nothing whatsoever, even though it’s seemingly obvious what the user is trying to type.</p>
-
-
-
+<p>We can divine what the user <em>probably</em> intends most of the time but it’ll always be a game of heuristics. Most solutions shy away from this game, opting instead to match the query letter-for-letter in each potential value, and this is usually sufficient, but without any other logic not only will “la” match “Latvia” but also “Angola”. And usually “Ltvia” will match nothing whatsoever, even though it’s seemingly obvious what the user is trying to type.</p>
 
 <p>我们可以推断用户在这上面花费的时间，显然这是一个启发式游戏。大多数解决方案都是尝试匹配字母之间可能潜在的值，通常已经足够了，“la” 没有任何逻辑，会匹配 “Latvia” 也会匹配 “Angola”。但绝不会匹配 “Ltvia”，尽管“Ltvia”看似是用户想要的输入类型。</p>
 
-
-
-
-<p>If you try implementing a fuzzy matcher to solve this, the first revelation is that you can&rsquo;t just boolean-match the query against the data like so many solutions do. You need to score each potential match. Hopefully, in the case of country selection, you end up with a sensible subset of countries that match the query to some reasonable degree. This scoring is necessary so that you know what you&rsquo;re putting at the top of the list. When typing &ldquo;U&rdquo;, the user expects Ukraine or Uzbekistan sooner than Mauritius or Sudan, for example.</p>
-
-
-
+<p>If you try implementing a fuzzy matcher to solve this, the first revelation is that you can’t just boolean-match the query against the data like so many solutions do. You need to score each potential match. Hopefully, in the case of country selection, you end up with a sensible subset of countries that match the query to some reasonable degree. This scoring is necessary so that you know what you’re putting at the top of the list. When typing “U”, the user expects Ukraine or Uzbekistan sooner than Mauritius or Sudan, for example.</p>
 
 <p>假如你想用模糊匹配去解决这个问题。首先，你不能像往常那样用boolean匹配去请求查询数据。你需要计算每个存在匹配的分数。 在选择国家情况下，你最终需要请求匹配查询一些合符逻辑的合理的国家子集。那么这分数是非常有必要的，以便我们可以把它们排到列表的顶部。</p>
 
-
-
-
 <p>（译注, boolean匹配 <a href="https://github.com/bevacqua/fuzzysearch">https://github.com/bevacqua/fuzzysearch</a>）</p>
 
-
-
-
-<p>Oddly, if you looked at the most common autocompletion widget out there (jQuery UI), it <a href="http://jsfiddle.net/2c11xknm/embedded/result,js,html">doesn&rsquo;t appear</a> to follow this intuition.</p>
-
-
-
+<p>Oddly, if you looked at the most common autocompletion widget out there (jQuery UI), it <a href="http://jsfiddle.net/2c11xknm/embedded/result,js,html">doesn’t appear</a> to follow this intuition.</p>
 
 <p>奇怪的是，假如见过最常用的jQuery UI 自动完成（autocompletion）插件，他并没有解决这个问题。</p>
 
-
-
-
 <p>Even the most <a href="http://baymard.com/labs/country-selector">graceful</a> solutions tend to avoid the muddiness of dealing with mistakes like “untied states” or “leichtenstein”. Sure, the likeliness of a person having to type the name of a country they aren’t intimately familiar with is probably quite low, but people still make mistakes.</p>
-
-
-
 
 <p>即使是最优雅的解决方案，都趋向于忽视模糊处理错误，像“untied states” （united states） 和 “leichtenstein” （liechtenstein ）。当然， 就像一个人输入一个国家的名字，他们不熟悉这个国家可能性是非常很低。但人们仍然会犯错误。</p>
 
+<p>I’ve been intrigued by this topic for quite a while and it’s why I originally made <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a>. It solves the problem quite well, I think, and it does so in a pretty transparent way, with scores applied for various qualities such as the index of the query within the target string (“king” scores higher than “dom” in “kingdom”, for example), but it’s still a quite a lot of code for such a tiny part of an overall user experience.</p>
 
-
-
-<p>I&rsquo;ve been intrigued by this topic for quite a while and it&rsquo;s why I originally made <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a>. It solves the problem quite well, I think, and it does so in a pretty transparent way, with scores applied for various qualities such as the index of the query within the target string (&ldquo;king&rdquo; scores higher than &ldquo;dom&rdquo; in &ldquo;kingdom&rdquo;, for example), but it&rsquo;s still a quite a lot of code for such a tiny part of an overall user experience.</p>
-
-
-
-
-<p>我一直被这个话题吸引了很长时间，也是我写 <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a> 的原因。它可以很好地处理类似问题，我想，他的原理是非常显而易见的，就是通过分数去区分不同品质（把分数应用于品质）例如，目标字符串查询的索引(正如在查询“kingdom” &ldquo;的时候，king"的分数比 "dom"高)。但这还是需要相当多的代码去实现这小部分，相对于这样一个整体用户体验的而言。</p>
-
-
-
+<p>我一直被这个话题吸引了很长时间，也是我写 <a href="https://github.com/padolsey/relevancy.js">relevancy.js</a> 的原因。它可以很好地处理类似问题，我想，他的原理是非常显而易见的，就是通过分数去区分不同品质（把分数应用于品质）例如，目标字符串查询的索引(正如在查询“kingdom” “的时候，king”的分数比 “dom”高)。但这还是需要相当多的代码去实现这小部分，相对于这样一个整体用户体验的而言。</p>
 
 <p>I have once again been playing with this problem (thanks to a certain <a href="https://twitter.com/codepo8/status/572863924887945216">tweet</a>) and have so wanted to come up with something stupefyingly graceful.</p>
 
-
-
-
 <p>我又再一次遇上了这个问题（谢谢 <a href="https://twitter.com/codepo8/status/572863924887945216">tweet</a> 的肯定），我想可以写的更加优雅。</p>
-
-
-
 
 <p>It all starts with a scratch in back of your mind — the one that tells you that your time has come. The <a href="http://xkcd.com/208/">world requires you</a> to use regular expressions.</p>
 
-
-
-
 <p>一切从头开始在你的脑海里，这告诉你的时间到了。<a href="http://xkcd.com/208/">world requires you</a> （世界需要你） 用正则表达式。</p>
-
-
-
 
 <p><strong>Warning:</strong> I don’t sincerely recommend doing any of this. It’s just a bit of fun. It’s probably an inefficient, unreliable, obscure and ultimately foolish endeavour!</p>
 
-
-
-
 <p>Warning： 别分心，不然效率极低的，bebebe～～～</p>
 
+<h2 id="lets-begin">Let’s begin!</h2>
 
-<p><a name="Let...s.begin."></a></p>
-
-<h2>Let’s begin!</h2>
-
-
-<p><a name="L.................."></a></p>
-
-<h2>我们入正题：</h2>
-
-
-
+<p>##我们入正题：</p>
 
 <p>A static France might look like this:</p>
 
-
-
-
 <p>静态字符串France 正则：</p>
-
-
-
 
 <pre><code>/^France$/
 </code></pre>
 
-
-
-
 <p>A more lenient France might be less sensitive to its case:</p>
 
-
-
-
 <p>不区分大小写：</p>
-
-
-
 
 <pre><code>/^france$/i
 </code></pre>
 
-
-
-
 <p>We could then allow the characters to be optional too:</p>
 
-
-
-
 <p>我们也可以允许字符是可选的</p>
-
-
-
 
 <pre><code>/^f?r?a?n?c?e?$/i
 </code></pre>
 
-
-
-
 <p>This would match “f” and “franc” and “FaE”, etc.</p>
-
-
-
 
 <p>这会匹配 “f”， “franc” 和 “FaE”等等。</p>
 
-
-
-
 <p>But… users make even more grievous mistakes sometimes, and our regular expression should be able to handle those. So let’s add a single character of leniency between each legitimate character, and at the beginning and end of the string:</p>
 
-
-
-
 <p>但…… 用户有时犯更严重的错误，我们的正常表达应该能够处理这些错误。因此，让我们在每一个合理的字母之间加上一个宽容的字符在每个字符的前后。</p>
-
-
-
 
 <pre><code>/^.?f?.?r?.?a?.?n?.?c?.?e?.?$/i
 </code></pre>
 
-
-
-
 <p>But then this would allow contiguous mistakes like “fafafafa”. We only want to allow a <em>single</em> incorrect mistake after each successfully entered character. For this we can use groups to force each character to be matched and a lazy quantifier on the mistake character to ensure that legitimate characters get to successfully match.</p>
-
-
-
 
 <p>但当这允许连续错误像“fafafafa”，我们只允许一个单一的错误在每个正确输入字符之后。为此我们可以使用分组强制每个字符匹配和懒惰匹配的错误的字符串，确保合法字符可以成功匹配。</p>
 
-
-
-
 <p>So:</p>
-
-
-
 
 <pre><code>/f.?otherStuff/
 </code></pre>
 
-
-
-
 <p>Becomes:</p>
-
-
-
 
 <pre><code>/(?:f.??)?otherStuff/
 </code></pre>
 
-
-
-
 <p>In English: Try to match <code>f</code> followed by <code>otherStuff</code>. If impossible then try to match any character after <code>f</code> but before <code>otherStuff</code>. (This is why lazy quantifiers (e.g. <code>??</code>) are so useful!)</p>
-
-
-
 
 <p>就是说，尝试匹配跟在otherStuff之前的f。如果不可能的话，尝试匹配任何在“f” 之后，在“otherStuff” 之前的字符。</p>
 
-
-
-
 <p>The entire regex would become:</p>
 
-
-
-
 <p>完整的正则表达式会变成：</p>
-
-
-
 
 <pre><code>/^(?:.(?=f))?(?:f.??)?(?:r.??)?(?:a.??)?(?:n.??)?(?:c.??)?(?:e.??)?$/i
 </code></pre>
 
-
-
-
 <p>We should probably capture each individual match (<code>f</code> should be <code>(f)</code>) so that we can analyze the result and score it appropriately.</p>
 
-
-
-
 <p>我们可能需要捕获每个单独的匹配(<code>f</code> 应该是<code>(f)</code>) ，以便我们可以分析结果并适当地评分。</p>
-
-
-
 
 <pre><code>var r = /^(?:(f).??)?(?:(r).??)?(?:(a).??)?(?:(n).??)?(?:(c).??)?(?:(e).??)?$/i
 
@@ -512,18 +680,9 @@ of beta, so you can reasonably expect no one is still using versions that do not
 // =&gt; ["f$R-aN_cEx", "f", "R", "a", "N", "c", "E"]
 </code></pre>
 
-
-
-
 <p>The regular expression, broken down:</p>
 
-
-
-
 <p>正则表达式解释：</p>
-
-
-
 
 <pre><code>/
   ^       # Start of string
@@ -544,28 +703,13 @@ of beta, so you can reasonably expect no one is still using versions that do not
 /i
 </code></pre>
 
-
-
-
 <p><em>A quick note</em>: <em>lazy</em> or <em>lazily</em> in the context of regular expressions simply means that that thing will be intentionally excluded from the first match attempt and will only be used if the subsequent regular expression is unsuccessful without it.</p>
-
-
-
 
 <p>小便签：正则表达式中懒惰匹配是指……</p>
 
-
-
-
 <p>One caveat with the above regex is that it doesn’t allow a mistake to be at the beginning of the string. We could fix this with a lookahead to the effect of “allow a mistake here as long as its followed by a non-mistake” but since “non-mistake” could effectively be any character in the legitimate string it’s easier to just make allowances for that initial mistake in each group. Additionally, we probably want to capture every single mistake, in addition to legitimate characters. Here’s our next iteration:</p>
 
-
-
-
 <p>一个需要注意的是，上面的正则表达式，它不允许在字符串的开头有错误。我们可以修复这个前瞻错误通过 “允许犯错误，只要它跟在一个非错误后面”， 但由于 “非错误” 可以有效地在合法字符串中的任何字符，使得它更容易在每个组中出现所允许的初始错误。此外，除了合法的字符，我们还可能要捕捉每一个错误。下面是我们的实现：</p>
-
-
-
 
 <pre><code>/
   ^         # Start of string
@@ -585,28 +729,13 @@ of beta, so you can reasonably expect no one is still using versions that do not
 /i
 </code></pre>
 
-
-
-
 <p>The check <code>(^.)?</code> has to be specified in each group, to account for mistakes that don’t involve “f”, like “krance” or “ttance”, etc.</p>
-
-
-
 
 <p>检查<code>(^.)?</code>必须每组都指定, 以便考虑错误不涉及到 “f”, 就像 “krance” 和 “ttance”, 等等。</p>
 
-
-
-
 <p>Since we’re aiming to genericize this entire mess, we should create a generator that assembles the regular expression given any piece of text:</p>
 
-
-
-
 <p>我们的目标是是要去处理这一类问题，所以我们需要构建一个完整的生成器去组装将给定的文本集合的正则表达式。</p>
-
-
-
 
 <pre><code>function makeFuzzyRegex(string) {
 
@@ -632,13 +761,7 @@ makeFuzzyRegex('omg');
 // =&gt; /^(?:(^.)?(o)(.??))?(?:(^.)?(m)(.??))?(?:(^.)?(g)(.??))?$/i
 </code></pre>
 
-
-
-
 <p>This regex matched against ‘_o-m*g!’ produces:</p>
-
-
-
 
 <pre><code>[
   // Full match:
@@ -659,28 +782,13 @@ makeFuzzyRegex('omg');
 ]
 </code></pre>
 
-
-
-
 <p>The captures are in groups of three, with every second capture being the legitimate character (case-insensitive), and with every first and third potentially being mistakes.</p>
-
-
-
 
 <p>捕获是在三组，每组捕获都是合法性（不区分大小写），并与每组第一和第三个字符都可能潜在错误。</p>
 
-
-
-
 <p>We can then loop through these captures and apply weights as we see fit.</p>
 
-
-
-
 <p>我们可以循环这些捕捉和应用权重作为我们合适的分数。</p>
-
-
-
 
 <pre><code>var fullMatch = makeFuzzyRegex('omg').exec('_o-m*g!');
 var captures = fullMatch.slice(1); // Get captures specifically
@@ -695,28 +803,13 @@ for (var i = 0, l = captures.length; i &lt; l; i += 3) {
 score; // =&gt; 26
 </code></pre>
 
-
-
-
 <p>That scoring is quite arbitrary, but we’ve at least prescribed our wish to score successes more than we punish mistakes (10 vs 1).</p>
-
-
-
 
 <p>这计算是十分随意的，但是我们至少指定我们的愿望比我们惩罚的错误更成功(10 vs 1)。</p>
 
-
-
-
 <p>We can start to play with the heuristics of this if we wrap it all up:</p>
 
-
-
-
 <p>我们把它封装起来，让Ta溜溜：</p>
-
-
-
 
 <pre><code>function createFuzzyScorer(text) {
 
@@ -761,18 +854,9 @@ score; // =&gt; 26
 }
 </code></pre>
 
-
-
-
 <p>Our first attempt isn’t too bad:</p>
 
-
-
-
 <p>我们的第一次尝试并不太坏：</p>
-
-
-
 
 <pre><code>var score = createFuzzyScorer('omg');
 
@@ -785,18 +869,9 @@ score('o');       // =&gt; 10
 score('nope');    // =&gt; 0
 </code></pre>
 
-
-
-
 <p>These seem like sensible enough scores, generally, but we’re more interested in autocompletion, and so there’s an obvious predictive element there. If a user types ‘o’ then that should probably score higher than ‘g’ if we’re testing against ‘omg’, but with the above mechanism they both receive a standard 10:</p>
 
-
-
-
-<p>这似乎是可感知的足够的分数，一般，但我们在自动完成更感兴趣，所以有一个明显的预测元素的存在。当我们我们测试‘omg’时，如果用户键入"o"那应该得分高于"g"，但上述方法都接受标准的10：</p>
-
-
-
+<p>这似乎是可感知的足够的分数，一般，但我们在自动完成更感兴趣，所以有一个明显的预测元素的存在。当我们我们测试‘omg’时，如果用户键入”o”那应该得分高于”g”，但上述方法都接受标准的10：</p>
 
 <pre><code>var score = createFuzzyScorer('omg');
 
@@ -804,18 +879,9 @@ score('o'); // =&gt; 10
 score('g'); // =&gt; 10
 </code></pre>
 
-
-
-
 <p>We can fix this by applying a higher weight to matches that appear earlier in the string:</p>
 
-
-
-
 <p>我们可以用更高的权重来解决字符串中较早出现的匹配问题：</p>
-
-
-
 
 <pre><code>// The scoring loop:
 for (var i = 0, l = captures.length; i &lt; l; i += 3) {
@@ -825,18 +891,9 @@ for (var i = 0, l = captures.length; i &lt; l; i += 3) {
 }
 </code></pre>
 
-
-
-
 <p>Now the score given for any singular legitimate match will decrease as the index (<code>i</code>) increases. Here are the results:</p>
 
-
-
-
 <p>现在任何奇异的合法的匹配的得分将会递减随着指数（i）增加。这里是结果：</p>
-
-
-
 
 <pre><code>var score = createFuzzyScorer('omg');
 
@@ -849,35 +906,17 @@ score('o');       // =&gt; 1.00
 score('nope');    // =&gt; 0.00
 </code></pre>
 
-
-
-
 <p>This is getting closer to our intuition. The next step would be to try to create a real autocompletion widget. I’ve done it so I know that we’ll want to make one more change. The problem with our scoring right now is that it’ll award legitimate characters relative to the length of the string. But when comparing scores across multiple subject strings, this approach seems broken.</p>
 
-
-
-
 <p>这是越来越接近我们的直觉。下一步将努力创造一个真正的自动完成功能部件。我已经这样做了，所以我知道，我们将要做一个改变。现在我们分值的问题是，奖励合法的字符相对于字符串的长度。但是，当比较多个同类字符串的分数时，这种方法似乎被打破。</p>
-
-
-
 
 <pre><code>createFuzzyScorer('RuneScript')('Ru'); // 1.9
 createFuzzyScorer('Ruby')('Ru');       // 1.7
 </code></pre>
 
-
-
-
 <p>These should both score equally, as “Ru” is just as likely to become “Ruby” as it is to become “RuneScript”. To achieve this we should only take into account the index, and make the weight of any scoring decision inversely proportional to that index, in this case via an exponential taper (<code>pow(index, -2)</code>).</p>
 
-
-
-
 <p>显然，分数应该相等，因为 “Ru” 推演成 “Ruby” 和 “RuneScript” 是一样. 为了实现这一点，我们应该考虑到该指数，并使任何得分决定的权重与指数成反比，在这种情况下，通过指数锥度 (<code>pow(index, -2)</code>)</p>
-
-
-
 
 <pre><code>// The scoring loop:
 for (var i = 0, l = captures.length; i &lt; l; i += 3) {
@@ -888,33 +927,15 @@ for (var i = 0, l = captures.length; i &lt; l; i += 3) {
 }
 </code></pre>
 
-
-
-
 <p><em>(Final version of <code>createFuzzyScorer</code> available <a href="https://gist.github.com/padolsey/a27a32d5859a71403b10">as a gist</a>.)</em></p>
-
-
-
 
 <p><strong><a href="http://jsbin.com/wanetemare/1/edit?js,output">See this demo using programming languages as the dataset</a></strong>. Try intentionally misspelling something (jawascript), or missing out characters (jaascit), or just going a little crazy (jahskt). It works beautifully.</p>
 
-
-
-
 <p><strong><a href="http://jsbin.com/wanetemare/1/edit?js,output">在数据集用编程语言实现查看demo</a></strong>. 尝试拼写错误（jawascript），或者丢失字母（jaascit）或者输入一些类似的（jahskt）， 它依然工作得很漂亮。</p>
-
-
-
 
 <p>To achieve speedy sorting, a fuzzy scorer is created for every single value before the user types anything:</p>
 
-
-
-
 <p>为了实现快速排序， 每一个单一的值的模糊分数应该在用户输入之前被创建：</p>
-
-
-
 
 <pre><code>var data = PROGRAMMING_LANGUAGES.map(function(lang, i) {
   return {
@@ -926,18 +947,9 @@ for (var i = 0, l = captures.length; i &lt; l; i += 3) {
 });
 </code></pre>
 
+<p>This means we can iterate through <code>data</code> on every relevant input event, and call the <code>score()</code>method with the current query. We can then bundle this into a <em>filter-&gt;sort-&gt;slice</em> flow to get our list of sensible suggestions:</p>
 
-
-
-<p>This means we can iterate through <code>data</code> on every relevant input event, and call the <code>score()</code>method with the current query. We can then bundle this into a <em>filter->sort->slice</em> flow to get our list of sensible suggestions:</p>
-
-
-
-
-<p>这意味着我们可以遍历每个相关的输入事件的 data ，调用 score() 方法来实现当前查询。我们可以把这变成一个 <em>filter->sort->slice</em> 得出我们列出的有判断力的建议：</p>
-
-
-
+<p>这意味着我们可以遍历每个相关的输入事件的 data ，调用 score() 方法来实现当前查询。我们可以把这变成一个 <em>filter-&gt;sort-&gt;slice</em> 得出我们列出的有判断力的建议：</p>
 
 <pre><code>var sorted = data.filter(function(item) {
 
@@ -956,38 +968,17 @@ for (var i = 0, l = captures.length; i &lt; l; i += 3) {
 }).slice(0, 10); // We only need the top 10...
 </code></pre>
 
-
-
-
 <p>And.. we’re done. It’s never really finished though: you’ll find endless tweaks that can be made to the scorer to make it more believably resemble human-like intuition.</p>
-
-
-
 
 <p>我们做到了，虽然它从来没有真正完成，你会发现很多的调整，使得分数更加人工智能。</p>
 
-
-
-
 <p>For those wanting to test the resulting country autocompletion interaction: <strong><a href="http://jsbin.com/lejucikiha/1/edit?js,output">See the demo</a></strong>.</p>
-
-
-
 
 <p>对于那些想要测试国家自动完成返回值交互的，<strong><a href="http://jsbin.com/lejucikiha/1/edit?js,output">See the demo</a></strong>.</p>
 
-
-
-
 <p>I guess, despite my initial warning, I wouldn’t actually mind using this in production, as long as there were a decent number of unit tests. I’d probably also assemble the regular expressions on the server and serve them up as literals. It’s also worth mentioning that almost everything in this post has been exploring the fuzzy-matching of very short strings in small datasets. Even in the case of the country demo, to get more applicable results, I broke up long names into the component parts and then scored against each. E.g.</p>
 
-
-
-
 <p>我想，尽管我最初的忠告，我不介意使用这个在生产，只要做一些数量的单位测试。我可能也组装正则表达式在服务器并为提供服务。值得一提的是，几乎所有的这篇文章都在探索小数据集上的模糊匹配。即使在国家输入案例的演示，以获得更适用的结果，我折断了长的名字，组成部分，然后对每一个得分。例如</p>
-
-
-
 
 <pre><code>// E.g. Macedonia, the Former Yugoslav Republic of:
 var scorers = [
@@ -1002,73 +993,31 @@ var scorers = [
 // Etc.
 </code></pre>
 
-
-
-
 <p>And this would be terribly inefficient on a larger scale, so with any dataset longer than a list of countries you’re probably best to explore <a href="http://en.wikipedia.org/wiki/Trie">Trie</a>-based approaches to autocompletion.</p>
-
-
-
 
 <p>And with that, I’ll shut-up and wish you merry regex’ing!</p>
 
-
-
-
 <p>然而这在大规模扫描下是非常低效的，所以任何数据集比的国家名单长的，你可能最好的探究 <a href="http://en.wikipedia.org/wiki/Trie">Trie</a>-based 方法 来处理自动完成。然后，我会闭嘴， wish you merry regex’ing!</p>
-
-
-
 
 <p>译者注：</p>
 
-
-
-
 <p>文中及其评论提到的资源：</p>
-
-
-
 
 <p><a href="https://github.com/padolsey/relevancy.js">https://github.com/padolsey/relevancy.js</a></p>
 
-
-
-
 <p><a href="https://github.com/bevacqua/fuzzysearch">https://github.com/bevacqua/fuzzysearch</a></p>
-
-
-
 
 <p><a href="https://github.com/gf3/Levenshtein">https://github.com/gf3/Levenshtein</a></p>
 
-
-
-
 <p>作者github：<a href="https://github.com/padolsey">https://github.com/padolsey</a></p>
-
-
-
 
 <p>译者：主要用到正则懒惰匹配去实现<code>真值</code>线性回归。you are truly, how much truly you are!</p>
 
-
-
-
 <p>就是通过匹配度分数进行排序，而不是单单的boolean 值指定，再a-z 排序输出，</p>
-
-
-
 
 <p><a href="https://github.com/bevacqua/fuzzysearch">https://github.com/bevacqua/fuzzysearch</a>所用的方法，你只能在true or false 之间选择，而padolsey所用的方法字样引入了权重概念更加智能，但是在大规模数据下是非常低效的。另外在作者的博客评论中也提到的 <a href="https://github.com/gf3/Levenshtein">https://github.com/gf3/Levenshtein</a>， 可以自行wiki一下。</p>
 
-
-
-
 <hr />
-
-
-
 
 <p>最后如有漏译，错译，欢迎指正。</p>
 
@@ -1076,261 +1025,364 @@ var scorers = [
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[javascript类库中和编程语言中getter和setter]]></title>
-    <link href="http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter/"/>
-    <updated>2013-08-17T23:16:31+08:00</updated>
-    <id>http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter</id>
-    <content type="html"><![CDATA[<p>1.backbonejs中的getter和setter</p>
+    <title type="html"><![CDATA[svg画布定位]]></title>
+    <link href="http://blog.w3cub.com/blog/2014/07/14/svg-canvas-positioning/"/>
+    <updated>2014-07-14T03:55:00+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2014/07/14/svg-canvas-positioning</id>
+    <content type="html"><![CDATA[<p>// 角度(angle)转弧度(radian)</p>
 
+<pre><code class="language-js">
+var radian = angle * Math.PI / 180;
+var angle = radian* 180/ Math.PI;
+alert(radian/ angle == Math.PI / 180);
+</code></pre>
+<!-- more -->
+<hr />
 
+<p>// Math.atan2()是弧度制</p>
 
-
-<p>所说的backbonejs中的getter和setter就是内部自定义get和set方法，set方法嵌入了<code>Pub/Sub模型</code>,
-例如 <code>book.on("change:title change:author", ...);</code>当<code>book.set('title':'othertitle');</code>触发<code>change</code>对用的<code>function</code>,
-解开二重锁 （不等于自身和并且非正在执行change function)。</p>
-
-
-
-
-<!--more-->
-
-
-
-
-<pre><code class="javascript">    set: function(key, val, options) {
-      var attr, attrs, unset, changes, silent, changing, prev, current;
-      if (key == null) return this;
-
-      // Handle both `"key", value` and `{key: value}` -style arguments.
-      if (typeof key === 'object') {
-        attrs = key;
-        options = val;
-      } else {
-        (attrs = {})[key] = val;
-      }
-
-      options || (options = {});
-
-      // Run validation.
-      if (!this._validate(attrs, options)) return false;
-
-      // Extract attributes and options.
-      unset           = options.unset;
-      silent          = options.silent;
-      changes         = [];
-      changing        = this._changing;
-      this._changing  = true;
-
-      if (!changing) {
-        this._previousAttributes = _.clone(this.attributes);
-        this.changed = {};
-      }
-      current = this.attributes, prev = this._previousAttributes;
-
-      // Check for changes of `id`.
-      if (this.idAttribute in attrs) this.id = attrs[this.idAttribute];
-
-      // For each `set` attribute, update or delete the current value.
-      for (attr in attrs) {
-        val = attrs[attr];
-        if (!_.isEqual(current[attr], val)) changes.push(attr);
-        if (!_.isEqual(prev[attr], val)) {
-          this.changed[attr] = val;
-        } else {
-          delete this.changed[attr];
-        }
-        unset ? delete current[attr] : current[attr] = val;
-      }
-
-      // Trigger all relevant attribute changes.
-      if (!silent) {
-        if (changes.length) this._pending = true;
-        for (var i = 0, l = changes.length; i &lt; l; i++) {
-          this.trigger('change:' + changes[i], this, current[changes[i]], options);
-        }
-      }
-
-      // You might be wondering why there's a `while` loop here. Changes can
-      // be recursively nested within `"change"` events.
-      if (changing) return this;
-      if (!silent) {
-        while (this._pending) {
-          this._pending = false;
-          this.trigger('change', this, options);
-        }
-      }
-      this._pending = false;
-      this._changing = false;
-      return this;
-    }
+<pre><code class="language-js">var radian = Math.atan2((p1.y-p0.y),(p1.x-p0.x));
 </code></pre>
 
+<p>//————</p>
 
+<p>//已知角度degree(0,360)，半径(raduis)，求圆上的点(p1)</p>
 
+<pre><code class="language-js">var radian = angle * Math.PI / 180;
+    p1.x = raduis * Math.cos(radian) + p0.x;  
+    p1.y = raduis * Math.sin(radian) + p0.y;
 
-<p>2.YUI中的getter和setter</p>
+function getPointAt(p0, radius, angle) {
 
+    var radian = angle * Math.PI / 180,
 
+        p1 = {};
 
+    p1.x = raduis * Math.cos(radian) + p0.x;  
 
-<pre><code class="javascript">    get : function(name) {
-        return this._getAttr(name);
-    },
+    p1.y = raduis * Math.sin(radian) + p0.y; 
+    return p1; 
 
-    set : function(name, val, opts) {
-        return this._setAttr(name, val, opts);
-    },
-    //……
+}
 </code></pre>
 
+<p>//———-</p>
 
+<p>//两点A,B,求角度degree(0,360),A为Origin(p0).</p>
 
+<p>var radian = Math.atan2((p1.y-p0.y),(p1.x-p0.x));</p>
 
-<p>get: <code>http://yuilibrary.com/yui/docs/api/files/attribute_js_AttributeCore.js.html#l343</code></p>
+<p>var angle = radian * 180 / Math.PI;</p>
 
+<p>//———</p>
 
+<p>//已知两点A(p0),B(p1),求AB连线上距离其中一点的D0 or D1的坐标</p>
 
+<p>// ….</p>
 
-<p>Y.augment : <code>http://yuilibrary.com/yui/docs/api/files/oop_js_oop.js.html#l67</code></p>
+<p>都是高中数学</p>
 
+<hr />
 
+<p>参考：</p>
 
+<p>https://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB</p>
 
-<p>3.javascript中的getter和setter</p>
+<p>https://zh.wikipedia.org/wiki/%E7%AC%9B%E5%8D%A1%E5%84%BF%E5%9D%90%E6%A0%87%E7%B3%BB</p>
 
+<p>应用场景：</p>
 
+<p><a href="https://www.thecn.com/tc129">https://www.thecn.com/tc129</a> 社交关系图</p>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[javascript 对象中的复制，继承，引用，浅拷贝，深拷贝，多态，静态方法]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class/"/>
+    <updated>2013-10-19T15:10:43+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class</id>
+    <content type="html"><![CDATA[<h2 id="导言">导言</h2>
 
-<pre><code class="javascript">    // 对象构造实现，javascript类库中最常用的方法
+<p>javascript与C,C++,Java等语言，他们之间总让人感觉存在一层纱，javascript易入门，难深入，而其他则相反（个人观点）。</p>
 
-    function Field(val){
-        var value = val;
+<p>其实不论什么语言，难与易的突破口都在语法基础上，当你越学得深入，你会发现语言之间的相同是如此的美妙。其实个人感觉javascript是相对其他语言是最容易学的一种语言。但部分人确认为，javascript十分难学，什么兼容性都把你搞死了。个人认为应该把javascript的难与易一分为二。javascript的语言是相对其他语言简单的，而且没有过多的语法概念（泛型，多态，模板），让编程者留下很多可以思考和想象的空间。或许多人喜欢javascript就是因为它的灵活性。</p>
 
-        this.getValue = function(){
-            return value;
-        };
+<!-- more -->
 
-        this.setValue = function(val){
-            value = val;
-        };
-    } 
+<h2 id="前言">前言</h2>
 
-    // 模拟“hidden value property” 
+<p>javascript是一门松散的面向对象脚本语言</p>
 
-    function Field(val){
-        var value = val;
+<p>为什么说是松散的呢？javascript一切皆对象（var），就是说不论数组，函数……都是继承自对象。</p>
 
-        this.__defineGetter__("value", function(){
-            return value;
-        });
+<p>javascript给我们所展现对象继承存储其实就像treegrid数据类似，但是正好相反。</p>
 
-        this.__defineSetter__("value", function(val){
-            value = val;
-        });
+<p>就是说javascript对象继承存储和javascript静态方法存储是相反的。</p>
+
+<p><img src="http://g.hiphotos.bdimg.com/album/pic/item/9f2f070828381f30f7ee428fab014c086e06f025.jpg" alt="" /></p>
+
+<p>图：treegrid数据</p>
+
+<hr />
+
+<p><img src="http://g.hiphotos.bdimg.com/album/pic/item/8326cffc1e178a8247764887f403738da977e84b.jpg" alt="" /></p>
+
+<p><img src="http://d.hiphotos.bdimg.com/album/pic/item/08f790529822720e378cd5dd79cb0a46f21fab52.jpg" alt="" /></p>
+
+<p>图：javascript对象继承</p>
+
+<hr />
+
+<p><img src="http://b.hiphotos.bdimg.com/album/pic/item/4b90f603738da97738a2b70cb251f8198618e303.jpg" alt="" /></p>
+
+<p>图：javascript静态方法</p>
+
+<hr />
+
+<p><img src="http://a.hiphotos.bdimg.com/album/pic/item/37d3d539b6003af3622ceb47372ac65c1038b606.jpg" alt="" /></p>
+
+<p>图：javascript Object layout</p>
+
+<p>上面所说的其实就是javascript对象构成，或许还会困惑，下面将深入分析。</p>
+
+<h2 id="一javascript对象引用">一、javascript对象引用</h2>
+
+<p>什么叫做javascript对象引用？简单地说就是非实体对象赋值，即是非String,Number,Array，Null,Undefined等对象（除Object对象）赋值。</p>
+
+<pre><code>// 引用
+var source  = {
+    warm:function(v){
+        alert(v)
     }
+};
+var quote = source;
+delete source.warm;
+quote.warm('b');
+</code></pre>
 
-    // es6 是实现
-    function Field(val){
-        this.value = val;
-    }
+<p>上面代码会报错，因为source是非实体对象，quote内存地址指向source，当删除source.warm的时候，quote下的warm随之消失。</p>
 
-    Field.prototype = {
-        get value(){
-            return this._value;
-        },
-        set value(val){
-            this._value = val;
+<h2 id="二javascript对象复制浅拷贝深拷贝">二、javascript对象复制，浅拷贝，深拷贝</h2>
+
+<p>对于上述的代码要想不报错的话，就必须对source.warm也赋值给quote.warm，因为source.warm是实体对象（Function）。</p>
+
+<p>对对象进行遍历，子对象一对一赋值就叫做javascript对象复制。既然是遍历，自然有深浅度。所以我们对彻底遍历叫做深拷贝，只遍历子对象第一层叫做浅拷贝。</p>
+
+<p>(1)</p>
+
+<pre><code class="language-js">    var source  = {
+        warm:function(v){
+            alert(v)
         }
     };
-</code></pre>
-
-
-
-
-<p>4.java中的getter和setter</p>
-
-
-
-
-<pre><code class="javascript">    public class TestGetterSetter { //TestGetterSetter.class
-
-        private String name ;
-
-        public void setName(String name){
-            if(this.name != name){
-                System.out.println("name is changeing!");
-                this.name = name ;
-                // trigger change  event
+    function extend(target, source) {
+        for (var n in source) {
+            if(source.hasOwnProperty(n)){
+                target[n] = source[n]
             }
-
+        }
+        return target
     }
-
-    public String getName(String name){
-        if (this.name == null ){
-        setName("Guest");
-        }
-        return this.name ;
-    }
-
-        public String getName() {
-            return name;
-        }
-    }
-
-
-    public class TestMain { //TestMain.class
-        TestGetterSetter tb ;
-
-        public static void main(String[] args) {
-
-            new TestMain().todo();
-            // TODO Auto-generated method stub
-
-        }
-        public TestMain(){ // init
-
-             super();
-             System.out.println("init TestMain !!");
-        }
-        public void todo(){
-             tb  =  new TestGetterSetter();
-             tb.setName("caicai");
-             System.out.println(tb.getName());
-        }
-
-    }
+    var exObj = extend({},source);
+    delete source.warm;
+    exObj.warm('b');
 </code></pre>
 
+<p>(2)上述代码不会报错，因为source通过遍历已经把其子对象复制到exObj下了。</p>
 
+<pre><code class="language-js">var source  = {
+    warm:function(v){
+        alert(v)
+    },
+    childs:{
+        log:function(v){
+            alert('log'+v);
+        },
+        info:function(v){
+            alert('info'+v);
+        }
+    },
+    _private:{
+        _name:'source',
+        _age:12
+    }
+};
+function extend(target, source) {
+    for (var n in source) {
+        if(source.hasOwnProperty(n)){
+            target[n] = source[n]
+        }
+    }
+    return target
+}
+var exObj = extend({},source);
+</code></pre>
 
+<p>会发生错误，为什么呢？上面同样是复制，当我们执行如下代码：</p>
 
-<p>总结：</p>
+<pre><code class="language-js">delete source.childs.log;
+delete source.childs;
+exObj.childs.log('b');
+</code></pre>
 
+<p>同理，我们执行如下：就是我们一开始所说遍历的深度不彻底，我们通过上述extend方法只遍历了source.childs,而source.childs是非实体对象，所以只是充当exObj.childs对象的引用。</p>
 
+<pre><code class="language-js">exOBj._private._age++;
+source._private._age; // 13
 
+</code></pre>
 
-<p>用function封装存储规则，在set，get中嵌入pub/sub模式实现 事件触发。</p>
+<p>我们要实现深拷贝的话，就必须 判断其子对象是否是非实体对象，假如是非实体对象的话，就进行递归遍历操作。我们改变exOBj._private._age的时候，source._private.age也发生改变，道理和上面的一样。</p>
 
+<p>还记得jquery.extend api吗</p>
 
+<pre><code class="language-js">jQuery.extend( [deep ], target, object1 [, objectN ] )
+</code></pre>
 
+<p>当我们第一个参数传入true的时候，就帮我我们实施深拷贝操作。</p>
 
-<p>参考文献：</p>
+<h2 id="三javascript对象继承">三、javascript对象继承</h2>
 
+<p>学过java或者c++，php等语言的读者就好理解了，刚开始前言的</p>
 
+<p>图：javascript对象继承 和 图：javascript Object layout就说的很详细了。那么他们是怎么实现的呢？</p>
 
+<p>其实javascript中还有一个很重要的概念就是作用域。</p>
 
-<p>1.<a href="http://ejohn.org/blog/javascript-getters-and-setters/">http://ejohn.org/blog/javascript-getters-and-setters/</a></p>
+<p>编程语言中的继承就是子类继承父类已有的方法，属性，并做相应的拓展，进而形成自己的具有特定属性和方法的类。</p>
 
+<p>开始学面向对象语言的时候，通常都会举一个经典例子，就是动物父类，派生鸟类，鱼类……，而鸟类接着派生出鹰，麻雀……。</p>
 
+<p>而javascript（ecma5）还没有给出官方的方法进行上述操作而已。但是后续（ecma 6）将会支持。正如，一开始说所，javascript是一门松散的面向对象语言，留给变成者很多思考的空间。</p>
 
+<p>javascript中有两个很重要的方法就是call，apply。人们常谈的javascript设计模式常常都离不开call,apply,回调函数等等。</p>
 
-<p>2.javascript权威指南 6.6 属性getter和setter</p>
+<p>那么如何才能实现（图：javascript对象继承）中类似的对象继承？</p>
 
+<p>接着动物的例子：</p>
 
+<p>what is animal? 它们能够对环境作出反应并移动，捕食其他生物。</p>
 
+<pre><code class="language-js">function animal(){
+    
+}
+animal.prototype = {
+    catchOther:function(){
+    
+    },
+    protectSelf:function(){
+    
+    }
+}
+</code></pre>
+
+<p>鸟类：</p>
+
+<pre><code class="language-js">function bird(){
+    
+}
+bird = wrapper(bird,animal);
+bird.prototype.fly = function(){
+    console.log('flying');
+}
+</code></pre>
+
+<p>wrapper？？用来继承，如何写才能实现如下呢？</p>
+
+<p><img src="http://f.hiphotos.bdimg.com/album/pic/item/b58f8c5494eef01f4fd433e2e2fe9925bd317dd0.jpg" alt="" /></p>
+
+<p>new 一个 animal ？？并指向bird.prototype ?</p>
+
+<p>好像可以实现,但是当我们打入</p>
+
+<p>bird.prototype.<strong>proto</strong>.constructor的时候是什么呢？？构造函数是否符合对象的构造函数的定义呢？</p>
+
+<p>我们给出一个简单的方案，至于构造函数应该执行谁的问题留作思考，网上也很多关于这方面的讨论？自己可以搜一下</p>
+
+<pre><code class="language-js">function wrapper(child, parent) {
+    var ins = function() {
+        child.apply(this, arguments);
+    };
+    var subclass = function() {};
+    subclass.prototype = parent.prototype;
+    ins.prototype = new subclass;
+    return ins;
+};
+</code></pre>
+
+<p>所谓的静态方法就是不涉及抽象对象函数实现的方法，举个很简单的例子，如jquery中的$.isFunction,$.isArray等等就属于静态方法。同样是上面的例子</p>
+
+<p>四、javascript对象静态方法</p>
+
+<pre><code class="language-js">var source  = {
+    warm:function(v){
+        alert(v)
+    },
+    childs:{
+        log:function(v){
+            alert('log'+v);
+        },
+        info:function(v){
+            alert('info'+v);
+        }
+    },
+    _private:{
+        _name:'source',
+        _age:12
+    }
+};
+function extend(target, source) {
+    for (var n in source) {
+        if(source.hasOwnProperty(n)){
+            target[n] = source[n]
+        }
+    }
+    return target
+}
+var exObj = extend({},source);
+</code></pre>
+
+<p>这里不合理的地方在于当我们对其成员可操作，假如上述是公共方法，团队每个人都可以对其调用，并假如warm方法会对其兄弟属性_private产生改变。如何_private下的是标识变量（flog ~），那么这个标识变量就违反了可操作的唯一性。</p>
+
+<h2 id="五javascript对象多态">五、javascript对象多态</h2>
+
+<p>所谓的对象多态就是和构造函数或者方法参数传递进行动态识别处理。</p>
+
+<p>依然是$.extend,还记得api有多少调用吗？</p>
+
+<p>java中的多态是不同参数类型都重新定义一遍，好像十分费劲？javascript留给编程者的思考空间就是给你一个arguments，调用当前方法的参数集合，是一个类数组。</p>
+
+<p>一般地：</p>
+
+<pre><code class="language-js">function(a){
+  var args = [].slice(arguments,0);
+  if(args[0] == 'xx')doxxx;
+  if(typeof args[0] == 'function') doxxx;
+}
+</code></pre>
+
+<p>相关阅读：是不是很有意思呢。</p>
+
+<p>1、<a href="http://hi.baidu.com/tp100/item/a18184ee589145d5eb34c941" title="javascript权威指南 源代码分析（一）Objects">javascript权威指南 源代码分析（一）Objects</a></p>
+
+<p>2、<a href="http://hi.baidu.com/tp100/item/4fbb55d18f6741352a35c741" title="javascript权威指南 源代码分析（二）Functions">javascript权威指南 源代码分析（二）Functions</a></p>
+
+<p>3、（<a href="http://www.cnblogs.com/snandy/archive/2012/09/01/2664134.html">JavaScript中<strong>proto</strong>与prototype的关系</a>）</p>
+
+<p>后记：</p>
+
+<p>码字真累，百度空间蛋疼啊，写到一半按了不知道什么键，没有了一大截……</p>
+
+<p>有高亮代码时，不要按ctrl+Z，不然你的人生十分钟会浪费掉的。</p>
+
+<p>2013/10/19</p>
+
+<p>本文来源</p>
+
+<p>菜籽油: <a href="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e" title="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e">http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e</a></p>
 
 <p>-EOF-</p>
-
 ]]></content>
   </entry>
   
