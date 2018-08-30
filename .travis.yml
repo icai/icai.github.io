@@ -17,5 +17,5 @@ script:
   - bundle exec rake generate
 
 after_success:
-  - bundle deploy_ci
+  - bundle exec rake deploy_ci
 
