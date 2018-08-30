@@ -416,3 +416,19 @@ task :list do
   puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
   puts "(type rake -T for more detail)\n\n"
 end
+
+
+task :deploy_sync do
+  # ci 配置环境变量
+  ROT_TOKEN = ENV["ROT_TOKEN"]
+  if ROT_TOKEN
+    system "git config --global user.name \"Terry Rot\""
+    system "git config --global user.email \"gidcai@gmail.com\""
+    system "git clone --depth 50 -b master --single-branch https://#{ROT_TOKEN}@github.com/icai/icai.github.io.git #{deploy_dir}"
+  end
+end
+
+
+task :deploy_ci => [:integrate, :deploy_sync, :generate, :deploy] do
+
+end
