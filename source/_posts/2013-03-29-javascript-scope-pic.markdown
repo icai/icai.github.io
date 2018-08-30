@@ -22,7 +22,8 @@ keywords: javascript, scope
 
 在javascript或其他语言的作用域中同样有类似的，就是说addClass的内部方法或变量你是不能访问的，除非它定义为全局对象（window.xxxx）。。。
 <!-- more -->
-![](http://b.hiphotos.baidu.com/album/pic/item/ac4bd11373f08202f358e14c4afbfbedaa641bfe.jpg)
+
+![scope](https://user-images.githubusercontent.com/1061012/44856346-c3d39100-ac9f-11e8-8f52-a6be11140c98.jpg)
 
 例：
 

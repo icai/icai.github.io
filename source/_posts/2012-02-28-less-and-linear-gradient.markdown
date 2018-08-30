@@ -67,7 +67,7 @@ spin(@color, -10); // return a color with a 10 degree smaller hue than @color（
 
 ## 四、预览效果：
 
-![](http://hiphotos.baidu.com/tp100/pic/item/f2cfb68e8c5494eeb8d370ae2df5e0fe98257ea1.jpg)
+![preview](https://user-images.githubusercontent.com/1061012/44856110-32641f00-ac9f-11e8-88fa-87842654fbe8.jpg)
 
 ## 五、源代码：
 

@@ -1,16 +1,21 @@
 language: ruby
 rvm:
   - 2.4.1
+node_js: lts/*
 
 before_install:
   - gem update --system
   - gem --version
   - gem install bundler
 
+before_script:
+  - npm install -g bower
+
 script: 
+  - bower install
   - bundle install
   - bundle exec rake preview
 
 after_success:
-  - bundle gen_deploy
+  # - bundle gen_deploy
 
