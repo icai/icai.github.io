@@ -1,4 +1,16 @@
 language: ruby
 rvm:
-  - 2.2.3
-script: bundle exec rake install; bundle exec rake generate
+  - 2.4.1
+
+before_install:
+  - gem update --system
+  - gem --version
+  - gem install bundler
+
+script: 
+  - bundle install
+  - bundle exec rake preview
+
+after_success:
+  - bundle gen_deploy
+
