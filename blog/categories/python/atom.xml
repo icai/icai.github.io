@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-08-30T14:52:36+08:00</updated>
+  <updated>2018-08-30T19:29:14+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -24,7 +24,6 @@
 
 <!-- more -->
 
-<p>{% raw %}</p>
 <pre><code class="language-py"># encoding: utf-8
 import os
 import urllib2
@@ -207,7 +206,6 @@ if __name__ == '__main__':
     main()
 
 </code></pre>
-<p>{% endraw %}</p>
 
 <p>后续加上PIL动态合成支持。</p>
 

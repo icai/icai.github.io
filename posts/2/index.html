@@ -40,17 +40,17 @@
 <p class="subtitle">I am Terry，习惯阅读无注释代码</p>
 <nav id="main-nav"><ul class="main">
 	<li class=""><a href="/">主页  Blog</a></li>
-    <li class=""><a href="/blog/archives">归档  Archives</a></li>
-    <li class="inline"><a href="/blog/categories">分类  Categories</a></li>
-    <li class="inline" ><a href="/blog/tags">标签  Tags</a></li>
+    <li class=""><a href="/blog/archives/">归档  Archives</a></li>
+    <li class="inline"><a href="/blog/categories/">分类  Categories</a></li>
+    <li class="inline" ><a href="/blog/tags/">标签  Tags</a></li>
     
-    <li><a href="/slides">演讲 talks</a></li>
+    <li><a href="/slides/">演讲 talks</a></li>
     
-    <li><a href="/about">关于  About</a></li>
+    <li><a href="/about/">关于  About</a></li>
 </ul>
 <ul class="main">
     <li><a href="http://site.w3cub.com/" target="_blank">前端网址导航  Navs</a></li>
-    <li><a href="/tools">前端工具箱  Tools</a></li>
+    <li><a href="/tools/">前端工具箱  Tools</a></li>
 </ul></nav>
 <nav id="sub-nav">
 	<div class="social">
@@ -228,15 +228,13 @@
 	
 	</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		// 角度(angle)转弧度(radian)
+		<p>// 角度(angle)转弧度(radian)</p>
 
-
-```js
-
+<pre><code class="language-js">
 var radian = angle * Math.PI / 180;
 var angle = radian* 180/ Math.PI;
 alert(radian/ angle == Math.PI / 180);
-```
+</code></pre>
 
 		
 		<a href="/blog/2014/07/14/svg-canvas-positioning/" class="more-link">Read on &rarr;</a>
@@ -273,11 +271,11 @@ alert(radian/ angle == Math.PI / 180);
 	
 	</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		## 导言
+		<h2 id="导言">导言</h2>
 
-javascript与C,C++,Java等语言，他们之间总让人感觉存在一层纱，javascript易入门，难深入，而其他则相反（个人观点）。
+<p>javascript与C,C++,Java等语言，他们之间总让人感觉存在一层纱，javascript易入门，难深入，而其他则相反（个人观点）。</p>
 
-其实不论什么语言，难与易的突破口都在语法基础上，当你越学得深入，你会发现语言之间的相同是如此的美妙。其实个人感觉javascript是相对其他语言是最容易学的一种语言。但部分人确认为，javascript十分难学，什么兼容性都把你搞死了。个人认为应该把javascript的难与易一分为二。javascript的语言是相对其他语言简单的，而且没有过多的语法概念（泛型，多态，模板），让编程者留下很多可以思考和想象的空间。或许多人喜欢javascript就是因为它的灵活性。
+<p>其实不论什么语言，难与易的突破口都在语法基础上，当你越学得深入，你会发现语言之间的相同是如此的美妙。其实个人感觉javascript是相对其他语言是最容易学的一种语言。但部分人确认为，javascript十分难学，什么兼容性都把你搞死了。个人认为应该把javascript的难与易一分为二。javascript的语言是相对其他语言简单的，而且没有过多的语法概念（泛型，多态，模板），让编程者留下很多可以思考和想象的空间。或许多人喜欢javascript就是因为它的灵活性。</p>
 
 
 		
@@ -315,9 +313,9 @@ javascript与C,C++,Java等语言，他们之间总让人感觉存在一层纱，
 	
 	</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		前端处理重复列表类型数据都是十分繁琐的，让我们一劳永日吧。
+		<p>前端处理重复列表类型数据都是十分繁琐的，让我们一劳永日吧。</p>
 
-银行类表，航空公司列表,……
+<p>银行类表，航空公司列表,……</p>
 
 
 		
@@ -397,8 +395,7 @@ javascript与C,C++,Java等语言，他们之间总让人感觉存在一层纱，
 	
 	</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		```py
-import os
+		<pre><code class="language-py">import os
  
 _reName = "ABC,BJBANK,BOC,BSB,CCB,CEB,CITIC,CMB,CMBC,COMM,DBSCN,GDB,HANABANK,HSBC,HXBANK,HZCB,ICBC,JSBANK,KLB,PSBC,SCB,SDB,SJBANK,SPABANK,BHB,SHBANK,WHCCB,BOCD,HBRCU,HDBANK,HSBK,XTB,ZJKCCB,CZCCB,JINCHB,JSB,JZBANK,YQCCB,H3CB,ORBANK,WHBANK,BOCY,BODD,BOJZ,BOYK,FSCB,FXCB,JLRCU,DAQINGB,NBBANK,NJCB,WZCB,BOSZ,CSRCB,CZRCB,EGBANK,GCB,HSBANK,JRCB,KSRB,LSBANK,TCRCB,WJRCB,WRCB,ZRCBANK,FJHXBC,JHBANK,JXBANK,NBYZ,NDHB,SXCB,ZJNX,ARCU,BOD,JJBANK,GZB,JXRCU,NCB,SRBANK,BANKWF,DYCCB,DZBANK,JNBANK,LSBC,QDCCB,QLBANK,RZB,SDRCU,TACCB,AYCB,BOP,BOZK,BZMD,CBKF,HNRCU,NYCB,SCBBANK,SCCB,XCYH,XXBANK,XYBANK,ZZBANK,HBC,HKB,HURCB,WHRCB,HNRCC,DRCBCL,GDRCC,GLBANK,GRCB,NHB,SDEB,SRCB,XLBANK,BGB,GXRCU,LZCCB,CCQTGB,CDCB,CQBANK,CRCBANK,CDRCB,CGNB,DYCB,GYCB,LSCCB,PZHCCB,SCRCU,YBCCB,ZGCCB,GZRCU,ZYCBANK,YNRCC,YXCCB,CABANK,SXRCCU,XABANK,GSRCU,LZYH,NXRCU,SZSBK".split(',')
 path = 'F:\\PSD2.0\\bankalipay\\sprite\\images\\'
@@ -408,7 +405,7 @@ for file in os.listdir(path):
         _id = int(_baseName[9:_baseName.index('.')])
         _newName = _reName[_id - 1 ] + '.png'
         os.rename(os.path.join(path,file),os.path.join(path,_newName))
-```
+</code></pre>
 
 
 		
@@ -446,9 +443,9 @@ for file in os.listdir(path):
 	
 	</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		%u4e00 = 
+		<p>%u4e00 =</p>
 
-![](http://e.hiphotos.baidu.com/album/pic/item/cc11728b4710b912ac88a0b6c2fdfc0392452228.jpg)
+<p><img src="http://e.hiphotos.baidu.com/album/pic/item/cc11728b4710b912ac88a0b6c2fdfc0392452228.jpg" alt="" /></p>
 
 
 		
@@ -486,34 +483,33 @@ for file in os.listdir(path):
 	
 	</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		0.测试如此简单：
+		<p>0.测试如此简单：</p>
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>QUnit basic example</title>
-  <link rel="stylesheet" href="/resources/qunit.css">
-</head>
-<body>
-  <h1 id="qunit-header">QUnit</h1>
-  <h2 id="qunit-banner"></h2>
-  <div id="qunit-testrunner-toolbar"></div>
-  <h2 id="qunit-userAgent"></h2>
-  <ol id="qunit-tests"></ol>
-  <div id="qunit-fixture"></div>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;QUnit basic example&lt;/title&gt;
+  &lt;link rel="stylesheet" href="/resources/qunit.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 id="qunit-header"&gt;QUnit&lt;/h1&gt;
+  &lt;h2 id="qunit-banner"&gt;&lt;/h2&gt;
+  &lt;div id="qunit-testrunner-toolbar"&gt;&lt;/div&gt;
+  &lt;h2 id="qunit-userAgent"&gt;&lt;/h2&gt;
+  &lt;ol id="qunit-tests"&gt;&lt;/ol&gt;
+  &lt;div id="qunit-fixture"&gt;&lt;/div&gt;
 
-  <script src="/resources/qunit.js"></script>
-  <script>
+  &lt;script src="/resources/qunit.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
     test( "a basic test example", function() {
       var value = "hello";
       equal( value, "hello", "We expect value to be hello" );
     });
-  </script>
-</body>
-</html>
-```
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 
 
 		
@@ -551,17 +547,17 @@ for file in os.listdir(path):
 	
 	</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		分子 原子 质子 中子 电子 原子核 离子
+		<p>分子 原子 质子 中子 电子 原子核 离子</p>
 
-宇宙  银河系  太阳系  地月系
+<p>宇宙  银河系  太阳系  地月系</p>
 
-例：我的地址是：宇宙银河系太阳系地月系地球中国广东省广州天河区XXX。
+<p>例：我的地址是：宇宙银河系太阳系地月系地球中国广东省广州天河区XXX。</p>
 
-假如外星人来我家作客，必须知道我的地址，才能来我家作客。。。
+<p>假如外星人来我家作客，必须知道我的地址，才能来我家作客。。。</p>
 
-我的私有财产你不能动，除非我允许(民主社会)：
+<p>我的私有财产你不能动，除非我允许(民主社会)：</p>
 
-在javascript或其他语言的作用域中同样有类似的，就是说addClass的内部方法或变量你是不能访问的，除非它定义为全局对象（window.xxxx）。。。
+<p>在javascript或其他语言的作用域中同样有类似的，就是说addClass的内部方法或变量你是不能访问的，除非它定义为全局对象（window.xxxx）。。。<br />
 
 		
 		<a href="/blog/2013/03/29/javascript-scope-pic/" class="more-link">Read on &rarr;</a>
@@ -625,7 +621,7 @@ Copyright &copy; 2018
 			<script type="text/x-mathjax-config">
 				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
 			</script>
-			<script type="text/javascript" src="http://cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+			<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 		</div>
 	</div>
 </body>
