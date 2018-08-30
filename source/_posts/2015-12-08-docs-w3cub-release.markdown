@@ -10,7 +10,7 @@ translate: false
 keywords: project,development,documents,w3cub
 ---
 
-##Preface
+## Preface
 
 [docs.w3cub](http://docs.w3cub.com/) project is based on <a href="https://github.com/Thibaut/devdocs">open source</a><iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=Thibaut&amp;repo=devdocs&amp;type=star&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>. we use jekyll system to rewrite and hosted on Github Pages. This project continued for several months and written in my spare time. 
 
@@ -19,7 +19,7 @@ As you know, all pages are static. we think that this would be more fast than us
 
 After subsequent improvement, we will open some jekyll plug-ins and source code. 
 
-##Credits
+## Credits
 
 Following credits copy from devdocs.
 
@@ -34,11 +34,11 @@ Following credits copy from devdocs.
 
 About devdocs, you can read [this](https://devdocs.io/about).
 
-##The coming issue
+## The coming issue
 
 After improve these static web pages, I would do the app. If you like this, please wait the coming app. 
 
-##Related links
+## Related links
 
 - my project [docs.w3cub](http://docs.w3cub.com/)
 - original project [devdocs](https://devdocs.io/about)

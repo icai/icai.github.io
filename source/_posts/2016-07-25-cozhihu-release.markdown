@@ -38,7 +38,7 @@ cozhihu(多彩知乎)发布啦！
 <img aria-hidden="true"  src="https://lh3.googleusercontent.com/Q9-jyFEiolQrCY9WHREouUwbN4i5gcDGy-xw3xFbFii5Ea8S1ezuRM2IQwuLhCOYNZgntdqFcfI=s640-h400-e365-rw" width="640px" height="400px" >
 
 
-###开源协议
+### 开源协议
 
 Copyright (c) 2016 Terry Cai. Licensed under the MIT license.
 开源地址：[https://github.com/icai/cozhihu](https://github.com/icai/cozhihu)

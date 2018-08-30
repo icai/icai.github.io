@@ -42,7 +42,7 @@
 # </figure>
 #
 require './plugins/pygments_code'
-require './plugins/raw'
+# require './plugins/raw'
 
 module Jekyll
 
