@@ -1,3 +1,8 @@
+# It is possible, but not recommended as of Bundler 1.7, 
+# to add multiple global source lines. 
+# Each of these sources MUST be a valid Rubygems repository.
+# https://bundler.io/v1.16/man/gemfile.5.html
+source "https://rubygems.org"
 source "https://gems.ruby-china.com"
 
 group :development do
