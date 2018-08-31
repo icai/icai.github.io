@@ -5,11 +5,11 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>泛前端开发</title>
+	<title>jquery one 工作原理 - 泛前端开发</title>
 	<meta name="author" content="Terry Cai">
 	
-	<meta name="description" content="Mar 29, 2013 javascript Comments Jquery One 工作原理 先看一下源码实现 Read on &rarr; Mar 19, 2013 javascript Comments 《编写可维护的JavaScript》读书笔记（节选) 1.Basic &hellip;">
-	<meta name="keywords" content="泛前端开发,前端,全栈,frontend,fullstack,octopress,frontend tools">
+	<meta name="description" content="Mar 29, 2013 javascript Comments Jquery One 工作原理 先看一下源码实现 //Attach a handler to an event for the elements. The handler is executed at most once per &hellip;">
+	<meta name="keywords" content="jquery, javascript,one, 原理">
 	
 	<meta name="HandheldFriendly" content="True">
 	<meta name="MobileOptimized" content="320">
@@ -17,7 +17,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://blog.w3cub.com/posts/3/">
+	<link rel="canonical" href="http://blog.w3cub.com/blog/2013/03/29/jquery-one/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<script src="/assets/application-555523497a2cb672b8f83344414d95c89fc0ec37e583fccb3b2d7b79f9025439.js" integrity="sha256-VVUjSXostnK4+DNEQU2VyJ/A7Dflg/zLOy17efkCVDk=" crossorigin="anonymous" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" integrity="sha256-iZM+puF27rU6KblbX6VUFKCI3yfW1qG+EMPnJF1MM2o=" crossorigin="anonymous" href="/assets/application-89933ea6e176eeb53a29b95b5fa55414a088df27d6d6a1be10c3e7245d4c336a.css">
@@ -113,11 +113,10 @@
 				
 			
 			<div class="main-col-container">
-				<div id="content" class="inner">
-<div itemscope itemtype="http://schema.org/Blog">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
 
 
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
 	<div class="meta">
 		<div class="date">
 
@@ -138,225 +137,87 @@
 
 </div>
 		
-			<span class="comments"><a href="/blog/2013/03/29/jquery-one/#disqus_thread">Comments</a></span>
+
+		
+			<span class="comments"><a href="#disqus_thread">Comments</a></span>
 		
 	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2013/03/29/jquery-one/" itemprop="url">Jquery One 工作原理
+	<h1 class="title" itemprop="name">Jquery One 工作原理
 	
-	</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		先看一下源码实现
+	</h1>
+	
 
+	
+	<hr />
+	<div class="entry-content" itemprop="articleBody"><p>先看一下源码实现</p>
 
-		
-		<a href="/blog/2013/03/29/jquery-one/" class="more-link">Read on &rarr;</a>
-	</div>
+<!-- more -->
+
+<pre><code class="language-js">//Attach a handler to an event for the elements. The handler is executed at most once per element.  
+on: function(types, selector, data, fn, /*INTERNAL*/ one) { //...    
+    if (one === 1) {
+        origFn = fn;
+        fn = function(event) {
+            // Can use an empty set, since event contains the info            
+            jQuery().off(event);
+            return origFn.apply(this, arguments);
+        }; // Use same guid so caller can remove using origFn        
+        fn.guid = origFn.guid || (origFn.guid = jQuery.guid++);
+    } // ....      
+}, one: function(types, selector, data, fn) {
+    return this.on(types, selector, data, fn, 1);
+},
+</code></pre>
+
+<pre><code class="language-js">$("body").one("click", ".main_container", function() {
+    alert("This displays once for the first .foo clicked in the body.");
+});
+</code></pre>
+
+<p>相当于</p>
+
+<pre><code class="language-js">$("body").on("click", ".main_container", function(event) {
+    jQuery().off(event);
+    alert("This displays once for the first .foo clicked in the body.");
+});
+
+</code></pre>
+
+<p>-EOF-</p>
+</div>
+
+	
+		<br>
+<br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">Creative Commons BY-NC-ND 3.0</a></br>
+	
 
 </article>
 
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-
-<time datetime="2013-03-19T05:17:09+00:00" data-updated="true" itemprop="datePublished">Mar 19, 2013</time></div>
-		<div class="cats">
-
-
-	javascript
-
-
-</div>
-		
-			<span class="comments"><a href="/blog/2013/03/19/maintainable-javascript-notes/#disqus_thread">Comments</a></span>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2013/03/19/maintainable-javascript-notes/" itemprop="url">《编写可维护的JavaScript》读书笔记（节选)
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
 	
-	</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		1.Basic Formatting:
-
-
-粗略浏览了一些，其实就是一些习惯问题，例如：
-
-缩进空格，代码换行，常量赋值……
-
-列举各大框架的缩进习惯，2 space ,4 space or 1 tab……
-
-
-		
-		<a href="/blog/2013/03/19/maintainable-javascript-notes/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-
-<time datetime="2012-11-10T15:35:19+00:00" data-updated="true" itemprop="datePublished">Nov 10, 2012</time></div>
-		<div class="cats">
-
-
-	music
-
-
-</div>
-		
-			<span class="comments"><a href="/blog/2012/11/10/music-city-hall/#disqus_thread">Comments</a></span>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2012/11/10/music-city-hall/" itemprop="url">City Hall
+	<a class="addthis_button_sinaweibo"></a>
 	
-	</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<div>
-<embed src="http://www.xiami.com/widget/0_141216/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed>
-</div>
-
-
-Lyrics: 
-
-
-Title: Blue Caravan  
-Artist: Vienna Teng  
-Album: Dreaming Through the Noise  
-Year: 2006  
-
-me and my baby on a february holiday  
-'cause we got the news  
-yeah, we got the news  
-500 miles and we're gonna make it all the way  
-we've got nothing to lose  
-we've got nothing to lose  
-
-		
-		<a href="/blog/2012/11/10/music-city-hall/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-
-<time datetime="2012-06-16T05:29:31+00:00" data-updated="true" itemprop="datePublished">Jun 16, 2012</time></div>
-		<div class="cats">
-
-
-	python
-
-
-</div>
-		
-			<span class="comments"><a href="/blog/2012/06/16/python-starter-for-jser/#disqus_thread">Comments</a></span>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2012/06/16/python-starter-for-jser/" itemprop="url">Python概念转换dictionary、tuple、和 List
 	
-	</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		1.**Dictionar **-->Object json
-
-```py
-d = {"server":"mpilgrim", "database":"master"}
-```
-
-Dictionary 的 key 是大小写敏感的.
-
-```py
-d["server"]
-
-del d["server"] #删除单个
-
-d.clear()  #清空
-```
-
-		
-		<a href="/blog/2012/06/16/python-starter-for-jser/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-
-<time datetime="2012-02-28T04:53:01+00:00" data-updated="true" itemprop="datePublished">Feb 28, 2012</time></div>
-		<div class="cats">
-
-
-	javascript
-
-
-</div>
-		
-			<span class="comments"><a href="/blog/2012/02/28/less-and-linear-gradient/#disqus_thread">Comments</a></span>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2012/02/28/less-and-linear-gradient/" itemprop="url">关于lesscss和颜色梯度（linear-gradient ）的一些问题
 	
-	</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		## 一、什么是less？
-
-一种 动态 样式 语言.
-
-LESS 将 CSS 赋予了动态语言的特性，如 变量， 继承，运算， 函数.
-
-LESS 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可一在服务端运行 (借助Node.js).
-
-
-		
-		<a href="/blog/2012/02/28/less-and-linear-gradient/" class="more-link">Read on &rarr;</a>
+	<a class="addthis_button_twitter"></a>
+	
+	
+	
+	<a class="addthis_button_compact"></a>
+	<a class="addthis_counter addthis_bubble_style"></a>
 	</div>
-
-</article>
-
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-558841b45b591663"></script>
 </div>
-<nav id="pagenavi">
-    
-        <a href="/posts/2" class="prev">Prev</a>
-    
-    
-    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
-</nav></div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
 			</div>
 			<footer id="footer" class="inner">Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
 <br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
@@ -372,7 +233,10 @@ Copyright &copy; 2018
       var disqus_shortname = 'w3cub';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.w3cub.com/blog/2013/03/29/jquery-one/';
+        var disqus_url = 'http://blog.w3cub.com/blog/2013/03/29/jquery-one/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
