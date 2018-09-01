@@ -28,37 +28,40 @@ permalink: /about/
 
 ## 个人简历
 
- 2018.5 – 2018.8 合一新媒体 web前端开发工程师    
- 区块链交易平台   
- 前端组长，公司原因，宣布解散   
+
+
+☑ 2018.5 – 2018.8 合一新媒体 web前端开发工程师    
+▪ 区块链交易平台   
+▪ 前端组长，公司原因，宣布解散   
 
 
 
- 2016.12 – 2018.5 蜘点集团 web前端开发工程师   
- 先后参与 ERP， 审批流，批发通， 积分系统，WMS，核价比价系统前端开发架构。  
- 代表性项目地址: [https://pf.zhidianlife.com](https://pf.zhidianlife.com), [https://wms.zhidianlife.com](https://wms.zhidianlife.com)    
- .Net组前端组长
+☑ 2016.12 – 2018.5 蜘点集团 web前端开发工程师   
+▪ 先后参与 ERP， 审批流，批发通， 积分系统，WMS，核价比价系统前端开发架构。  
+▪ 代表性项目地址: [https://pf.zhidianlife.com](https://pf.zhidianlife.com), [https://wms.zhidianlife.com](https://wms.zhidianlife.com)    
+▪ .Net组前端组长
 
 
- 2013.12 - 2016.12 CourseNetworking, LLC 前端开发工程师   
- 负责前端大小工作， 2013 年改版主要前端，主张用开放国际化技术架构。  
- 主要负责 Task， Profile， 首页，登录页， Badge 等模块，及日常前端工作。  
- 五人团队，广州研发。 联合办公（美国马来西亚 QA）。  
- 项目地址: [https://www.thecn.com](https://www.thecn.com)  
-
-
-
- 2012.12 - 2013.12 纵横天地旅行网 前端工程师(UI组前端， UX）  
- 页面专题， 页面重构， 升级改版，移动 web， 组件编写及交互支持。  
- 参与 B2C, B2B, 后台等大大小小前端工作。  
- 组件归档， jplugin.w3cub.com。 (离职一年后公司倒闭)   
+☑ 2013.12 - 2016.12 CourseNetworking, LLC 前端开发工程师   
+▪ 负责前端大小工作， 2013 年改版主要前端，主张用开放国际化技术架构。  
+▪ 主要负责 Task， Profile， 首页，登录页， Badge 等模块，及日常前端工作。  
+▪ 五人团队，广州研发。 联合办公（美国马来西亚 QA）。  
+▪ 项目地址: [https://www.thecn.com](https://www.thecn.com)  
 
 
 
- 2012.03 - 2012.12 广州简乐网络科技有限公司 js前端开发   
-	负责网站页面架构，网站交互前端工作。   
-	五人团队，funlr.com 纷乐网。   
-	主张用requirejs。   
+☑ 2012.12 - 2013.12 纵横天地旅行网 前端工程师(UI组前端， UX）  
+▪ 页面专题， 页面重构， 升级改版，移动 web， 组件编写及交互支持。  
+▪ 参与 B2C, B2B, 后台等大大小小前端工作。  
+▪ 组件归档， jplugin.w3cub.com。 (离职一年后公司倒闭)   
+
+
+
+☑ 2012.03 - 2012.12 广州简乐网络科技有限公司 js前端开发   
+▪	负责网站页面架构，网站交互前端工作。   
+▪	五人团队，funlr.com 纷乐网。   
+▪	主张用requirejs。   
+
 
 
 
