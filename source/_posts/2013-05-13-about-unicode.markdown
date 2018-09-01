@@ -11,37 +11,39 @@ keywords: unicode, CJK
 
 %u4e00 = 
 
-![](http://e.hiphotos.baidu.com/album/pic/item/cc11728b4710b912ac88a0b6c2fdfc0392452228.jpg)
+![](https://user-images.githubusercontent.com/1061012/44942678-2e90e380-adea-11e8-8dab-7aac4af0b67b.jpg)
 
 <!-- more -->
 
 %u9fa5 = 
 
-![](http://e.hiphotos.baidu.com/album/pic/item/203fb80e7bec54e72a554c56b8389b504fc26a38.jpg)
+![](https://user-images.githubusercontent.com/1061012/44942679-2f297a00-adea-11e8-9ba1-06560848ca39.jpg)
 
 --------------------------------
 
 一:
 
-![](http://f.hiphotos.baidu.com/album/pic/item/b21c8701a18b87d68a8af957060828381e30fdaa.jpg)
+![](https://user-images.githubusercontent.com/1061012/44942680-2f297a00-adea-11e8-8347-6a8056456ec0.jpg)
 
 龥:
 
-![](http://e.hiphotos.baidu.com/album/pic/item/bd315c6034a85edfb987a36b48540923dd54756a.jpg)
+![](https://user-images.githubusercontent.com/1061012/44942681-2fc21080-adea-11e8-8aee-f9f034982305.jpg)
 
 [一-龥]
 
 再看看我们熟悉的A：
 
-![](http://b.hiphotos.baidu.com/album/pic/item/8b13632762d0f7035025cb9409fa513d2797c5e7.jpg)
+
+![](https://user-images.githubusercontent.com/1061012/44942682-305aa700-adea-11e8-9299-636b1d72d6ea.jpg)
 
 x00-xff:
 
-![](http://d.hiphotos.baidu.com/album/pic/item/63d0f703918fa0ecb3fb2245279759ee3d6ddbbe.jpg)
+
+![](https://user-images.githubusercontent.com/1061012/44942683-305aa700-adea-11e8-9826-316a2d9742ae.jpg)
 
 -----------------------------------------------
 
-![](http://f.hiphotos.baidu.com/album/pic/item/0824ab18972bd40758b895b57a899e510fb3097e.jpg)
+![](https://user-images.githubusercontent.com/1061012/44942684-30f33d80-adea-11e8-9784-9335bb07d8e3.jpg)
 
 参考文献：
 
