@@ -27,7 +27,6 @@ javascript给我们所展现对象继承存储其实就像treegrid数据类似�
 
 就是说javascript对象继承存储和javascript静态方法存储是相反的。
 
-![](http://g.hiphotos.bdimg.com/album/pic/item/9f2f070828381f30f7ee428fab014c086e06f025.jpg)
 ![1](https://user-images.githubusercontent.com/1061012/44942632-1b314880-ade9-11e8-9309-3b1fab06e63e.jpg)
 
 图：treegrid数据
