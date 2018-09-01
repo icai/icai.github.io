@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-08-31T08:08:51+00:00</updated>
+  <updated>2018-09-01T05:21:59+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -1120,27 +1120,28 @@ function getPointAt(p0, radius, angle) {
 
 <p>就是说javascript对象继承存储和javascript静态方法存储是相反的。</p>
 
-<p><img src="http://g.hiphotos.bdimg.com/album/pic/item/9f2f070828381f30f7ee428fab014c086e06f025.jpg" alt="" /></p>
+<p><img src="http://g.hiphotos.bdimg.com/album/pic/item/9f2f070828381f30f7ee428fab014c086e06f025.jpg" alt="" /><br />
+<img src="https://user-images.githubusercontent.com/1061012/44942632-1b314880-ade9-11e8-9309-3b1fab06e63e.jpg" alt="1" /></p>
 
 <p>图：treegrid数据</p>
 
 <hr />
 
-<p><img src="http://g.hiphotos.bdimg.com/album/pic/item/8326cffc1e178a8247764887f403738da977e84b.jpg" alt="" /></p>
+<p><img src="https://user-images.githubusercontent.com/1061012/44942633-1bc9df00-ade9-11e8-9649-1bf153d2abfa.png" alt="2" /></p>
 
-<p><img src="http://d.hiphotos.bdimg.com/album/pic/item/08f790529822720e378cd5dd79cb0a46f21fab52.jpg" alt="" /></p>
+<p><img src="https://user-images.githubusercontent.com/1061012/44942634-1c627580-ade9-11e8-84cf-3982b8b78b73.png" alt="3" /></p>
 
 <p>图：javascript对象继承</p>
 
 <hr />
 
-<p><img src="http://b.hiphotos.bdimg.com/album/pic/item/4b90f603738da97738a2b70cb251f8198618e303.jpg" alt="" /></p>
+<p><img src="https://user-images.githubusercontent.com/1061012/44942635-1c627580-ade9-11e8-8a8c-aec513b87629.png" alt="4" /></p>
 
 <p>图：javascript静态方法</p>
 
 <hr />
 
-<p><img src="http://a.hiphotos.bdimg.com/album/pic/item/37d3d539b6003af3622ceb47372ac65c1038b606.jpg" alt="" /></p>
+<p><img src="https://user-images.githubusercontent.com/1061012/44942636-1cfb0c00-ade9-11e8-9938-a850e81c4915.jpg" alt="5" /></p>
 
 <p>图：javascript Object layout</p>
 
@@ -1290,7 +1291,7 @@ bird.prototype.fly = function(){
 
 <p>wrapper？？用来继承，如何写才能实现如下呢？</p>
 
-<p><img src="http://f.hiphotos.bdimg.com/album/pic/item/b58f8c5494eef01f4fd433e2e2fe9925bd317dd0.jpg" alt="" /></p>
+<p><img src="https://user-images.githubusercontent.com/1061012/44942637-1cfb0c00-ade9-11e8-8f70-8375bdbe35cb.png" alt="6" /></p>
 
 <p>new 一个 animal ？？并指向bird.prototype ?</p>
 
