@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-09-01T05:21:59+00:00</updated>
+  <updated>2018-09-01T05:22:18+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -1120,8 +1120,7 @@ function getPointAt(p0, radius, angle) {
 
 <p>就是说javascript对象继承存储和javascript静态方法存储是相反的。</p>
 
-<p><img src="http://g.hiphotos.bdimg.com/album/pic/item/9f2f070828381f30f7ee428fab014c086e06f025.jpg" alt="" /><br />
-<img src="https://user-images.githubusercontent.com/1061012/44942632-1b314880-ade9-11e8-9309-3b1fab06e63e.jpg" alt="1" /></p>
+<p><img src="https://user-images.githubusercontent.com/1061012/44942632-1b314880-ade9-11e8-9309-3b1fab06e63e.jpg" alt="1" /></p>
 
 <p>图：treegrid数据</p>
 
