@@ -28,26 +28,30 @@ javascript给我们所展现对象继承存储其实就像treegrid数据类似�
 就是说javascript对象继承存储和javascript静态方法存储是相反的。
 
 ![](http://g.hiphotos.bdimg.com/album/pic/item/9f2f070828381f30f7ee428fab014c086e06f025.jpg)
+![1](https://user-images.githubusercontent.com/1061012/44942632-1b314880-ade9-11e8-9309-3b1fab06e63e.jpg)
 
 图：treegrid数据
 
 * * *
 
-![](http://g.hiphotos.bdimg.com/album/pic/item/8326cffc1e178a8247764887f403738da977e84b.jpg)
 
-![](http://d.hiphotos.bdimg.com/album/pic/item/08f790529822720e378cd5dd79cb0a46f21fab52.jpg)
+![2](https://user-images.githubusercontent.com/1061012/44942633-1bc9df00-ade9-11e8-9649-1bf153d2abfa.png)
+
+![3](https://user-images.githubusercontent.com/1061012/44942634-1c627580-ade9-11e8-84cf-3982b8b78b73.png)
 
 图：javascript对象继承
 
 * * *
 
-![](http://b.hiphotos.bdimg.com/album/pic/item/4b90f603738da97738a2b70cb251f8198618e303.jpg)
+
+![4](https://user-images.githubusercontent.com/1061012/44942635-1c627580-ade9-11e8-8a8c-aec513b87629.png)
 
 图：javascript静态方法
 
 * * *
 
-![](http://a.hiphotos.bdimg.com/album/pic/item/37d3d539b6003af3622ceb47372ac65c1038b606.jpg)
+
+![5](https://user-images.githubusercontent.com/1061012/44942636-1cfb0c00-ade9-11e8-9938-a850e81c4915.jpg)
 
 图：javascript Object layout
 
@@ -213,7 +217,7 @@ bird.prototype.fly = function(){
 
 wrapper？？用来继承，如何写才能实现如下呢？
 
-![](http://f.hiphotos.bdimg.com/album/pic/item/b58f8c5494eef01f4fd433e2e2fe9925bd317dd0.jpg)
+![6](https://user-images.githubusercontent.com/1061012/44942637-1cfb0c00-ade9-11e8-8f70-8375bdbe35cb.png)
 
 new 一个 animal ？？并指向bird.prototype ?
 
