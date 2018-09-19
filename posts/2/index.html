@@ -8,7 +8,7 @@
 	<title>泛前端开发</title>
 	<meta name="author" content="Terry Cai">
 	
-	<meta name="description" content="Jun 28, 2015 ruby Comments Rvm Help 常用命令（Action）： list :: show currently installed rubies, interactive output. install :: install one or many ruby &hellip;">
+	<meta name="description" content="Jul 15, 2015 javascript Comments 模糊匹配查询正则表达式探究 [译] Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user &hellip;">
 	<meta name="keywords" content="泛前端开发,前端,全栈,frontend,fullstack,octopress,frontend tools">
 	
 	<meta name="HandheldFriendly" content="True">
@@ -115,6 +115,58 @@
 			<div class="main-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+
+<time datetime="2015-07-15T14:09:43+00:00" data-updated="true" itemprop="datePublished">Jul 15, 2015</time></div>
+		<div class="cats">
+
+
+	javascript
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/" itemprop="url">模糊匹配查询正则表达式探究
+	
+		<i class="fa translate-mark" title="translate" >[译]</i>
+	
+	</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing "uni" into a country input field actually intends to select? It could match any of these:
+
+自动完成一直都是一个没完没了的问题。谁能准确地说出当一个地球人在一个国家输入框输入“uni”打算选什么？可能会出现以下情况：
+
+* Tanzania, [**U**][**n**][**i**]ted Republic of
+* [**U**][**n**][**i**]ted Arab Emirates
+* [**U**][**n**][**i**]ted Kingdom
+* [**U**][**n**][**i**]ted States
+* T[**u**][**n**][**i**]sia
+
+Of course, it’s probably not the last one, but that right there is a human intuition that we often forget to instil into these UI interactions.
+
+当然，这可能不是最后一个，但人类的直觉通常会忘记灌输这些UI交互。
+
+
+		
+		<a href="/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -496,71 +548,6 @@ for file in os.listdir(path):
 
 		
 		<a href="/blog/2013/05/13/about-unicode/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-
-<time datetime="2013-03-30T04:39:38+00:00" data-updated="true" itemprop="datePublished">Mar 30, 2013</time></div>
-		<div class="cats">
-
-
-	javascript
-
-
-</div>
-		
-			<span class="comments"><a href="/blog/2013/03/30/qunitjs-header-first/#disqus_thread">Comments</a></span>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2013/03/30/qunitjs-header-first/" itemprop="url">Qunit 入门必读
-	
-	</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		0.测试如此简单：
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>QUnit basic example</title>
-  <link rel="stylesheet" href="/resources/qunit.css">
-</head>
-<body>
-  <h1 id="qunit-header">QUnit</h1>
-  <h2 id="qunit-banner"></h2>
-  <div id="qunit-testrunner-toolbar"></div>
-  <h2 id="qunit-userAgent"></h2>
-  <ol id="qunit-tests"></ol>
-  <div id="qunit-fixture"></div>
-
-  <script src="/resources/qunit.js"></script>
-  <script>
-    test( "a basic test example", function() {
-      var value = "hello";
-      equal( value, "hello", "We expect value to be hello" );
-    });
-  </script>
-</body>
-</html>
-```
-
-
-		
-		<a href="/blog/2013/03/30/qunitjs-header-first/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: interview | 泛前端开发]]></title>
+  <link href="http://blog.w3cub.com/blog/categories/interview/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2018-09-19T17:43:16+00:00</updated>
+  <id>http://blog.w3cub.com/</id>
+  <author>
+    <name><![CDATA[Terry Cai]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[前端面试题之他们想问什么？]]></title>
+    <link href="http://blog.w3cub.com/blog/2018/09/19/front-end-interview-questions-what-do-you-want-to-ask/"/>
+    <updated>2018-09-19T14:55:43+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2018/09/19/front-end-interview-questions--what-do-you-want-to-ask</id>
+    <content type="html"><![CDATA[<p>最近在找工作遇到很多奇葩的面试问题？怎么说呢，就是比较书面性的，比较学术性的问题？<br />
+今天大家分享一下吧，我们来分析一下究竟这些问题究竟在问什么？跟最终像表达的是什么？<br />
+对于面试题，真是千秋各异，有些公司喜欢问原理，有些公司不管原理什么的，直接那个API怎么怎么用！</p>
+
+<!-- more -->
+
+<p>回归正题吧!</p>
+
+<h2 id="1浏览器输入url后都干了些什么">1、浏览器输入url后都干了些什么?</h2>
+
+<p>我只会答：建立请求，接收数据，dom渲染等。那么百度一下别人是怎么写？<br />
+其实也差不多只是分解的很细，按我的理解说一下吧</p>
+
+<p>1） 如何建立请求？引申出来的HTTP协议的理解了？<br />
+那么HTTP协议如何工作？</p>
+
+<p>一个基本HTTP系统有什么组件构成？</p>
+
+<p><img width="418" alt="default" src="https://user-images.githubusercontent.com/1061012/45764276-f4866500-bc64-11e8-9825-49c9ac0efa2d.png" /></p>
+
+<p>过程是怎么样的？</p>
+
+<p>[client/request] –[Proxy] – [Proxy] – [Proxy]– [Server/response]</p>
+
+<p>其中Proxies中可以进行如下操作：</p>
+
+<ul>
+  <li>caching (the cache can be public or private, like the browser cache)</li>
+  <li>filtering (like an antivirus scan, parental controls, …)</li>
+  <li>load balancing (to allow multiple servers to serve the different requests)</li>
+  <li>authentication (to control access to different resources)</li>
+  <li>logging (allowing the storage of historical information)</li>
+</ul>
+
+<p>HTTP大致的流程：</p>
+
+<p>1、Open a TCP connection (建立TCP链接)</p>
+
+<p>2、Send an HTTP message （发送HTTP消息）</p>
+
+<p>3、Read the response sent by the server （读取服务器响应信息）</p>
+
+<p>4、Close or reuse the connection for further requests.（关闭或者重用链接）</p>
+
+<p><a href="https://docs.w3cub.com/http/overview/">https://docs.w3cub.com/http/overview/</a></p>
+
+<p>2）如何渲染页面的？</p>
+
+<p>任何浏览器都应该有的7大组件</p>
+
+<p><img src="https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/layers.png" alt="How Web Browswers Work 2" width="432" height="296" /></p>
+
+<p>涉及到的要点：DOM Tree, Html Parser, Css Parser, Layout, Painting, Css Box Modal(盒子模型), Positioning 等等，很长不一一说，可以阅读下面链接。</p>
+
+<p><a href="https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/">https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/</a></p>
+
+<h2 id="2-eventloop的理解">2、 eventloop的理解？</h2>
+
+<p>我只会答：你指的是setTimeout，作用域，执行机制之类的吗？</p>
+
+<p>其实想问的是浏览器单线程是如何工作的？ setTimeout在当前作用域最后调用只是一个子集</p>
+
+<p><img src="https://mdn.mozillademos.org/files/4617/default.svg" alt="Stack, heap, queue" style="height: 270px; width: 294px;" /></p>
+
+<p>alert 和 synchronous XHR 会堵塞浏览器</p>
+
+<p>eventLoop 大致的执行顺序</p>
+
+<pre><code class="language-js">while (eventLoop.waitForTask()) {
+  const taskQueue = eventLoop.selectTaskQueue()
+  if (taskQueue.hasNextTask()) {
+    taskQueue.processNextTask()
+  }
+
+  const microtaskQueue = eventLoop.microTaskQueue
+  while (microtaskQueue.hasNextMicrotask()) {
+    microtaskQueue.processNextMicrotask()
+  }
+
+  if (shouldRender()) {
+    applyScrollResizeAndCSS()
+    runAnimationFrames()
+    render()
+  }
+}
+
+</code></pre>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop">https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop</a></p>
+
+<p><a href="https://blog.risingstack.com/writing-a-javascript-framework-execution-timing-beyond-settimeout/">https://blog.risingstack.com/writing-a-javascript-framework-execution-timing-beyond-settimeout/</a></p>
+
+<h2 id="3vue-或-react-diff算法原理的有了解过吗">3、Vue 或 react Diff算法原理的有了解过吗？</h2>
+
+<p>目的很明确，其实为了避免不好的用法。</p>
+
+<p>待续</p>
+
+<h2 id="4-vue-data-vuex-或者-react-state-redux-是如何工作的">4、 Vue data Vuex 或者 React state Redux 是如何工作的？</h2>
+
+<p>待续</p>
+
+]]></content>
+  </entry>
+  
+</feed>

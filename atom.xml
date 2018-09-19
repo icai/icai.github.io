@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-09-19T05:06:49+00:00</updated>
+  <updated>2018-09-19T17:42:30+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -12,6 +12,116 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[前端面试题之他们想问什么？]]></title>
+    <link href="http://blog.w3cub.com/blog/2018/09/19/front-end-interview-questions-what-do-you-want-to-ask/"/>
+    <updated>2018-09-19T14:55:43+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2018/09/19/front-end-interview-questions--what-do-you-want-to-ask</id>
+    <content type="html"><![CDATA[<p>最近在找工作遇到很多奇葩的面试问题？怎么说呢，就是比较书面性的，比较学术性的问题？<br />
+今天大家分享一下吧，我们来分析一下究竟这些问题究竟在问什么？跟最终像表达的是什么？<br />
+对于面试题，真是千秋各异，有些公司喜欢问原理，有些公司不管原理什么的，直接那个API怎么怎么用！</p>
+
+<!-- more -->
+
+<p>回归正题吧!</p>
+
+<h2 id="1浏览器输入url后都干了些什么">1、浏览器输入url后都干了些什么?</h2>
+
+<p>我只会答：建立请求，接收数据，dom渲染等。那么百度一下别人是怎么写？<br />
+其实也差不多只是分解的很细，按我的理解说一下吧</p>
+
+<p>1） 如何建立请求？引申出来的HTTP协议的理解了？<br />
+那么HTTP协议如何工作？</p>
+
+<p>一个基本HTTP系统有什么组件构成？</p>
+
+<p><img width="418" alt="default" src="https://user-images.githubusercontent.com/1061012/45764276-f4866500-bc64-11e8-9825-49c9ac0efa2d.png" /></p>
+
+<p>过程是怎么样的？</p>
+
+<p>[client/request] –[Proxy] – [Proxy] – [Proxy]– [Server/response]</p>
+
+<p>其中Proxies中可以进行如下操作：</p>
+
+<ul>
+  <li>caching (the cache can be public or private, like the browser cache)</li>
+  <li>filtering (like an antivirus scan, parental controls, …)</li>
+  <li>load balancing (to allow multiple servers to serve the different requests)</li>
+  <li>authentication (to control access to different resources)</li>
+  <li>logging (allowing the storage of historical information)</li>
+</ul>
+
+<p>HTTP大致的流程：</p>
+
+<p>1、Open a TCP connection (建立TCP链接)</p>
+
+<p>2、Send an HTTP message （发送HTTP消息）</p>
+
+<p>3、Read the response sent by the server （读取服务器响应信息）</p>
+
+<p>4、Close or reuse the connection for further requests.（关闭或者重用链接）</p>
+
+<p><a href="https://docs.w3cub.com/http/overview/">https://docs.w3cub.com/http/overview/</a></p>
+
+<p>2）如何渲染页面的？</p>
+
+<p>任何浏览器都应该有的7大组件</p>
+
+<p><img src="https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/layers.png" alt="How Web Browswers Work 2" width="432" height="296" /></p>
+
+<p>涉及到的要点：DOM Tree, Html Parser, Css Parser, Layout, Painting, Css Box Modal(盒子模型), Positioning 等等，很长不一一说，可以阅读下面链接。</p>
+
+<p><a href="https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/">https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/</a></p>
+
+<h2 id="2-eventloop的理解">2、 eventloop的理解？</h2>
+
+<p>我只会答：你指的是setTimeout，作用域，执行机制之类的吗？</p>
+
+<p>其实想问的是浏览器单线程是如何工作的？ setTimeout在当前作用域最后调用只是一个子集</p>
+
+<p><img src="https://mdn.mozillademos.org/files/4617/default.svg" alt="Stack, heap, queue" style="height: 270px; width: 294px;" /></p>
+
+<p>alert 和 synchronous XHR 会堵塞浏览器</p>
+
+<p>eventLoop 大致的执行顺序</p>
+
+<pre><code class="language-js">while (eventLoop.waitForTask()) {
+  const taskQueue = eventLoop.selectTaskQueue()
+  if (taskQueue.hasNextTask()) {
+    taskQueue.processNextTask()
+  }
+
+  const microtaskQueue = eventLoop.microTaskQueue
+  while (microtaskQueue.hasNextMicrotask()) {
+    microtaskQueue.processNextMicrotask()
+  }
+
+  if (shouldRender()) {
+    applyScrollResizeAndCSS()
+    runAnimationFrames()
+    render()
+  }
+}
+
+</code></pre>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop">https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop</a></p>
+
+<p><a href="https://blog.risingstack.com/writing-a-javascript-framework-execution-timing-beyond-settimeout/">https://blog.risingstack.com/writing-a-javascript-framework-execution-timing-beyond-settimeout/</a></p>
+
+<h2 id="3vue-或-react-diff算法原理的有了解过吗">3、Vue 或 react Diff算法原理的有了解过吗？</h2>
+
+<p>目的很明确，其实为了避免不好的用法。</p>
+
+<p>待续</p>
+
+<h2 id="4-vue-data-vuex-或者-react-state-redux-是如何工作的">4、 Vue data Vuex 或者 React state Redux 是如何工作的？</h2>
+
+<p>待续</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Complete NGINX Cookbook notes]]></title>
@@ -3435,281 +3545,6 @@ for file in os.listdir(path):
 <p>3.<a href="http://library.ust.hk/scip98/papers/sun-wu-li.pdf">http://library.ust.hk/scip98/papers/sun-wu-li.pdf</a>（The Design and Implementation of CJK Unified Character Set on UNIX Systems）</p>
 
 <p>4.<a href="https://zh.wikipedia.org/wiki/GB_2312">https://zh.wikipedia.org/wiki/GB_2312</a>（GB 2312）</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Qunit 入门必读]]></title>
-    <link href="http://blog.w3cub.com/blog/2013/03/30/qunitjs-header-first/"/>
-    <updated>2013-03-30T04:39:38+00:00</updated>
-    <id>http://blog.w3cub.com/blog/2013/03/30/qunitjs-header-first</id>
-    <content type="html"><![CDATA[<p>0.测试如此简单：</p>
-
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8"&gt;
-  &lt;title&gt;QUnit basic example&lt;/title&gt;
-  &lt;link rel="stylesheet" href="http://blog.w3cub.com/resources/qunit.css"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1 id="qunit-header"&gt;QUnit&lt;/h1&gt;
-  &lt;h2 id="qunit-banner"&gt;&lt;/h2&gt;
-  &lt;div id="qunit-testrunner-toolbar"&gt;&lt;/div&gt;
-  &lt;h2 id="qunit-userAgent"&gt;&lt;/h2&gt;
-  &lt;ol id="qunit-tests"&gt;&lt;/ol&gt;
-  &lt;div id="qunit-fixture"&gt;&lt;/div&gt;
-
-  &lt;script src="http://blog.w3cub.com/resources/qunit.js"&gt;&lt;/script&gt;
-  &lt;script&gt;
-    test( "a basic test example", function() {
-      var value = "hello";
-      equal( value, "hello", "We expect value to be hello" );
-    });
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-
-<!-- more -->
-
-<p>1.逻辑比较：</p>
-
-<pre><code class="language-js">test( "a basic test example", function() {
-  var value = "hello";
-  equal( value, "hello", "We expect value to be hello" );
-});
-</code></pre>
-
-<p>2.告诉它有多少条断言：</p>
-
-<pre><code class="language-js">test( "a basic test example", function() {
-  expect(1)// 一个断言
-  var value = "hello";
-  equal( value, "hello", "We expect value to be hello" );
-});
-</code></pre>
-
-<p>3.单向比较：</p>
-
-<pre><code class="language-js">//ok ：ok::function 传入的第一个参数为真，则通过。
-ok( true, "true succeeds" );
-</code></pre>
-
-<p>4.双向比较：</p>
-
-<pre><code class="language-js">test("equal", 3, function() {
-  var actual = 5 - 4;
-  equal(actual, 1,     "passes because 1 == 1");
-  equal(actual, true,  "passes because 1 == true");
-  equal(actual, false, "fails because 1 != false");
-});
-</code></pre>
-
-<p>2） notEqual： notEqual::function传入的第一第二个参数不相等(==)，则通过。</p>
-
-<pre><code class="language-js">test("notEqual", 3, function() {
-  var actual = 5 - 4;
-  notEqual(actual, 0,     "passes because 1 != 0");
-  notEqual(actual, false, "passes because 1 != false");
-  notEqual(actual, true,  "fails because 1 == true");
-});
-</code></pre>
-
-<p>3）strictEqual ： strictEqual::function传入的第一第二个参数绝对相等(===)，则通过。</p>
-
-<pre><code class="language-js">test("strictEqual", 3, function() {
-  var actual = 5 - 4;
-  strictEqual(actual, 1,     "passes because 1 === 1");
-  strictEqual(actual, true,  "fails because 1 !== true");
-  strictEqual(actual, false, "fails because 1 !== false");
-});
-</code></pre>
-
-<p>4) notStrictEqual ： notStrictEqual::function传入的第一第二个参数绝对不相等(!==)，则通过。</p>
-
-<pre><code class="language-js">test("notStrictEqual", 3, function() {
-  var actual = 5 - 4;
-  notStrictEqual(actual, 1,     "fails because 1 === 1");
-  notStrictEqual(actual, true,  "passes because 1 !== true");
-  notStrictEqual(actual, false, "passes because 1 !== false");
-});
-</code></pre>
-
-<p>5） deepEqual    deepEqual::function传入的第一第二个参数完全相等(基本类型，===)，则通过。</p>
-
-<pre><code class="language-js">test("deepEqual", 7, function() {
-  var actual = {a: 1};
-
-  equal(    actual, {a: 1},   "fails because objects are different");
-  deepEqual(actual, {a: 1},   "passes because objects are equivalent");
-  deepEqual(actual, {a: "1"}, "fails because '1' !== 1");
-
-  var a = $("body &gt; *");
-  var b = $("body").children();
-
-  equal(    a,       b,       "fails because jQuery objects are different");
-  deepEqual(a,       b,       "fails because jQuery objects are not equivalent");
-  equal(    a.get(), b.get(), "fails because element arrays are different");
-  deepEqual(a.get(), b.get(), "passes because element arrays are equivalent");
-});
-</code></pre>
-
-<p>6) notDeepEqual notDeepEqual::function传入的第一第二个参数不完全相等(基本类型，===)，则通过。</p>
-
-<pre><code class="language-js">test("notDeepEqual", 3, function() {
-  var actual = {a: 1};
-
-  notEqual(    actual, {a: 1},   "passes because objects are different");
-  notDeepEqual(actual, {a: 1},   "fails because objects are equivalent");
-  notDeepEqual(actual, {a: "1"}, "passes because '1' !== 1");
-});
-</code></pre>
-
-<p>5.预期断言：</p>
-
-<p>throws()     throws::function传入的第一个参数（回调函数）抛出错误，则通过。</p>
-
-<pre><code class="language-js">test( "throws", function() {
-  function CustomError( message ) {
-    this.message = message;
-  }
-  CustomError.prototype.toString = function() {
-    return this.message;
-  };
-  throws(
-    function() {
-      throw "error"
-    },
-    "throws with just a message, no expected"
-  );
-  throws(
-    function() {
-      throw new CustomError();
-    },
-    CustomError,
-    "raised error is an instance of CustomError"
-  );
-  throws(
-    function() {
-      throw new CustomError("some error description");
-    },
-    /description/,
-    "raised error message contains 'description'"
-  );
-});
-</code></pre>
-
-<p>6.异步测试：</p>
-
-<pre><code class="language-js">test("stop &amp; start", function() {
-  expect(1);
-  var actual = false;
-  stop();// 中断测试
-  setTimeout(function() {
-    ok(actual, "this test actually runs, and fails");
-    start();// 完成测试
-  }, 1000);
-});
-
-asyncTest("asyncTest &amp; start", function() {
-  expect(1);
-  var actual = false;
-  setTimeout(function() {
-    ok(actual, "this test actually runs, and fails");
-    start();//完成测试
-  }, 1000);
-});
-</code></pre>
-
-<p>7.模块组合：</p>
-
-<p>1）简单模块组合：</p>
-
-<pre><code class="language-js">module("core");
-test("a test in the core module", function() {
-  ok(true, "this test had better pass");
-});
-test("another test in the core module", function() {
-  ok(true, "this test had also better pass");
-});
-</code></pre>
-
-<p>2) 带回调函数（setup，teardown）模块组合：</p>
-
-<pre><code>module("module2", {
-  setup: function() {
-    ok(true, "once extra assert per test");
-    this.prop = "foo";
-  },
-  teardown: function() {
-    ok(true, "and one extra assert after each test");
-  }
-});
-test("test with setup and teardown", function() {
-  expect(3);
-  same(this.prop, "foo", "this.prop === 'foo' in all tests");
-});
-</code></pre>
-
-<p>8.全局回调：</p>
-
-<pre><code>// 测试开始
-QUnit.begin = function() {
-  console.log("Running Test Suite");
-};
-// 测试结束
-QUnit.done = function(failures, total) {
-  console.info("Suite: %d failures / %d tests", failures, total);
-};
-// 在每个模块前运行
-QUnit.moduleStart = function(name) {
-  console.group("Module: " + name);
-};
-// 在每个模块后运行
-QUnit.moduleDone = function(name, failures, total) {
-  console.info("Module: %d failures / %d tests", failures, total);
-  console.groupEnd();
-};
-// 每个单元测试前运行.
-QUnit.testStart = function(name) {
-  console.group("Test: " + name);
-};
-// 每个单元测试后运行
-QUnit.testDone = function(name, failures, total) {
-  console.info("Test: %d failures / %d tests", failures, total);
-  console.groupEnd();
-};
-// 在每一个断言后运行
-QUnit.log = function(result, message) {
-  console[ result ? "log" : "error" ](message);
-};
-</code></pre>
-
-<p>9.界面转逻辑：</p>
-
-<p>1）Dom 测试容器：</p>
-
-<pre><code> #qunit-fixture
-</code></pre>
-
-<p>2）模拟事件:</p>
-
-<p><a href="https://github.com/jquery/jquery-ui/tree/master/tests">https://github.com/jquery/jquery-ui/tree/master/tests</a></p>
-
-<p>10.实用测试插件：</p>
-
-<p>1) <a href="https://github.com/jquery/jquery-ui/blob/master/tests/jquery.simulate.js">https://github.com/jquery/jquery-ui/blob/master/tests/jquery.simulate.js</a></p>
-
-<p>2) <a href="http://qunitjs.com/plugins/">http://qunitjs.com/plugins/</a></p>
-
-<p>参考阅读：</p>
-
-<p>1） <a href="http://qunitjs.com/cookbook/">http://qunitjs.com/cookbook/</a></p>
-
-<p>2）<a href="http://api.qunitjs.com/">http://api.qunitjs.com/</a></p>
-
-<p>3）<a href="http://benalman.com/talks/unit-testing-qunit.html">http://benalman.com/talks/unit-testing-qunit.html</a> （main）</p>
 ]]></content>
   </entry>
   
