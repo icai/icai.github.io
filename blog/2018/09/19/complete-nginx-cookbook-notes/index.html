@@ -1,0 +1,839 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Complete NGINX Cookbook notes - 泛前端开发</title>
+	<meta name="author" content="Terry Cai">
+	
+	<meta name="description" content="Sep 19, 2018 nginx Comments Complete NGINX Cookbook Notes Complete NGINX Cookbook 首先这本说是可以免费下载的。 https://www.nginx.com/resources/library/complete- &hellip;">
+	<meta name="keywords" content="nginx, cookbook">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://blog.w3cub.com/blog/2018/09/19/complete-nginx-cookbook-notes/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<script src="/assets/application-555523497a2cb672b8f83344414d95c89fc0ec37e583fccb3b2d7b79f9025439.js" integrity="sha256-VVUjSXostnK4+DNEQU2VyJ/A7Dflg/zLOy17efkCVDk=" crossorigin="anonymous" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" integrity="sha256-iZM+puF27rU6KblbX6VUFKCI3yfW1qG+EMPnJF1MM2o=" crossorigin="anonymous" href="/assets/application-89933ea6e176eeb53a29b95b5fa55414a088df27d6d6a1be10c3e7245d4c336a.css">
+	
+
+</head>
+
+
+<body class="blog">
+	<div class="container">
+		<div class="sidebar">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+		<img src="/assets/images/avatar.jpeg" style="width: 160px;" />
+	
+</div>
+<h1><a href="/">泛前端开发</a></h1>
+<p class="subtitle">I am Terry，习惯阅读无注释代码</p>
+<nav id="main-nav"><ul class="main">
+	<li class=""><a href="/">主页  Blog</a></li>
+    <li class=""><a href="/blog/archives/">归档  Archives</a></li>
+    <li class="inline"><a href="/blog/categories/">分类  Categories</a></li>
+    <li class="inline" ><a href="/blog/tags/">标签  Tags</a></li>
+    
+    <li><a href="/slides/">演讲 talks</a></li>
+    
+    <li><a href="/about/">关于  About</a></li>
+</ul>
+<ul class="main">
+    <li><a href="http://site.w3cub.com/" target="_blank">前端网址导航  Navs</a></li>
+    <li><a href="/tools/">前端工具箱  Tools</a></li>
+</ul></nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+
+		
+		<a class="weibo" href="http://weibo.com/328765211" target="_blank" title="Weibo">Weibo</a>
+		
+		
+			<a class="facebook" href="http://www.facebook.com/terry.cai.7921" target="_blank" title="Facebook">Facebook</a>
+		
+		
+		
+
+		
+
+		
+			<a class="github" href="https://github.com/icai" target="_blank" title="GitHub">GitHub</a>
+		
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" target="_blank" title="RSS">RSS</a>
+		
+
+
+
+	</div>
+</nav>
+
+<section class="aboutme">
+  <p class="motto">
+    <script>
+    var mottos = ["多数人25岁就死了，一直到75岁才埋。——Horus9527 译","人民不应该怕政府，政府才应该怕人民。","天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。  ——老子","爱国者的责任就是保护国家不受政府侵犯——托马斯·潘恩","计算机就跟比基尼一样，省去了人们许多的胡思乱想。 ——萨姆·尤因","想了解一个人的个性，那就赋予他权力。 ——林肯","如果你怀疑自己，那么你的立足点确实不稳固了。","在民主和独裁的斗争中，纸上的宪法敌不过独裁者的刺刀。——林语堂","国家是危险的机器 ——华盛顿","冬天已经到来，春天还会远吗？ ——雪莱","工作撵跑三个魔鬼：无聊、堕落和贫穷。","老大哥在看着你。——奥威尔","宗教上最深的误解——认为坏人没有宗教。——尼采","国家是为人而建立，而人不是为国家而生存。——爱因斯坦","肚子大不可怕，可怕的是肚子里没有好东西。——加菲猫","任何有可能出错的事将会出错 ——墨菲定理","管得最少，就是最好的政府。——大卫·梭罗","人人生而平等 ——美国独立宣言","其实人跟树是一样的，越是向往高处的阳光，它的根就越要伸向黑暗的地底。——尼采"];
+    document.writeln(mottos[Math.floor(Math.random() * mottos.length)])
+    </script>
+  </p>
+</section>
+</header>				
+			</div>
+		</div>
+		<div id="topbar" class="topbar">
+			<div class="btn-bar"><i></i></div> 
+			<h1><a href="/">泛前端开发</a></h1> 
+			<a class="me" href="/about/"><img src="/assets/images/avatar.jpeg" alt="泛前端开发"></a>
+		</div>
+		<div id="sidebar-mask" style="display: none;"></div>
+		<div class="main-col">
+			
+				
+			
+			<div class="main-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+
+
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+
+<time datetime="2018-09-19T04:51:43+00:00" data-updated="true" itemprop="datePublished">Sep 19, 2018</time></div>
+		<div class="cats">
+
+
+	nginx
+
+
+</div>
+		
+
+		
+			<span class="comments"><a href="#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name">Complete NGINX Cookbook Notes
+	
+	</h1>
+	
+
+	
+	<hr />
+	<div class="entry-content" itemprop="articleBody"><p>Complete NGINX Cookbook 首先这本说是可以免费下载的。</p>
+
+<p>https://www.nginx.com/resources/library/complete-nginx-cookbook/</p>
+
+<p>正题</p>
+
+<p>我们都清楚 O’Reilly Cookbook 类型的书籍的风格，主要行文风格都是提出问题，给出答案并解决问题。</p>
+
+<p>这本说主要分为三部分讲解：</p>
+
+<ul>
+  <li>Part I: Load Balancing and HTTP Caching（负载平衡和HTTP缓存）</li>
+  <li>Part II: Security and Access （安全和访问）</li>
+  <li>Part III: Deployment and Operations （部署和运营）</li>
+</ul>
+
+<p>最常用到的当然是第一章，负载均衡；十一章，访问控制，如何设置跨域；十三章，https配置等。<br />
+相对于开发者而言，我们更多的只需要了解第一部分。第三部分对于开发者没有什么必要，所以就没有记录，有需要的可以自行阅读。</p>
+
+<!-- more -->
+
+<ul>
+  <li>第一部分：</li>
+</ul>
+
+<h2 id="第一章-high-performance-load-balancing-高性能负载均衡">第一章 High-Performance Load Balancing （高性能负载均衡）</h2>
+
+<p>1.1 HTTP Load Balancing（http负载均衡）</p>
+
+<pre><code>upstream backend {
+    server 10.10.12.45:80 weight=1;
+    server app.example.com:80 weight=2;
+}
+server {
+    location / {
+        proxy_pass http://backend;
+    }
+}
+
+</code></pre>
+<p>你把当前请求负载到多个server上，同时server可以指定权重（weight）。</p>
+
+<p>更多配置可以访问 https://docs.w3cub.com/nginx/stream/ngx_stream_upstream_module/#upstream</p>
+
+<p>1.2 TCP Load Balancing （TCP负载均衡）</p>
+
+<pre><code>stream {
+    upstream mysql_read {
+        server read1.example.com:3306 weight=5;
+        server read2.example.com:3306;
+        server 10.10.12.34:3306 backup;
+    }
+    server {
+        listen 3306;
+        proxy_pass mysql_read;
+    }
+}
+</code></pre>
+
+<p>1.3 Load-Balancing Methods （负载均衡方法）</p>
+
+<p>The following load-balancing methods are available for upstream HTTP, TCP, and UDP pools:</p>
+
+<p>五种方法（指令名称）：</p>
+
+<p>Round robin （ weight=x）<br />
+Least connections （least_conn）<br />
+Least time （least_time）<br />
+Generic hash （hash）<br />
+IP hash （ip_hash）</p>
+
+<p>阅读： https://docs.w3cub.com/nginx/stream/ngx_stream_upstream_module/</p>
+
+<p>1.4 Connection Limiting （连接数限制）</p>
+
+<pre><code>upstream backend {
+    zone backends 64k;
+    queue 750 timeout=30s;
+    server webserver1.example.com max_conns=25;
+    server webserver2.example.com max_conns=15;
+}
+
+</code></pre>
+
+<h2 id="第二章-intelligent-session-persistence--智能会话持久性">第二章 Intelligent Session Persistence  （智能会话持久性）</h2>
+
+<p>2.1 Sticky Cookie （粘性Cookie）</p>
+
+<p>You need to bind a downstream client to an upstream server</p>
+
+<p>sticky cookie 指令</p>
+
+<pre><code>upstream backend {
+    server backend1.example.com;
+    server backend2.example.com;
+    sticky cookie
+           affinity
+           expires=1h
+           domain=.example.com
+           httponly
+           secure
+           path=/;
+}
+
+</code></pre>
+
+<p>2.2 Sticky Learn</p>
+
+<p>You need to bind a downstream client to an upstream server by using an existing cookie.</p>
+
+<p>sticky learn 指令</p>
+
+<pre><code>upstream backend {
+    server backend1.example.com:8080;
+    server backend2.example.com:8081;
+    sticky learn
+            create=$upstream_cookie_cookiename
+            lookup=$cookie_cookiename
+            zone=client_sessions:2m;
+}
+</code></pre>
+
+<p>2.3 Sticky Routing</p>
+
+<p>提供一个映射修正处理</p>
+
+<pre><code>map $cookie_jsessionid $route_cookie {
+    ~.+\.(?P&lt;route&gt;\w+)$ $route;
+}
+map $request_uri $route_uri {
+    ~jsessionid=.+\.(?P&lt;route&gt;\w+)$ $route;
+}
+upstream backend {
+    server backend1.example.com route=a;
+    server backend2.example.com route=b;
+    sticky route $route_cookie $route_uri;
+}
+</code></pre>
+
+<p>2.4 Connection Draining</p>
+
+<p>You need to gracefully remove servers for maintenance or other reasons while still serving sessions.</p>
+
+<pre><code>curl 'http://localhost/upstream_conf?upstream=backend&amp;id=1&amp;drain=1'
+</code></pre>
+
+<h2 id="第五章-massively-scalable-content-caching-大规模可扩展的内容缓存">第五章 Massively Scalable Content Caching （大规模可扩展的内容缓存）</h2>
+
+<p>5.1 Caching Zones （缓存区）</p>
+
+<p>You need to cache content and need to define where the cache is stored.</p>
+
+<p>Use the proxy_cache_path directive to define shared memory cache<br />
+zones and a location for the content:</p>
+
+<pre><code>proxy_cache_path /var/nginx/cache
+                keys_zone=CACHE:60m
+                levels=1:2
+                inactive=3h
+                max_size=20g;
+proxy_cache CACHE;
+</code></pre>
+
+<p>5.2 Caching Hash Keys</p>
+
+<p>You need to control how your content is cached and looked up.</p>
+
+<p>Use the proxy_cache_key directive, along with variables to define<br />
+what constitutes a cache hit or miss:</p>
+
+<pre><code>proxy_cache_key "$host$request_uri $cookie_user";
+</code></pre>
+
+<p>5.3 Cache Bypass</p>
+
+<p>Use the proxy_cache_bypass directive with a nonempty or nonzero<br />
+value. One way to do this is by setting a variable within location<br />
+blocks that you do not want cached to equal 1:</p>
+
+<pre><code>proxy_cache_bypass $http_cache_bypass;
+
+</code></pre>
+
+<p>The configuration tells NGINX to bypass the cache if the HTTP<br />
+request header named cache_bypass is set to any value that is not 0.</p>
+
+<p>5.4 Cache Performance (性能)</p>
+
+<pre><code>location ~* \.(css|js)$ {
+  expires 1y;
+  add_header Cache-Control "public";
+}
+</code></pre>
+
+<p>5.5 Purging （）</p>
+
+<pre><code>map $request_method $purge_method {
+    PURGE 1;
+    default 0;
+}
+server {
+    ...
+    location / {
+        ...
+        proxy_cache_purge $purge_method;
+    }
+}
+
+</code></pre>
+
+<hr />
+
+<p>Part II: Security and Access（安全和访问）</p>
+
+<h2 id="第十一章-controlling-access">第十一章 Controlling Access</h2>
+
+<p>11.1 Access Based on IP Address</p>
+
+<p>根据客户端IP设定访问权限</p>
+
+<pre><code>location /admin/ {
+    deny 10.0.0.1;
+    allow 10.0.0.0/20;
+    allow 2001:0db8::/32;
+    deny all;
+}
+
+</code></pre>
+
+<p>11.2 Allowing Cross-Origin Resource Sharing</p>
+
+<p>跨域资源共享, 这里的OPTIONS 处理可以参考</p>
+
+<pre><code>map $request_method $cors_method {
+    OPTIONS 11;
+    GET 1;
+    POST 1;
+    default 0;
+}
+server {
+    ...
+    location / {
+        if ($cors_method ~ '1') {
+            add_header 'Access-Control-Allow-Methods' 
+            'GET,POST,OPTIONS';
+            add_header 'Access-Control-Allow-Origin'
+            '*.example.com';
+            add_header 'Access-Control-Allow-Headers'
+            'DNT,
+            Keep-Alive,
+            User-Agent,
+            If-Modified-Since,
+            Cache-Control,
+            Content-Type';
+        }
+        if ($cors_method = '11') {
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+    }
+}
+
+</code></pre>
+
+<h2 id="第十二章-limiting-use-限制使用">第十二章 Limiting Use （限制使用）</h2>
+
+<p>12.1 Limiting Connections <br />
+限制连接数</p>
+
+<p>You need to limit the number of connections based on a <code>predefined key</code>, such as the client’s IP address.</p>
+
+<p>limit_conn 指令</p>
+
+<pre><code>http {
+    limit_conn_zone $binary_remote_addr zone=limitbyaddr:10m;
+    limit_conn_status 429;
+    ...
+    server {
+        ...
+        limit_conn limitbyaddr 40;
+        ...
+    }
+}
+</code></pre>
+
+<p>This configuration creates a shared memory zone named limit <br />
+byaddr. The predefined key used is the client’s IP address in binary<br />
+form. The size of the shared memory zone is set to 10 mega‐<br />
+bytes. The limit_conn directive takes two parameters: a<br />
+limit_conn_zone name, and the number of connections allowed.<br />
+The limit_conn_status sets the response when the connections are<br />
+limited to a status of 429, indicating too many<br />
+requests. The limit_conn and limit_conn_status directives are<br />
+valid in the HTTP, server, and location context.</p>
+
+<p>12.2 Limiting Rate</p>
+
+<p>频率</p>
+
+<pre><code>http {
+    limit_req_zone $binary_remote_addr
+        zone=limitbyaddr:10m rate=1r/s;
+    limit_req_status 429;
+    ...
+    server {
+        ...
+        limit_req zone=limitbyaddr burst=10 nodelay;
+        ...
+    }
+}
+
+</code></pre>
+
+<p>12.3 Limiting Bandwidth</p>
+
+<p>带宽限制， 自动降速</p>
+
+<pre><code>location /download/ {
+    limit_rate_after 10m;
+    limit_rate 1m;
+}
+</code></pre>
+
+<h2 id="第十三章-encrypting">第十三章 Encrypting</h2>
+
+<p>13.1 Client-Side Encryption</p>
+
+<p>You need to encrypt traffic between your NGINX server and the client.</p>
+
+<p>加密传输，SSL modules such as  the <code>ngx_http_ssl_module</code> or <code>ngx_stream_ssl_module</code></p>
+
+<pre><code>http { # All directives used below are also valid in stream
+    server {
+        listen 8433 ssl;
+        ssl_protocols TLSv1.2;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+        ssl_certificate /usr/local/nginx/conf/cert.pem;
+        ssl_certificate_key /usr/local/nginx/conf/cert.key;
+        ssl_session_cache shared:SSL:10m;
+        ssl_session_timeout 10m;
+    }
+}
+
+</code></pre>
+
+<p>更新阅读  <br />
+https://docs.w3cub.com/nginx/http/ngx_http_ssl_module/#example   <br />
+https://docs.w3cub.com/nginx/stream/ngx_stream_ssl_module/#example</p>
+
+<p>13.2 Upstream Encryption</p>
+
+<p>You need to encrypt traffic between NGINX and the upstream service <br />
+and set specific negotiation rules for compliance regulations <br />
+or if the upstream is outside of your secured network.</p>
+
+<pre><code>location / {
+    proxy_pass https://upstream.example.com;
+    proxy_ssl_verify on;
+    proxy_ssl_verify_depth 2;
+    proxy_ssl_protocols TLSv1.2;
+}
+</code></pre>
+
+<h2 id="第十四章-http-basic-authentication">第十四章 HTTP Basic Authentication</h2>
+
+<p>分为两个步骤，创建密码文件， 设定nginx 配置</p>
+
+<p>14.1 Creating a User File</p>
+
+<p>文件格式</p>
+
+<pre><code># comment
+name1:password1
+name2:password2:comment
+name3:password3
+
+</code></pre>
+
+<p>或者通过以下命令（先安装openssl）</p>
+
+<pre><code>openssl passwd MyPassword1234
+</code></pre>
+
+<p>14.2 Using Basic Authentication</p>
+
+<pre><code>location / {
+    auth_basic "Private site";
+    auth_basic_user_file conf.d/passwd;
+}
+
+</code></pre>
+
+<h2 id="第十五章-http-authentication-subrequests">第十五章 HTTP Authentication Subrequests</h2>
+
+<p>15.1 Authentication Subrequests</p>
+
+<p>Use the http_auth_request_module to make a request to the<br />
+authentication service to verify identity before serving the request:</p>
+
+<pre><code>location /private/ {
+    auth_request /auth;
+    auth_request_set $auth_status $upstream_status;
+}
+location = /auth {
+    internal;
+    proxy_pass http://auth-server;
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+    proxy_set_header X-Original-URI $request_uri;
+}
+</code></pre>
+
+<h2 id="第十六章--secure-links">第十六章  Secure Links</h2>
+
+<p>16.1 Securing a Location</p>
+
+<p>Use the secure link module and the secure_link_secret directive<br />
+to restrict access to resources to users who have a secure link:</p>
+
+<pre><code>location /resources {
+    secure_link_secret mySecret;
+    if ($secure_link = "") { return 403; }
+    rewrite ^ /secured/$secure_link;
+}
+location /secured/ {
+    internal;
+    root /var/www;
+}
+</code></pre>
+
+<p>16.2 Generating a Secure Link with a Secret (生成一个安全链接)</p>
+
+<p>You need to generate a secure link from <code>your application</code> using a<br />
+secret.</p>
+
+<p>The <code>secure link module</code> in NGINX accepts the hex digest of an <code>md5</code><br />
+hashed string, where the string is a concatenation of the URI path<br />
+and the secret.</p>
+
+<pre><code>echo -n 'index.htmlmySecret' | openssl md5 -hex
+
+(stdin)= a53bee08a4bf0bbea978ddf736363a12
+</code></pre>
+<p>Python示例</p>
+
+<pre><code class="language-py">import hashlib
+hashlib.md5.(b'index.htmlmySecret').hexdigest()
+
+'a53bee08a4bf0bbea978ddf736363a12
+</code></pre>
+
+<p>Now that we have this hash digest, we can use it in a URL. Our<br />
+example will be for www.example.com making a request for the<br />
+file <code>/var/www/secured/index.html</code> through our /resources location.<br />
+Our full URL will be the following:</p>
+<pre><code>www.example.com/resources/a53bee08a4bf0bbea978ddf736363a12/\
+index.html
+</code></pre>
+
+<p>16.3 Securing a Location with an <code>Expire Date</code></p>
+
+<pre><code>location /resources {
+    root /var/www;
+    secure_link $arg_md5,$arg_expires;
+    secure_link_md5 "$secure_link_expires$uri$remote_addr
+    mySecret";
+    if ($secure_link = "") { return 403; }
+    if ($secure_link = "0") { return 410; }
+}
+</code></pre>
+
+<p>secure_link directive 有两个参数，第一个参数是保存md5哈希的变量；第二个参数是保存链接的到期时间（Unix epoch time format）</p>
+
+<p>16.4 Generating an Expiring Link</p>
+
+<p>创建一个时间戳（Unix epoch time format）</p>
+
+<pre><code class="language-bash">date -d "2020-12-31 00:00" +%s --utc
+# 1609372800
+</code></pre>
+
+<p>Next you’ll need to concatenate your hash string to match the string<br />
+configured with the secure_link_md5 directive. In this case, our<br />
+string to be used will be 1293771600/resources/<br />
+index.html127.0.0.1 mySecret. The md5 hash is a bit different<br />
+than just a hex digest. It’s an md5 hash in binary format, base64 enco‐<br />
+ded, with plus signs (+) translated to hyphens (-), slashes (/) trans‐<br />
+lated to underscores (_), and equal (=) signs removed. The following<br />
+is an example on a Unix system:</p>
+
+<pre><code class="language-bash"> echo -n '1609372800/resources/index.html127.0.0.1 mySecret' \
+| openssl md5 -binary \
+| openssl base64 \
+| tr +/ -_ \
+| tr -d =
+# TG6ck3OpAttQ1d7jW3JOcw
+</code></pre>
+
+<p>Now that we have our hash, we can use it as an argument along with<br />
+the expire date:</p>
+
+<p>/resources/index.html?md5=TG6ck3OpAttQ1d7jW3JOcw&amp;expires=1609372800’</p>
+
+<pre><code class="language-py">
+from datetime import datetime, timedelta
+from base64 import b64encode
+import hashlib
+# Set environment vars
+resource = b'/resources/index.html'
+remote_addr = b'127.0.0.1'
+host = b'www.example.com'
+mysecret = b'mySecret'
+# Generate expire timestamp
+now = datetime.utcnow()
+expire_dt = now + timedelta(hours=1)
+expire_epoch = str.encode(expire_dt.strftime('%s'))
+# md5 hash the string
+uncoded = expire_epoch + resource + remote_addr + mysecret
+md5hashed = hashlib.md5(uncoded).digest()
+# Base64 encode and transform the string
+b64 = b64encode(md5hashed)
+unpadded_b64url = b64.replace(b'+', b'-')\
+    .replace(b'/', b'_')\
+    .replace(b'=', b'')
+# Format and generate the link
+linkformat = "{}{}?md5={}?expires={}"
+securelink = linkformat.format(
+    host.decode(),
+    resource.decode(),
+    unpadded_b64url.decode(),
+    expire_epoch.decode()
+)
+print(securelink)
+
+</code></pre>
+
+<h2 id="第二十章-practical-security-tips">第二十章 Practical Security Tips</h2>
+
+<p>20.1 HTTPS Redirects</p>
+
+<p><code>Use a rewrite to send all HTTP traffic to HTTPS:</code></p>
+
+<pre><code>server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 301 https://$host$request_uri;
+}
+</code></pre>
+
+<p>20.2 Redirecting to HTTPS Where SSL/TLS Is Terminated Before NGINX</p>
+
+<pre><code>server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    if ($http_x_forwarded_proto = 'http') {
+        return 301 https://$host$request_uri;
+    }
+}
+</code></pre>
+
+<p>This configuration is very much like HTTPS redirects. However, in<br />
+this configuration we’re only redirecting <code>if the header X-Forwarded-Proto</code> is equal to HTTP.</p>
+
+<p>20.3 HTTP Strict Transport Security</p>
+
+<p>You need to instruct browsers to <code>never</code> send requests over HTTP</p>
+
+<p>Use the HTTP Strict Transport Security (HSTS) enhancement by<br />
+setting the Strict-Transport-Security header:</p>
+
+<pre><code>add_header Strict-Transport-Security max-age=31536000;
+
+</code></pre>
+
+<p>This configuration sets the Strict-Transport-Security header to a<br />
+max age of a year. This will instruct the browser to always do an<br />
+internal redirect when HTTP requests are attempted to this domain,<br />
+so that <code>all requests will be made over HTTPS</code>.</p>
+
+<p>20.4 Satisfying Any Number of Security Methods</p>
+
+<p>Use the satisfy directive</p>
+
+<pre><code>location / {
+    satisfy any;
+    allow 192.168.1.0/24;
+    deny all;
+    auth_basic "closed site";
+    auth_basic_user_file conf/htpasswd;
+}
+</code></pre>
+
+<p>本文： <a href="https://github.com/icai/nginxcooking">https://github.com/icai/nginxcooking</a></p>
+
+<p>-EOF-</p>
+
+</div>
+
+	
+		<br>
+<br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">Creative Commons BY-NC-ND 3.0</a></br>
+	
+
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+	
+	<a class="addthis_button_sinaweibo"></a>
+	
+	
+	
+	<a class="addthis_button_twitter"></a>
+	
+	
+	
+	<a class="addthis_button_compact"></a>
+	<a class="addthis_counter addthis_bubble_style"></a>
+	</div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-558841b45b591663"></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner">Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
+Copyright &copy; 2018
+
+    Terry Cai
+
+</br></footer>
+			
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'w3cub';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.w3cub.com/blog/2018/09/19/complete-nginx-cookbook-notes/';
+        var disqus_url = 'http://blog.w3cub.com/blog/2018/09/19/complete-nginx-cookbook-notes/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-64597109-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+			<link rel="stylesheet" type="text/css" href="/assets/prism/prism.css"/>
+			<script src="/assets/prism/prism.js" type="text/javascript"></script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
+			</script>
+			<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		</div>
+	</div>
+</body>
+</html>
