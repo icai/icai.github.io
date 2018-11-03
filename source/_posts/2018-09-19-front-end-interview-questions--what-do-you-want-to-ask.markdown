@@ -20,7 +20,7 @@ keywords: interview, frontend
 
 ## 1、浏览器输入url后都干了些什么?
 
-我只会答：建立请求，接收数据，dom渲染等。那么百度一下别人是怎么写？
+你只会答：建立请求，接收数据，dom渲染等。那么百度一下别人是怎么写？
 其实也差不多只是分解的很细，按我的理解说一下吧
 
 1） 如何建立请求？引申出来的HTTP协议的理解了？
@@ -74,7 +74,7 @@ HTTP大致的流程：
 
 ## 2、 eventloop的理解？
 
-我只会答：你指的是setTimeout，作用域，执行机制之类的吗？
+你只会答：你指的是setTimeout，作用域，执行机制之类的吗？
 
 其实想问的是浏览器单线程是如何工作的？ setTimeout在当前作用域最后调用只是一个子集
 
@@ -115,17 +115,43 @@ while (eventLoop.waitForTask()) {
 
 ## 3、Vue 或 react Diff算法原理的有了解过吗？
 
+过程：
 
-目的很明确，其实为了避免不好的用法。
+跟上一次 vircual dom diff 后生成语法树, 然后patch回去 native dom.
 
-待续
+状态机 -> virtual dom(template) diff -> 生成 patch -> native dom.
+
+Vue virtual DOM patching 算法是基于 https://github.com/snabbdom/snabbdom
+
+
+diff 算法大致 O(n3) -> O(n) 引入两个前提条件：elements Types 和 collection key
+
+React: 
+
+https://reactjs.org/docs/reconciliation.html
+
+
 
 
 ## 4、 Vue data Vuex 或者 React state Redux 是如何工作的？
 
+Vuex
 
-待续
+![](http://wx2.sinaimg.cn/large/50e0073dgy1fwg0bx3mo8j20jh0fbwef.jpg)
 
+Redux
+
+![](http://wx1.sinaimg.cn/large/50e0073dgy1fwuwvl12isg21400u0kjm.gif)
+
+Dva 
+![](http://wx1.sinaimg.cn/mw690/50e0073dgy1fwg0c6xkgej218u0e4ju8.jpg)
+
+Redux-saga
+
+![](http://wx1.sinaimg.cn/mw690/50e0073dgy1fwg0hxxv3bj20u30f2q4e.jpg)
+
+
+-完-
 
 
 
