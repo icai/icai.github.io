@@ -4,7 +4,7 @@
   <title><![CDATA[Category: interview | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/interview/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-11-03T06:32:33+00:00</updated>
+  <updated>2018-11-03T08:09:43+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -28,7 +28,7 @@
 
 <h2 id="1浏览器输入url后都干了些什么">1、浏览器输入url后都干了些什么?</h2>
 
-<p>我只会答：建立请求，接收数据，dom渲染等。那么百度一下别人是怎么写？<br />
+<p>你只会答：建立请求，接收数据，dom渲染等。那么百度一下别人是怎么写？<br />
 其实也差不多只是分解的很细，按我的理解说一下吧</p>
 
 <p>1） 如何建立请求？引申出来的HTTP协议的理解了？<br />
@@ -76,7 +76,7 @@
 
 <h2 id="2-eventloop的理解">2、 eventloop的理解？</h2>
 
-<p>我只会答：你指的是setTimeout，作用域，执行机制之类的吗？</p>
+<p>你只会答：你指的是setTimeout，作用域，执行机制之类的吗？</p>
 
 <p>其实想问的是浏览器单线程是如何工作的？ setTimeout在当前作用域最后调用只是一个子集</p>
 
@@ -112,13 +112,38 @@
 
 <h2 id="3vue-或-react-diff算法原理的有了解过吗">3、Vue 或 react Diff算法原理的有了解过吗？</h2>
 
-<p>目的很明确，其实为了避免不好的用法。</p>
+<p>过程：</p>
 
-<p>待续</p>
+<p>跟上一次 vircual dom diff 后生成语法树, 然后patch回去 native dom.</p>
+
+<p>状态机 -&gt; virtual dom(template) diff -&gt; 生成 patch -&gt; native dom.</p>
+
+<p>Vue virtual DOM patching 算法是基于 https://github.com/snabbdom/snabbdom</p>
+
+<p>diff 算法大致 O(n3) -&gt; O(n) 引入两个前提条件：elements Types 和 collection key</p>
+
+<p>React:</p>
+
+<p>https://reactjs.org/docs/reconciliation.html</p>
 
 <h2 id="4-vue-data-vuex-或者-react-state-redux-是如何工作的">4、 Vue data Vuex 或者 React state Redux 是如何工作的？</h2>
 
-<p>待续</p>
+<p>Vuex</p>
+
+<p><img src="http://wx2.sinaimg.cn/large/50e0073dgy1fwg0bx3mo8j20jh0fbwef.jpg" alt="" /></p>
+
+<p>Redux</p>
+
+<p><img src="http://wx1.sinaimg.cn/large/50e0073dgy1fwuwvl12isg21400u0kjm.gif" alt="" /></p>
+
+<p>Dva <br />
+<img src="http://wx1.sinaimg.cn/mw690/50e0073dgy1fwg0c6xkgej218u0e4ju8.jpg" alt="" /></p>
+
+<p>Redux-saga</p>
+
+<p><img src="http://wx1.sinaimg.cn/mw690/50e0073dgy1fwg0hxxv3bj20u30f2q4e.jpg" alt="" /></p>
+
+<p>-完-</p>
 
 ]]></content>
   </entry>
