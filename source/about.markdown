@@ -17,10 +17,10 @@ permalink: /about/
 
 地球寄居者，<i class="fa fa-map-marker fa-lg"></i><span class="sr-only">location at</span> China, Guangzhou.
 
-热爱前端开发，但不限于前端开发。平时习惯阅读各种优秀源代码，为什么我在左侧强调无注释，因为优秀的代码过多的注释反而影响阅读。同时阅读“无注释代码”，也是一种学习方法。也是一个自学软件工程师和爱好者。在没有计算机的时代，我认为在日常生活中，跟现在软件工程模型最像的就是图书馆。
+热爱前端开发，但不限于前端开发。平时习惯阅读各种优秀源代码，为什么我在左侧强调无注释，因为优秀的代码过多的注释反而影响阅读。同时阅读“无注释代码”，也是一种学习方法。
 
 
-平时爱好：篮球好久没有到球场了，阅读，电影，电视剧，刷抖音，看漂亮小姐姐，好色……
+平时爱好：篮球好久没有到球场了，阅读，电影，电视剧，刷抖音 ……
 
 唯物主义者，爱吃肉，静鸡鸡，蜡笔小新。
 
@@ -87,9 +87,6 @@ Follow me: <iframe src="https://ghbtns.com/github-btn.html?user=icai&type=follow
 
 ## 关于本站
 本站主要用于个人博客资讯记录，Github Pages 静态化页面，可在网页下方找到源代码。
-以前一直在百度空间写日志，最高的文章PV达8k。百度空间关闭后，把日志备份在<a class="netease" href="http://blog.163.com/{{ site.netease_user }}" target="_blank" title="Netease">Netease</a>。
-
-2018 年 网易博客也关闭，慢慢整理有用的日志回到本站。
 
 <br>
 
