@@ -123,6 +123,7 @@ The `redis` service uses a public [Redis](https://registry.hub.docker.com/_/redi
 ## 第四步: 使用Compose构建和运行您的应用程序
 
 1.  从项目目录中，运行`docker-compose up`启动应用程序.
+
 ```bash
 $ docker-compose up
 Creating network "composetest_default" with the default driver
@@ -143,10 +144,7 @@ redis_1  | 1:M 17 Aug 22:11:10.483 # Server initialized
 redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 web_1    |  * Debugger PIN: 330-787-903
 redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections
-
-
 ```
-
 
 
 Compose拉取Redis图像，为您的代码构建图像，并启动您定义的服务。 在这种情况下，代码在构建时静态复制到映像中。
