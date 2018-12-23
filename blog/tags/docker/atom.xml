@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Docker | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/docker/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-12-23T06:01:33+00:00</updated>
+  <updated>2018-12-23T06:14:18+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -18,9 +18,7 @@
     <link href="http://blog.w3cub.com/blog/2018/12/23/docker-compose-gettingstarted/"/>
     <updated>2018-12-23T05:48:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2018/12/23/docker-compose-gettingstarted</id>
-    <content type="html"><![CDATA[<h1 id="docker-compose入门">Docker Compose入门</h1>
-
-<pre><code>预计阅读时间：10分钟
+    <content type="html"><![CDATA[<pre><code>预计阅读时间：10分钟
 </code></pre>
 
 <p>在此页面上，您将构建一个在Docker Compose上运行的简单Python Web应用程序。该应用程序使用Flask框架并在Redis中维护一个命中计数器。虽然该示例使用Python，但即使您不熟悉它，此处演示的概念也应该是可以理解的。</p>
@@ -28,6 +26,8 @@
 <h2 id="预先准备">预先准备</h2>
 
 <p>确保您已经安装了 <a href="https://docs.docker.com/install/">Docker Engine</a> 和 <a href="https://docs.docker.com/compose/install/">Docker Compose</a>. 您不需要安装Python或Redis，因为两者都是由Docker镜像提供的。</p>
+
+<!-- more -->
 
 <h2 id="第一步-setup">第一步: Setup</h2>
 
@@ -321,6 +321,10 @@ composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
     <p>documentation, docs, docker, compose, orchestration, containers</p>
   </li>
 </ul>
+
+<hr />
+
+<p><a href="http://markdown.w3cub.com/">markdown编辑</a></p>
 ]]></content>
   </entry>
   
