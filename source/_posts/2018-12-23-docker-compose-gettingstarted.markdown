@@ -8,12 +8,12 @@ tags: [Docker,Compose]
 statement: true
 translate: true
 originaltitle: "Get started with Docker Compose"
-originalurl: https://docs.docker.com/compose/gettingstarted/#step-8-experiment-with-some-other-commands
+originalurl: https://docs.docker.com/compose/gettingstarted/
 keywords: docker, Compose
 
 ---
 
-# Docker Compose入门
+
 
     预计阅读时间：10分钟
 
@@ -22,6 +22,8 @@ keywords: docker, Compose
 ## 预先准备
 
 确保您已经安装了 [Docker Engine](https://docs.docker.com/install/) 和 [Docker Compose](https://docs.docker.com/compose/install/). 您不需要安装Python或Redis，因为两者都是由Docker镜像提供的。
+
+<!-- more -->
 
 ## 第一步: Setup
 
@@ -264,3 +266,7 @@ Check the `Hello World` message in a web browser again, and refresh to see the c
 *   To learn more about volumes and bind mounts, see [Manage data in Docker](https://docs.docker.com/engine/admin/volumes/)
 
     documentation, docs, docker, compose, orchestration, containers
+    
+---
+
+[markdown编辑](http://markdown.w3cub.com/)
