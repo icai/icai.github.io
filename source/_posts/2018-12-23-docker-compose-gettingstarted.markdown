@@ -35,7 +35,7 @@ keywords: docker, Compose
         $ cd composetest
 
 2.  在项目目录中创建一个名为`app.py`的文件并粘贴如下:
-
+```py
         import time
 
         import redis
@@ -62,6 +62,7 @@ keywords: docker, Compose
 
         if __name__ == "__main__":
             app.run(host="0.0.0.0", debug=True)
+```
 
     In this example, `redis` is the hostname of the redis container on the application’s network. We use the default port for Redis, `6379`.
 
@@ -99,7 +100,7 @@ keywords: docker, Compose
 ## 第三步: 在Compose文件中定义服务
 
 在项目目录中创建一个名为`docker-compose.yml`的文件并粘贴以下内容:
-
+```yml
     version: '3'
     services:
       web:
@@ -109,6 +110,7 @@ keywords: docker, Compose
       redis:
         image: "redis:alpine"
 
+```
 这Compose文件定义了两个服务, `web` and `redis`. The `web` service:
 
 *   Uses an image that’s built from the `Dockerfile` in the current directory.
@@ -119,7 +121,7 @@ The `redis` service uses a public [Redis](https://registry.hub.docker.com/_/redi
 ## 第四步: 使用Compose构建和运行您的应用程序
 
 1.  从项目目录中，运行`docker-compose up`启动应用程序.
-
+```sh
         $ docker-compose up
         Creating network "composetest_default" with the default driver
         Creating composetest_web_1 ...
@@ -139,6 +141,8 @@ The `redis` service uses a public [Redis](https://registry.hub.docker.com/_/redi
         redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
         web_1    |  * Debugger PIN: 330-787-903
         redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections
+
+```
 
     Compose pulls a Redis image, builds an image for your code, and starts the services you defined. In this case, the code is statically copied into the image at build time.
 
@@ -179,7 +183,7 @@ The `redis` service uses a public [Redis](https://registry.hub.docker.com/_/redi
 ## 第五步: 编辑Compose文件以添加绑定装载
 
 编辑项目目录中的`docker-compose.yml`为`web`服务添加 [bind mount](https://docs.docker.com/engine/admin/volumes/bind-mounts/) :
-
+```yml
     version: '3'
     services:
       web:
@@ -191,12 +195,13 @@ The `redis` service uses a public [Redis](https://registry.hub.docker.com/_/redi
       redis:
         image: "redis:alpine"
 
+```
 The new `volumes` key 把项目目录（当前目录）挂载到容器内的`/ code`允许您动态修改代码，而无需重建映像
 
 ## 第六步: 使用Compose Re-build并运行应用程序
 
 在项目目录中，键入`docker-compose up`以使用更新的Compose文件构建应用程序，然后运行它。
-
+```sh
     $ docker-compose up
     Creating network "composetest_default" with the default driver
     Creating composetest_web_1 ...
@@ -206,6 +211,7 @@ The new `volumes` key 把项目目录（当前目录）挂载到容器内的`/ c
     Attaching to composetest_web_1, composetest_redis_1
     web_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
     ...
+```
 
 Check the `Hello World` message in a web browser again, and refresh to see the count increment.
 
@@ -231,7 +237,7 @@ Check the `Hello World` message in a web browser again, and refresh to see the c
 ## 第八步: 尝试一些其他命令
 
 如果你想在后台运行你的服务, 你可以在`docker-compose up`命令后面添加 `-d` (for “detached” mode)，使用`docker-compose ps`查看当前正在运行的内容:
-
+```sh
     $ docker-compose up -d
     Starting composetest_redis_1...
     Starting composetest_web_1...
@@ -241,6 +247,7 @@ Check the `Hello World` message in a web browser again, and refresh to see the c
     -------------------------------------------------------------------
     composetest_redis_1   /usr/local/bin/run         Up
     composetest_web_1     /bin/sh -c python app.py   Up      5000->5000/tcp
+```
 
 `docker-compose run`命令允许您为服务运行一次性命令。例如，查看`web`服务可用的环境变量:
 
@@ -269,4 +276,4 @@ Check the `Hello World` message in a web browser again, and refresh to see the c
     
 ---
 
-[markdown编辑](http://markdown.w3cub.com/)
+Terry edit on [markdown编辑](http://markdown.w3cub.com/)
