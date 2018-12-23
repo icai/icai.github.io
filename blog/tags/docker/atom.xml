@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Docker | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/docker/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-12-23T06:14:18+00:00</updated>
+  <updated>2018-12-23T06:21:02+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -41,35 +41,33 @@
 $ cd composetest
 </code></pre>
   </li>
-  <li>
-    <p>在项目目录中创建一个名为<code>app.py</code>的文件并粘贴如下:</p>
+  <li>在项目目录中创建一个名为<code>app.py</code>的文件并粘贴如下:
+    <pre><code class="language-py">    import time
 
-    <pre><code>import time
+    import redis
+    from flask import Flask
 
-import redis
-from flask import Flask
+    app = Flask(__name__)
+    cache = redis.Redis(host='redis', port=6379)
 
-app = Flask(__name__)
-cache = redis.Redis(host='redis', port=6379)
+    def get_hit_count():
+        retries = 5
+        while True:
+            try:
+                return cache.incr('hits')
+            except redis.exceptions.ConnectionError as exc:
+                if retries == 0:
+                    raise exc
+                retries -= 1
+                time.sleep(0.5)
 
-def get_hit_count():
-    retries = 5
-    while True:
-        try:
-            return cache.incr('hits')
-        except redis.exceptions.ConnectionError as exc:
-            if retries == 0:
-                raise exc
-            retries -= 1
-            time.sleep(0.5)
+    @app.route('/')
+    def hello():
+        count = get_hit_count()
+        return 'Hello World! I have been seen {} times.\n'.format(count)
 
-@app.route('/')
-def hello():
-    count = get_hit_count()
-    return 'Hello World! I have been seen {} times.\n'.format(count)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    if __name__ == "__main__":
+        app.run(host="0.0.0.0", debug=True)
 </code></pre>
 
     <p>In this example, <code>redis</code> is the hostname of the redis container on the application’s network. We use the default port for Redis, <code>6379</code>.</p>
@@ -117,17 +115,16 @@ CMD ["python", "app.py"]
 <h2 id="第三步-在compose文件中定义服务">第三步: 在Compose文件中定义服务</h2>
 
 <p>在项目目录中创建一个名为<code>docker-compose.yml</code>的文件并粘贴以下内容:</p>
+<pre><code class="language-yml">    version: '3'
+    services:
+      web:
+        build: .
+        ports:
+         - "5000:5000"
+      redis:
+        image: "redis:alpine"
 
-<pre><code>version: '3'
-services:
-  web:
-    build: .
-    ports:
-     - "5000:5000"
-  redis:
-    image: "redis:alpine"
 </code></pre>
-
 <p>这Compose文件定义了两个服务, <code>web</code> and <code>redis</code>. The <code>web</code> service:</p>
 
 <ul>
@@ -140,106 +137,96 @@ services:
 <h2 id="第四步-使用compose构建和运行您的应用程序">第四步: 使用Compose构建和运行您的应用程序</h2>
 
 <ol>
-  <li>
-    <p>从项目目录中，运行<code>docker-compose up</code>启动应用程序.</p>
-
-    <pre><code>$ docker-compose up
-Creating network "composetest_default" with the default driver
-Creating composetest_web_1 ...
-Creating composetest_redis_1 ...
-Creating composetest_web_1
-Creating composetest_redis_1 ... done
-Attaching to composetest_web_1, composetest_redis_1
-web_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
-redis_1  | 1:C 17 Aug 22:11:10.480 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-redis_1  | 1:C 17 Aug 22:11:10.480 # Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=1, just started
-redis_1  | 1:C 17 Aug 22:11:10.480 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
-web_1    |  * Restarting with stat
-redis_1  | 1:M 17 Aug 22:11:10.483 * Running mode=standalone, port=6379.
-redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
-web_1    |  * Debugger is active!
-redis_1  | 1:M 17 Aug 22:11:10.483 # Server initialized
-redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
-web_1    |  * Debugger PIN: 330-787-903
-redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections
-</code></pre>
-
-    <p>Compose pulls a Redis image, builds an image for your code, and starts the services you defined. In this case, the code is statically copied into the image at build time.</p>
-  </li>
-  <li>
-    <p>在浏览器输入 <code>http://0.0.0.0:5000/</code> 查看应用运行情况.</p>
-
-    <p>If you’re using Docker natively on Linux, Docker for Mac, or Docker for Windows, then the web app should now be listening on port 5000 on your Docker daemon host. Point your web browser to <code>http://localhost:5000</code> to find the <code>Hello World</code>message. If this doesn’t resolve, you can also try <code>http://0.0.0.0:5000</code>.</p>
-
-    <p>If you’re using Docker Machine on a Mac or Windows, use <code>docker-machine ip MACHINE_VM</code> to get the IP address of your Docker host. Then, open <code>http://MACHINE_VM_IP:5000</code> in a browser.</p>
-
-    <p>You should see a message in your browser saying:</p>
-
-    <pre><code>Hello World! I have been seen 1 times.
-</code></pre>
-
-    <p><img src="https://docs.docker.com/compose/images/quick-hello-world-1.png" alt="hello world in browser" /></p>
-  </li>
-  <li>
-    <p>刷新网页.</p>
-
-    <p>The number should increment.</p>
-
-    <pre><code>Hello World! I have been seen 2 times.
-</code></pre>
-
-    <p><img src="https://docs.docker.com/compose/images/quick-hello-world-2.png" alt="hello world in browser" /></p>
-  </li>
-  <li>
-    <p>切换到另一个终端窗口，然后键入<code>docker image ls</code>列出本地图像.</p>
-
-    <p>Listing images at this point should return <code>redis</code> and <code>web</code>.</p>
-
-    <pre><code>$ docker image ls
-REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
-composetest_web         latest              e2c21aa48cc1        4 minutes ago       93.8MB
-python                  3.4-alpine          84e6077c7ab6        7 days ago          82.5MB
-redis                   alpine              9d8fa9aa0e5b        3 weeks ago         27.5MB
-</code></pre>
-
-    <p>You can inspect images with <code>docker inspect &lt;tag or id&gt;</code>.</p>
-  </li>
-  <li>
-    <p>通过在另一个终端在项目目录中运行<code>docker-compose down</code>, 或者在启动应用程序的终端中按CTRL + C 来停止应用程序.</p>
-  </li>
+  <li>从项目目录中，运行<code>docker-compose up</code>启动应用程序.<br />
+```sh<br />
+    $ docker-compose up<br />
+    Creating network “composetest_default” with the default driver<br />
+    Creating composetest_web_1 …<br />
+    Creating composetest_redis_1 …<br />
+    Creating composetest_web_1<br />
+    Creating composetest_redis_1 … done<br />
+    Attaching to composetest_web_1, composetest_redis_1<br />
+    web_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)<br />
+    redis_1  | 1:C 17 Aug 22:11:10.480 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo<br />
+    redis_1  | 1:C 17 Aug 22:11:10.480 # Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=1, just started<br />
+    redis_1  | 1:C 17 Aug 22:11:10.480 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf<br />
+    web_1    |  * Restarting with stat<br />
+    redis_1  | 1:M 17 Aug 22:11:10.483 * Running mode=standalone, port=6379.<br />
+    redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.<br />
+    web_1    |  * Debugger is active!<br />
+    redis_1  | 1:M 17 Aug 22:11:10.483 # Server initialized<br />
+    redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command ‘echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled’ as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.<br />
+    web_1    |  * Debugger PIN: 330-787-903<br />
+    redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections</li>
 </ol>
 
-<h2 id="第五步-编辑compose文件以添加绑定装载">第五步: 编辑Compose文件以添加绑定装载</h2>
+<pre><code>
+    Compose pulls a Redis image, builds an image for your code, and starts the services you defined. In this case, the code is statically copied into the image at build time.
 
-<p>编辑项目目录中的<code>docker-compose.yml</code>为<code>web</code>服务添加 <a href="https://docs.docker.com/engine/admin/volumes/bind-mounts/">bind mount</a> :</p>
+2.  在浏览器输入 `http://0.0.0.0:5000/` 查看应用运行情况.
 
-<pre><code>version: '3'
-services:
-  web:
-    build: .
-    ports:
-     - "5000:5000"
-    volumes:
-     - .:/code
-  redis:
-    image: "redis:alpine"
+    If you’re using Docker natively on Linux, Docker for Mac, or Docker for Windows, then the web app should now be listening on port 5000 on your Docker daemon host. Point your web browser to `http://localhost:5000` to find the `Hello World`message. If this doesn’t resolve, you can also try `http://0.0.0.0:5000`.
+
+    If you’re using Docker Machine on a Mac or Windows, use `docker-machine ip MACHINE_VM` to get the IP address of your Docker host. Then, open `http://MACHINE_VM_IP:5000` in a browser.
+
+    You should see a message in your browser saying:
+
+        Hello World! I have been seen 1 times.
+
+    ![hello world in browser](https://docs.docker.com/compose/images/quick-hello-world-1.png)
+
+3.  刷新网页.
+
+    The number should increment.
+
+        Hello World! I have been seen 2 times.
+
+    ![hello world in browser](https://docs.docker.com/compose/images/quick-hello-world-2.png)
+
+4.  切换到另一个终端窗口，然后键入`docker image ls`列出本地图像.
+
+    Listing images at this point should return `redis` and `web`.
+
+        $ docker image ls
+        REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+        composetest_web         latest              e2c21aa48cc1        4 minutes ago       93.8MB
+        python                  3.4-alpine          84e6077c7ab6        7 days ago          82.5MB
+        redis                   alpine              9d8fa9aa0e5b        3 weeks ago         27.5MB
+
+    You can inspect images with `docker inspect &lt;tag or id&gt;`.
+
+5.  通过在另一个终端在项目目录中运行`docker-compose down`, 或者在启动应用程序的终端中按CTRL + C 来停止应用程序.
+
+## 第五步: 编辑Compose文件以添加绑定装载
+
+编辑项目目录中的`docker-compose.yml`为`web`服务添加 [bind mount](https://docs.docker.com/engine/admin/volumes/bind-mounts/) :
+```yml
+    version: '3'
+    services:
+      web:
+        build: .
+        ports:
+         - "5000:5000"
+        volumes:
+         - .:/code
+      redis:
+        image: "redis:alpine"
+
 </code></pre>
-
 <p>The new <code>volumes</code> key 把项目目录（当前目录）挂载到容器内的<code>/ code</code>允许您动态修改代码，而无需重建映像</p>
 
 <h2 id="第六步-使用compose-re-build并运行应用程序">第六步: 使用Compose Re-build并运行应用程序</h2>
 
 <p>在项目目录中，键入<code>docker-compose up</code>以使用更新的Compose文件构建应用程序，然后运行它。</p>
-
-<pre><code>$ docker-compose up
-Creating network "composetest_default" with the default driver
-Creating composetest_web_1 ...
-Creating composetest_redis_1 ...
-Creating composetest_web_1
-Creating composetest_redis_1 ... done
-Attaching to composetest_web_1, composetest_redis_1
-web_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
-...
+<pre><code class="language-sh">    $ docker-compose up
+    Creating network "composetest_default" with the default driver
+    Creating composetest_web_1 ...
+    Creating composetest_redis_1 ...
+    Creating composetest_web_1
+    Creating composetest_redis_1 ... done
+    Attaching to composetest_web_1, composetest_redis_1
+    web_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+    ...
 </code></pre>
 
 <p>Check the <code>Hello World</code> message in a web browser again, and refresh to see the count increment.</p>
@@ -278,16 +265,15 @@ web_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 <h2 id="第八步-尝试一些其他命令">第八步: 尝试一些其他命令</h2>
 
 <p>如果你想在后台运行你的服务, 你可以在<code>docker-compose up</code>命令后面添加 <code>-d</code> (for “detached” mode)，使用<code>docker-compose ps</code>查看当前正在运行的内容:</p>
+<pre><code class="language-sh">    $ docker-compose up -d
+    Starting composetest_redis_1...
+    Starting composetest_web_1...
 
-<pre><code>$ docker-compose up -d
-Starting composetest_redis_1...
-Starting composetest_web_1...
-
-$ docker-compose ps
-Name                 Command            State       Ports
--------------------------------------------------------------------
-composetest_redis_1   /usr/local/bin/run         Up
-composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
+    $ docker-compose ps
+    Name                 Command            State       Ports
+    -------------------------------------------------------------------
+    composetest_redis_1   /usr/local/bin/run         Up
+    composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
 </code></pre>
 
 <p><code>docker-compose run</code>命令允许您为服务运行一次性命令。例如，查看<code>web</code>服务可用的环境变量:</p>
@@ -324,7 +310,7 @@ composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
 
 <hr />
 
-<p><a href="http://markdown.w3cub.com/">markdown编辑</a></p>
+<p>Terry edit on <a href="http://markdown.w3cub.com/">markdown编辑</a></p>
 ]]></content>
   </entry>
   
