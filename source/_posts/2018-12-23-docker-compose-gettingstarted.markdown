@@ -65,11 +65,12 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
 ```
 
-    In this example, `redis` is the hostname of the redis container on the application’s network. We use the default port for Redis, `6379`.
 
-    > Handling transient errors
-    > 
-    > Note the way the `get_hit_count` function is written. This basic retry loop lets us attempt our request multiple times if the redis service is not available. This is useful at startup while the application comes online, but also makes our application more resilient if the Redis service needs to be restarted anytime during the app’s lifetime. In a cluster, this also helps handling momentary connection drops between nodes.
+In this example, `redis` is the hostname of the redis container on the application’s network. We use the default port for Redis, `6379`.
+
+> Handling transient errors
+> 
+> Note the way the `get_hit_count` function is written. This basic retry loop lets us attempt our request multiple times if the redis service is not available. This is useful at startup while the application comes online, but also makes our application more resilient if the Redis service needs to be restarted anytime during the app’s lifetime. In a cluster, this also helps handling momentary connection drops between nodes.
 
 3.  在项目目录中创建另一个名为`requirements.txt`的文件并粘贴如下:
 
@@ -147,7 +148,7 @@ redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections
 ```
 
 
-Compose拉取Redis图像，为您的代码构建图像，并启动您定义的服务。 在这种情况下，代码在构建时静态复制到映像中。
+Compose拉取Redis镜像，为您的代码构建镜像，并启动您定义的服务。 在这种情况下，代码在构建时静态复制到映像中。
 
 2.  在浏览器输入 `http://0.0.0.0:5000/` 查看应用运行情况.
 
@@ -169,7 +170,7 @@ Compose拉取Redis图像，为您的代码构建图像，并启动您定义的�
 
     ![hello world in browser](https://docs.docker.com/compose/images/quick-hello-world-2.png)
 
-4.  切换到另一个终端窗口，然后键入`docker image ls`列出本地图像.
+4.  切换到另一个终端窗口，然后键入`docker image ls`列出本地镜像.
 
     Listing images at this point should return `redis` and `web`.
 
