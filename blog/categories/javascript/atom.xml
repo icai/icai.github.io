@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2019-04-01T10:22:10+00:00</updated>
+  <updated>2019-04-01T10:27:06+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -21,6 +21,8 @@
     <content type="html"><![CDATA[<p>像软件加密与解密一样，javascript的混淆与解混淆同属于同一个范畴。道高一尺，魔高一丈。没有永恒的黑，也没有永恒的白。一切都是资本市场驱动行为，现在都流行你能为人解决什么问题，这个概念。那么市场究竟能容纳多少个能解决这种问题的利益者。JS没有秘密。</p>
 
 <p>其实本人不赞成javascript进行hash混淆处理，一拖慢运行时速度，二体积大。JS代码前端可获取，天生赋予“开源”属性，都可以在chrome devTools下查看。JS非压缩性混淆完全违法前端优化准则。</p>
+
+<!-- more -->
 
 <p>目前网络上可以搜索的JS混淆工具不外乎以下几种：</p>
 
