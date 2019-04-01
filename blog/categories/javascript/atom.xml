@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-12-24T15:15:02+00:00</updated>
+  <updated>2019-04-01T10:15:55+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -12,6 +12,285 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[javascript混淆与解混淆的那些事儿]]></title>
+    <link href="http://blog.w3cub.com/blog/2019/04/01/js-confusion/"/>
+    <updated>2019-04-01T05:48:43+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2019/04/01/js-confusion</id>
+    <content type="html"><![CDATA[<p>像软件加密与解密一样，javascript的混淆与解混淆同属于同一个范畴。道高一尺，魔高一丈。没有永恒的黑，也没有永恒的白。一切都是资本市场驱动行为，现在都流行你能为人解决什么问题，这个概念。那么市场究竟能容纳多少个能解决这种问题的利益者。JS没有秘密。</p>
+
+<p>其实本人不赞成javascript进行hash混淆处理，一拖慢运行时速度，二体积大。JS代码前端可获取，天生赋予“开源”属性，都可以在chrome devTools下查看。JS非压缩性混淆完全违法前端优化准则。</p>
+
+<p>目前网络上可以搜索的JS混淆工具不外乎以下几种：</p>
+
+<p><a href="http://blog.w3cub.com/tools/jspacker/">eval混淆</a>，也是最早JS出现的混淆加密，据说第一天就被破解，修改一下代码，alert一下就可以破解了。这种方法从出生的那天就失去了意义。其实JS加密（混淆）是相对于可读性而言的，其实真正有意义的就是压缩型混淆uglify这一类，即可减少体重，也可减少可读性。</p>
+
+<p>但是，也不能排除部分商业源代码使用hash类型混淆源代码，比如 miniui 使用的<a href="https://sourceforge.net/projects/jsintegration/files/tools/_%20JSA-20071021/">JSA加密</a>, fundebug使用的<a href="https://obfuscator.io/">javascript-obfuscator</a>。</p>
+
+<p>下面通过代码来说明 JSA加密 和 javascript-obfuscator 的区别：</p>
+
+<p>要混淆的代码：</p>
+
+<pre><code class="language-js">function logG(message) {
+  console.log('\x1b[32m%s\x1b[0m', message); 
+}
+function logR(message) {
+  console.log('\x1b[41m%s\x1b[0m', message); 
+}
+logG('logR');
+logR('logG');
+
+</code></pre>
+
+<p>通过<a href="https://sourceforge.net/projects/jsintegration/files/tools/_%20JSA-20071021/">JSA加密</a>混淆后生成的代码</p>
+
+<pre><code>function o00($){console.log("\x1b[32m%s\x1b[0m",$)}function o01($){console.log("\x1b[41m%s\x1b[0m",$)}o00("logR");o01("logG")
+
+</code></pre>
+<p>然后再<a href="https://beautifier.io/">beautifier</a>一下：</p>
+
+<pre><code class="language-js">function o00($) {
+  console.log("\x1b[32m%s\x1b[0m", $)
+}
+
+function o01($) {
+  console.log("\x1b[41m%s\x1b[0m", $)
+}
+o00("logR");
+o01("logG")
+
+</code></pre>
+
+<p>可以发现，其实没有做什么什么修改，只是做了一些变量替换。想还原也比较简单的。这里就不拿它来做代表，也没有什么人用。</p>
+
+<p>通过<a href="https://obfuscator.io/">javascript-obfuscator</a>混淆后生成的代码</p>
+
+<pre><code class="language-js">var _0xd6ac=['[41m%s[0m','logG','log'];(function(_0x203a66,_0x6dd4f4){var _0x3c5c81=function(_0x4f427c){while(--_0x4f427c){_0x203a66['push'](_0x203a66['shift']());}};_0x3c5c81(++_0x6dd4f4);}(_0xd6ac,0x6e));var _0x5b26=function(_0x2d8f05,_0x4b81bb){_0x2d8f05=_0x2d8f05-0x0;var _0x4d74cb=_0xd6ac[_0x2d8f05];return _0x4d74cb;};function logG(_0x4f1daa){console[_0x5b26('0x0')]('[32m%s[0m',_0x4f1daa);}function logR(_0x38b325){console[_0x5b26('0x0')](_0x5b26('0x1'),_0x38b325);}logG('logR');logR(_0x5b26('0x2'));
+
+</code></pre>
+
+<p>再<a href="https://beautifier.io/">beautifier</a>一下：</p>
+
+<pre><code class="language-js">var _0xd6ac = ['[41m%s[0m', 'logG', 'log'];
+(function(_0x203a66, _0x6dd4f4) {
+  var _0x3c5c81 = function(_0x4f427c) {
+    while (--_0x4f427c) {
+      _0x203a66['push'](_0x203a66['shift']());
+    }
+  };
+  _0x3c5c81(++_0x6dd4f4);
+}(_0xd6ac, 0x6e));
+var _0x5b26 = function(_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0xd6ac[_0x2d8f05];
+  return _0x4d74cb;
+};
+
+function logG(_0x4f1daa) {
+  console[_0x5b26('0x0')]('[32m%s[0m', _0x4f1daa);
+}
+
+function logR(_0x38b325) {
+  console[_0x5b26('0x0')](_0x5b26('0x1'), _0x38b325);
+}
+logG('logR');
+logR(_0x5b26('0x2'));
+</code></pre>
+
+<p>这个复杂得多，但是分析一下你会发现，其实多了一个字典，所有方法变量，都有可能存在字典中，调用时先调用字典还原方法名变量再执行。<br />
+其实入口都是变量的规则。</p>
+
+<p>字典函数：</p>
+
+<pre><code class="language-js">var _0xd6ac = ['[41m%s[0m', 'logG', 'log'];
+(function(_0x203a66, _0x6dd4f4) {
+  var _0x3c5c81 = function(_0x4f427c) {
+    while (--_0x4f427c) {
+      _0x203a66['push'](_0x203a66['shift']());
+    }
+  };
+  _0x3c5c81(++_0x6dd4f4);
+}(_0xd6ac, 0x6e));
+var _0x5b26 = function(_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0xd6ac[_0x2d8f05];
+  return _0x4d74cb;
+};
+
+</code></pre>
+
+<p>通过以上发现，我们可以把JS混淆归结为三类，分别是 eval类型，hash类型，压缩类型。而压缩类型，是目前前端性能优化的常用工具，以<a href="https://www.npmjs.com/package/uglify-js">uglify</a>为代表。</p>
+
+<p>常用的前端压缩优化工具：</p>
+
+<p>JavaScript:</p>
+<ul>
+  <li><a href="https://github.com/babel/minify">babel-minify</a></li>
+  <li><a href="https://github.com/terser-js/terser">terser</a></li>
+  <li><a href="https://github.com/mishoo/UglifyJS2">uglify-js</a></li>
+  <li><a href="https://github.com/mishoo/UglifyJS2/tree/harmony">uglify-es</a></li>
+  <li><a href="https://www.npmjs.com/package/google-closure-compiler">Google Closure Compiler</a></li>
+  <li><a href="http://yui.github.io/yuicompressor/">YUI Compressor</a></li>
+</ul>
+
+<p>CSS:</p>
+<ul>
+  <li><a href="https://github.com/postcss/postcss">PostCSS</a></li>
+  <li><a href="https://github.com/jakubpawlowicz/clean-css">clean-css</a></li>
+  <li><a href="https://github.com/css/csso">CSSO</a></li>
+  <li><a href="http://yui.github.io/yuicompressor/">YUI Compressor</a></li>
+</ul>
+
+<p>HTML:</p>
+<ul>
+  <li><a href="https://www.npmjs.com/package/html-minifier">html-minifier</a></li>
+</ul>
+
+<p>从工具流(workflow) 来看，不论是 webpack 还是 gulp ，目前javascript最流行工具还是uglify。</p>
+
+<p>相应的解混淆工具：</p>
+
+<ul>
+  <li>
+    <p>eval对应的解混淆工具, 随便百度都可以搜索到，如<a href="http://blog.w3cub.com/tools/jspacker/">jspacker</a></p>
+  </li>
+  <li>
+    <p>JSA对应的解混淆工具<a href="https://github.com/jscck/unjsa">unjsa</a></p>
+  </li>
+  <li>
+    <p><a href="https://obfuscator.io/">javascript-obfuscator</a>对应的解混淆工具<a href="https://github.com/jscck/crack.js">crack.js</a></p>
+  </li>
+  <li>
+    <p>压缩类型uglify对应的工具<a href="https://github.com/eth-sri/UnuglifyJS">UnuglifyJS</a>，在线版<a href="http://www.jsnice.org/">jsnice</a></p>
+  </li>
+</ul>
+
+<p>解混淆策略其实是依据生成代码规律编写，不外乎观察特征分析，再观察特征分析，不断调整。都是手办眼见功夫。</p>
+
+<p>都没有什么难度可言，有的就是耐性。比如<a href="https://obfuscator.io/">javascript-obfuscator</a>对应的解混淆工具可以<br />
+分解为N因子问题：</p>
+
+<p>如何查询function的作用域？<br />
+预执行变量替换可能存在类型？<br />
+…</p>
+
+<p>如：</p>
+
+<pre><code class="language-js">var _0xd6ac = ['[41m%s[0m', 'logG', 'log'];
+(function(_0x203a66, _0x6dd4f4) {
+  var _0x3c5c81 = function(_0x4f427c) {
+    while (--_0x4f427c) {
+      _0x203a66['push'](_0x203a66['shift']());
+    }
+  };
+  _0x3c5c81(++_0x6dd4f4);
+}(_0xd6ac, 0x6e));
+var _0x5b26 = function(_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0xd6ac[_0x2d8f05];
+  return _0x4d74cb;
+};
+
+function logG(_0x4f1daa) {
+  console[_0x5b26('0x0')]('[32m%s[0m', _0x4f1daa);
+}
+
+function logR(_0x38b325) {
+  console[_0x5b26('0x0')](_0x5b26('0x1'), _0x38b325);
+}
+logG('logR');
+logR(_0x5b26('0x2'));
+</code></pre>
+
+<p>要还原成</p>
+
+<pre><code class="language-js">function logG(message) {
+  console.log('\x1b[32m%s\x1b[0m', message); 
+}
+function logR(message) {
+  console.log('\x1b[41m%s\x1b[0m', message); 
+}
+logG('logR');
+logR('logG');
+
+</code></pre>
+<p>第一步你总得知道字典函数，然后执行字典函数 <code>_0x5b26('0x0')</code> 还原成 <code>log</code>.</p>
+
+<p>那么就好办了，写代码的事。<br />
+如 https://github.com/jscck/crack.js/blob/master/crack.js</p>
+
+<p>还原后，如何重构代码，那么你还得知道代码生成之前是通过什么工具打包的webpack? 还是？</p>
+
+<p>如webpack 的各种封装头和尾<br />
+https://webpack.js.org/configuration/output/#expose-a-variable</p>
+
+<pre><code class="language-js">(function webpackUniversalModuleDefinition(root, factory) {
+  if(typeof exports === 'object' &amp;&amp; typeof module === 'object')
+    module.exports = factory();
+  else if(typeof define === 'function' &amp;&amp; define.amd)
+    define([], factory);
+  else if(typeof exports === 'object')
+    exports['MyLibrary'] = factory();
+  else
+    root['MyLibrary'] = factory();
+})(typeof self !== 'undefined' ? self : this, function() {
+  return _entry_return_;
+});
+</code></pre>
+
+<p>假如再深入一点，可能会涉及到JS语法解释器, AST抽象语法树</p>
+
+<p>目前涉及到 JS语法解释器, AST抽象语法树的功能如下：</p>
+
+<p><a href="https://prepack.io/">prepack</a>, <a href="http://esprima.org/">esprima</a>, <a href="https://babeljs.io/">babel</a></p>
+
+<p>或者可以阅读《编程语言实现模式》，涉及到 <a href="https://github.com/antlr/antlr4">antlr4</a>。</p>
+
+<p>当然也可以通过esprima等工具来做解混淆，只是工作量大一点，值不值的问题。</p>
+
+<p>对于未来，JS商业源码加密的方向可能<a href="https://webassembly.org/">webassembly</a>，先在服务端编译成wasm，源码就能真正的闭源。</p>
+
+<p>有人的地方就有路，有混淆的地方就有解混淆，目前机器学习编程响应的解混淆工具也做的相当出色，比如</p>
+
+<p><a href="16"><img src="https://www.sri.inf.ethz.ch/assets/images/sri-logo.svg" alt="Secure, Reliable, and Intelligent Systems Lab" width="136" /></a></p>
+
+<p>Machine Learning for Programming 产品<br />
+<a href="17">nice2predict</a>，<a href="9">jsnice</a> …<br />
+查看 https://www.sri.inf.ethz.ch/research/plml</p>
+
+<h2 id="拓展参考">拓展参考</h2>
+
+<h3 id="ast抽象语法树">AST抽象语法树</h3>
+
+<p>为什么额外说一下AST抽象语法树，因为你可以 input-&gt; ast -&gt; output Anything。</p>
+
+<p>比如你jsx转换小程序模版语法，这样你就可以用react语法来写小程序，如Taro。<br />
+mpvue, wepy, postcss …… 这些都是通过AST进行构建转换的工具，es6 -&gt; es5, babel 都是使用AST。</p>
+
+<p>AST抽象语法树大致流程：</p>
+
+<p>Input 生成 AST tree</p>
+
+<p>然后通过AST类型断言进行相应的转换</p>
+
+<p>http://esprima.org/demo/parse.html</p>
+
+<h3 id="反编译工具全集">反编译工具全集</h3>
+
+<p>小程序</p>
+
+<p>https://github.com/qwerty472123/wxappUnpacker</p>
+
+<p><code>推荐.Net、C# 逆向反编译四大工具利器</code></p>
+
+<p>https://www.cnblogs.com/ldc218/p/8945892.html</p>
+
+<p>2018年支持java8的Java反编译工具汇总<br />
+https://blog.csdn.net/yannqi/article/details/80847354</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to properly uninstall Service Worker？]]></title>
@@ -1094,295 +1373,6 @@ function getPointAt(p0, radius, angle) {
 
 <p><a href="https://www.thecn.com/tc129">https://www.thecn.com/tc129</a> 社交关系图</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[javascript 对象中的复制，继承，引用，浅拷贝，深拷贝，多态，静态方法]]></title>
-    <link href="http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class/"/>
-    <updated>2013-10-19T07:10:43+00:00</updated>
-    <id>http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class</id>
-    <content type="html"><![CDATA[<h2 id="导言">导言</h2>
-
-<p>javascript与C,C++,Java等语言，他们之间总让人感觉存在一层纱，javascript易入门，难深入，而其他则相反（个人观点）。</p>
-
-<p>其实不论什么语言，难与易的突破口都在语法基础上，当你越学得深入，你会发现语言之间的相同是如此的美妙。其实个人感觉javascript是相对其他语言是最容易学的一种语言。但部分人确认为，javascript十分难学，什么兼容性都把你搞死了。个人认为应该把javascript的难与易一分为二。javascript的语言是相对其他语言简单的，而且没有过多的语法概念（泛型，多态，模板），让编程者留下很多可以思考和想象的空间。或许多人喜欢javascript就是因为它的灵活性。</p>
-
-<!-- more -->
-
-<h2 id="前言">前言</h2>
-
-<p>javascript是一门松散的面向对象脚本语言</p>
-
-<p>为什么说是松散的呢？javascript一切皆对象（var），就是说不论数组，函数……都是继承自对象。</p>
-
-<p>javascript给我们所展现对象继承存储其实就像treegrid数据类似，但是正好相反。</p>
-
-<p>就是说javascript对象继承存储和javascript静态方法存储是相反的。</p>
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942632-1b314880-ade9-11e8-9309-3b1fab06e63e.jpg" alt="1" /></p>
-
-<p>图：treegrid数据</p>
-
-<hr />
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942633-1bc9df00-ade9-11e8-9649-1bf153d2abfa.png" alt="2" /></p>
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942634-1c627580-ade9-11e8-84cf-3982b8b78b73.png" alt="3" /></p>
-
-<p>图：javascript对象继承</p>
-
-<hr />
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942635-1c627580-ade9-11e8-8a8c-aec513b87629.png" alt="4" /></p>
-
-<p>图：javascript静态方法</p>
-
-<hr />
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942636-1cfb0c00-ade9-11e8-9938-a850e81c4915.jpg" alt="5" /></p>
-
-<p>图：javascript Object layout</p>
-
-<p>上面所说的其实就是javascript对象构成，或许还会困惑，下面将深入分析。</p>
-
-<h2 id="一javascript对象引用">一、javascript对象引用</h2>
-
-<p>什么叫做javascript对象引用？简单地说就是非实体对象赋值，即是非String,Number,Array，Null,Undefined等对象（除Object对象）赋值。</p>
-
-<pre><code>// 引用
-var source  = {
-    warm:function(v){
-        alert(v)
-    }
-};
-var quote = source;
-delete source.warm;
-quote.warm('b');
-</code></pre>
-
-<p>上面代码会报错，因为source是非实体对象，quote内存地址指向source，当删除source.warm的时候，quote下的warm随之消失。</p>
-
-<h2 id="二javascript对象复制浅拷贝深拷贝">二、javascript对象复制，浅拷贝，深拷贝</h2>
-
-<p>对于上述的代码要想不报错的话，就必须对source.warm也赋值给quote.warm，因为source.warm是实体对象（Function）。</p>
-
-<p>对对象进行遍历，子对象一对一赋值就叫做javascript对象复制。既然是遍历，自然有深浅度。所以我们对彻底遍历叫做深拷贝，只遍历子对象第一层叫做浅拷贝。</p>
-
-<p>(1)</p>
-
-<pre><code class="language-js">    var source  = {
-        warm:function(v){
-            alert(v)
-        }
-    };
-    function extend(target, source) {
-        for (var n in source) {
-            if(source.hasOwnProperty(n)){
-                target[n] = source[n]
-            }
-        }
-        return target
-    }
-    var exObj = extend({},source);
-    delete source.warm;
-    exObj.warm('b');
-</code></pre>
-
-<p>(2)上述代码不会报错，因为source通过遍历已经把其子对象复制到exObj下了。</p>
-
-<pre><code class="language-js">var source  = {
-    warm:function(v){
-        alert(v)
-    },
-    childs:{
-        log:function(v){
-            alert('log'+v);
-        },
-        info:function(v){
-            alert('info'+v);
-        }
-    },
-    _private:{
-        _name:'source',
-        _age:12
-    }
-};
-function extend(target, source) {
-    for (var n in source) {
-        if(source.hasOwnProperty(n)){
-            target[n] = source[n]
-        }
-    }
-    return target
-}
-var exObj = extend({},source);
-</code></pre>
-
-<p>会发生错误，为什么呢？上面同样是复制，当我们执行如下代码：</p>
-
-<pre><code class="language-js">delete source.childs.log;
-delete source.childs;
-exObj.childs.log('b');
-</code></pre>
-
-<p>同理，我们执行如下：就是我们一开始所说遍历的深度不彻底，我们通过上述extend方法只遍历了source.childs,而source.childs是非实体对象，所以只是充当exObj.childs对象的引用。</p>
-
-<pre><code class="language-js">exOBj._private._age++;
-source._private._age; // 13
-
-</code></pre>
-
-<p>我们要实现深拷贝的话，就必须 判断其子对象是否是非实体对象，假如是非实体对象的话，就进行递归遍历操作。我们改变exOBj._private._age的时候，source._private.age也发生改变，道理和上面的一样。</p>
-
-<p>还记得jquery.extend api吗</p>
-
-<pre><code class="language-js">jQuery.extend( [deep ], target, object1 [, objectN ] )
-</code></pre>
-
-<p>当我们第一个参数传入true的时候，就帮我我们实施深拷贝操作。</p>
-
-<h2 id="三javascript对象继承">三、javascript对象继承</h2>
-
-<p>学过java或者c++，php等语言的读者就好理解了，刚开始前言的</p>
-
-<p>图：javascript对象继承 和 图：javascript Object layout就说的很详细了。那么他们是怎么实现的呢？</p>
-
-<p>其实javascript中还有一个很重要的概念就是作用域。</p>
-
-<p>编程语言中的继承就是子类继承父类已有的方法，属性，并做相应的拓展，进而形成自己的具有特定属性和方法的类。</p>
-
-<p>开始学面向对象语言的时候，通常都会举一个经典例子，就是动物父类，派生鸟类，鱼类……，而鸟类接着派生出鹰，麻雀……。</p>
-
-<p>而javascript（ecma5）还没有给出官方的方法进行上述操作而已。但是后续（ecma 6）将会支持。正如，一开始说所，javascript是一门松散的面向对象语言，留给变成者很多思考的空间。</p>
-
-<p>javascript中有两个很重要的方法就是call，apply。人们常谈的javascript设计模式常常都离不开call,apply,回调函数等等。</p>
-
-<p>那么如何才能实现（图：javascript对象继承）中类似的对象继承？</p>
-
-<p>接着动物的例子：</p>
-
-<p>what is animal? 它们能够对环境作出反应并移动，捕食其他生物。</p>
-
-<pre><code class="language-js">function animal(){
-    
-}
-animal.prototype = {
-    catchOther:function(){
-    
-    },
-    protectSelf:function(){
-    
-    }
-}
-</code></pre>
-
-<p>鸟类：</p>
-
-<pre><code class="language-js">function bird(){
-    
-}
-bird = wrapper(bird,animal);
-bird.prototype.fly = function(){
-    console.log('flying');
-}
-</code></pre>
-
-<p>wrapper？？用来继承，如何写才能实现如下呢？</p>
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942637-1cfb0c00-ade9-11e8-8f70-8375bdbe35cb.png" alt="6" /></p>
-
-<p>new 一个 animal ？？并指向bird.prototype ?</p>
-
-<p>好像可以实现,但是当我们打入</p>
-
-<p>bird.prototype.<strong>proto</strong>.constructor的时候是什么呢？？构造函数是否符合对象的构造函数的定义呢？</p>
-
-<p>我们给出一个简单的方案，至于构造函数应该执行谁的问题留作思考，网上也很多关于这方面的讨论？自己可以搜一下</p>
-
-<pre><code class="language-js">function wrapper(child, parent) {
-    var ins = function() {
-        child.apply(this, arguments);
-    };
-    var subclass = function() {};
-    subclass.prototype = parent.prototype;
-    ins.prototype = new subclass;
-    return ins;
-};
-</code></pre>
-
-<p>所谓的静态方法就是不涉及抽象对象函数实现的方法，举个很简单的例子，如jquery中的$.isFunction,$.isArray等等就属于静态方法。同样是上面的例子</p>
-
-<p>四、javascript对象静态方法</p>
-
-<pre><code class="language-js">var source  = {
-    warm:function(v){
-        alert(v)
-    },
-    childs:{
-        log:function(v){
-            alert('log'+v);
-        },
-        info:function(v){
-            alert('info'+v);
-        }
-    },
-    _private:{
-        _name:'source',
-        _age:12
-    }
-};
-function extend(target, source) {
-    for (var n in source) {
-        if(source.hasOwnProperty(n)){
-            target[n] = source[n]
-        }
-    }
-    return target
-}
-var exObj = extend({},source);
-</code></pre>
-
-<p>这里不合理的地方在于当我们对其成员可操作，假如上述是公共方法，团队每个人都可以对其调用，并假如warm方法会对其兄弟属性_private产生改变。如何_private下的是标识变量（flog ~），那么这个标识变量就违反了可操作的唯一性。</p>
-
-<h2 id="五javascript对象多态">五、javascript对象多态</h2>
-
-<p>所谓的对象多态就是和构造函数或者方法参数传递进行动态识别处理。</p>
-
-<p>依然是$.extend,还记得api有多少调用吗？</p>
-
-<p>java中的多态是不同参数类型都重新定义一遍，好像十分费劲？javascript留给编程者的思考空间就是给你一个arguments，调用当前方法的参数集合，是一个类数组。</p>
-
-<p>一般地：</p>
-
-<pre><code class="language-js">function(a){
-  var args = [].slice(arguments,0);
-  if(args[0] == 'xx')doxxx;
-  if(typeof args[0] == 'function') doxxx;
-}
-</code></pre>
-
-<p>相关阅读：是不是很有意思呢。</p>
-
-<p>1、<a href="http://hi.baidu.com/tp100/item/a18184ee589145d5eb34c941" title="javascript权威指南 源代码分析（一）Objects">javascript权威指南 源代码分析（一）Objects</a></p>
-
-<p>2、<a href="http://hi.baidu.com/tp100/item/4fbb55d18f6741352a35c741" title="javascript权威指南 源代码分析（二）Functions">javascript权威指南 源代码分析（二）Functions</a></p>
-
-<p>3、（<a href="http://www.cnblogs.com/snandy/archive/2012/09/01/2664134.html">JavaScript中<strong>proto</strong>与prototype的关系</a>）</p>
-
-<p>后记：</p>
-
-<p>码字真累，百度空间蛋疼啊，写到一半按了不知道什么键，没有了一大截……</p>
-
-<p>有高亮代码时，不要按ctrl+Z，不然你的人生十分钟会浪费掉的。</p>
-
-<p>2013/10/19</p>
-
-<p>本文来源</p>
-
-<p>菜籽油: <a href="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e" title="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e">http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e</a></p>
-
-<p>-EOF-</p>
 ]]></content>
   </entry>
   

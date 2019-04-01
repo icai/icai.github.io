@@ -1,0 +1,516 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>javascript混淆与解混淆的那些事儿 - 泛前端开发</title>
+	<meta name="author" content="Terry Cai">
+	
+	<meta name="description" content="Apr 01, 2019 javascript confusion, javascript Comments Javascript混淆与解混淆的那些事儿 像软件加密与解密一样，javascript的混淆与解混淆同属于同一个范畴。道高一尺，魔高一丈。没有永恒的黑，也没有永恒的白。 &hellip;">
+	<meta name="keywords" content="confusion, crack">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://blog.w3cub.com/blog/2019/04/01/js-confusion/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<script src="/assets/application-555523497a2cb672b8f83344414d95c89fc0ec37e583fccb3b2d7b79f9025439.js" integrity="sha256-VVUjSXostnK4+DNEQU2VyJ/A7Dflg/zLOy17efkCVDk=" crossorigin="anonymous" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" integrity="sha256-iZM+puF27rU6KblbX6VUFKCI3yfW1qG+EMPnJF1MM2o=" crossorigin="anonymous" href="/assets/application-89933ea6e176eeb53a29b95b5fa55414a088df27d6d6a1be10c3e7245d4c336a.css">
+	
+
+</head>
+
+
+<body class="blog">
+	<div class="container">
+		<div class="sidebar">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+		<img src="/assets/images/avatar.jpeg" style="width: 160px;" />
+	
+</div>
+<h1><a href="/">泛前端开发</a></h1>
+<p class="subtitle">I am Terry，习惯阅读无注释代码</p>
+<nav id="main-nav"><ul class="main">
+	<li class=""><a href="/">主页  Blog</a></li>
+    <li class=""><a href="/blog/archives/">归档  Archives</a></li>
+    <li class="inline"><a href="/blog/categories/">分类  Categories</a></li>
+    <li class="inline" ><a href="/blog/tags/">标签  Tags</a></li>
+    
+    <li><a href="/slides/">演讲 talks</a></li>
+    
+    <li><a href="/about/">关于  About</a></li>
+</ul>
+<ul class="main">
+    <li><a href="http://site.w3cub.com/" target="_blank">前端网址导航  Navs</a></li>
+    <li><a href="/tools/">前端工具箱  Tools</a></li>
+</ul></nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+
+		
+		<a class="weibo" href="http://weibo.com/328765211" target="_blank" title="Weibo">Weibo</a>
+		
+		
+			<a class="facebook" href="http://www.facebook.com/terry.cai.7921" target="_blank" title="Facebook">Facebook</a>
+		
+		
+		
+
+		
+
+		
+			<a class="github" href="https://github.com/icai" target="_blank" title="GitHub">GitHub</a>
+		
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" target="_blank" title="RSS">RSS</a>
+		
+
+
+
+	</div>
+</nav>
+
+<section class="aboutme">
+  <p class="motto">
+    <script>
+    var mottos = ["多数人25岁就死了，一直到75岁才埋。——Horus9527 译","人民不应该怕政府，政府才应该怕人民。","天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。  ——老子","爱国者的责任就是保护国家不受政府侵犯——托马斯·潘恩","计算机就跟比基尼一样，省去了人们许多的胡思乱想。 ——萨姆·尤因","想了解一个人的个性，那就赋予他权力。 ——林肯","如果你怀疑自己，那么你的立足点确实不稳固了。","在民主和独裁的斗争中，纸上的宪法敌不过独裁者的刺刀。——林语堂","国家是危险的机器 ——华盛顿","冬天已经到来，春天还会远吗？ ——雪莱","工作撵跑三个魔鬼：无聊、堕落和贫穷。","老大哥在看着你。——奥威尔","宗教上最深的误解——认为坏人没有宗教。——尼采","国家是为人而建立，而人不是为国家而生存。——爱因斯坦","肚子大不可怕，可怕的是肚子里没有好东西。——加菲猫","任何有可能出错的事将会出错 ——墨菲定理","管得最少，就是最好的政府。——大卫·梭罗","人人生而平等 ——美国独立宣言","其实人跟树是一样的，越是向往高处的阳光，它的根就越要伸向黑暗的地底。——尼采"];
+    document.writeln(mottos[Math.floor(Math.random() * mottos.length)])
+    </script>
+  </p>
+</section>
+</header>				
+			</div>
+		</div>
+		<div id="topbar" class="topbar">
+			<div class="btn-bar"><i></i></div> 
+			<h1><a href="/">泛前端开发</a></h1> 
+			<a class="me" href="/about/"><img src="/assets/images/avatar.jpeg" alt="泛前端开发"></a>
+		</div>
+		<div id="sidebar-mask" style="display: none;"></div>
+		<div class="main-col">
+			
+				
+			
+			<div class="main-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+
+
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+
+<time datetime="2019-04-01T05:48:43+00:00" data-updated="true" itemprop="datePublished">Apr 01, 2019</time></div>
+		<div class="cats">
+
+
+	javascript
+
+
+</div>
+		
+
+<div class="tags">
+  
+    <a class='tag' href='/blog/tags/confusion/'>confusion</a>, <a class='tag' href='/blog/tags/javascript/'>javascript</a>
+  
+</div>
+
+		
+			<span class="comments"><a href="#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name">Javascript混淆与解混淆的那些事儿
+	
+	</h1>
+	
+
+	
+	<hr />
+	<div class="entry-content" itemprop="articleBody"><p>像软件加密与解密一样，javascript的混淆与解混淆同属于同一个范畴。道高一尺，魔高一丈。没有永恒的黑，也没有永恒的白。一切都是资本市场驱动行为，现在都流行你能为人解决什么问题，这个概念。那么市场究竟能容纳多少个能解决这种问题的利益者。JS没有秘密。</p>
+
+<p>其实本人不赞成javascript进行hash混淆处理，一拖慢运行时速度，二体积大。JS代码前端可获取，天生赋予“开源”属性，都可以在chrome devTools下查看。JS非压缩性混淆完全违法前端优化准则。</p>
+
+<p>目前网络上可以搜索的JS混淆工具不外乎以下几种：</p>
+
+<p><a href="http://blog.w3cub.com/tools/jspacker/">eval混淆</a>，也是最早JS出现的混淆加密，据说第一天就被破解，修改一下代码，alert一下就可以破解了。这种方法从出生的那天就失去了意义。其实JS加密（混淆）是相对于可读性而言的，其实真正有意义的就是压缩型混淆uglify这一类，即可减少体重，也可减少可读性。</p>
+
+<p>但是，也不能排除部分商业源代码使用hash类型混淆源代码，比如 miniui 使用的<a href="https://sourceforge.net/projects/jsintegration/files/tools/_%20JSA-20071021/">JSA加密</a>, fundebug使用的<a href="https://obfuscator.io/">javascript-obfuscator</a>。</p>
+
+<p>下面通过代码来说明 JSA加密 和 javascript-obfuscator 的区别：</p>
+
+<p>要混淆的代码：</p>
+
+<pre><code class="language-js">function logG(message) {
+  console.log('\x1b[32m%s\x1b[0m', message); 
+}
+function logR(message) {
+  console.log('\x1b[41m%s\x1b[0m', message); 
+}
+logG('logR');
+logR('logG');
+
+</code></pre>
+
+<p>通过<a href="https://sourceforge.net/projects/jsintegration/files/tools/_%20JSA-20071021/">JSA加密</a>混淆后生成的代码</p>
+
+<pre><code>function o00($){console.log("\x1b[32m%s\x1b[0m",$)}function o01($){console.log("\x1b[41m%s\x1b[0m",$)}o00("logR");o01("logG")
+
+</code></pre>
+<p>然后再<a href="https://beautifier.io/">beautifier</a>一下：</p>
+
+<pre><code class="language-js">function o00($) {
+  console.log("\x1b[32m%s\x1b[0m", $)
+}
+
+function o01($) {
+  console.log("\x1b[41m%s\x1b[0m", $)
+}
+o00("logR");
+o01("logG")
+
+</code></pre>
+
+<p>可以发现，其实没有做什么什么修改，只是做了一些变量替换。想还原也比较简单的。这里就不拿它来做代表，也没有什么人用。</p>
+
+<p>通过<a href="https://obfuscator.io/">javascript-obfuscator</a>混淆后生成的代码</p>
+
+<pre><code class="language-js">var _0xd6ac=['[41m%s[0m','logG','log'];(function(_0x203a66,_0x6dd4f4){var _0x3c5c81=function(_0x4f427c){while(--_0x4f427c){_0x203a66['push'](_0x203a66['shift']());}};_0x3c5c81(++_0x6dd4f4);}(_0xd6ac,0x6e));var _0x5b26=function(_0x2d8f05,_0x4b81bb){_0x2d8f05=_0x2d8f05-0x0;var _0x4d74cb=_0xd6ac[_0x2d8f05];return _0x4d74cb;};function logG(_0x4f1daa){console[_0x5b26('0x0')]('[32m%s[0m',_0x4f1daa);}function logR(_0x38b325){console[_0x5b26('0x0')](_0x5b26('0x1'),_0x38b325);}logG('logR');logR(_0x5b26('0x2'));
+
+</code></pre>
+
+<p>再<a href="https://beautifier.io/">beautifier</a>一下：</p>
+
+<pre><code class="language-js">var _0xd6ac = ['[41m%s[0m', 'logG', 'log'];
+(function(_0x203a66, _0x6dd4f4) {
+  var _0x3c5c81 = function(_0x4f427c) {
+    while (--_0x4f427c) {
+      _0x203a66['push'](_0x203a66['shift']());
+    }
+  };
+  _0x3c5c81(++_0x6dd4f4);
+}(_0xd6ac, 0x6e));
+var _0x5b26 = function(_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0xd6ac[_0x2d8f05];
+  return _0x4d74cb;
+};
+
+function logG(_0x4f1daa) {
+  console[_0x5b26('0x0')]('[32m%s[0m', _0x4f1daa);
+}
+
+function logR(_0x38b325) {
+  console[_0x5b26('0x0')](_0x5b26('0x1'), _0x38b325);
+}
+logG('logR');
+logR(_0x5b26('0x2'));
+</code></pre>
+
+<p>这个复杂得多，但是分析一下你会发现，其实多了一个字典，所有方法变量，都有可能存在字典中，调用时先调用字典还原方法名变量再执行。<br />
+其实入口都是变量的规则。</p>
+
+<p>字典函数：</p>
+
+<pre><code class="language-js">var _0xd6ac = ['[41m%s[0m', 'logG', 'log'];
+(function(_0x203a66, _0x6dd4f4) {
+  var _0x3c5c81 = function(_0x4f427c) {
+    while (--_0x4f427c) {
+      _0x203a66['push'](_0x203a66['shift']());
+    }
+  };
+  _0x3c5c81(++_0x6dd4f4);
+}(_0xd6ac, 0x6e));
+var _0x5b26 = function(_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0xd6ac[_0x2d8f05];
+  return _0x4d74cb;
+};
+
+</code></pre>
+
+<p>通过以上发现，我们可以把JS混淆归结为三类，分别是 eval类型，hash类型，压缩类型。而压缩类型，是目前前端性能优化的常用工具，以<a href="https://www.npmjs.com/package/uglify-js">uglify</a>为代表。</p>
+
+<p>常用的前端压缩优化工具：</p>
+
+<p>JavaScript:</p>
+<ul>
+  <li><a href="https://github.com/babel/minify">babel-minify</a></li>
+  <li><a href="https://github.com/terser-js/terser">terser</a></li>
+  <li><a href="https://github.com/mishoo/UglifyJS2">uglify-js</a></li>
+  <li><a href="https://github.com/mishoo/UglifyJS2/tree/harmony">uglify-es</a></li>
+  <li><a href="https://www.npmjs.com/package/google-closure-compiler">Google Closure Compiler</a></li>
+  <li><a href="http://yui.github.io/yuicompressor/">YUI Compressor</a></li>
+</ul>
+
+<p>CSS:</p>
+<ul>
+  <li><a href="https://github.com/postcss/postcss">PostCSS</a></li>
+  <li><a href="https://github.com/jakubpawlowicz/clean-css">clean-css</a></li>
+  <li><a href="https://github.com/css/csso">CSSO</a></li>
+  <li><a href="http://yui.github.io/yuicompressor/">YUI Compressor</a></li>
+</ul>
+
+<p>HTML:</p>
+<ul>
+  <li><a href="https://www.npmjs.com/package/html-minifier">html-minifier</a></li>
+</ul>
+
+<p>从工具流(workflow) 来看，不论是 webpack 还是 gulp ，目前javascript最流行工具还是uglify。</p>
+
+<p>相应的解混淆工具：</p>
+
+<ul>
+  <li>
+    <p>eval对应的解混淆工具, 随便百度都可以搜索到，如<a href="http://blog.w3cub.com/tools/jspacker/">jspacker</a></p>
+  </li>
+  <li>
+    <p>JSA对应的解混淆工具<a href="https://github.com/jscck/unjsa">unjsa</a></p>
+  </li>
+  <li>
+    <p><a href="https://obfuscator.io/">javascript-obfuscator</a>对应的解混淆工具<a href="https://github.com/jscck/crack.js">crack.js</a></p>
+  </li>
+  <li>
+    <p>压缩类型uglify对应的工具<a href="https://github.com/eth-sri/UnuglifyJS">UnuglifyJS</a>，在线版<a href="http://www.jsnice.org/">jsnice</a></p>
+  </li>
+</ul>
+
+<p>解混淆策略其实是依据生成代码规律编写，不外乎观察特征分析，再观察特征分析，不断调整。都是手办眼见功夫。</p>
+
+<p>都没有什么难度可言，有的就是耐性。比如<a href="https://obfuscator.io/">javascript-obfuscator</a>对应的解混淆工具可以<br />
+分解为N因子问题：</p>
+
+<p>如何查询function的作用域？<br />
+预执行变量替换可能存在类型？<br />
+…</p>
+
+<p>如：</p>
+
+<pre><code class="language-js">var _0xd6ac = ['[41m%s[0m', 'logG', 'log'];
+(function(_0x203a66, _0x6dd4f4) {
+  var _0x3c5c81 = function(_0x4f427c) {
+    while (--_0x4f427c) {
+      _0x203a66['push'](_0x203a66['shift']());
+    }
+  };
+  _0x3c5c81(++_0x6dd4f4);
+}(_0xd6ac, 0x6e));
+var _0x5b26 = function(_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0xd6ac[_0x2d8f05];
+  return _0x4d74cb;
+};
+
+function logG(_0x4f1daa) {
+  console[_0x5b26('0x0')]('[32m%s[0m', _0x4f1daa);
+}
+
+function logR(_0x38b325) {
+  console[_0x5b26('0x0')](_0x5b26('0x1'), _0x38b325);
+}
+logG('logR');
+logR(_0x5b26('0x2'));
+</code></pre>
+
+<p>要还原成</p>
+
+<pre><code class="language-js">function logG(message) {
+  console.log('\x1b[32m%s\x1b[0m', message); 
+}
+function logR(message) {
+  console.log('\x1b[41m%s\x1b[0m', message); 
+}
+logG('logR');
+logR('logG');
+
+</code></pre>
+<p>第一步你总得知道字典函数，然后执行字典函数 <code>_0x5b26('0x0')</code> 还原成 <code>log</code>.</p>
+
+<p>那么就好办了，写代码的事。<br />
+如 https://github.com/jscck/crack.js/blob/master/crack.js</p>
+
+<p>还原后，如何重构代码，那么你还得知道代码生成之前是通过什么工具打包的webpack? 还是？</p>
+
+<p>如webpack 的各种封装头和尾<br />
+https://webpack.js.org/configuration/output/#expose-a-variable</p>
+
+<pre><code class="language-js">(function webpackUniversalModuleDefinition(root, factory) {
+  if(typeof exports === 'object' &amp;&amp; typeof module === 'object')
+    module.exports = factory();
+  else if(typeof define === 'function' &amp;&amp; define.amd)
+    define([], factory);
+  else if(typeof exports === 'object')
+    exports['MyLibrary'] = factory();
+  else
+    root['MyLibrary'] = factory();
+})(typeof self !== 'undefined' ? self : this, function() {
+  return _entry_return_;
+});
+</code></pre>
+
+<p>假如再深入一点，可能会涉及到JS语法解释器, AST抽象语法树</p>
+
+<p>目前涉及到 JS语法解释器, AST抽象语法树的功能如下：</p>
+
+<p><a href="https://prepack.io/">prepack</a>, <a href="http://esprima.org/">esprima</a>, <a href="https://babeljs.io/">babel</a></p>
+
+<p>或者可以阅读《编程语言实现模式》，涉及到 <a href="https://github.com/antlr/antlr4">antlr4</a>。</p>
+
+<p>当然也可以通过esprima等工具来做解混淆，只是工作量大一点，值不值的问题。</p>
+
+<p>对于未来，JS商业源码加密的方向可能<a href="https://webassembly.org/">webassembly</a>，先在服务端编译成wasm，源码就能真正的闭源。</p>
+
+<p>有人的地方就有路，有混淆的地方就有解混淆，目前机器学习编程响应的解混淆工具也做的相当出色，比如</p>
+
+<p><a href="16"><img src="https://www.sri.inf.ethz.ch/assets/images/sri-logo.svg" alt="Secure, Reliable, and Intelligent Systems Lab" width="136" /></a></p>
+
+<p>Machine Learning for Programming 产品<br />
+<a href="17">nice2predict</a>，<a href="9">jsnice</a> …<br />
+查看 https://www.sri.inf.ethz.ch/research/plml</p>
+
+<h2 id="拓展参考">拓展参考</h2>
+
+<h3 id="ast抽象语法树">AST抽象语法树</h3>
+
+<p>为什么额外说一下AST抽象语法树，因为你可以 input-&gt; ast -&gt; output Anything。</p>
+
+<p>比如你jsx转换小程序模版语法，这样你就可以用react语法来写小程序，如Taro。<br />
+mpvue, wepy, postcss …… 这些都是通过AST进行构建转换的工具，es6 -&gt; es5, babel 都是使用AST。</p>
+
+<p>AST抽象语法树大致流程：</p>
+
+<p>Input 生成 AST tree</p>
+
+<p>然后通过AST类型断言进行相应的转换</p>
+
+<p>http://esprima.org/demo/parse.html</p>
+
+<h3 id="反编译工具全集">反编译工具全集</h3>
+
+<p>小程序</p>
+
+<p>https://github.com/qwerty472123/wxappUnpacker</p>
+
+<p><code>推荐.Net、C# 逆向反编译四大工具利器</code></p>
+
+<p>https://www.cnblogs.com/ldc218/p/8945892.html</p>
+
+<p>2018年支持java8的Java反编译工具汇总<br />
+https://blog.csdn.net/yannqi/article/details/80847354</p>
+
+</div>
+
+	
+		<br>
+<br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">Creative Commons BY-NC-ND 3.0</a></br>
+	
+
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+	
+	<a class="addthis_button_sinaweibo"></a>
+	
+	
+	
+	<a class="addthis_button_twitter"></a>
+	
+	
+	
+	<a class="addthis_button_compact"></a>
+	<a class="addthis_counter addthis_bubble_style"></a>
+	</div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-558841b45b591663"></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner">Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
+Copyright &copy; 2019
+
+    Terry Cai
+
+</br></footer>
+			
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'w3cub';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.w3cub.com/blog/2019/04/01/js-confusion/';
+        var disqus_url = 'http://blog.w3cub.com/blog/2019/04/01/js-confusion/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-64597109-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+			<link rel="stylesheet" type="text/css" href="/assets/prism/prism.css"/>
+			<script src="/assets/prism/prism.js" type="text/javascript"></script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
+			</script>
+			<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		</div>
+	</div>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2018-12-24T15:15:02+00:00</updated>
+  <updated>2019-04-01T10:15:55+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -12,6 +12,285 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[javascript混淆与解混淆的那些事儿]]></title>
+    <link href="http://blog.w3cub.com/blog/2019/04/01/js-confusion/"/>
+    <updated>2019-04-01T05:48:43+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2019/04/01/js-confusion</id>
+    <content type="html"><![CDATA[<p>像软件加密与解密一样，javascript的混淆与解混淆同属于同一个范畴。道高一尺，魔高一丈。没有永恒的黑，也没有永恒的白。一切都是资本市场驱动行为，现在都流行你能为人解决什么问题，这个概念。那么市场究竟能容纳多少个能解决这种问题的利益者。JS没有秘密。</p>
+
+<p>其实本人不赞成javascript进行hash混淆处理，一拖慢运行时速度，二体积大。JS代码前端可获取，天生赋予“开源”属性，都可以在chrome devTools下查看。JS非压缩性混淆完全违法前端优化准则。</p>
+
+<p>目前网络上可以搜索的JS混淆工具不外乎以下几种：</p>
+
+<p><a href="http://blog.w3cub.com/tools/jspacker/">eval混淆</a>，也是最早JS出现的混淆加密，据说第一天就被破解，修改一下代码，alert一下就可以破解了。这种方法从出生的那天就失去了意义。其实JS加密（混淆）是相对于可读性而言的，其实真正有意义的就是压缩型混淆uglify这一类，即可减少体重，也可减少可读性。</p>
+
+<p>但是，也不能排除部分商业源代码使用hash类型混淆源代码，比如 miniui 使用的<a href="https://sourceforge.net/projects/jsintegration/files/tools/_%20JSA-20071021/">JSA加密</a>, fundebug使用的<a href="https://obfuscator.io/">javascript-obfuscator</a>。</p>
+
+<p>下面通过代码来说明 JSA加密 和 javascript-obfuscator 的区别：</p>
+
+<p>要混淆的代码：</p>
+
+<pre><code class="language-js">function logG(message) {
+  console.log('\x1b[32m%s\x1b[0m', message); 
+}
+function logR(message) {
+  console.log('\x1b[41m%s\x1b[0m', message); 
+}
+logG('logR');
+logR('logG');
+
+</code></pre>
+
+<p>通过<a href="https://sourceforge.net/projects/jsintegration/files/tools/_%20JSA-20071021/">JSA加密</a>混淆后生成的代码</p>
+
+<pre><code>function o00($){console.log("\x1b[32m%s\x1b[0m",$)}function o01($){console.log("\x1b[41m%s\x1b[0m",$)}o00("logR");o01("logG")
+
+</code></pre>
+<p>然后再<a href="https://beautifier.io/">beautifier</a>一下：</p>
+
+<pre><code class="language-js">function o00($) {
+  console.log("\x1b[32m%s\x1b[0m", $)
+}
+
+function o01($) {
+  console.log("\x1b[41m%s\x1b[0m", $)
+}
+o00("logR");
+o01("logG")
+
+</code></pre>
+
+<p>可以发现，其实没有做什么什么修改，只是做了一些变量替换。想还原也比较简单的。这里就不拿它来做代表，也没有什么人用。</p>
+
+<p>通过<a href="https://obfuscator.io/">javascript-obfuscator</a>混淆后生成的代码</p>
+
+<pre><code class="language-js">var _0xd6ac=['[41m%s[0m','logG','log'];(function(_0x203a66,_0x6dd4f4){var _0x3c5c81=function(_0x4f427c){while(--_0x4f427c){_0x203a66['push'](_0x203a66['shift']());}};_0x3c5c81(++_0x6dd4f4);}(_0xd6ac,0x6e));var _0x5b26=function(_0x2d8f05,_0x4b81bb){_0x2d8f05=_0x2d8f05-0x0;var _0x4d74cb=_0xd6ac[_0x2d8f05];return _0x4d74cb;};function logG(_0x4f1daa){console[_0x5b26('0x0')]('[32m%s[0m',_0x4f1daa);}function logR(_0x38b325){console[_0x5b26('0x0')](_0x5b26('0x1'),_0x38b325);}logG('logR');logR(_0x5b26('0x2'));
+
+</code></pre>
+
+<p>再<a href="https://beautifier.io/">beautifier</a>一下：</p>
+
+<pre><code class="language-js">var _0xd6ac = ['[41m%s[0m', 'logG', 'log'];
+(function(_0x203a66, _0x6dd4f4) {
+  var _0x3c5c81 = function(_0x4f427c) {
+    while (--_0x4f427c) {
+      _0x203a66['push'](_0x203a66['shift']());
+    }
+  };
+  _0x3c5c81(++_0x6dd4f4);
+}(_0xd6ac, 0x6e));
+var _0x5b26 = function(_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0xd6ac[_0x2d8f05];
+  return _0x4d74cb;
+};
+
+function logG(_0x4f1daa) {
+  console[_0x5b26('0x0')]('[32m%s[0m', _0x4f1daa);
+}
+
+function logR(_0x38b325) {
+  console[_0x5b26('0x0')](_0x5b26('0x1'), _0x38b325);
+}
+logG('logR');
+logR(_0x5b26('0x2'));
+</code></pre>
+
+<p>这个复杂得多，但是分析一下你会发现，其实多了一个字典，所有方法变量，都有可能存在字典中，调用时先调用字典还原方法名变量再执行。<br />
+其实入口都是变量的规则。</p>
+
+<p>字典函数：</p>
+
+<pre><code class="language-js">var _0xd6ac = ['[41m%s[0m', 'logG', 'log'];
+(function(_0x203a66, _0x6dd4f4) {
+  var _0x3c5c81 = function(_0x4f427c) {
+    while (--_0x4f427c) {
+      _0x203a66['push'](_0x203a66['shift']());
+    }
+  };
+  _0x3c5c81(++_0x6dd4f4);
+}(_0xd6ac, 0x6e));
+var _0x5b26 = function(_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0xd6ac[_0x2d8f05];
+  return _0x4d74cb;
+};
+
+</code></pre>
+
+<p>通过以上发现，我们可以把JS混淆归结为三类，分别是 eval类型，hash类型，压缩类型。而压缩类型，是目前前端性能优化的常用工具，以<a href="https://www.npmjs.com/package/uglify-js">uglify</a>为代表。</p>
+
+<p>常用的前端压缩优化工具：</p>
+
+<p>JavaScript:</p>
+<ul>
+  <li><a href="https://github.com/babel/minify">babel-minify</a></li>
+  <li><a href="https://github.com/terser-js/terser">terser</a></li>
+  <li><a href="https://github.com/mishoo/UglifyJS2">uglify-js</a></li>
+  <li><a href="https://github.com/mishoo/UglifyJS2/tree/harmony">uglify-es</a></li>
+  <li><a href="https://www.npmjs.com/package/google-closure-compiler">Google Closure Compiler</a></li>
+  <li><a href="http://yui.github.io/yuicompressor/">YUI Compressor</a></li>
+</ul>
+
+<p>CSS:</p>
+<ul>
+  <li><a href="https://github.com/postcss/postcss">PostCSS</a></li>
+  <li><a href="https://github.com/jakubpawlowicz/clean-css">clean-css</a></li>
+  <li><a href="https://github.com/css/csso">CSSO</a></li>
+  <li><a href="http://yui.github.io/yuicompressor/">YUI Compressor</a></li>
+</ul>
+
+<p>HTML:</p>
+<ul>
+  <li><a href="https://www.npmjs.com/package/html-minifier">html-minifier</a></li>
+</ul>
+
+<p>从工具流(workflow) 来看，不论是 webpack 还是 gulp ，目前javascript最流行工具还是uglify。</p>
+
+<p>相应的解混淆工具：</p>
+
+<ul>
+  <li>
+    <p>eval对应的解混淆工具, 随便百度都可以搜索到，如<a href="http://blog.w3cub.com/tools/jspacker/">jspacker</a></p>
+  </li>
+  <li>
+    <p>JSA对应的解混淆工具<a href="https://github.com/jscck/unjsa">unjsa</a></p>
+  </li>
+  <li>
+    <p><a href="https://obfuscator.io/">javascript-obfuscator</a>对应的解混淆工具<a href="https://github.com/jscck/crack.js">crack.js</a></p>
+  </li>
+  <li>
+    <p>压缩类型uglify对应的工具<a href="https://github.com/eth-sri/UnuglifyJS">UnuglifyJS</a>，在线版<a href="http://www.jsnice.org/">jsnice</a></p>
+  </li>
+</ul>
+
+<p>解混淆策略其实是依据生成代码规律编写，不外乎观察特征分析，再观察特征分析，不断调整。都是手办眼见功夫。</p>
+
+<p>都没有什么难度可言，有的就是耐性。比如<a href="https://obfuscator.io/">javascript-obfuscator</a>对应的解混淆工具可以<br />
+分解为N因子问题：</p>
+
+<p>如何查询function的作用域？<br />
+预执行变量替换可能存在类型？<br />
+…</p>
+
+<p>如：</p>
+
+<pre><code class="language-js">var _0xd6ac = ['[41m%s[0m', 'logG', 'log'];
+(function(_0x203a66, _0x6dd4f4) {
+  var _0x3c5c81 = function(_0x4f427c) {
+    while (--_0x4f427c) {
+      _0x203a66['push'](_0x203a66['shift']());
+    }
+  };
+  _0x3c5c81(++_0x6dd4f4);
+}(_0xd6ac, 0x6e));
+var _0x5b26 = function(_0x2d8f05, _0x4b81bb) {
+  _0x2d8f05 = _0x2d8f05 - 0x0;
+  var _0x4d74cb = _0xd6ac[_0x2d8f05];
+  return _0x4d74cb;
+};
+
+function logG(_0x4f1daa) {
+  console[_0x5b26('0x0')]('[32m%s[0m', _0x4f1daa);
+}
+
+function logR(_0x38b325) {
+  console[_0x5b26('0x0')](_0x5b26('0x1'), _0x38b325);
+}
+logG('logR');
+logR(_0x5b26('0x2'));
+</code></pre>
+
+<p>要还原成</p>
+
+<pre><code class="language-js">function logG(message) {
+  console.log('\x1b[32m%s\x1b[0m', message); 
+}
+function logR(message) {
+  console.log('\x1b[41m%s\x1b[0m', message); 
+}
+logG('logR');
+logR('logG');
+
+</code></pre>
+<p>第一步你总得知道字典函数，然后执行字典函数 <code>_0x5b26('0x0')</code> 还原成 <code>log</code>.</p>
+
+<p>那么就好办了，写代码的事。<br />
+如 https://github.com/jscck/crack.js/blob/master/crack.js</p>
+
+<p>还原后，如何重构代码，那么你还得知道代码生成之前是通过什么工具打包的webpack? 还是？</p>
+
+<p>如webpack 的各种封装头和尾<br />
+https://webpack.js.org/configuration/output/#expose-a-variable</p>
+
+<pre><code class="language-js">(function webpackUniversalModuleDefinition(root, factory) {
+  if(typeof exports === 'object' &amp;&amp; typeof module === 'object')
+    module.exports = factory();
+  else if(typeof define === 'function' &amp;&amp; define.amd)
+    define([], factory);
+  else if(typeof exports === 'object')
+    exports['MyLibrary'] = factory();
+  else
+    root['MyLibrary'] = factory();
+})(typeof self !== 'undefined' ? self : this, function() {
+  return _entry_return_;
+});
+</code></pre>
+
+<p>假如再深入一点，可能会涉及到JS语法解释器, AST抽象语法树</p>
+
+<p>目前涉及到 JS语法解释器, AST抽象语法树的功能如下：</p>
+
+<p><a href="https://prepack.io/">prepack</a>, <a href="http://esprima.org/">esprima</a>, <a href="https://babeljs.io/">babel</a></p>
+
+<p>或者可以阅读《编程语言实现模式》，涉及到 <a href="https://github.com/antlr/antlr4">antlr4</a>。</p>
+
+<p>当然也可以通过esprima等工具来做解混淆，只是工作量大一点，值不值的问题。</p>
+
+<p>对于未来，JS商业源码加密的方向可能<a href="https://webassembly.org/">webassembly</a>，先在服务端编译成wasm，源码就能真正的闭源。</p>
+
+<p>有人的地方就有路，有混淆的地方就有解混淆，目前机器学习编程响应的解混淆工具也做的相当出色，比如</p>
+
+<p><a href="16"><img src="https://www.sri.inf.ethz.ch/assets/images/sri-logo.svg" alt="Secure, Reliable, and Intelligent Systems Lab" width="136" /></a></p>
+
+<p>Machine Learning for Programming 产品<br />
+<a href="17">nice2predict</a>，<a href="9">jsnice</a> …<br />
+查看 https://www.sri.inf.ethz.ch/research/plml</p>
+
+<h2 id="拓展参考">拓展参考</h2>
+
+<h3 id="ast抽象语法树">AST抽象语法树</h3>
+
+<p>为什么额外说一下AST抽象语法树，因为你可以 input-&gt; ast -&gt; output Anything。</p>
+
+<p>比如你jsx转换小程序模版语法，这样你就可以用react语法来写小程序，如Taro。<br />
+mpvue, wepy, postcss …… 这些都是通过AST进行构建转换的工具，es6 -&gt; es5, babel 都是使用AST。</p>
+
+<p>AST抽象语法树大致流程：</p>
+
+<p>Input 生成 AST tree</p>
+
+<p>然后通过AST类型断言进行相应的转换</p>
+
+<p>http://esprima.org/demo/parse.html</p>
+
+<h3 id="反编译工具全集">反编译工具全集</h3>
+
+<p>小程序</p>
+
+<p>https://github.com/qwerty472123/wxappUnpacker</p>
+
+<p><code>推荐.Net、C# 逆向反编译四大工具利器</code></p>
+
+<p>https://www.cnblogs.com/ldc218/p/8945892.html</p>
+
+<p>2018年支持java8的Java反编译工具汇总<br />
+https://blog.csdn.net/yannqi/article/details/80847354</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[javascript类库中和编程语言中getter和setter]]></title>
