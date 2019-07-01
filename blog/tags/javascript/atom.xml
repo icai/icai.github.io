@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2019-07-01T10:16:14+00:00</updated>
+  <updated>2019-07-01T10:58:00+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -42,7 +42,7 @@
 <p><strong>我们把这种形式叫做 前后分离 + 后端辅助（SPA hack回滚）。</strong></p>
 
 <p>但是随着node，babel的快速发展，浏览器快速迭代，前端工作天天调试兼容的时代过去了。变成了后端服务器 + 前端服务器这种架构。[back server] -&gt;-&gt; [[view-server]front server]。<br />
-前端的地位重要多了。同构这个概念于是被提出了。当时前端们就设想 <strong>后端渲染跟前端异步渲染可用重用</strong>。比如一个循环的列表，里面的item 模版可以被前端重用。到后来，随着 react vue 等框架开始流行，nextjs诞生了。这个阶段，主要是SPA的改进。node服务器把SEO需要的功能都做了。<br />
+前端的地位重要多了。同构这个概念于是被提出了。当时前端们就设想 <strong>后端渲染跟前端异步渲染可以重用</strong>。比如一个循环的列表，里面的item 模版可以被前端重用。到后来，随着 react vue 等框架开始流行，nextjs诞生了。这个阶段，主要是SPA的改进。node服务器把SEO需要的功能都做了。<br />
 既然node可以写server层，那么为什么不可以后端也用node呢。当然这用什么语言写后端，并不影响前端。</p>
 
 <p><strong>我们把这个形式称做，SPA + SSR前端渲染。</strong></p>
