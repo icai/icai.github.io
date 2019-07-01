@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: ssr | 泛前端开发]]></title>
+  <link href="http://blog.w3cub.com/blog/tags/ssr/atom.xml" rel="self"/>
+  <link href="http://blog.w3cub.com/"/>
+  <updated>2019-07-01T10:16:14+00:00</updated>
+  <id>http://blog.w3cub.com/</id>
+  <author>
+    <name><![CDATA[Terry Cai]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[浅谈服务端渲染(SSR)的几种形式]]></title>
+    <link href="http://blog.w3cub.com/blog/2019/07/01/ssr-types/"/>
+    <updated>2019-07-01T08:48:43+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2019/07/01/ssr-types</id>
+    <content type="html"><![CDATA[<p>在好久好久之前，前端的概念是模糊的。前端就是页面仔，切图仔。前端的任务就是把html跟js写好，然后丢给后端套数据。基本传统的MVC，smarty View。</p>
+<pre><code>assign-&gt;('data', $data)
+</code></pre>
+<p>这些也给后端做了。或者前端就丢给UI（美工）做，前端是不存在的。</p>
+
+<!--more -->
+
+<p>[[back] -&gt;[view]]-&gt; [front end]</p>
+
+<p>但是随着移动端的兴起，开始流行前后分离。</p>
+
+<p>后端渲染模版的这一层就给省略掉了.<br />
+变成前后分离。其实所谓的后端渲染，也就是渲染首屏幕。<br />
+[back] -&gt;-&gt; [front and view]</p>
+
+<p>但是又因为前后分离对搜索引擎爬虫不太友好。想当年，做网站的人都十分在意一个东西，就是Alexa排名，后者国内的百度排名，cnzz排名等等。毕竟那个时候风头的人都会看一下你的网站alexa是多少。其实这种指标就是反应了一个网站的活跃度。不如说，你说你的网站有几百万用户，但是别人查了一下这种排名，尽然几千万，搜索引擎收录几乎没有。这样做你认为会有信服力吗？</p>
+
+<p>当然SEO需求大部分面向C端的。<strong>面向后台管理系统</strong>的当然就没有那么在乎了。</p>
+
+<p>为了解决SPA  bad SEO 问题。例如后台服务器拦截拦截特定爬虫进行SEO hack，批量提交Sitemap 等等的手段。简单的说，你想告诉搜索引擎链接，然后爬虫跳进来，进行相应的SEO hack 投食时渲染。</p>
+
+<p><strong>我们把这种形式叫做 前后分离 + 后端辅助（SPA hack回滚）。</strong></p>
+
+<p>但是随着node，babel的快速发展，浏览器快速迭代，前端工作天天调试兼容的时代过去了。变成了后端服务器 + 前端服务器这种架构。[back server] -&gt;-&gt; [[view-server]front server]。<br />
+前端的地位重要多了。同构这个概念于是被提出了。当时前端们就设想 <strong>后端渲染跟前端异步渲染可用重用</strong>。比如一个循环的列表，里面的item 模版可以被前端重用。到后来，随着 react vue 等框架开始流行，nextjs诞生了。这个阶段，主要是SPA的改进。node服务器把SEO需要的功能都做了。<br />
+既然node可以写server层，那么为什么不可以后端也用node呢。当然这用什么语言写后端，并不影响前端。</p>
+
+<p><strong>我们把这个形式称做，SPA + SSR前端渲染。</strong></p>
+
+<p>既然可以SSR前端渲染，为什么不可以后端渲染呢！当然服务器的权利就只剩下了 node。<br />
+又开始 后端的 Route -&gt; Controller -&gt; Model-&gt; View.<br />
+这时候的 View 就变成了react 或者 vue. 其实就把当年的后端模版替换成了 前端框架模版，model输出的数据就变成 View的prop或者data 变量。</p>
+
+<p><strong>我们把这种形式称为  SSR后端渲染。</strong></p>
+
+<p>到头来，你会发现，走了一圈，又回到了原点。</p>
+
+]]></content>
+  </entry>
+  
+</feed>
