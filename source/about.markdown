@@ -74,7 +74,7 @@ permalink: /about/
 
 <br>
 
-查看 https://github.com/icai
+查看 [https://github.com/icai](https://github.com/icai)
 
 <br>
 
@@ -106,7 +106,7 @@ Follow me: <iframe src="https://ghbtns.com/github-btn.html?user=icai&type=follow
 目前w3cub已经启用的二级域名有 
 
 -W3cubtools
-<a href="https://blog.w3cub.com/" target="_blank">tools.w3cub.com</a>, 开发者和家人的工具箱，力求2019底做到全网最全。
+<a href="https://tools.w3cub.com/" target="_blank">tools.w3cub.com</a>, 开发者和家人的工具箱，力求2019底做到全网最全。
 
 -泛前端开发
 <a href="https://blog.w3cub.com/" target="_blank">blog.w3cub.com</a>, 个人博客   
