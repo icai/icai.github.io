@@ -72,17 +72,17 @@ permalink: /about/
 
 ## 开源项目
 
-
-
 <br>
+
+查看 https://github.com/icai
+
 <br>
 
 
 ## 自我评价
 
 本人有多年前端工作经验， 有经常阅读源代码的习惯。    
-具备较强的逻辑分析，需求分析能力。较强前端架构能力。   
-与时俱进，在电商，教育，社交，视频等领域有多年经验沉淀。  
+具备较强的逻辑分析，需求分析能力。较强前端架构能力。 
 
 
 
@@ -104,6 +104,9 @@ Follow me: <iframe src="https://ghbtns.com/github-btn.html?user=icai&type=follow
 ## 关于w3cub
 
 目前w3cub已经启用的二级域名有 
+
+-W3cubtools
+<a href="https://blog.w3cub.com/" target="_blank">tools.w3cub.com</a>, 开发者和家人的工具箱，力求2019底做到全网最全。
 
 -泛前端开发
 <a href="https://blog.w3cub.com/" target="_blank">blog.w3cub.com</a>, 个人博客   
