@@ -124,11 +124,11 @@ Github:  [https://github.com/icai](https://github.com/icai)
 
 ## 联系方式
 
-欢迎gmail me <gidcai#gmail.com>
+欢迎gmail me <gidcai#gmail.com> 
 
-微信：328765211
-微博：328765211
-QQ：328765211
+微信：328765211   
+微博：328765211   
+QQ：328765211   
 
 
 
