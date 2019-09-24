@@ -13,6 +13,8 @@ permalink: /about/
 
 ## 关于我
 
+90后
+
 一个程序员，你可以叫我[Terry](https://github.com/icai). 
 
 地球寄居者，<i class="fa fa-map-marker fa-lg"></i><span class="sr-only">location at</span> China, Guangzhou.
@@ -24,15 +26,8 @@ permalink: /about/
 
 唯物主义者，爱吃肉，静鸡鸡，蜡笔小新。
 
-90后
-
 
 <br>
-
-## 学历
-
-大专 - 中山大学 计算机及其用 2011.06
-
 
 
 ## 个人简历
@@ -93,6 +88,11 @@ permalink: /about/
 ▪	五人团队，funlr.com 纷乐网。   
 ▪	主张用requirejs。   
 
+
+<br>
+## 学历
+
+大专 中山大学 - 计算机及其用  2011.06
 
 <br>
 
