@@ -51,14 +51,9 @@ permalink: /about/
 ▪ 代表性项目地址: [https://pf.zhidianlife.com](https://pf.zhidianlife.com), [https://wms.zhidianlife.com](https://wms.zhidianlife.com)    
 ▪ .Net组前端组长  
 ▪ 贡献： 
-[快递单排版方案](https://github.com/icai/printr),  
-[前端多页解决方案](https://github.com/icai/bfms), 
- - 实践案例：https://pf.zhidianlife.com 
- 
- 
-[bootvue](https://github.com/icai/bootvue),  
- - 实践案例：https://wms.zhidianlife.com 
-
+[快递单排版方案](https://github.com/icai/printr),   
+[前端多页解决方案](https://github.com/icai/bfms),  案例：https://pf.zhidianlife.com   
+[bootvue](https://github.com/icai/bootvue), 案例：https://wms.zhidianlife.com    
 [miload](https://github.com/icai/miload)
 
 
