@@ -3,15 +3,13 @@
 # Each of these sources MUST be a valid Rubygems repository.
 # https://bundler.io/v1.16/man/gemfile.5.html
 source "https://rubygems.org"
-source "https://gems.ruby-china.com"
 
 group :development do
   gem 'rake', '~> 12.0'
-  gem 'jekyll', '~> 3.6', '>= 3.8.3'
-  
+  gem 'jekyll', '~> 3.8', '>= 3.8.5'
   gem 'rdiscount', '~> 2.0'
   gem 'RedCloth', '~> 4.3', '>= 4.3.2'
-  gem 'haml', '~> 4.0'
+  gem 'haml', '>= 5.0.0'
   gem 'pygments.rb'
   gem 'rouge'
   gem 'rb-fsevent', '~> 0.9'
@@ -25,8 +23,6 @@ group :development do
   gem 'sass'
   gem 'coffee-script'
   gem 'bower'
-  
-
 
 end
 group :jekyll_plugins do
@@ -35,7 +31,8 @@ group :jekyll_plugins do
   gem 'jekyll-sitemap'
   gem 'jekyll-paginate'
   gem 'jekyll-gist'
-  gem 'jekyll-assets'
+  gem "sprockets", "~> 3.7"
+  gem 'jekyll-assets', '~> 3.0', '>= 3.0.12'
   gem 'octopress-date-format', '~> 3.0'
 end
 
