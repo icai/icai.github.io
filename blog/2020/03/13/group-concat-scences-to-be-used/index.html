@@ -1,0 +1,330 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>group_concat scences to be used - 泛前端开发</title>
+	<meta name="author" content="Terry Cai">
+	
+	<meta name="description" content="Mar 13, 2020 mysql group_concat, groupby, mysql Comments Group_concat Scences to Be Used group_concat 只能与groupby连用，分组查询常用场景 场景一： 用户角色关系， 用户表，角色表， &hellip;">
+	<meta name="keywords" content="groupby, mysql, group_concat">
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="泛前端开发" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<script src="/assets/application-555523497a2cb672b8f83344414d95c89fc0ec37e583fccb3b2d7b79f9025439.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="/assets/application-4b2e4f9827923f8ef44b2b07f9847f45b32725b46209f3348925eb750bf01476.css">
+	
+
+</head>
+
+
+<body class="blog">
+	<div class="container">
+		<div class="sidebar">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+		<img src="/assets/images/avatar.jpeg" style="width: 160px;" />
+	
+</div>
+<h1><a href="/">泛前端开发</a></h1>
+<p class="subtitle">I am Terry，习惯阅读无注释代码</p>
+<nav id="main-nav"><ul class="main">
+	<li class=""><a href="/">主页  Blog</a></li>
+    <li class=""><a href="/blog/archives/">归档  Archives</a></li>
+    <li class="inline"><a href="/blog/categories/">分类  Categories</a></li>
+    <li class="inline" ><a href="/blog/tags/">标签  Tags</a></li>
+    
+    <li><a href="/slides/">演讲 talks</a></li>
+    
+    <li><a href="/about/">关于  About</a></li>
+</ul>
+<ul class="main">
+    <li><a href="http://site.w3cub.com/" target="_blank">前端网址导航  Navs</a></li>
+    <li><a href="/tools/">前端工具箱  Tools</a></li>
+</ul></nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+
+		
+		<a class="weibo" href="http://weibo.com/328765211" target="_blank" title="Weibo">Weibo</a>
+		
+		
+			<a class="facebook" href="http://www.facebook.com/terry.cai.7921" target="_blank" title="Facebook">Facebook</a>
+		
+		
+		
+
+		
+
+		
+			<a class="github" href="https://github.com/icai" target="_blank" title="GitHub">GitHub</a>
+		
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" target="_blank" title="RSS">RSS</a>
+		
+
+
+
+	</div>
+</nav>
+
+<section class="aboutme">
+  <p class="motto">
+    <script>
+    var mottos = ["多数人25岁就死了，一直到75岁才埋。——Horus9527 译","人民不应该怕政府，政府才应该怕人民。","天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。  ——老子","爱国者的责任就是保护国家不受政府侵犯——托马斯·潘恩","计算机就跟比基尼一样，省去了人们许多的胡思乱想。 ——萨姆·尤因","想了解一个人的个性，那就赋予他权力。 ——林肯","如果你怀疑自己，那么你的立足点确实不稳固了。","在民主和独裁的斗争中，纸上的宪法敌不过独裁者的刺刀。——林语堂","国家是危险的机器 ——华盛顿","冬天已经到来，春天还会远吗？ ——雪莱","工作撵跑三个魔鬼：无聊、堕落和贫穷。","老大哥在看着你。——奥威尔","宗教上最深的误解——认为坏人没有宗教。——尼采","国家是为人而建立，而人不是为国家而生存。——爱因斯坦","肚子大不可怕，可怕的是肚子里没有好东西。——加菲猫","任何有可能出错的事将会出错 ——墨菲定理","管得最少，就是最好的政府。——大卫·梭罗","人人生而平等 ——美国独立宣言","其实人跟树是一样的，越是向往高处的阳光，它的根就越要伸向黑暗的地底。——尼采","培养愚人去巩固制度是一种自我毁灭，毕竟你以为世界只有你一个；当在特定作用域下你可能看似很成功，但是对于整体却是毁灭性。"];
+    document.writeln(mottos[Math.floor(Math.random() * mottos.length)])
+    </script>
+  </p>
+</section>
+</header>				
+			</div>
+		</div>
+		<div id="topbar" class="topbar">
+			<div class="btn-bar"><i></i></div> 
+			<h1><a href="/">泛前端开发</a></h1> 
+			<a class="me" href="/about/"><img src="/assets/images/avatar.jpeg" alt="泛前端开发"></a>
+		</div>
+		<div id="sidebar-mask" style="display: none;"></div>
+		<div class="main-col">
+			
+				
+			
+			<div class="main-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+
+
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+
+<time datetime="2020-03-13T07:44:47+00:00" data-updated="true" itemprop="datePublished">Mar 13, 2020</time></div>
+		<div class="cats">
+
+
+	mysql
+
+
+</div>
+		
+
+<div class="tags">
+  
+    <a class='tag' href='/blog/tags/group-concat/'>group_concat</a>, <a class='tag' href='/blog/tags/groupby/'>groupby</a>, <a class='tag' href='/blog/tags/mysql/'>mysql</a>
+  
+</div>
+
+		
+			<span class="comments"><a href="#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name">Group_concat Scences to Be Used
+	
+	</h1>
+	
+
+	
+	<hr />
+	<div class="entry-content" itemprop="articleBody"><p>group_concat 只能与groupby连用，分组查询常用场景</p>
+
+<p>场景一：</p>
+
+<p>用户角色关系， 用户表，角色表，用户角色表。 用户可以拥有多个角色。查询所有用户并附带出他们所属的角色。</p>
+
+<p>场景二：</p>
+
+<p>文章标签关系，文章表，标签表，文章标签关系表。查询所有文章并附带出他们所属的标签。</p>
+
+<!--more -->
+
+<p>下面以场景一举例</p>
+
+<p>创建用户表</p>
+
+<pre><code class="language-sql">CREATE TABLE `bs_user` (
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `user_name` varchar(20) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `mail` varchar(40) DEFAULT NULL,
+  `tel` varchar(11) DEFAULT NULL,
+  `sex` varchar(1) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+</code></pre>
+
+<p>创建角色表</p>
+
+<pre><code class="language-sql">CREATE TABLE `bs_role` (
+  `role_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `role_name` varchar(10) NOT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `creator_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `modified_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `is_del` int(1) DEFAULT '0',
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+</code></pre>
+
+<p>创建用户角色关系表</p>
+
+<pre><code class="language-sql">CREATE TABLE `bs_user_role` (
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `role_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` datetime NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `role_id` (`role_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+</code></pre>
+
+<h2 id="查询所有用户并附带出他们所属的角色">查询所有用户并附带出他们所属的角色</h2>
+
+<p>分解</p>
+
+<ul>
+  <li>查询 所有用户</li>
+  <li>查询 所有用户角色</li>
+  <li>联合</li>
+</ul>
+
+<pre><code class="language-sql">select a.id as user_id, a.user_name, a.name, 
+    group_concat(s.role_id) AS role_id, 
+    group_concat(s.role_name) AS role_name, 
+    group_concat(s.description) AS description from bs_user a
+left outer join (
+	select  b.user_id user_id, b.role_id role_id, c.role_name role_name, c.description description from bs_user_role b  
+	left  join bs_role c on b.role_id=c.role_id
+ ) AS s on s.user_id = a.id
+where a.is_del=0
+group by user_id
+order by created_at desc limit 0, 10;
+</code></pre>
+
+<p>结果</p>
+
+<p><img src="/assets/posts/mysql/group_concat-a2f9d87821e17b3df49f6bb5ccc7f9f17f8d9c46feb92c747456b56754d9f64c.png" alt="Result" /></p>
+
+</div>
+
+	
+		<br>
+<br>原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">Creative Commons BY-NC-ND 3.0</a></br>
+	
+
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+	
+	<a class="addthis_button_sinaweibo"></a>
+	
+	
+	
+	<a class="addthis_button_twitter"></a>
+	
+	
+	
+	<a class="addthis_button_compact"></a>
+	<a class="addthis_counter addthis_bubble_style"></a>
+	</div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-558841b45b591663"></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner">Powered by <a href="https://jekyllrb.com/">Jekyll</a>, Hosted by <a href="https://pages.github.com">Github Pages</a>, <a href="https://github.com">GitHub</a>.
+<br>Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>. <a href="https://github.com/icai/icai.github.io/tree/source" target="_blank">Source Code</a></br>
+Copyright &copy; 2020
+
+    Terry Cai
+
+</br></footer>
+			
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'w3cub';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used/';
+        var disqus_url = 'http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-64597109-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+			<link rel="stylesheet" type="text/css" href="/assets/prism/prism.css"/>
+			<script src="/assets/prism/prism.js" type="text/javascript"></script>
+			<script type="text/x-mathjax-config">
+				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
+			</script>
+			<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		</div>
+	</div>
+</body>
+</html>

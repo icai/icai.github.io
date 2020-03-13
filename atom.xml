@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-03-06T07:30:48+00:00</updated>
+  <updated>2020-03-13T08:50:07+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -12,6 +12,99 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[group_concat scences to be used]]></title>
+    <link href="http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used/"/>
+    <updated>2020-03-13T07:44:47+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used</id>
+    <content type="html"><![CDATA[<p>group_concat 只能与groupby连用，分组查询常用场景</p>
+
+<p>场景一：</p>
+
+<p>用户角色关系， 用户表，角色表，用户角色表。 用户可以拥有多个角色。查询所有用户并附带出他们所属的角色。</p>
+
+<p>场景二：</p>
+
+<p>文章标签关系，文章表，标签表，文章标签关系表。查询所有文章并附带出他们所属的标签。</p>
+
+<!--more -->
+
+<p>下面以场景一举例</p>
+
+<p>创建用户表</p>
+
+<pre><code class="language-sql">CREATE TABLE `bs_user` (
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `user_name` varchar(20) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `mail` varchar(40) DEFAULT NULL,
+  `tel` varchar(11) DEFAULT NULL,
+  `sex` varchar(1) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+</code></pre>
+
+<p>创建角色表</p>
+
+<pre><code class="language-sql">CREATE TABLE `bs_role` (
+  `role_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `role_name` varchar(10) NOT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `creator_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `modified_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `is_del` int(1) DEFAULT '0',
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+</code></pre>
+
+<p>创建用户角色关系表</p>
+
+<pre><code class="language-sql">CREATE TABLE `bs_user_role` (
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `role_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` datetime NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `role_id` (`role_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+</code></pre>
+
+<h2 id="查询所有用户并附带出他们所属的角色">查询所有用户并附带出他们所属的角色</h2>
+
+<p>分解</p>
+
+<ul>
+  <li>查询 所有用户</li>
+  <li>查询 所有用户角色</li>
+  <li>联合</li>
+</ul>
+
+<pre><code class="language-sql">select a.id as user_id, a.user_name, a.name, 
+    group_concat(s.role_id) AS role_id, 
+    group_concat(s.role_name) AS role_name, 
+    group_concat(s.description) AS description from bs_user a
+left outer join (
+	select  b.user_id user_id, b.role_id role_id, c.role_name role_name, c.description description from bs_user_role b  
+	left  join bs_role c on b.role_id=c.role_id
+ ) AS s on s.user_id = a.id
+where a.is_del=0
+group by user_id
+order by created_at desc limit 0, 10;
+</code></pre>
+
+<p>结果</p>
+
+<p><img src="http://blog.w3cub.com/assets/posts/mysql/group_concat-a2f9d87821e17b3df49f6bb5ccc7f9f17f8d9c46feb92c747456b56754d9f64c.png" alt="Result" /></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[浅谈服务端渲染(SSR)的几种形式]]></title>
@@ -3699,218 +3792,6 @@ var exObj = extend({},source);
 <p>菜籽油: <a href="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e" title="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e">http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e</a></p>
 
 <p>-EOF-</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[python银行数据渲染css sprite]]></title>
-    <link href="http://blog.w3cub.com/blog/2013/08/19/python-generate-banks-data-css-sprite/"/>
-    <updated>2013-08-19T05:44:09+00:00</updated>
-    <id>http://blog.w3cub.com/blog/2013/08/19/python-generate-banks-data-css-sprite</id>
-    <content type="html"><![CDATA[<p>前端处理重复列表类型数据都是十分繁琐的，让我们一劳永日吧。</p>
-
-<p>银行类表，航空公司列表,……</p>
-
-<!-- more -->
-
-<pre><code class="language-py"># encoding: utf-8
-import os
-import urllib2
-import ConfigParser
-import time
-import msvcrt
- 
- 
-def log(tips,exit = False):
-    print str(tips)
- 
-    if exit:
-        msvcrt.getch()
- 
-class BuildBank(object):
-    """docstring for BuildBank"""
- 
-    def __init__(self):
-        super(BuildBank, self).__init__()
- 
-        self.templatePath = raw_input("please input your template Path in 'config.ini' file :")   #"default"
- 
-        if not os.path.exists(self.templatePath):
-            os.makedirs(self.templatePath)
- 
-        self.getConfig()
- 
-        if self.isgetPic == True :
-            self.getPic(self.remoteUrl)
- 
-        self.render()
- 
-    def getConfig(self):
- 
-        now = str(time.time() )
-        fileName = "bank_alipay_"+ now +".html"
-        pngName = "bank_alipay_"+ now +".png"
- 
- 
-        cf = ConfigParser.ConfigParser()
-        cf.read("config.ini")
-        self.allBank = cf.get("main", "allBank")
- 
-        self.template = cf.get("template",self.templatePath)
-        self.bankList = cf.get("banklist",self.templatePath)
-         
- 
-        self.fileName = cf.get("main", "fileName") or fileName
-        self.pngName = cf.get("main", "pngName") or pngName
-        self.size = cf.getint("main", "size")
- 
- 
-        self.isgetPic =  cf.getboolean("main", "isgetPic")
-        self.remoteUrl = cf.get("main","remoteUrl").format(allbank = self.allBank,stamp = int(time.time()))
-         
-    def getPic(self,url):
- 
-        _absPngName = os.path.join(self.templatePath,self.pngName)
- 
-        if os.path.isfile(_absPngName) : return False
-        headers={'User-Agent': "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"}
-         
-        log("start getting remote pic...")
- 
-        imgRequest = urllib2.Request(url,headers=headers);
-        imgData = urllib2.urlopen(imgRequest).read()
-         
-        output =open(_absPngName,"wb")
-        output.write(imgData)
-        output.close()
- 
-        log ("complate getting remote pic...")
- 
-    def renderCss(self):
-        allbankclass_tmpl = ".bank_{bank}"
-        # 所有银行 class 名 集合 模板
-        eachbankclass_tmpl = "\t.bank_{bank} {{ background-position: 0 {posy}; }}"
-        # 单个银行  class 名 模板
- 
- 
-        _style = ""
-        _banklist = self.allBank.lower().split(',')
-        _size = self.size
- 
-        allbankclass = []
-        eachbankclass = []
- 
-        for i in  range(len(_banklist)):
-            allbankclass.append( allbankclass_tmpl.format(bank=_banklist[i]) )
-            eachbankclass.append( eachbankclass_tmpl.format(bank=_banklist[i],posy=  str(- i * _size) + "px" if i &gt; 0 else str(- i * _size)))
-        else :
-            _style = '''
-            .bank_list li {
-                float: left;
-                padding: 10px 0;
-                width: 180px;
-                overflow: hidden;
-            }
-            .bank_list li .radio{
-                float: left;
-                margin: 8px 2px 0 2px;
-            }
-            .bank_list li .bank_label{ float: left; border:1px solid #e2e2e2; }
-            .bank_list li .hover,.bank_list li .checked{
-                border:1px solid #F60;
-            }
-            ''' + ",".join(allbankclass) + '''
-            { width: 126px;  height: 36px; background-image:url(
-            '''+ self.pngName + '''
-            ); background-repeat:no-repeat; cursor: pointer; display:block; }
-            ''' + "\n".join(eachbankclass)
-        return _style
- 
-    def renderList(self,receivbank):
-        body = ""
-        for i in receivbank.lower().split(',') :
-            body += self.template.format(bank=i)
-        return body
- 
-    def render(self):
- 
-        style = self.renderCss()
-         
-        head = '''
-            &lt;!doctype html&gt;
-            &lt;html lang="en"&gt;
-            &lt;head&gt;
-                &lt;meta charset="UTF-8"&gt;
-                &lt;title&gt;Document&lt;/title&gt;
-                &lt;script src="http://code.jquery.com/jquery-1.7.2.js" &gt;&lt;/script&gt;
-                &lt;style&gt;
-            '''+ style +'''
-                &lt;/style&gt;
-            &lt;/head&gt;
-            &lt;body&gt;
-                &lt;ul class="bank_list" &gt;
-            '''
-        body = self.renderList(self.bankList)
-        foot = '''
-                &lt;/ul&gt;
-                &lt;script&gt;
-                $(function(){
-                    $('.bank_list .bank_label').hover(function(){
-                        $(this).addClass('hover');
-                    },function(){
-                        $(this).removeClass('hover');
-                    })
-                    $('input[type="radio"]').change(function(){
-                        var $id = $(this).attr('id'),$name = $(this).attr('name');
-                        $('label[for="'+ $id +'"]').addClass("checked").parents('li').siblings().find('label').removeClass('checked');
-                    })
-                })
-                &lt;/script&gt;    
-            &lt;/body&gt;
-            &lt;/html&gt;
-            '''
- 
-        f=open(os.path.join(self.templatePath,self.fileName) ,"w")
-        f.write(head)
-        f.write(body)
-        f.write(foot)
-        f.close()
- 
-        log("complate rendering html...")
-        log("press any key to exit...", True)
- 
- 
- 
-###############################################################
- 
- 
-def main():
-    try:
-       BuildBank()
-    except:
-        log("some except error,check your config.ini and your input,please press any key to exit", true)
-      pass
- 
-if __name__ == '__main__':
-    main()
-
-</code></pre>
-
-<p>后续加上PIL动态合成支持。</p>
-
-<p>附上exe版：</p>
-
-<p>http://vdisk.weibo.com/s/dGotZ8td0hi7</p>
-
-<p>该版本耦合了“银行”,后续版本支持 “重复列表类型数据”（通用）。</p>
-
-<p>相关参考：</p>
-
-<p><a href="https://gist.github.com/gourneau/939252">https://gist.github.com/gourneau/939252</a></p>
-
-<p><a href="https://github.com/jorgebastida/glue">https://github.com/jorgebastida/glue</a></p>
-
-<p><a href="http://yostudios.github.io/Spritemapper/">http://yostudios.github.io/Spritemapper/</a></p>
 ]]></content>
   </entry>
   
