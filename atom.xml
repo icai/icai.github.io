@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-03-24T15:41:19+00:00</updated>
+  <updated>2020-03-24T15:47:28+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -20,7 +20,7 @@
     <id>http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number</id>
     <content type="html"><![CDATA[<p>Today, we show some useful mysql code about procedure, function and trigger.</p>
 
-<p>## 1. generate serial number by table name use <code>function</code></p>
+<h2 id="1-generate-serial-number-by-table-name-use-function">1. generate serial number by table name use <code>function</code></h2>
 
 <p>rule: prefix + timestr + sequence number</p>
 
