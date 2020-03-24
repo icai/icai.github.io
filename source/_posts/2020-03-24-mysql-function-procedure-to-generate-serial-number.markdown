@@ -13,7 +13,7 @@ keywords: procedure, mysql, function, trigger
 Today, we show some useful mysql code about procedure, function and trigger.
 
 
- ## 1. generate serial number by table name use `function`
+## 1. generate serial number by table name use `function`
   
 rule: prefix + timestr + sequence number
 
