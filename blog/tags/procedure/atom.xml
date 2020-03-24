@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: procedure | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/procedure/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-03-24T15:47:52+00:00</updated>
+  <updated>2020-03-24T15:48:36+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -20,7 +20,7 @@
     <id>http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number</id>
     <content type="html"><![CDATA[<p>Today, we show some useful mysql code about procedure, function and trigger.</p>
 
-<h2 id="1-generate-serial-number-by-table-name-use-function">1. generate serial number by table name use <code>function</code></h2>
+<h2 id="1-generate-serial-number-by-table-name-using-function">1. generate serial number by table name using <code>function</code></h2>
 
 <p>rule: prefix + timestr + sequence number</p>
 
@@ -64,7 +64,7 @@ select nextNo('role');
 
 </code></pre>
 
-<h2 id="2-generate-sequence-number-use-procedure">2. generate sequence number use <code>procedure</code></h2>
+<h2 id="2-generate-sequence-number-using-procedure">2. generate sequence number using <code>procedure</code></h2>
 
 <p>rule:  timestr + ordersn</p>
 
