@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-03-13T08:50:07+00:00</updated>
+  <updated>2020-03-24T15:41:19+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -12,6 +12,253 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[mysql function procedure trigger to generate serial number]]></title>
+    <link href="http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number/"/>
+    <updated>2020-03-24T14:27:44+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number</id>
+    <content type="html"><![CDATA[<p>Today, we show some useful mysql code about procedure, function and trigger.</p>
+
+<p>## 1. generate serial number by table name use <code>function</code></p>
+
+<p>rule: prefix + timestr + sequence number</p>
+
+<!--more -->
+
+<pre><code class="language-sql">
+DROP function IF EXISTS nextNo;
+
+delimiter ;; 
+
+CREATE function nextNo(tableType char(20)) returns char(20) 
+reads sql data
+commit '表单号'
+begin 
+    declare prefix char(2);
+    -- declare table_prefix char(3);
+    -- set table_prefix = 'bs_';
+    select prefix=
+        case tableType
+            when 'role' then 'ro'
+        end
+
+    declare timestr INT;
+
+    SET timestr = round(date_format(now(),'%Y%m%d%H%m%s') * 1.72); 
+    -- len 14
+
+	declare lastval int; 
+	select lastval = 
+        case  tableType
+            when 'role' then (select right(max(role_no), 4) from `bs_role`)
+        end
+	if lastval is null set lastval = prefix + '0001';
+	return prefix + timestr + right('000' + convert(varchar(10),lastval + 1),4)
+end
+;;
+delimiter ;
+
+
+select nextNo('role');
+
+</code></pre>
+
+<h2 id="2-generate-sequence-number-use-procedure">2. generate sequence number use <code>procedure</code></h2>
+
+<p>rule:  timestr + ordersn</p>
+
+<pre><code class="language-sql">
+DROP PROCEDURE IF EXISTS usp_seqnum;
+delimiter ;; 
+CREATE PROCEDURE usp_seqnum()
+    reads sql data
+    comment '序列号'
+BEGIN
+    -- 定义变量并获取相关值
+    DECLARE v_cnt INT;
+    DECLARE v_timestr INT;
+    SET v_timestr = DATE_FORMAT(NOW(),'%Y%m%d');
+    SELECT ROUND(RAND()*100,0)+1 INTO v_cnt;
+    -- 新建表
+    DROP TABLE IF EXISTS im_orderseq;
+    CREATE TABLE  im_orderseq(
+        timestr NVARCHAR(8) NOT NULL ,
+        ordersn INT(3)
+    );
+    START TRANSACTION;
+		-- 更新表的最值
+		UPDATE im_orderseq SET ordersn = ordersn + v_cnt WHERE timestr = v_timestr;
+		IF ROW_COUNT() = 0 THEN
+			-- 插入数据
+			INSERT INTO im_orderseq(timestr,ordersn) VALUES(v_timestr,v_cnt);
+		END IF;
+		SELECT CONCAT(v_timestr,LPAD(ordersn,7,0))AS ordersn
+		FROM im_orderseq WHERE timestr = v_timestr;
+    COMMIT;
+END;
+;; 
+delimiter ;
+
+
+CALL usp_seqnum();
+SELECT * FROM im_orderseq;
+
+</code></pre>
+
+<h2 id="3-tree-data-using-function-or-procedure">3. tree data using <code>function</code> or <code>PROCEDURE</code></h2>
+
+<p>first, initialize table structure and insert demo data.</p>
+
+<pre><code class="language-sql">DROP TABLE IF EXISTS `tree_node`;
+CREATE TABLE `tree_node`(
+	`id` INT   COMMENT "登录日志ID"  ,
+    `pid` INT NULL,
+    `name` VARCHAR(5),
+    `sort` INT NULL,
+	PRIMARY KEY (`id`)
+	
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='树形结构表';
+
+insert into tree_node values(1,0,"A",0);
+insert into tree_node values(7,0,"G",2);
+insert into tree_node values(2,1,"B",3);
+insert into tree_node values(3,1,"C",4);
+insert into tree_node values(4,1,"D",5);
+insert into tree_node values(5,4,"E",6);
+insert into tree_node values(6,4,"F",7);
+
+insert into tree_node values(8,7,"H",8);
+insert into tree_node values(9,7,"I",9);
+insert into tree_node values(10,7,"J",10);
+insert into tree_node values(11,10,"K",11);
+insert into tree_node values(12,10,"L",12);
+insert into tree_node values(13,11,"M",13);
+insert into tree_node values(14,11,"N",14);
+
+
+</code></pre>
+
+<p>get all the children ids by parent id</p>
+
+<pre><code class="language-sql">DROP function IF EXISTS getTreeChild;
+delimiter ;; 
+CREATE function getTreeChild( rootid int) RETURNS VARCHAR(5000)
+COMMENT '树形节点ID'  
+reads sql data
+BEGIN
+	DECLARE sTemp VARCHAR(200);  
+	DECLARE sTempChd VARCHAR(200);  
+	SET sTemp = '$';
+	SET sTempChd = cast(rootid as char);  
+	WHILE sTempChd is not NULL DO  
+		SET sTemp = concat(sTemp,',',sTempChd);  
+		SELECT group_concat(id) INTO sTempChd FROM tree_node where find_in_set(pid,sTempChd)&gt;0;  
+	END WHILE;  
+	return sTemp;  
+END
+;;
+
+delimiter ;  
+
+-- -----------------------------------------
+
+select getTreeChild(0)
+
+</code></pre>
+
+<p>get tree order data</p>
+
+<pre><code class="language-sql">  
+DROP PROCEDURE IF EXISTS `createChildLst`;  
+delimiter ;;  
+CREATE PROCEDURE `createChildLst`(IN pidin INT,IN nDepth INT)  
+COMMENT '入口过程'  
+BEGIN  
+    DECLARE done INT DEFAULT 0;  
+    DECLARE b INT;  
+    DECLARE cur1 CURSOR FOR SELECT id FROM tree_node where pid=pidin order by sort;  
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1; 
+      
+    OPEN cur1;  
+  
+    FETCH cur1 INTO b;  
+    INSERT INTO tmpLst VALUES (NULL,pidin,nDepth,done);  
+      
+    WHILE done=0 DO  
+         CALL createChildLst(b,nDepth+1);  
+         
+         FETCH cur1 INTO b;  
+           
+    END WHILE;  
+  
+    CLOSE cur1;  
+ END  
+ ;;  
+delimiter ;  
+  
+-- ----------------------------  
+--  Procedure structure for `showChildLst`  
+-- ----------------------------  
+DROP PROCEDURE IF EXISTS `showChildLst`;  
+delimiter ;;  
+CREATE PROCEDURE `showChildLst`(IN pid INT)  
+    COMMENT '递归过程'  
+BEGIN  
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmpLst(sno int primary key auto_increment,id int,depth int,isLeaf int);  
+    DELETE FROM tmpLst;  
+  
+    CALL createChildLst(pid,0);  
+    select tmpLst.*,tree_node.* from tmpLst,tree_node where tmpLst.id=tree_node.id order by tmpLst.sno;  
+END  
+ ;;  
+delimiter ;  
+
+-- ----------------------------------------
+
+set max_sp_recursion_depth=255;  
+call showChildLst(1);  
+
+
+</code></pre>
+
+<h2 id="4-can-i-use-a-function-for-a-default-value-in-mysql">4. Can I use a function for a default value in MySql?</h2>
+
+<p><a href="https://stackoverflow.com/questions/270309/can-i-use-a-function-for-a-default-value-in-mysql">question link</a></p>
+
+<pre><code class="language-sql">create table app_users
+(
+    app_user_id smallint(6) not null auto_increment primary key,
+    api_key     char(36) not null default uuid()
+);
+
+</code></pre>
+
+<p>use <code>Trigger</code></p>
+
+<pre><code class="language-sql">CREATE TRIGGER before_insert_app_users
+BEFORE INSERT ON app_users
+FOR EACH ROW
+  IF new.api_key IS NULL
+  THEN
+    SET new.api_key = uuid();
+  END IF;
+</code></pre>
+<p>You still have to update previously existing rows, like this:</p>
+
+<pre><code class="language-sql">
+UPDATE app_users SET api_key = (SELECT uuid());
+</code></pre>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://stackoverflow.com/questions/270309/can-i-use-a-function-for-a-default-value-in-mysql">Can I use a function for a default value in MySql?</a></li>
+  <li><a href="https://www.tutorialspoint.com/What-are-the-advantages-and-disadvantages-of-using-MySQL-stored-procedures">What are the advantages and disadvantages of using MySQL stored procedures?</a></li>
+  <li><a href="https://dzone.com/articles/why-mysql-stored-procedures-functions-and-triggers">Why MySQL Stored Procedures, Functions, and Triggers Are Bad for Performance</a></li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[group_concat scences to be used]]></title>
@@ -3503,295 +3750,6 @@ function getPointAt(p0, radius, angle) {
 
 <p><a href="https://www.thecn.com/tc129">https://www.thecn.com/tc129</a> 社交关系图</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[javascript 对象中的复制，继承，引用，浅拷贝，深拷贝，多态，静态方法]]></title>
-    <link href="http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class/"/>
-    <updated>2013-10-19T07:10:43+00:00</updated>
-    <id>http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class</id>
-    <content type="html"><![CDATA[<h2 id="导言">导言</h2>
-
-<p>javascript与C,C++,Java等语言，他们之间总让人感觉存在一层纱，javascript易入门，难深入，而其他则相反（个人观点）。</p>
-
-<p>其实不论什么语言，难与易的突破口都在语法基础上，当你越学得深入，你会发现语言之间的相同是如此的美妙。其实个人感觉javascript是相对其他语言是最容易学的一种语言。但部分人确认为，javascript十分难学，什么兼容性都把你搞死了。个人认为应该把javascript的难与易一分为二。javascript的语言是相对其他语言简单的，而且没有过多的语法概念（泛型，多态，模板），让编程者留下很多可以思考和想象的空间。或许多人喜欢javascript就是因为它的灵活性。</p>
-
-<!-- more -->
-
-<h2 id="前言">前言</h2>
-
-<p>javascript是一门松散的面向对象脚本语言</p>
-
-<p>为什么说是松散的呢？javascript一切皆对象（var），就是说不论数组，函数……都是继承自对象。</p>
-
-<p>javascript给我们所展现对象继承存储其实就像treegrid数据类似，但是正好相反。</p>
-
-<p>就是说javascript对象继承存储和javascript静态方法存储是相反的。</p>
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942632-1b314880-ade9-11e8-9309-3b1fab06e63e.jpg" alt="1" /></p>
-
-<p>图：treegrid数据</p>
-
-<hr />
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942633-1bc9df00-ade9-11e8-9649-1bf153d2abfa.png" alt="2" /></p>
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942634-1c627580-ade9-11e8-84cf-3982b8b78b73.png" alt="3" /></p>
-
-<p>图：javascript对象继承</p>
-
-<hr />
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942635-1c627580-ade9-11e8-8a8c-aec513b87629.png" alt="4" /></p>
-
-<p>图：javascript静态方法</p>
-
-<hr />
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942636-1cfb0c00-ade9-11e8-9938-a850e81c4915.jpg" alt="5" /></p>
-
-<p>图：javascript Object layout</p>
-
-<p>上面所说的其实就是javascript对象构成，或许还会困惑，下面将深入分析。</p>
-
-<h2 id="一javascript对象引用">一、javascript对象引用</h2>
-
-<p>什么叫做javascript对象引用？简单地说就是非实体对象赋值，即是非String,Number,Array，Null,Undefined等对象（除Object对象）赋值。</p>
-
-<pre><code>// 引用
-var source  = {
-    warm:function(v){
-        alert(v)
-    }
-};
-var quote = source;
-delete source.warm;
-quote.warm('b');
-</code></pre>
-
-<p>上面代码会报错，因为source是非实体对象，quote内存地址指向source，当删除source.warm的时候，quote下的warm随之消失。</p>
-
-<h2 id="二javascript对象复制浅拷贝深拷贝">二、javascript对象复制，浅拷贝，深拷贝</h2>
-
-<p>对于上述的代码要想不报错的话，就必须对source.warm也赋值给quote.warm，因为source.warm是实体对象（Function）。</p>
-
-<p>对对象进行遍历，子对象一对一赋值就叫做javascript对象复制。既然是遍历，自然有深浅度。所以我们对彻底遍历叫做深拷贝，只遍历子对象第一层叫做浅拷贝。</p>
-
-<p>(1)</p>
-
-<pre><code class="language-js">    var source  = {
-        warm:function(v){
-            alert(v)
-        }
-    };
-    function extend(target, source) {
-        for (var n in source) {
-            if(source.hasOwnProperty(n)){
-                target[n] = source[n]
-            }
-        }
-        return target
-    }
-    var exObj = extend({},source);
-    delete source.warm;
-    exObj.warm('b');
-</code></pre>
-
-<p>(2)上述代码不会报错，因为source通过遍历已经把其子对象复制到exObj下了。</p>
-
-<pre><code class="language-js">var source  = {
-    warm:function(v){
-        alert(v)
-    },
-    childs:{
-        log:function(v){
-            alert('log'+v);
-        },
-        info:function(v){
-            alert('info'+v);
-        }
-    },
-    _private:{
-        _name:'source',
-        _age:12
-    }
-};
-function extend(target, source) {
-    for (var n in source) {
-        if(source.hasOwnProperty(n)){
-            target[n] = source[n]
-        }
-    }
-    return target
-}
-var exObj = extend({},source);
-</code></pre>
-
-<p>会发生错误，为什么呢？上面同样是复制，当我们执行如下代码：</p>
-
-<pre><code class="language-js">delete source.childs.log;
-delete source.childs;
-exObj.childs.log('b');
-</code></pre>
-
-<p>同理，我们执行如下：就是我们一开始所说遍历的深度不彻底，我们通过上述extend方法只遍历了source.childs,而source.childs是非实体对象，所以只是充当exObj.childs对象的引用。</p>
-
-<pre><code class="language-js">exOBj._private._age++;
-source._private._age; // 13
-
-</code></pre>
-
-<p>我们要实现深拷贝的话，就必须 判断其子对象是否是非实体对象，假如是非实体对象的话，就进行递归遍历操作。我们改变exOBj._private._age的时候，source._private.age也发生改变，道理和上面的一样。</p>
-
-<p>还记得jquery.extend api吗</p>
-
-<pre><code class="language-js">jQuery.extend( [deep ], target, object1 [, objectN ] )
-</code></pre>
-
-<p>当我们第一个参数传入true的时候，就帮我我们实施深拷贝操作。</p>
-
-<h2 id="三javascript对象继承">三、javascript对象继承</h2>
-
-<p>学过java或者c++，php等语言的读者就好理解了，刚开始前言的</p>
-
-<p>图：javascript对象继承 和 图：javascript Object layout就说的很详细了。那么他们是怎么实现的呢？</p>
-
-<p>其实javascript中还有一个很重要的概念就是作用域。</p>
-
-<p>编程语言中的继承就是子类继承父类已有的方法，属性，并做相应的拓展，进而形成自己的具有特定属性和方法的类。</p>
-
-<p>开始学面向对象语言的时候，通常都会举一个经典例子，就是动物父类，派生鸟类，鱼类……，而鸟类接着派生出鹰，麻雀……。</p>
-
-<p>而javascript（ecma5）还没有给出官方的方法进行上述操作而已。但是后续（ecma 6）将会支持。正如，一开始说所，javascript是一门松散的面向对象语言，留给变成者很多思考的空间。</p>
-
-<p>javascript中有两个很重要的方法就是call，apply。人们常谈的javascript设计模式常常都离不开call,apply,回调函数等等。</p>
-
-<p>那么如何才能实现（图：javascript对象继承）中类似的对象继承？</p>
-
-<p>接着动物的例子：</p>
-
-<p>what is animal? 它们能够对环境作出反应并移动，捕食其他生物。</p>
-
-<pre><code class="language-js">function animal(){
-    
-}
-animal.prototype = {
-    catchOther:function(){
-    
-    },
-    protectSelf:function(){
-    
-    }
-}
-</code></pre>
-
-<p>鸟类：</p>
-
-<pre><code class="language-js">function bird(){
-    
-}
-bird = wrapper(bird,animal);
-bird.prototype.fly = function(){
-    console.log('flying');
-}
-</code></pre>
-
-<p>wrapper？？用来继承，如何写才能实现如下呢？</p>
-
-<p><img src="https://user-images.githubusercontent.com/1061012/44942637-1cfb0c00-ade9-11e8-8f70-8375bdbe35cb.png" alt="6" /></p>
-
-<p>new 一个 animal ？？并指向bird.prototype ?</p>
-
-<p>好像可以实现,但是当我们打入</p>
-
-<p>bird.prototype.<strong>proto</strong>.constructor的时候是什么呢？？构造函数是否符合对象的构造函数的定义呢？</p>
-
-<p>我们给出一个简单的方案，至于构造函数应该执行谁的问题留作思考，网上也很多关于这方面的讨论？自己可以搜一下</p>
-
-<pre><code class="language-js">function wrapper(child, parent) {
-    var ins = function() {
-        child.apply(this, arguments);
-    };
-    var subclass = function() {};
-    subclass.prototype = parent.prototype;
-    ins.prototype = new subclass;
-    return ins;
-};
-</code></pre>
-
-<p>所谓的静态方法就是不涉及抽象对象函数实现的方法，举个很简单的例子，如jquery中的$.isFunction,$.isArray等等就属于静态方法。同样是上面的例子</p>
-
-<p>四、javascript对象静态方法</p>
-
-<pre><code class="language-js">var source  = {
-    warm:function(v){
-        alert(v)
-    },
-    childs:{
-        log:function(v){
-            alert('log'+v);
-        },
-        info:function(v){
-            alert('info'+v);
-        }
-    },
-    _private:{
-        _name:'source',
-        _age:12
-    }
-};
-function extend(target, source) {
-    for (var n in source) {
-        if(source.hasOwnProperty(n)){
-            target[n] = source[n]
-        }
-    }
-    return target
-}
-var exObj = extend({},source);
-</code></pre>
-
-<p>这里不合理的地方在于当我们对其成员可操作，假如上述是公共方法，团队每个人都可以对其调用，并假如warm方法会对其兄弟属性_private产生改变。如何_private下的是标识变量（flog ~），那么这个标识变量就违反了可操作的唯一性。</p>
-
-<h2 id="五javascript对象多态">五、javascript对象多态</h2>
-
-<p>所谓的对象多态就是和构造函数或者方法参数传递进行动态识别处理。</p>
-
-<p>依然是$.extend,还记得api有多少调用吗？</p>
-
-<p>java中的多态是不同参数类型都重新定义一遍，好像十分费劲？javascript留给编程者的思考空间就是给你一个arguments，调用当前方法的参数集合，是一个类数组。</p>
-
-<p>一般地：</p>
-
-<pre><code class="language-js">function(a){
-  var args = [].slice(arguments,0);
-  if(args[0] == 'xx')doxxx;
-  if(typeof args[0] == 'function') doxxx;
-}
-</code></pre>
-
-<p>相关阅读：是不是很有意思呢。</p>
-
-<p>1、<a href="http://hi.baidu.com/tp100/item/a18184ee589145d5eb34c941" title="javascript权威指南 源代码分析（一）Objects">javascript权威指南 源代码分析（一）Objects</a></p>
-
-<p>2、<a href="http://hi.baidu.com/tp100/item/4fbb55d18f6741352a35c741" title="javascript权威指南 源代码分析（二）Functions">javascript权威指南 源代码分析（二）Functions</a></p>
-
-<p>3、（<a href="http://www.cnblogs.com/snandy/archive/2012/09/01/2664134.html">JavaScript中<strong>proto</strong>与prototype的关系</a>）</p>
-
-<p>后记：</p>
-
-<p>码字真累，百度空间蛋疼啊，写到一半按了不知道什么键，没有了一大截……</p>
-
-<p>有高亮代码时，不要按ctrl+Z，不然你的人生十分钟会浪费掉的。</p>
-
-<p>2013/10/19</p>
-
-<p>本文来源</p>
-
-<p>菜籽油: <a href="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e" title="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e">http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e</a></p>
-
-<p>-EOF-</p>
 ]]></content>
   </entry>
   
