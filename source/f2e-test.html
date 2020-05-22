@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MAKA FE TEST</title>
+  <style>
+    body {
+      background: #eee url(https://img1.maka.im/user/8031039/poster/T_87J0MHW1/T_87J0MHW1_v2.jpg?x-oss-process=image/resize,w_740/quality,Q_80/format,webp) center repeat-y;
+    }
+
+    #exam {
+      justify-content: center;
+      background: #fff;
+      position: fixed;
+      width: 50vw;
+      top: 1vh;
+      padding: 0 1vh 0;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 1);
+      opacity: 0.9
+    }
+
+    .screen {
+      position: fixed;
+      bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+
+    #box {
+      /* position: absolute; */
+      box-sizing: border-box;
+      width: 80vw;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 1);
+      display: -webkit-flex;
+      /* Safari */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .rect {
+      height: 2vh;
+      margin: 0 0 0 0;
+    }
+  </style>
+</head>
+
+<body style="height:100000em;">
+  <div class="screen">
+    <div id="box"></div>
+  </div>
+  <div id="exam">
+    <h1>题目</h1>
+    <p>1、使box区域相对于整个页面（水平+垂直）居中，让每个rect颜色块实现按宽度从大到小进行排序且每行两端对齐</p>
+    <p>2、每个rect块上显示按宽度排序的序号，随着页面滚动实时更新</p>
+    <p>3、优化update函数，不改变dom结构的情况下实现同样的滚动刷新效果，解决卡顿问题（time cost小于50ms）,并说明卡顿的原因</p>
+    <p><font color="red">卡顿的原因</font>: 频繁操作Dom，触发页面多次的重排或重绘</p>
+  </div>
+  <script>
+    const _ = {};
+    _.now = Date.now || function () {
+      return new Date().getTime();
+    };
+
+    _.throttle = function (func, wait, options) {
+      var timeout, context, args, result;
+      var previous = 0;
+      if (!options) options = {};
+
+      var later = function () {
+        previous = options.leading === false ? 0 : _.now();
+        timeout = null;
+        result = func.apply(context, args);
+        if (!timeout) context = args = null;
+      };
+
+      var throttled = function () {
+        var now = _.now();
+        if (!previous && options.leading === false) previous = now;
+        var remaining = wait - (now - previous);
+        context = this;
+        args = arguments;
+        if (remaining <= 0 || remaining > wait) {
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+          }
+          previous = now;
+          result = func.apply(context, args);
+          if (!timeout) context = args = null;
+        } else if (!timeout && options.trailing !== false) {
+          timeout = setTimeout(later, remaining);
+        }
+        return result;
+      };
+
+      throttled.cancel = function () {
+        clearTimeout(timeout);
+        previous = 0;
+        timeout = context = args = null;
+      };
+
+      return throttled;
+    };
+
+    const box = document.querySelector('#box');
+    const minWidth = 8
+    const maxWidth = 32
+
+    let racts = Array(1000).fill(0).map((item, index) => {
+      let ract = {
+        index: index,
+        r: Math.random() * 100 + 100 | 0,
+        g: Math.random() * 100 + 100 | 0,
+        b: Math.random() * 100 + 50 | 0,
+        w: Math.random() * maxWidth
+      }
+      return ract;
+    });
+
+    const generateRatcs = (arr) => {
+      return arr.map((item) => {
+        const {
+          index,
+          r,
+          g,
+          b,
+          w
+        } = item;
+        return `
+        <div class="rect" rect-id="${index}" style="background:rgb(${r}, ${g}, ${b});width:${w}px;" >
+        </div>
+       `
+      }).join('')
+    }
+
+    const sortBy = (arr, itemName, order) => {
+      return arr.sort(function (left, right) {
+        var a = left[itemName];
+        var b = right[itemName];
+        if (order == 'asc') {
+          if (a !== b) {
+            if (a > b || a === void 0) return 1;
+            if (a < b || b === void 0) return -1;
+          }
+          return left.index - right.index;
+        } else {
+          if (a !== b) {
+            if (a > b || a === void 0) return -1;
+            if (a < b || b === void 0) return 1;
+          }
+          return right.index - right.index;
+        }
+
+      })
+    }
+
+    box.innerHTML = generateRatcs(sortBy(racts, 'w'));
+
+    function update(t) {
+      console.time('time cost');
+      racts = racts.map((n) => {
+        let width = n.w * Math.random() * 2
+        width = width > maxWidth ? maxWidth : width
+        width = width < minWidth ? minWidth : width
+        n.w = width
+        return n
+      })
+      box.innerHTML = generateRatcs(sortBy(racts, 'w')); // generateRatcs(racts);
+      console.timeEnd('time cost');
+    }
+
+
+    function onScroll(e) {
+      const t = window.scrollY;
+      update(t);
+    }
+    var throttled = _.throttle(onScroll, 100);
+    window.addEventListener('scroll', throttled);
+  </script>
+</body>
+
+</html>
