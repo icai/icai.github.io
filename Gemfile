@@ -6,6 +6,7 @@ source "https://rubygems.org"
 
 group :development do
   gem 'rake', '~> 12.0'
+  
   gem 'jekyll', '~> 3.8', '>= 3.8.5'
   gem 'rdiscount', '~> 2.0'
   gem 'RedCloth', '~> 4.3', '>= 4.3.2'
@@ -16,7 +17,8 @@ group :development do
   gem 'stringex', '~> 1.4.0'
 
   gem 'nokogiri', '~> 1.8', '>= 1.8.4'
-
+  
+  gem 'kramdown-parser-gfm'
   gem 'mini_magick'
   gem 'autoprefixer-rails'
   gem 'uglifier'
