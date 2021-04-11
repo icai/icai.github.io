@@ -1,209 +1,123 @@
-.highlight table td { padding: 5px; }
-.highlight table pre { margin: 0; }
-.highlight .cm {
-  color: #999988;
+.highlight .c /* comment, punctuation.definition.comment, string.comment */ {
+  color: #6a737d;
+}
+
+.highlight .c1 /* constant, entity.name.constant, variable.other.constant, variable.language, support, meta.property-name, support.constant, support.variable, meta.module-reference, markup.raw, meta.diff.header, meta.output */,
+.highlight .s .highlight .v /* string variable */ {
+  color: #005cc5;
+}
+
+.highlight .e /* entity */,
+.highlight .en /* entity.name */ {
+  color: #6f42c1;
+}
+
+.highlight .smi /* variable.parameter.function, storage.modifier.package, storage.modifier.import, storage.type.java, variable.other */,
+.highlight .s .highlight .s1 /* string source */ {
+  color: #24292e;
+}
+
+.highlight .ent /* entity.name.tag, markup.quote */ {
+  color: #22863a;
+}
+
+.highlight .k /* keyword, storage, storage.type */ {
+  color: #d73a49;
+}
+
+.highlight .s /* string */,
+.highlight .pds /* punctuation.definition.string, source.regexp, string.regexp.character-class */,
+.highlight .s .highlight .pse .highlight .s1 /* string punctuation.section.embedded source */,
+.highlight .sr /* string.regexp */,
+.highlight .sr .highlight .cce /* string.regexp constant.character.escape */,
+.highlight .sr .highlight .sre /* string.regexp source.ruby.embedded */,
+.highlight .sr .highlight .sra /* string.regexp string.regexp.arbitrary-repitition */ {
+  color: #032f62;
+}
+
+.highlight .v /* variable */,
+.highlight .smw /* sublimelinter.mark.warning */ {
+  color: #e36209;
+}
+
+.highlight .bu /* invalid.broken, invalid.deprecated, invalid.unimplemented, message.error, brackethighlighter.unmatched, sublimelinter.mark.error */ {
+  color: #b31d28;
+}
+
+.highlight .ii /* invalid.illegal */ {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.highlight .c2 /* carriage-return */ {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.highlight .c2::before /* carriage-return */ {
+  content: "^M";
+}
+
+.highlight .sr .highlight .cce /* string.regexp constant.character.escape */ {
+  font-weight: bold;
+  color: #22863a;
+}
+
+.highlight .ml /* markup.list */ {
+  color: #735c0f;
+}
+
+.highlight .mh /* markup.heading */,
+.highlight .mh .highlight .en /* markup.heading entity.name */,
+.highlight .ms /* meta.separator */ {
+  font-weight: bold;
+  color: #005cc5;
+}
+
+.highlight .mi /* markup.italic */ {
   font-style: italic;
+  color: #24292e;
 }
-.highlight .cp {
-  color: #999999;
+
+.highlight .mb /* markup.bold */ {
   font-weight: bold;
+  color: #24292e;
 }
-.highlight .c1 {
-  color: #999988;
-  font-style: italic;
+
+.highlight .md /* markup.deleted, meta.diff.header.from-file, punctuation.definition.deleted */ {
+  color: #b31d28;
+  background-color: #ffeef0;
 }
-.highlight .cs {
-  color: #999999;
+
+.highlight .mi1 /* markup.inserted, meta.diff.header.to-file, punctuation.definition.inserted */ {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.highlight .mc /* markup.changed, punctuation.definition.changed */ {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.highlight .mi2 /* markup.ignored, markup.untracked */ {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.highlight .mdr /* meta.diff.range */ {
   font-weight: bold;
-  font-style: italic;
+  color: #6f42c1;
 }
-.highlight .c, .highlight .cd {
-  color: #999988;
-  font-style: italic;
+
+.highlight .ba /* brackethighlighter.tag, brackethighlighter.curly, brackethighlighter.round, brackethighlighter.square, brackethighlighter.angle, brackethighlighter.quote */ {
+  color: #586069;
 }
-.highlight .err {
-  color: #a61717;
-  background-color: #e3d2d2;
+
+.highlight .sg /* sublimelinter.gutter-mark */ {
+  color: #959da5;
 }
-.highlight .gd {
-  color: #000000;
-  background-color: #ffdddd;
-}
-.highlight .ge {
-  color: #000000;
-  font-style: italic;
-}
-.highlight .gr {
-  color: #aa0000;
-}
-.highlight .gh {
-  color: #999999;
-}
-.highlight .gi {
-  color: #000000;
-  background-color: #ddffdd;
-}
-.highlight .go {
-  color: #888888;
-}
-.highlight .gp {
-  color: #555555;
-}
-.highlight .gs {
-  font-weight: bold;
-}
-.highlight .gu {
-  color: #aaaaaa;
-}
-.highlight .gt {
-  color: #aa0000;
-}
-.highlight .kc {
-  color: #000000;
-  font-weight: bold;
-}
-.highlight .kd {
-  color: #000000;
-  font-weight: bold;
-}
-.highlight .kn {
-  color: #000000;
-  font-weight: bold;
-}
-.highlight .kp {
-  color: #000000;
-  font-weight: bold;
-}
-.highlight .kr {
-  color: #000000;
-  font-weight: bold;
-}
-.highlight .kt {
-  color: #445588;
-  font-weight: bold;
-}
-.highlight .k, .highlight .kv {
-  color: #000000;
-  font-weight: bold;
-}
-.highlight .mf {
-  color: #009999;
-}
-.highlight .mh {
-  color: #009999;
-}
-.highlight .il {
-  color: #009999;
-}
-.highlight .mi {
-  color: #009999;
-}
-.highlight .mo {
-  color: #009999;
-}
-.highlight .m, .highlight .mb, .highlight .mx {
-  color: #009999;
-}
-.highlight .sb {
-  color: #d14;
-}
-.highlight .sc {
-  color: #d14;
-}
-.highlight .sd {
-  color: #d14;
-}
-.highlight .s2 {
-  color: #d14;
-}
-.highlight .se {
-  color: #d14;
-}
-.highlight .sh {
-  color: #d14;
-}
-.highlight .si {
-  color: #d14;
-}
-.highlight .sx {
-  color: #d14;
-}
-.highlight .sr {
-  color: #009926;
-}
-.highlight .s1 {
-  color: #d14;
-}
-.highlight .ss {
-  color: #990073;
-}
-.highlight .s {
-  color: #d14;
-}
-.highlight .na {
-  color: #008080;
-}
-.highlight .bp {
-  color: #999999;
-}
-.highlight .nb {
-  color: #0086B3;
-}
-.highlight .nc {
-  color: #445588;
-  font-weight: bold;
-}
-.highlight .no {
-  color: #008080;
-}
-.highlight .nd {
-  color: #3c5d5d;
-  font-weight: bold;
-}
-.highlight .ni {
-  color: #800080;
-}
-.highlight .ne {
-  color: #990000;
-  font-weight: bold;
-}
-.highlight .nf {
-  color: #990000;
-  font-weight: bold;
-}
-.highlight .nl {
-  color: #990000;
-  font-weight: bold;
-}
-.highlight .nn {
-  color: #555555;
-}
-.highlight .nt {
-  color: #000080;
-}
-.highlight .vc {
-  color: #008080;
-}
-.highlight .vg {
-  color: #008080;
-}
-.highlight .vi {
-  color: #008080;
-}
-.highlight .nv {
-  color: #008080;
-}
-.highlight .ow {
-  color: #000000;
-  font-weight: bold;
-}
-.highlight .o {
-  color: #000000;
-  font-weight: bold;
-}
-.highlight .w {
-  color: #bbbbbb;
-}
-.highlight {
-  background-color: #f8f8f8;
+
+.highlight .corl /* constant.other.reference.link, string.other.link */ {
+  text-decoration: underline;
+  color: #032f62;
 }

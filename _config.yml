@@ -7,12 +7,13 @@
 
 
 url: http://blog.w3cub.com
+lang: en
 title: 泛前端开发
 logo: "&lt;w3cub/&gt;"
-subtitle: I am Terry，习惯阅读无注释代码
+subtitle: I am Terry
 author: Terry Cai
 simple_search: https://www.google.com/search
-description: 泛前端开发是一个专注前端开发但不限于前端的技术分享个人独立博客
+description: 泛前端开发是一个专注前端开发的个人技术分享博客
 keywords: 泛前端开发,前端,全栈,frontend,fullstack,octopress,frontend tools
 
 
@@ -89,7 +90,7 @@ rdiscount:
   extensions: ["autolink", "footnotes", "generate_toc", "smart"]
   toc_token: "[TOC]"
 
-highlighter: coderay
+highlighter: pygments
 # highlighter: pygments # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
@@ -218,19 +219,25 @@ include:
 
 
 assets:
-  defaults:
-    js: { integrity: false } # true on JEKYLL_ENV=production
-    css: { integrity: false } # true on JEKYLL_ENV=production
-    img: { integrity: false } # true on JEKYLL_ENV=production
   # compress:
   #   css: false | true | default - development: false, production: true
   #   js: false | true | default - development: false, production: true
   autowrite: true
+  source_maps: false
+  gzip: false
+  defaults:
+    integrity:
+      css: false
+      js: false
+      img: false
   # cache: false | directory | default: .asset-cache
   # cache_type: memory | filesystem | default: filesystem
   # cdn: https://cdn.example.com
   # skip_baseurl_with_cdn: false
   # skip_prefix_with_cdn: false
+  # js: { integrity: false } # true on JEKYLL_ENV=production
+  # css: { integrity: false } # true on JEKYLL_ENV=production
+  # img: { integrity: false } # true on JEKYLL_ENV=production
   prefix: "/assets"
   digest: true
 
@@ -252,12 +259,11 @@ assets:
     - "*.gif"
     - "*.png" 
     - "application.js" 
-    - "application.css" 
+    - "application.css"
     - "slide.css"
   # compress:
   #   css: sass
   #   js: uglifier
-
   sources:
     - assets/css
     - assets/images

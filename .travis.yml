@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 2.6.0
+  - 2.7.0
 node_js: lts/*
 
 before_install:
@@ -9,7 +9,7 @@ before_install:
   - gem install bundler
 
 before_script:
-  - npm install -g bower
+
 
 script: 
   - bower install

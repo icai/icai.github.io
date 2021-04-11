@@ -15,11 +15,9 @@ permalink: /about/
 
 
 
-Frond End Developer，[Terry](https://github.com/icai). 
+I am Frond End Developer, Open Source Contributor, W3cubDocs Creator. 
 
-Location at，<i class="fa fa-map-marker fa-lg"></i><span class="sr-only"></span> China, Guangzhou.
-
-
+Location at Guangzhou, China.
 
 
 
@@ -27,12 +25,11 @@ Location at，<i class="fa fa-map-marker fa-lg"></i><span class="sr-only"></span
 ## Open Source
 
 
-NPM package:  https://www.npmjs.com/~icai
+NPM package:  [https://www.npmjs.com/~icai](https://www.npmjs.com/~icai)
 
 <br>
 
 Github:  [https://github.com/icai](https://github.com/icai)
-
 
 
 <br>
@@ -47,10 +44,9 @@ Github:  [https://github.com/icai](https://github.com/icai)
 
 ## Connect
 
-gmail me, gidcai at gmail dot com
+gmail: gidcai at gmail dot com
 
  
-
 <div>
 Follow me: <iframe src="https://ghbtns.com/github-btn.html?user=icai&type=follow&count=true" frameborder="0" scrolling="0" width="170px" height="20px" class="ghbtn"></iframe>
 </div>
@@ -62,7 +58,7 @@ This blog is using Github Pages to build, staticify hosted on Github Pages, code
 
 <br>
 
-## About w3cub Domain
+## About w3cub
 
 
 -W3cubDocs
@@ -71,7 +67,7 @@ This blog is using Github Pages to build, staticify hosted on Github Pages, code
 -W3cubtools
 <a href="https://tools.w3cub.com/" target="_blank">tools.w3cub.com</a>, Developer Tools
 
-- Personal Blog
+-Personal Blog
 <a href="https://blog.w3cub.com/" target="_blank">blog.w3cub.com</a>, Personal blog and news etc. 
 
 -jQuery Plugin
@@ -81,7 +77,7 @@ This blog is using Github Pages to build, staticify hosted on Github Pages, code
 <a href="http://markdown.w3cub.com/" target="_blank">markdown.w3cub.com</a>, markdown double ways Editor   
 
 
-- Cozhihu
+-Cozhihu
 <a href="http://cozhihu.w3cub.com/" target="_blank">cozhihu.w3cub.com</a> a Chrome Extension Offical website
 
 -Elvant UI

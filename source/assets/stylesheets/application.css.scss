@@ -1,13 +1,56 @@
-@import "../bower/compass-mixins/lib/compass";
-
 // $icon-font-path: "/assets/fonts/bootstrap/";
 // $twbs-font-path: "/assets/fonts/bootstrap/";
 // @import "bootstrap-sprockets";
 // @import "bootstrap-variables";
+
+@mixin pie-clearfix {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+}
+
+$inline-block-alignment: middle !default;
+
+// Provides a cross-browser method to implement `display: inline-block;`
+@mixin inline-block($alignment: $inline-block-alignment) {
+
+  display: inline-block;
+  @if $alignment and $alignment != none {
+    vertical-align: $alignment;
+  }
+}
+
+@mixin border-radius($radius: $default-border-radius, $vertical-radius: false) {
+    border-radius: $radius
+}
+@mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
+    color: $normal;
+    @if $visited {
+      &:visited {
+        color: $visited; } }
+    @if $focus {
+      &:focus {
+        color: $focus; } }
+    @if $hover {
+      &:hover {
+        color: $hover; } }
+    @if $active {
+      &:active {
+        color: $active; } } 
+}
+@mixin background(
+  $background-1
+) {
+  $backgrounds: compact($background-1);
+    background: $backgrounds;
+}
+
 @import "bootstrap";
 
 
-// $fa-font-path: "/assets/fonts/font-awesome/";
+
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
