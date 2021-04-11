@@ -5,6 +5,7 @@ node_js:
   - 12
 
 before_install:
+  - nvm use
   - gem update --system
   - gem --version
   - gem install bundler
