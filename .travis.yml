@@ -15,7 +15,6 @@ before_script:
 
 
 script: 
-  - bower install
   - bundle install
   - bundle exec rake generate
 

@@ -26,11 +26,6 @@ sudo apt install python3 python-minimal
 ## for Chinese
 sudo npm install -g cnpm --registry=https://registry.npm.taobao.org
 
-## install bower
-[c]npm install -g bower
-
-## install bower dependencies
-bower install
 
 
 ## install rvm
