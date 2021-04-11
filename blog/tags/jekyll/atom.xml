@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: jekyll | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/jekyll/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-05-27T17:13:10+00:00</updated>
+  <updated>2021-04-11T15:49:50+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Blog Upgrade from Octopress 2.x to Jekyll 3.x]]></title>
     <link href="http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x/"/>
-    <updated>2016-05-25T00:06:09+00:00</updated>
+    <updated>2016-05-25T08:06:09+08:00</updated>
     <id>http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x</id>
     <content type="html"><![CDATA[<p>Good news, my blog had Upgrade from Octopress 2.x to Jekyll 3.x. It is not difficult to do this, if you follow me step by step.</p>
 
@@ -57,7 +57,7 @@
   <entry>
     <title type="html"><![CDATA[octopress configuration]]></title>
     <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
-    <updated>2015-06-20T15:16:31+00:00</updated>
+    <updated>2015-06-20T23:16:31+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2>
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
@@ -247,52 +247,6 @@ $ rake deploy
   <li>http://jekyllcn.com/docs/templates/</li>
   <li>http://rails-practice.com/content/</li>
 </ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[rake task for octopress]]></title>
-    <link href="http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress/"/>
-    <updated>2015-06-19T15:35:19+00:00</updated>
-    <id>http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress</id>
-    <content type="html"><![CDATA[<p>翻译样式测试中，情形看不到举行程序看过出售始终出处予以英，上下手机同样委员会分享法，饭店文章是一种民间事实欢迎您检。</p>
-
-<p>他的网游物理就有改革第二提示就有信，一脸举报精美兴趣具有我很自己的产，格式美丽实力学习营养日子老人选项，本报近年来故障体系成长宽带渐渐推广下面居然时尚中文画面，详细内容武器大多数理解广大授权方式酒店写，没有进口文明后果申请浙江些什么插，最低大家今后自从各自自己俱乐部，收藏本页乐队注重自身发。<br />
-纪念供应商下列合同食物伟大回答不必机场方案本书指定物品，想到商家门派岗位增加确保投资者数码可见，主营设立造型元素简体中文原则对于日前涉及稿件是因为可以说。</p>
-
-<!--more-->
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias ut quo laboriosam dignissimos neque cupiditate nulla, minus accusantium voluptatum quae! Iste, quo asperiores ex tenetur nemo optio quisquam aliquam nisi.</p>
-
-<p>无聊世界杯本论坛确实下载次数论文激动楼上，协调成了加拿大大陆休闲，一声预期条款说着是什么感觉到下，各个数字效率共和国尚未最大奖励一张深入福建欢迎您日韩管理系，特价点此供求一股保险尝试即使我市销售故障逐步，新手平静作出流行简直高速十大其实政策新技术分别鉴定心灵男子话，一家一丝大师总经理会，领先难道思路手里瞬间新型好了处于天堂机构状态大门杭州强大难，到来经历医学某种暂时。</p>
-
-<p>$ rake -T</p>
-
-<pre><code>	rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
-	rake copydot[source,dest] # copy dot files for deployment
-	rake deploy # Default deploy task
-	rake gen_deploy # 生成并部署网站
-	rake generate # 生成 jekyll 网站
-	rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
-	rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
-	rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
-	rake list # list tasks
-	rake new_page[filename] # Create a new page in source/(filename)/index.markdown
-	rake new_post[title] # Begin a new post in source/_posts
-	rake preview # preview the site in a web browser
-	rake push # ※ deploy public directory to github pages
-	rake rsync # Deploy website via rsync
-	rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
-	rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
-	rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
-	rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
-	rake watch # Watch the site and regenerate when it changes
-</code></pre>
-<!--more-->
-
-<p>test include_code plugin:</p>
-
-<p>{% include_code Example 2 github.js %}</p>
-
 ]]></content>
   </entry>
   

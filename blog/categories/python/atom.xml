@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-05-27T17:13:10+00:00</updated>
+  <updated>2021-04-11T15:49:50+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[python银行数据渲染css sprite]]></title>
     <link href="http://blog.w3cub.com/blog/2013/08/19/python-generate-banks-data-css-sprite/"/>
-    <updated>2013-08-19T05:44:09+00:00</updated>
+    <updated>2013-08-19T13:44:09+08:00</updated>
     <id>http://blog.w3cub.com/blog/2013/08/19/python-generate-banks-data-css-sprite</id>
     <content type="html"><![CDATA[<p>前端处理重复列表类型数据都是十分繁琐的，让我们一劳永日吧。</p>
 
@@ -230,7 +230,7 @@ if __name__ == '__main__':
   <entry>
     <title type="html"><![CDATA[python shell 重命名银行数据]]></title>
     <link href="http://blog.w3cub.com/blog/2013/08/12/python-shell-rename-bankk-data/"/>
-    <updated>2013-08-12T05:39:59+00:00</updated>
+    <updated>2013-08-12T13:39:59+08:00</updated>
     <id>http://blog.w3cub.com/blog/2013/08/12/python-shell-rename-bankk-data</id>
     <content type="html"><![CDATA[<pre><code class="language-py">import os
  
@@ -273,7 +273,7 @@ for file in os.listdir(path):
   <entry>
     <title type="html"><![CDATA[python概念转换dictionary、tuple、和 list]]></title>
     <link href="http://blog.w3cub.com/blog/2012/06/16/python-starter-for-jser/"/>
-    <updated>2012-06-16T05:29:31+00:00</updated>
+    <updated>2012-06-16T13:29:31+08:00</updated>
     <id>http://blog.w3cub.com/blog/2012/06/16/python-starter-for-jser</id>
     <content type="html"><![CDATA[<p>1.**Dictionar **–&gt;Object json</p>
 

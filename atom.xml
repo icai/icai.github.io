@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-05-27T17:12:46+00:00</updated>
+  <updated>2021-04-11T15:42:57+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[mysql function procedure trigger to generate serial number]]></title>
     <link href="http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number/"/>
-    <updated>2020-03-24T14:27:44+00:00</updated>
+    <updated>2020-03-24T22:27:44+08:00</updated>
     <id>http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number</id>
     <content type="html"><![CDATA[<p>Today, we show some useful mysql code about procedure, function and trigger.</p>
 
@@ -263,7 +263,7 @@ UPDATE app_users SET api_key = (SELECT uuid());
   <entry>
     <title type="html"><![CDATA[group_concat scences to be used]]></title>
     <link href="http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used/"/>
-    <updated>2020-03-13T07:44:47+00:00</updated>
+    <updated>2020-03-13T15:44:47+08:00</updated>
     <id>http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used</id>
     <content type="html"><![CDATA[<p>group_concat 只能与groupby连用，分组查询常用场景</p>
 
@@ -348,7 +348,7 @@ order by created_at desc limit 0, 10;
 
 <p>结果</p>
 
-<p><img src="http://blog.w3cub.com/assets/posts/mysql/group_concat-a2f9d87821e17b3df49f6bb5ccc7f9f17f8d9c46feb92c747456b56754d9f64c.png" alt="Result" /></p>
+<p><img src="http://blog.w3cub.com/assets/posts/mysql/group_concat-395c57b66fbeebb2de7753a1bdc8d1df0bc3ce83031d99a27e71c4d746e16b16018004b6731687437284b037515f668fd417b82e8aa94131529ccedcba7af012.png" alt="Result" /></p>
 
 ]]></content>
   </entry>
@@ -356,7 +356,7 @@ order by created_at desc limit 0, 10;
   <entry>
     <title type="html"><![CDATA[浅谈服务端渲染(SSR)的几种形式]]></title>
     <link href="http://blog.w3cub.com/blog/2019/07/01/ssr-types/"/>
-    <updated>2019-07-01T08:48:43+00:00</updated>
+    <updated>2019-07-01T16:48:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2019/07/01/ssr-types</id>
     <content type="html"><![CDATA[<p>在好久好久之前，前端的概念是模糊的。前端就是页面仔，切图仔。前端的任务就是把html跟js写好，然后丢给后端套数据。基本传统的MVC，smarty View。</p>
 <pre><code>assign-&gt;('data', $data)
@@ -401,7 +401,7 @@ order by created_at desc limit 0, 10;
   <entry>
     <title type="html"><![CDATA[javascript混淆与解混淆的那些事儿]]></title>
     <link href="http://blog.w3cub.com/blog/2019/04/01/js-confusion/"/>
-    <updated>2019-04-01T05:48:43+00:00</updated>
+    <updated>2019-04-01T13:48:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2019/04/01/js-confusion</id>
     <content type="html"><![CDATA[<p>像软件加密与解密一样，javascript的混淆与解混淆同属于同一个范畴。道高一尺，魔高一丈。没有永恒的黑，也没有永恒的白。一切都是资本市场驱动行为，现在都流行你能为人解决什么问题，这个概念。那么市场究竟能容纳多少个能解决这种问题的利益者。JS没有秘密。</p>
 
@@ -682,7 +682,7 @@ https://blog.csdn.net/yannqi/article/details/80847354</p>
   <entry>
     <title type="html"><![CDATA[Docker Compose入门]]></title>
     <link href="http://blog.w3cub.com/blog/2018/12/23/docker-compose-gettingstarted/"/>
-    <updated>2018-12-23T05:48:43+00:00</updated>
+    <updated>2018-12-23T13:48:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2018/12/23/docker-compose-gettingstarted</id>
     <content type="html"><![CDATA[<pre><code>预计阅读时间：10分钟
 </code></pre>
@@ -999,7 +999,7 @@ composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
   <entry>
     <title type="html"><![CDATA[前端面试题之他们想问什么？]]></title>
     <link href="http://blog.w3cub.com/blog/2018/09/19/front-end-interview-questions-what-do-you-want-to-ask/"/>
-    <updated>2018-09-19T14:55:43+00:00</updated>
+    <updated>2018-09-19T22:55:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2018/09/19/front-end-interview-questions--what-do-you-want-to-ask</id>
     <content type="html"><![CDATA[<p>最近在找工作遇到很多奇葩的面试问题？怎么说呢，就是比较书面性的，比较学术性的问题？<br />
 今天大家分享一下吧，我们来分析一下究竟这些问题究竟在问什么？跟最终像表达的是什么？<br />
@@ -1134,7 +1134,7 @@ composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
   <entry>
     <title type="html"><![CDATA[Complete NGINX Cookbook notes]]></title>
     <link href="http://blog.w3cub.com/blog/2018/09/19/complete-nginx-cookbook-notes/"/>
-    <updated>2018-09-19T04:51:43+00:00</updated>
+    <updated>2018-09-19T12:51:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2018/09/19/complete-nginx-cookbook-notes</id>
     <content type="html"><![CDATA[<p>Complete NGINX Cookbook 首先这本说是可以免费下载的。</p>
 
@@ -1742,7 +1742,7 @@ so that <code>all requests will be made over HTTPS</code>.</p>
   <entry>
     <title type="html"><![CDATA[How to properly uninstall Service Worker？]]></title>
     <link href="http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker/"/>
-    <updated>2018-06-01T15:10:43+00:00</updated>
+    <updated>2018-06-01T23:10:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker</id>
     <content type="html"><![CDATA[<p>如何正确地卸载Service Worker？</p>
 
@@ -2131,7 +2131,7 @@ https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookb
   <entry>
     <title type="html"><![CDATA[《html5数据推送应用开发》读书摘要]]></title>
     <link href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/"/>
-    <updated>2017-08-06T09:18:14+00:00</updated>
+    <updated>2017-08-06T17:18:14+08:00</updated>
     <id>http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note</id>
     <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。<br />
 基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……<br />
@@ -2281,7 +2281,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[每日一点点之scrapy]]></title>
     <link href="http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy/"/>
-    <updated>2017-06-20T15:19:58+00:00</updated>
+    <updated>2017-06-20T23:19:58+08:00</updated>
     <id>http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy</id>
     <content type="html"><![CDATA[<p>Scrapy 是什么？</p>
 
@@ -2347,7 +2347,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[你好2017]]></title>
     <link href="http://blog.w3cub.com/blog/2017/01/02/hello-2017/"/>
-    <updated>2017-01-02T08:27:08+00:00</updated>
+    <updated>2017-01-02T16:27:08+08:00</updated>
     <id>http://blog.w3cub.com/blog/2017/01/02/hello-2017</id>
     <content type="html"><![CDATA[<p>2017年，起床的第一天，朋友圈里面的都是困难群众。谢谢主席关心的调侃。</p>
 
@@ -2395,7 +2395,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[多彩知乎发布啦]]></title>
     <link href="http://blog.w3cub.com/blog/2016/07/25/cozhihu-release/"/>
-    <updated>2016-07-25T14:10:46+00:00</updated>
+    <updated>2016-07-25T22:10:46+08:00</updated>
     <id>http://blog.w3cub.com/blog/2016/07/25/cozhihu-release</id>
     <content type="html"><![CDATA[<p>cozhihu(多彩知乎)发布啦！</p>
 
@@ -2464,7 +2464,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[start your shell tour from a question]]></title>
     <link href="http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question/"/>
-    <updated>2016-05-28T08:09:21+00:00</updated>
+    <updated>2016-05-28T16:09:21+08:00</updated>
     <id>http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question</id>
     <content type="html"><![CDATA[<p>Learn bash shell, by interest or needed. what is your reason to learn the shell? I think the best reason is that what you need is what you learn.</p>
 
@@ -2575,7 +2575,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[Blog Upgrade from Octopress 2.x to Jekyll 3.x]]></title>
     <link href="http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x/"/>
-    <updated>2016-05-25T00:06:09+00:00</updated>
+    <updated>2016-05-25T08:06:09+08:00</updated>
     <id>http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x</id>
     <content type="html"><![CDATA[<p>Good news, my blog had Upgrade from Octopress 2.x to Jekyll 3.x. It is not difficult to do this, if you follow me step by step.</p>
 
@@ -2616,7 +2616,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[docs w3cub is on]]></title>
     <link href="http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release/"/>
-    <updated>2015-12-08T14:23:26+00:00</updated>
+    <updated>2015-12-08T22:23:26+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release</id>
     <content type="html"><![CDATA[<h2 id="preface">Preface</h2>
 
@@ -2658,7 +2658,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[模糊匹配查询正则表达式探究]]></title>
     <link href="http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/"/>
-    <updated>2015-07-15T14:09:43+00:00</updated>
+    <updated>2015-07-15T22:09:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh</id>
     <content type="html"><![CDATA[<p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing “uni” into a country input field actually intends to select? It could match any of these:</p>
 
@@ -3130,7 +3130,7 @@ var scorers = [
   <entry>
     <title type="html"><![CDATA[rvm help]]></title>
     <link href="http://blog.w3cub.com/blog/2015/06/28/rvm-help/"/>
-    <updated>2015-06-28T05:12:54+00:00</updated>
+    <updated>2015-06-28T13:12:54+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/28/rvm-help</id>
     <content type="html"><![CDATA[<p>常用命令（Action）：</p>
 
@@ -3376,7 +3376,7 @@ limitations under the License.
   <entry>
     <title type="html"><![CDATA[octopress configuration]]></title>
     <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
-    <updated>2015-06-20T15:16:31+00:00</updated>
+    <updated>2015-06-20T23:16:31+08:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2>
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
@@ -3570,121 +3570,10 @@ $ rake deploy
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[rake task for octopress]]></title>
-    <link href="http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress/"/>
-    <updated>2015-06-19T15:35:19+00:00</updated>
-    <id>http://blog.w3cub.com/blog/2015/06/19/rake-task-for-octopress</id>
-    <content type="html"><![CDATA[<p>翻译样式测试中，情形看不到举行程序看过出售始终出处予以英，上下手机同样委员会分享法，饭店文章是一种民间事实欢迎您检。</p>
-
-<p>他的网游物理就有改革第二提示就有信，一脸举报精美兴趣具有我很自己的产，格式美丽实力学习营养日子老人选项，本报近年来故障体系成长宽带渐渐推广下面居然时尚中文画面，详细内容武器大多数理解广大授权方式酒店写，没有进口文明后果申请浙江些什么插，最低大家今后自从各自自己俱乐部，收藏本页乐队注重自身发。<br />
-纪念供应商下列合同食物伟大回答不必机场方案本书指定物品，想到商家门派岗位增加确保投资者数码可见，主营设立造型元素简体中文原则对于日前涉及稿件是因为可以说。</p>
-
-<!--more-->
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias ut quo laboriosam dignissimos neque cupiditate nulla, minus accusantium voluptatum quae! Iste, quo asperiores ex tenetur nemo optio quisquam aliquam nisi.</p>
-
-<p>无聊世界杯本论坛确实下载次数论文激动楼上，协调成了加拿大大陆休闲，一声预期条款说着是什么感觉到下，各个数字效率共和国尚未最大奖励一张深入福建欢迎您日韩管理系，特价点此供求一股保险尝试即使我市销售故障逐步，新手平静作出流行简直高速十大其实政策新技术分别鉴定心灵男子话，一家一丝大师总经理会，领先难道思路手里瞬间新型好了处于天堂机构状态大门杭州强大难，到来经历医学某种暂时。</p>
-
-<p>$ rake -T</p>
-
-<pre><code>	rake clean # 清理缓存: .pygments-cache, .gist-cache, .sass-cache
-	rake copydot[source,dest] # copy dot files for deployment
-	rake deploy # Default deploy task
-	rake gen_deploy # 生成并部署网站
-	rake generate # 生成 jekyll 网站
-	rake install[theme] # 初始化octopress，复制默认主题到Jekyll's generator路径下
-	rake integrate # 把所有隐藏的posts移回到posts目录，以准备生成网站
-	rake isolate[filename] # Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly
-	rake list # list tasks
-	rake new_page[filename] # Create a new page in source/(filename)/index.markdown
-	rake new_post[title] # Begin a new post in source/_posts
-	rake preview # preview the site in a web browser
-	rake push # ※ deploy public directory to github pages
-	rake rsync # Deploy website via rsync
-	rake set_root_dir[dir] # Update configurations to support publishing to root or sub directory
-	rake setup_github_pages[repo] # Set up _deploy folder and deploy branch for Github Pages deployment
-	rake update_source[theme] # Move source to source.old, install source theme updates, replace source/_includes/navigation.html with source.old's navigation
-	rake update_style[theme] # Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom
-	rake watch # Watch the site and regenerate when it changes
-</code></pre>
-<!--more-->
-
-<p>test include_code plugin:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Example 2 (github.js)</span> <a href="http://blog.w3cub.com/downloads/code/github.js">download</a></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span></span><span class="kd">var</span> <span class="nx">github</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class="line">  <span class="kd">function</span> <span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="kd">function</span> <span class="nx">render</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">){</span>
-</span><span class="line">    <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">target</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">fragment</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li class=&quot;pinned-repo-item&quot;&gt;&lt;div&gt;&lt;a href=&quot;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">html_url</span><span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span><span class="o">+</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="o">+</span><span class="s1">&#39;&lt;/a&gt;&lt;/div&gt;&lt;p&gt;&#39;</span><span class="o">+</span><span class="nx">escapeHtml</span><span class="p">(</span><span class="nx">repos</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">description</span><span class="o">||</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&lt;/p&gt;&lt;/li&gt;&#39;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="nx">t</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">fragment</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="k">return</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">showRepos</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span>
-</span><span class="line">      <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-</span><span class="line">          <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;https://api.github.com/users/&quot;</span><span class="o">+</span><span class="nx">options</span><span class="p">.</span><span class="nx">user</span><span class="o">+</span><span class="s2">&quot;/repos?sort=&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">sort</span> <span class="o">||</span> <span class="s1">&#39;pushed&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot;&amp;callback=?&quot;</span>
-</span><span class="line">        <span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;jsonp&#39;</span>
-</span><span class="line">        <span class="p">,</span> <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">$</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span> <span class="o">+</span> <span class="s1">&#39; li.loading&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Error loading feed&quot;</span><span class="p">);</span> <span class="p">}</span>
-</span><span class="line">        <span class="p">,</span> <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">          <span class="kd">var</span> <span class="nx">repos</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class="line">          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">data</span> <span class="o">||</span> <span class="o">!</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
-</span><span class="line">          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">            <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">skip_forks</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">fork</span><span class="p">)</span> <span class="p">{</span> <span class="k">continue</span><span class="p">;</span> <span class="p">}</span>
-</span><span class="line">            <span class="nx">repos</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-</span><span class="line">          <span class="p">}</span>
-</span><span class="line">          <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">)</span> <span class="p">{</span> <span class="nx">repos</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">count</span><span class="p">);</span> <span class="p">}</span>
-</span><span class="line">          <span class="nx">render</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span> <span class="nx">repos</span><span class="p">);</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">      <span class="p">});</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">};</span>
-</span><span class="line"><span class="p">})();</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[svg画布定位]]></title>
-    <link href="http://blog.w3cub.com/blog/2014/07/13/svg-canvas-positioning/"/>
-    <updated>2014-07-13T19:55:00+00:00</updated>
-    <id>http://blog.w3cub.com/blog/2014/07/13/svg-canvas-positioning</id>
+    <link href="http://blog.w3cub.com/blog/2014/07/14/svg-canvas-positioning/"/>
+    <updated>2014-07-14T03:55:00+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2014/07/14/svg-canvas-positioning</id>
     <content type="html"><![CDATA[<p>// 角度(angle)转弧度(radian)</p>
 
 <pre><code class="language-js">
@@ -3750,6 +3639,295 @@ function getPointAt(p0, radius, angle) {
 
 <p><a href="https://www.thecn.com/tc129">https://www.thecn.com/tc129</a> 社交关系图</p>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[javascript 对象中的复制，继承，引用，浅拷贝，深拷贝，多态，静态方法]]></title>
+    <link href="http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class/"/>
+    <updated>2013-10-19T15:10:43+08:00</updated>
+    <id>http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class</id>
+    <content type="html"><![CDATA[<h2 id="导言">导言</h2>
+
+<p>javascript与C,C++,Java等语言，他们之间总让人感觉存在一层纱，javascript易入门，难深入，而其他则相反（个人观点）。</p>
+
+<p>其实不论什么语言，难与易的突破口都在语法基础上，当你越学得深入，你会发现语言之间的相同是如此的美妙。其实个人感觉javascript是相对其他语言是最容易学的一种语言。但部分人确认为，javascript十分难学，什么兼容性都把你搞死了。个人认为应该把javascript的难与易一分为二。javascript的语言是相对其他语言简单的，而且没有过多的语法概念（泛型，多态，模板），让编程者留下很多可以思考和想象的空间。或许多人喜欢javascript就是因为它的灵活性。</p>
+
+<!-- more -->
+
+<h2 id="前言">前言</h2>
+
+<p>javascript是一门松散的面向对象脚本语言</p>
+
+<p>为什么说是松散的呢？javascript一切皆对象（var），就是说不论数组，函数……都是继承自对象。</p>
+
+<p>javascript给我们所展现对象继承存储其实就像treegrid数据类似，但是正好相反。</p>
+
+<p>就是说javascript对象继承存储和javascript静态方法存储是相反的。</p>
+
+<p><img src="https://user-images.githubusercontent.com/1061012/44942632-1b314880-ade9-11e8-9309-3b1fab06e63e.jpg" alt="1" /></p>
+
+<p>图：treegrid数据</p>
+
+<hr />
+
+<p><img src="https://user-images.githubusercontent.com/1061012/44942633-1bc9df00-ade9-11e8-9649-1bf153d2abfa.png" alt="2" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/1061012/44942634-1c627580-ade9-11e8-84cf-3982b8b78b73.png" alt="3" /></p>
+
+<p>图：javascript对象继承</p>
+
+<hr />
+
+<p><img src="https://user-images.githubusercontent.com/1061012/44942635-1c627580-ade9-11e8-8a8c-aec513b87629.png" alt="4" /></p>
+
+<p>图：javascript静态方法</p>
+
+<hr />
+
+<p><img src="https://user-images.githubusercontent.com/1061012/44942636-1cfb0c00-ade9-11e8-9938-a850e81c4915.jpg" alt="5" /></p>
+
+<p>图：javascript Object layout</p>
+
+<p>上面所说的其实就是javascript对象构成，或许还会困惑，下面将深入分析。</p>
+
+<h2 id="一javascript对象引用">一、javascript对象引用</h2>
+
+<p>什么叫做javascript对象引用？简单地说就是非实体对象赋值，即是非String,Number,Array，Null,Undefined等对象（除Object对象）赋值。</p>
+
+<pre><code>// 引用
+var source  = {
+    warm:function(v){
+        alert(v)
+    }
+};
+var quote = source;
+delete source.warm;
+quote.warm('b');
+</code></pre>
+
+<p>上面代码会报错，因为source是非实体对象，quote内存地址指向source，当删除source.warm的时候，quote下的warm随之消失。</p>
+
+<h2 id="二javascript对象复制浅拷贝深拷贝">二、javascript对象复制，浅拷贝，深拷贝</h2>
+
+<p>对于上述的代码要想不报错的话，就必须对source.warm也赋值给quote.warm，因为source.warm是实体对象（Function）。</p>
+
+<p>对对象进行遍历，子对象一对一赋值就叫做javascript对象复制。既然是遍历，自然有深浅度。所以我们对彻底遍历叫做深拷贝，只遍历子对象第一层叫做浅拷贝。</p>
+
+<p>(1)</p>
+
+<pre><code class="language-js">    var source  = {
+        warm:function(v){
+            alert(v)
+        }
+    };
+    function extend(target, source) {
+        for (var n in source) {
+            if(source.hasOwnProperty(n)){
+                target[n] = source[n]
+            }
+        }
+        return target
+    }
+    var exObj = extend({},source);
+    delete source.warm;
+    exObj.warm('b');
+</code></pre>
+
+<p>(2)上述代码不会报错，因为source通过遍历已经把其子对象复制到exObj下了。</p>
+
+<pre><code class="language-js">var source  = {
+    warm:function(v){
+        alert(v)
+    },
+    childs:{
+        log:function(v){
+            alert('log'+v);
+        },
+        info:function(v){
+            alert('info'+v);
+        }
+    },
+    _private:{
+        _name:'source',
+        _age:12
+    }
+};
+function extend(target, source) {
+    for (var n in source) {
+        if(source.hasOwnProperty(n)){
+            target[n] = source[n]
+        }
+    }
+    return target
+}
+var exObj = extend({},source);
+</code></pre>
+
+<p>会发生错误，为什么呢？上面同样是复制，当我们执行如下代码：</p>
+
+<pre><code class="language-js">delete source.childs.log;
+delete source.childs;
+exObj.childs.log('b');
+</code></pre>
+
+<p>同理，我们执行如下：就是我们一开始所说遍历的深度不彻底，我们通过上述extend方法只遍历了source.childs,而source.childs是非实体对象，所以只是充当exObj.childs对象的引用。</p>
+
+<pre><code class="language-js">exOBj._private._age++;
+source._private._age; // 13
+
+</code></pre>
+
+<p>我们要实现深拷贝的话，就必须 判断其子对象是否是非实体对象，假如是非实体对象的话，就进行递归遍历操作。我们改变exOBj._private._age的时候，source._private.age也发生改变，道理和上面的一样。</p>
+
+<p>还记得jquery.extend api吗</p>
+
+<pre><code class="language-js">jQuery.extend( [deep ], target, object1 [, objectN ] )
+</code></pre>
+
+<p>当我们第一个参数传入true的时候，就帮我我们实施深拷贝操作。</p>
+
+<h2 id="三javascript对象继承">三、javascript对象继承</h2>
+
+<p>学过java或者c++，php等语言的读者就好理解了，刚开始前言的</p>
+
+<p>图：javascript对象继承 和 图：javascript Object layout就说的很详细了。那么他们是怎么实现的呢？</p>
+
+<p>其实javascript中还有一个很重要的概念就是作用域。</p>
+
+<p>编程语言中的继承就是子类继承父类已有的方法，属性，并做相应的拓展，进而形成自己的具有特定属性和方法的类。</p>
+
+<p>开始学面向对象语言的时候，通常都会举一个经典例子，就是动物父类，派生鸟类，鱼类……，而鸟类接着派生出鹰，麻雀……。</p>
+
+<p>而javascript（ecma5）还没有给出官方的方法进行上述操作而已。但是后续（ecma 6）将会支持。正如，一开始说所，javascript是一门松散的面向对象语言，留给变成者很多思考的空间。</p>
+
+<p>javascript中有两个很重要的方法就是call，apply。人们常谈的javascript设计模式常常都离不开call,apply,回调函数等等。</p>
+
+<p>那么如何才能实现（图：javascript对象继承）中类似的对象继承？</p>
+
+<p>接着动物的例子：</p>
+
+<p>what is animal? 它们能够对环境作出反应并移动，捕食其他生物。</p>
+
+<pre><code class="language-js">function animal(){
+    
+}
+animal.prototype = {
+    catchOther:function(){
+    
+    },
+    protectSelf:function(){
+    
+    }
+}
+</code></pre>
+
+<p>鸟类：</p>
+
+<pre><code class="language-js">function bird(){
+    
+}
+bird = wrapper(bird,animal);
+bird.prototype.fly = function(){
+    console.log('flying');
+}
+</code></pre>
+
+<p>wrapper？？用来继承，如何写才能实现如下呢？</p>
+
+<p><img src="https://user-images.githubusercontent.com/1061012/44942637-1cfb0c00-ade9-11e8-8f70-8375bdbe35cb.png" alt="6" /></p>
+
+<p>new 一个 animal ？？并指向bird.prototype ?</p>
+
+<p>好像可以实现,但是当我们打入</p>
+
+<p>bird.prototype.<strong>proto</strong>.constructor的时候是什么呢？？构造函数是否符合对象的构造函数的定义呢？</p>
+
+<p>我们给出一个简单的方案，至于构造函数应该执行谁的问题留作思考，网上也很多关于这方面的讨论？自己可以搜一下</p>
+
+<pre><code class="language-js">function wrapper(child, parent) {
+    var ins = function() {
+        child.apply(this, arguments);
+    };
+    var subclass = function() {};
+    subclass.prototype = parent.prototype;
+    ins.prototype = new subclass;
+    return ins;
+};
+</code></pre>
+
+<p>所谓的静态方法就是不涉及抽象对象函数实现的方法，举个很简单的例子，如jquery中的$.isFunction,$.isArray等等就属于静态方法。同样是上面的例子</p>
+
+<p>四、javascript对象静态方法</p>
+
+<pre><code class="language-js">var source  = {
+    warm:function(v){
+        alert(v)
+    },
+    childs:{
+        log:function(v){
+            alert('log'+v);
+        },
+        info:function(v){
+            alert('info'+v);
+        }
+    },
+    _private:{
+        _name:'source',
+        _age:12
+    }
+};
+function extend(target, source) {
+    for (var n in source) {
+        if(source.hasOwnProperty(n)){
+            target[n] = source[n]
+        }
+    }
+    return target
+}
+var exObj = extend({},source);
+</code></pre>
+
+<p>这里不合理的地方在于当我们对其成员可操作，假如上述是公共方法，团队每个人都可以对其调用，并假如warm方法会对其兄弟属性_private产生改变。如何_private下的是标识变量（flog ~），那么这个标识变量就违反了可操作的唯一性。</p>
+
+<h2 id="五javascript对象多态">五、javascript对象多态</h2>
+
+<p>所谓的对象多态就是和构造函数或者方法参数传递进行动态识别处理。</p>
+
+<p>依然是$.extend,还记得api有多少调用吗？</p>
+
+<p>java中的多态是不同参数类型都重新定义一遍，好像十分费劲？javascript留给编程者的思考空间就是给你一个arguments，调用当前方法的参数集合，是一个类数组。</p>
+
+<p>一般地：</p>
+
+<pre><code class="language-js">function(a){
+  var args = [].slice(arguments,0);
+  if(args[0] == 'xx')doxxx;
+  if(typeof args[0] == 'function') doxxx;
+}
+</code></pre>
+
+<p>相关阅读：是不是很有意思呢。</p>
+
+<p>1、<a href="http://hi.baidu.com/tp100/item/a18184ee589145d5eb34c941" title="javascript权威指南 源代码分析（一）Objects">javascript权威指南 源代码分析（一）Objects</a></p>
+
+<p>2、<a href="http://hi.baidu.com/tp100/item/4fbb55d18f6741352a35c741" title="javascript权威指南 源代码分析（二）Functions">javascript权威指南 源代码分析（二）Functions</a></p>
+
+<p>3、（<a href="http://www.cnblogs.com/snandy/archive/2012/09/01/2664134.html">JavaScript中<strong>proto</strong>与prototype的关系</a>）</p>
+
+<p>后记：</p>
+
+<p>码字真累，百度空间蛋疼啊，写到一半按了不知道什么键，没有了一大截……</p>
+
+<p>有高亮代码时，不要按ctrl+Z，不然你的人生十分钟会浪费掉的。</p>
+
+<p>2013/10/19</p>
+
+<p>本文来源</p>
+
+<p>菜籽油: <a href="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e" title="http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e">http://hi.baidu.com/tp100/item/4d59a03b4b73fac42f8ec25e</a></p>
+
+<p>-EOF-</p>
 ]]></content>
   </entry>
   

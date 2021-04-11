@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Docker | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/docker/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-05-27T17:13:10+00:00</updated>
+  <updated>2021-04-11T15:49:50+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Docker Compose入门]]></title>
     <link href="http://blog.w3cub.com/blog/2018/12/23/docker-compose-gettingstarted/"/>
-    <updated>2018-12-23T05:48:43+00:00</updated>
+    <updated>2018-12-23T13:48:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2018/12/23/docker-compose-gettingstarted</id>
     <content type="html"><![CDATA[<pre><code>预计阅读时间：10分钟
 </code></pre>

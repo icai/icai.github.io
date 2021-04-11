@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: confusion | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/confusion/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-05-27T17:13:10+00:00</updated>
+  <updated>2021-04-11T15:49:50+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[javascript混淆与解混淆的那些事儿]]></title>
     <link href="http://blog.w3cub.com/blog/2019/04/01/js-confusion/"/>
-    <updated>2019-04-01T05:48:43+00:00</updated>
+    <updated>2019-04-01T13:48:43+08:00</updated>
     <id>http://blog.w3cub.com/blog/2019/04/01/js-confusion</id>
     <content type="html"><![CDATA[<p>像软件加密与解密一样，javascript的混淆与解混淆同属于同一个范畴。道高一尺，魔高一丈。没有永恒的黑，也没有永恒的白。一切都是资本市场驱动行为，现在都流行你能为人解决什么问题，这个概念。那么市场究竟能容纳多少个能解决这种问题的利益者。JS没有秘密。</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: mysql | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/mysql/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2020-05-27T17:13:10+00:00</updated>
+  <updated>2021-04-11T15:49:50+08:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[mysql function procedure trigger to generate serial number]]></title>
     <link href="http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number/"/>
-    <updated>2020-03-24T14:27:44+00:00</updated>
+    <updated>2020-03-24T22:27:44+08:00</updated>
     <id>http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number</id>
     <content type="html"><![CDATA[<p>Today, we show some useful mysql code about procedure, function and trigger.</p>
 
@@ -263,7 +263,7 @@ UPDATE app_users SET api_key = (SELECT uuid());
   <entry>
     <title type="html"><![CDATA[group_concat scences to be used]]></title>
     <link href="http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used/"/>
-    <updated>2020-03-13T07:44:47+00:00</updated>
+    <updated>2020-03-13T15:44:47+08:00</updated>
     <id>http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used</id>
     <content type="html"><![CDATA[<p>group_concat 只能与groupby连用，分组查询常用场景</p>
 
