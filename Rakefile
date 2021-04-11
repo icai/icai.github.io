@@ -426,7 +426,7 @@ task :deploy_sync do
   if defined?(ROT_TOKEN)
     system "git config --global user.name \"Terry Rot\""
     system "git config --global user.email \"gidcai@gmail.com\""
-    system "git clone --depth 50 -b master --single-branch hhttps://#{ROT_TOKEN}@github.com/icai/icai.github.io.git #{deploy_dir}"
+    system "git clone --depth 50 -b master --single-branch https://#{ROT_TOKEN}@github.com/icai/icai.github.io.git #{deploy_dir}"
   end
 end
 
