@@ -267,7 +267,7 @@ multitask :push do
   puts "## Deploying branch to Github Pages "
   puts "## Pulling any updates from Github Pages "
   cd "#{deploy_dir}" do 
-    Bundler.with_clean_env { system "git pull" }
+    Bundler.with_unbundled_env { system "git pull" }
   end
   (Dir["#{deploy_dir}/*"]).each { |f| rm_rf(f) }
   Rake::Task[:copydot].invoke(public_dir, deploy_dir)
@@ -423,10 +423,10 @@ end
 task :deploy_sync do
   # ci 配置环境变量
   ROT_TOKEN = ENV["ROT_TOKEN"]
-  if ROT_TOKEN
+  if defined?(ROT_TOKEN)
     system "git config --global user.name \"Terry Rot\""
     system "git config --global user.email \"gidcai@gmail.com\""
-    system "git clone --depth 50 -b master --single-branch https://#{ROT_TOKEN}@github.com/icai/icai.github.io.git #{deploy_dir}"
+    system "git clone --depth 50 -b master --single-branch hhttps://#{ROT_TOKEN}@github.com/icai/icai.github.io.git #{deploy_dir}"
   end
 end
 
