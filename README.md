@@ -1,9 +1,9 @@
-## A blog using Jekyll 3
+## A blog using Jekyll 4
 
 
 ### Preview
 
-http://blog.w3cub.com
+https://blog.w3cub.com
 
 
 ### Source

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: lazy | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/lazy/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2021-04-11T15:49:50+08:00</updated>
+  <updated>2021-04-11T11:48:31+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[模糊匹配查询正则表达式探究]]></title>
     <link href="http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/"/>
-    <updated>2015-07-15T22:09:43+08:00</updated>
+    <updated>2015-07-15T14:09:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh</id>
     <content type="html"><![CDATA[<p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing “uni” into a country input field actually intends to select? It could match any of these:</p>
 

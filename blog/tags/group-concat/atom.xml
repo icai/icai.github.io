@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: group_concat | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/group-concat/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2021-04-11T15:49:50+08:00</updated>
+  <updated>2021-04-11T11:48:31+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[group_concat scences to be used]]></title>
     <link href="http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used/"/>
-    <updated>2020-03-13T15:44:47+08:00</updated>
+    <updated>2020-03-13T07:44:47+00:00</updated>
     <id>http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used</id>
     <content type="html"><![CDATA[<p>group_concat 只能与groupby连用，分组查询常用场景</p>
 

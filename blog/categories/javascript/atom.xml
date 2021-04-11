@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2021-04-11T15:49:50+08:00</updated>
+  <updated>2021-04-11T11:48:31+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[浅谈服务端渲染(SSR)的几种形式]]></title>
     <link href="http://blog.w3cub.com/blog/2019/07/01/ssr-types/"/>
-    <updated>2019-07-01T16:48:43+08:00</updated>
+    <updated>2019-07-01T08:48:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2019/07/01/ssr-types</id>
     <content type="html"><![CDATA[<p>在好久好久之前，前端的概念是模糊的。前端就是页面仔，切图仔。前端的任务就是把html跟js写好，然后丢给后端套数据。基本传统的MVC，smarty View。</p>
 <pre><code>assign-&gt;('data', $data)
@@ -61,7 +61,7 @@
   <entry>
     <title type="html"><![CDATA[javascript混淆与解混淆的那些事儿]]></title>
     <link href="http://blog.w3cub.com/blog/2019/04/01/js-confusion/"/>
-    <updated>2019-04-01T13:48:43+08:00</updated>
+    <updated>2019-04-01T05:48:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2019/04/01/js-confusion</id>
     <content type="html"><![CDATA[<p>像软件加密与解密一样，javascript的混淆与解混淆同属于同一个范畴。道高一尺，魔高一丈。没有永恒的黑，也没有永恒的白。一切都是资本市场驱动行为，现在都流行你能为人解决什么问题，这个概念。那么市场究竟能容纳多少个能解决这种问题的利益者。JS没有秘密。</p>
 
@@ -342,7 +342,7 @@ https://blog.csdn.net/yannqi/article/details/80847354</p>
   <entry>
     <title type="html"><![CDATA[How to properly uninstall Service Worker？]]></title>
     <link href="http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker/"/>
-    <updated>2018-06-01T23:10:43+08:00</updated>
+    <updated>2018-06-01T15:10:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker</id>
     <content type="html"><![CDATA[<p>如何正确地卸载Service Worker？</p>
 
@@ -731,7 +731,7 @@ https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookb
   <entry>
     <title type="html"><![CDATA[《html5数据推送应用开发》读书摘要]]></title>
     <link href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/"/>
-    <updated>2017-08-06T17:18:14+08:00</updated>
+    <updated>2017-08-06T09:18:14+00:00</updated>
     <id>http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note</id>
     <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。<br />
 基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……<br />
@@ -881,7 +881,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[模糊匹配查询正则表达式探究]]></title>
     <link href="http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/"/>
-    <updated>2015-07-15T22:09:43+08:00</updated>
+    <updated>2015-07-15T14:09:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh</id>
     <content type="html"><![CDATA[<p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing “uni” into a country input field actually intends to select? It could match any of these:</p>
 

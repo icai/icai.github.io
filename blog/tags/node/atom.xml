@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: node | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/node/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2021-04-11T15:49:50+08:00</updated>
+  <updated>2021-04-11T11:48:31+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[浅谈服务端渲染(SSR)的几种形式]]></title>
     <link href="http://blog.w3cub.com/blog/2019/07/01/ssr-types/"/>
-    <updated>2019-07-01T16:48:43+08:00</updated>
+    <updated>2019-07-01T08:48:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2019/07/01/ssr-types</id>
     <content type="html"><![CDATA[<p>在好久好久之前，前端的概念是模糊的。前端就是页面仔，切图仔。前端的任务就是把html跟js写好，然后丢给后端套数据。基本传统的MVC，smarty View。</p>
 <pre><code>assign-&gt;('data', $data)

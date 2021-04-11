@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: setter | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/setter/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2021-04-11T15:49:50+08:00</updated>
+  <updated>2021-04-11T11:48:31+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[javascript类库中和编程语言中getter和setter]]></title>
     <link href="http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter/"/>
-    <updated>2013-08-17T23:16:31+08:00</updated>
+    <updated>2013-08-17T15:16:31+00:00</updated>
     <id>http://blog.w3cub.com/blog/2013/08/17/javascript-lib-and-other-programming-language-s-getter-and-setter</id>
     <content type="html"><![CDATA[<p>1.backbonejs中的getter和setter</p>
 

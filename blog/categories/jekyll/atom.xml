@@ -4,7 +4,7 @@
   <title><![CDATA[Category: jekyll | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/categories/jekyll/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2021-04-11T15:49:50+08:00</updated>
+  <updated>2021-04-11T11:48:31+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Blog Upgrade from Octopress 2.x to Jekyll 3.x]]></title>
     <link href="http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x/"/>
-    <updated>2016-05-25T08:06:09+08:00</updated>
+    <updated>2016-05-25T00:06:09+00:00</updated>
     <id>http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x</id>
     <content type="html"><![CDATA[<p>Good news, my blog had Upgrade from Octopress 2.x to Jekyll 3.x. It is not difficult to do this, if you follow me step by step.</p>
 

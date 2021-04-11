@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: octopress | 泛前端开发]]></title>
   <link href="http://blog.w3cub.com/blog/tags/octopress/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2021-04-11T15:49:50+08:00</updated>
+  <updated>2021-04-11T11:48:31+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Blog Upgrade from Octopress 2.x to Jekyll 3.x]]></title>
     <link href="http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x/"/>
-    <updated>2016-05-25T08:06:09+08:00</updated>
+    <updated>2016-05-25T00:06:09+00:00</updated>
     <id>http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x</id>
     <content type="html"><![CDATA[<p>Good news, my blog had Upgrade from Octopress 2.x to Jekyll 3.x. It is not difficult to do this, if you follow me step by step.</p>
 
@@ -57,7 +57,7 @@
   <entry>
     <title type="html"><![CDATA[octopress configuration]]></title>
     <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
-    <updated>2015-06-20T23:16:31+08:00</updated>
+    <updated>2015-06-20T15:16:31+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2>
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>

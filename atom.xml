@@ -4,7 +4,7 @@
   <title><![CDATA[泛前端开发]]></title>
   <link href="http://blog.w3cub.com/atom.xml" rel="self"/>
   <link href="http://blog.w3cub.com/"/>
-  <updated>2021-04-11T15:42:57+08:00</updated>
+  <updated>2021-04-11T11:48:11+00:00</updated>
   <id>http://blog.w3cub.com/</id>
   <author>
     <name><![CDATA[Terry Cai]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[mysql function procedure trigger to generate serial number]]></title>
     <link href="http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number/"/>
-    <updated>2020-03-24T22:27:44+08:00</updated>
+    <updated>2020-03-24T14:27:44+00:00</updated>
     <id>http://blog.w3cub.com/blog/2020/03/24/mysql-function-procedure-to-generate-serial-number</id>
     <content type="html"><![CDATA[<p>Today, we show some useful mysql code about procedure, function and trigger.</p>
 
@@ -263,7 +263,7 @@ UPDATE app_users SET api_key = (SELECT uuid());
   <entry>
     <title type="html"><![CDATA[group_concat scences to be used]]></title>
     <link href="http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used/"/>
-    <updated>2020-03-13T15:44:47+08:00</updated>
+    <updated>2020-03-13T07:44:47+00:00</updated>
     <id>http://blog.w3cub.com/blog/2020/03/13/group-concat-scences-to-be-used</id>
     <content type="html"><![CDATA[<p>group_concat 只能与groupby连用，分组查询常用场景</p>
 
@@ -356,7 +356,7 @@ order by created_at desc limit 0, 10;
   <entry>
     <title type="html"><![CDATA[浅谈服务端渲染(SSR)的几种形式]]></title>
     <link href="http://blog.w3cub.com/blog/2019/07/01/ssr-types/"/>
-    <updated>2019-07-01T16:48:43+08:00</updated>
+    <updated>2019-07-01T08:48:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2019/07/01/ssr-types</id>
     <content type="html"><![CDATA[<p>在好久好久之前，前端的概念是模糊的。前端就是页面仔，切图仔。前端的任务就是把html跟js写好，然后丢给后端套数据。基本传统的MVC，smarty View。</p>
 <pre><code>assign-&gt;('data', $data)
@@ -401,7 +401,7 @@ order by created_at desc limit 0, 10;
   <entry>
     <title type="html"><![CDATA[javascript混淆与解混淆的那些事儿]]></title>
     <link href="http://blog.w3cub.com/blog/2019/04/01/js-confusion/"/>
-    <updated>2019-04-01T13:48:43+08:00</updated>
+    <updated>2019-04-01T05:48:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2019/04/01/js-confusion</id>
     <content type="html"><![CDATA[<p>像软件加密与解密一样，javascript的混淆与解混淆同属于同一个范畴。道高一尺，魔高一丈。没有永恒的黑，也没有永恒的白。一切都是资本市场驱动行为，现在都流行你能为人解决什么问题，这个概念。那么市场究竟能容纳多少个能解决这种问题的利益者。JS没有秘密。</p>
 
@@ -682,7 +682,7 @@ https://blog.csdn.net/yannqi/article/details/80847354</p>
   <entry>
     <title type="html"><![CDATA[Docker Compose入门]]></title>
     <link href="http://blog.w3cub.com/blog/2018/12/23/docker-compose-gettingstarted/"/>
-    <updated>2018-12-23T13:48:43+08:00</updated>
+    <updated>2018-12-23T05:48:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2018/12/23/docker-compose-gettingstarted</id>
     <content type="html"><![CDATA[<pre><code>预计阅读时间：10分钟
 </code></pre>
@@ -999,7 +999,7 @@ composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
   <entry>
     <title type="html"><![CDATA[前端面试题之他们想问什么？]]></title>
     <link href="http://blog.w3cub.com/blog/2018/09/19/front-end-interview-questions-what-do-you-want-to-ask/"/>
-    <updated>2018-09-19T22:55:43+08:00</updated>
+    <updated>2018-09-19T14:55:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2018/09/19/front-end-interview-questions--what-do-you-want-to-ask</id>
     <content type="html"><![CDATA[<p>最近在找工作遇到很多奇葩的面试问题？怎么说呢，就是比较书面性的，比较学术性的问题？<br />
 今天大家分享一下吧，我们来分析一下究竟这些问题究竟在问什么？跟最终像表达的是什么？<br />
@@ -1134,7 +1134,7 @@ composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
   <entry>
     <title type="html"><![CDATA[Complete NGINX Cookbook notes]]></title>
     <link href="http://blog.w3cub.com/blog/2018/09/19/complete-nginx-cookbook-notes/"/>
-    <updated>2018-09-19T12:51:43+08:00</updated>
+    <updated>2018-09-19T04:51:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2018/09/19/complete-nginx-cookbook-notes</id>
     <content type="html"><![CDATA[<p>Complete NGINX Cookbook 首先这本说是可以免费下载的。</p>
 
@@ -1742,7 +1742,7 @@ so that <code>all requests will be made over HTTPS</code>.</p>
   <entry>
     <title type="html"><![CDATA[How to properly uninstall Service Worker？]]></title>
     <link href="http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker/"/>
-    <updated>2018-06-01T23:10:43+08:00</updated>
+    <updated>2018-06-01T15:10:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2018/06/01/how-to-properly-uninstall-service-worker</id>
     <content type="html"><![CDATA[<p>如何正确地卸载Service Worker？</p>
 
@@ -2131,7 +2131,7 @@ https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookb
   <entry>
     <title type="html"><![CDATA[《html5数据推送应用开发》读书摘要]]></title>
     <link href="http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note/"/>
-    <updated>2017-08-06T17:18:14+08:00</updated>
+    <updated>2017-08-06T09:18:14+00:00</updated>
     <id>http://blog.w3cub.com/blog/2017/08/06/sse-data-push-note</id>
     <content type="html"><![CDATA[<p>书很薄，在图书馆瞄了一下，知识点不多。<br />
 基本上第二章基本讲完，其他讲解都是一些擦边的，兼容性，安全性，……<br />
@@ -2281,7 +2281,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[每日一点点之scrapy]]></title>
     <link href="http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy/"/>
-    <updated>2017-06-20T23:19:58+08:00</updated>
+    <updated>2017-06-20T15:19:58+00:00</updated>
     <id>http://blog.w3cub.com/blog/2017/06/20/today-you-should-know-scrapy</id>
     <content type="html"><![CDATA[<p>Scrapy 是什么？</p>
 
@@ -2347,7 +2347,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[你好2017]]></title>
     <link href="http://blog.w3cub.com/blog/2017/01/02/hello-2017/"/>
-    <updated>2017-01-02T16:27:08+08:00</updated>
+    <updated>2017-01-02T08:27:08+00:00</updated>
     <id>http://blog.w3cub.com/blog/2017/01/02/hello-2017</id>
     <content type="html"><![CDATA[<p>2017年，起床的第一天，朋友圈里面的都是困难群众。谢谢主席关心的调侃。</p>
 
@@ -2395,7 +2395,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[多彩知乎发布啦]]></title>
     <link href="http://blog.w3cub.com/blog/2016/07/25/cozhihu-release/"/>
-    <updated>2016-07-25T22:10:46+08:00</updated>
+    <updated>2016-07-25T14:10:46+00:00</updated>
     <id>http://blog.w3cub.com/blog/2016/07/25/cozhihu-release</id>
     <content type="html"><![CDATA[<p>cozhihu(多彩知乎)发布啦！</p>
 
@@ -2464,7 +2464,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[start your shell tour from a question]]></title>
     <link href="http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question/"/>
-    <updated>2016-05-28T16:09:21+08:00</updated>
+    <updated>2016-05-28T08:09:21+00:00</updated>
     <id>http://blog.w3cub.com/blog/2016/05/28/start-your-shell-tour-from-a-question</id>
     <content type="html"><![CDATA[<p>Learn bash shell, by interest or needed. what is your reason to learn the shell? I think the best reason is that what you need is what you learn.</p>
 
@@ -2575,7 +2575,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[Blog Upgrade from Octopress 2.x to Jekyll 3.x]]></title>
     <link href="http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x/"/>
-    <updated>2016-05-25T08:06:09+08:00</updated>
+    <updated>2016-05-25T00:06:09+00:00</updated>
     <id>http://blog.w3cub.com/blog/2016/05/25/blog-upgrade-from-octopress-2-dot-x-to-jekyll-3-dot-x</id>
     <content type="html"><![CDATA[<p>Good news, my blog had Upgrade from Octopress 2.x to Jekyll 3.x. It is not difficult to do this, if you follow me step by step.</p>
 
@@ -2616,7 +2616,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[docs w3cub is on]]></title>
     <link href="http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release/"/>
-    <updated>2015-12-08T22:23:26+08:00</updated>
+    <updated>2015-12-08T14:23:26+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/12/08/docs-w3cub-release</id>
     <content type="html"><![CDATA[<h2 id="preface">Preface</h2>
 
@@ -2658,7 +2658,7 @@ of beta, so you can reasonably expect no one is still using versions that do not
   <entry>
     <title type="html"><![CDATA[模糊匹配查询正则表达式探究]]></title>
     <link href="http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh/"/>
-    <updated>2015-07-15T22:09:43+08:00</updated>
+    <updated>2015-07-15T14:09:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/07/15/fuzzy-scoring-regex-mayhem-zh</id>
     <content type="html"><![CDATA[<p>Autocompletion is never an entirely solved problem. Can anyone really say what on earth a user typing “uni” into a country input field actually intends to select? It could match any of these:</p>
 
@@ -3130,7 +3130,7 @@ var scorers = [
   <entry>
     <title type="html"><![CDATA[rvm help]]></title>
     <link href="http://blog.w3cub.com/blog/2015/06/28/rvm-help/"/>
-    <updated>2015-06-28T13:12:54+08:00</updated>
+    <updated>2015-06-28T05:12:54+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/28/rvm-help</id>
     <content type="html"><![CDATA[<p>常用命令（Action）：</p>
 
@@ -3376,7 +3376,7 @@ limitations under the License.
   <entry>
     <title type="html"><![CDATA[octopress configuration]]></title>
     <link href="http://blog.w3cub.com/blog/2015/06/20/octopress-config/"/>
-    <updated>2015-06-20T23:16:31+08:00</updated>
+    <updated>2015-06-20T15:16:31+00:00</updated>
     <id>http://blog.w3cub.com/blog/2015/06/20/octopress-config</id>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2>
 <p>假如想省钱，只是写写博客而已。免去服务器麻烦。推荐你用octopress，可以肯定的，没有wordpress 那么多功能。octopress 是基于 jekyll 的 静态化博客，可以在github pages 和 gitcafe 等上运行。下面我们来部署一下 我们的<code>A blogging framework for hackers.</code> 博客。</p>
@@ -3571,9 +3571,9 @@ $ rake deploy
   
   <entry>
     <title type="html"><![CDATA[svg画布定位]]></title>
-    <link href="http://blog.w3cub.com/blog/2014/07/14/svg-canvas-positioning/"/>
-    <updated>2014-07-14T03:55:00+08:00</updated>
-    <id>http://blog.w3cub.com/blog/2014/07/14/svg-canvas-positioning</id>
+    <link href="http://blog.w3cub.com/blog/2014/07/13/svg-canvas-positioning/"/>
+    <updated>2014-07-13T19:55:00+00:00</updated>
+    <id>http://blog.w3cub.com/blog/2014/07/13/svg-canvas-positioning</id>
     <content type="html"><![CDATA[<p>// 角度(angle)转弧度(radian)</p>
 
 <pre><code class="language-js">
@@ -3645,7 +3645,7 @@ function getPointAt(p0, radius, angle) {
   <entry>
     <title type="html"><![CDATA[javascript 对象中的复制，继承，引用，浅拷贝，深拷贝，多态，静态方法]]></title>
     <link href="http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class/"/>
-    <updated>2013-10-19T15:10:43+08:00</updated>
+    <updated>2013-10-19T07:10:43+00:00</updated>
     <id>http://blog.w3cub.com/blog/2013/10/19/javascript-object-and-class</id>
     <content type="html"><![CDATA[<h2 id="导言">导言</h2>
 

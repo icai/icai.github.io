@@ -19,8 +19,8 @@
 	
 	<link rel="canonical" href="http://blog.w3cub.com/tools/jquery/nthChild/">
 	<link href="/favicon.png" rel="shortcut icon">
-	<script type="text/javascript" src="/assets/application-475897c8769954758c6219989d3065f2381ad1cbf452a230c04172f5cd26e27eb034490a43139e590b01ab7960af43752b9e15635169fa6a4dd3c09652fe06a2.js" integrity="sha512-R1iXyHaZVHWMYhmYnTBl8jga0cv0UqIwwEFy9c0m4n6wNEkKQxOeWQsBq3lgr0N1K54VY1Fp+mpN08CWUv4Gog==" crossorigin="anonymous"></script>
-	<link rel="stylesheet" type="text/css" href="/assets/application-b9b8a21253015ac6d612547824db04498aa06a3ed16e84d290679e46f9fdcc9959fa39588fab9ac07a9265fad747f52cc236beeb18289dd0cf69d9aefb1a99c4.css" integrity="sha512-ubiiElMBWsbWElR4JNsESYqgaj7RboTSkGeeRvn9zJlZ+jlYj6uawHqSZfrXR/Uswja+6xgondDPadmu+xqZxA==" crossorigin="anonymous">
+	<script integrity="sha512-R1iXyHaZVHWMYhmYnTBl8jga0cv0UqIwwEFy9c0m4n6wNEkKQxOeWQsBq3lgr0N1K54VY1Fp+mpN08CWUv4Gog==" crossorigin="anonymous" type="text/javascript" src="/assets/application-475897c8769954758c6219989d3065f2381ad1cbf452a230c04172f5cd26e27eb034490a43139e590b01ab7960af43752b9e15635169fa6a4dd3c09652fe06a2.js"></script>
+	<link rel="stylesheet" type="text/css" integrity="sha512-ubiiElMBWsbWElR4JNsESYqgaj7RboTSkGeeRvn9zJlZ+jlYj6uawHqSZfrXR/Uswja+6xgondDPadmu+xqZxA==" crossorigin="anonymous" href="/assets/application-b9b8a21253015ac6d612547824db04498aa06a3ed16e84d290679e46f9fdcc9959fa39588fab9ac07a9265fad747f52cc236beeb18289dd0cf69d9aefb1a99c4.css">
 	
 
 </head>
@@ -228,14 +228,17 @@ Copyright &copy; 2021
 
 
 
-
-			<link rel="stylesheet" type="text/css" href="/assets/prism/prism.css"/>
-			<script src="/assets/prism/prism.js" type="text/javascript"></script>
-			<script type="text/x-mathjax-config">
-				MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
-			</script>
-			<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 		</div>
 	</div>
+
+	<link rel="stylesheet" type="text/css" href="/assets/prism/prism.css"/>
+	<script type="text/javascript">
+		$('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+	</script>
+	<script src="/assets/prism/prism.js" type="text/javascript"></script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({ tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]} });
+	</script>
+	<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.4.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
